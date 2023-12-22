@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+// const session = require('cookie-session');
+
 const passport = require('passport');
 const { errorHandler } = require('./middleware/errorMiddleware.js');
 const cookieParser = require('cookie-parser');
@@ -72,7 +74,24 @@ app.use(
   })
 );
 
+// -momery unleaked---------
+app.set('trust proxy', 1);
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+
+
+// app.use(
+//   session({
+//     cookie: {
+//       secure: true,
+//       maxAge: 60000,
+//     },
+//     // store: new RedisStore(),
+//     secret: 'secret',
+//     saveUninitialized: true,
+//     resave: false,
+//   })
+// );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
