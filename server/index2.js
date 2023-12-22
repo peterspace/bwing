@@ -53,6 +53,8 @@ const app = express();
 const backendURL = process.env.BACKEND_URL;
 const frontendURL = process.env.FRONTEND_URL;
 
+
+
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
@@ -69,8 +71,6 @@ app.use(
       'http://127.0.0.1:5000',
       'https://bwing-api.onrender.com',
       'https://bwing-h561.onrender.com',
-      'http://bwing-api.onrender.com',
-      'http://bwing-h561.onrender.com',
       process.env.FRONTEND_URL,
       process.env.BACKEND_URL,
     ],

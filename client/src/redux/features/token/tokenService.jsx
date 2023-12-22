@@ -2,6 +2,8 @@ import axios from 'axios';
 // import { toast } from 'react-toastify';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+// console.log({BACKEND_URL: BACKEND_URL})
+
 const addToken = async (userData) => {
   const response = await axios.post(`${BACKEND_URL}/token/addToken`, userData);
   if (response.data) {

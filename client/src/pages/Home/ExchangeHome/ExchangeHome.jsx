@@ -28,6 +28,7 @@ export const ExchangeHome = (props) => {
     setPercentageProgressHome,
   } = props;
   const location = useLocation();
+ 
   //==================================================================
   //==================================================================
   //The type of service initiated will determine the api calls made and used by the estimator for calling token list and prices
