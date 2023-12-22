@@ -4,12 +4,13 @@ import { resetPassword } from '../../services/apiService';
 
 import { toast } from 'react-toastify';
 
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import Modal from './Modal';
 import { useFormik } from 'formik';
 
 export const Reset = () => {
   const { resetToken } = useParams();
+  // const dispatch = useDispatch();
 
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -40,7 +41,7 @@ export const Reset = () => {
       },
     });
 
-  const dispatch = useDispatch();
+
 
   async function handleResetPassword(password, confirmPassword) {
     if (password.length < 6) {

@@ -14,7 +14,7 @@ import CryptoDetail from './pages/CoinsPage/CryptoDetail';
 import LogoMarkets from './components/coins/LogoMarkets';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Auth } from './pages/Auth/Auth';
-import { Reset } from './pages/auth/Reset';
+// import { Reset } from './pages/auth/Reset';
 import { Otp } from './pages/auth/Otp';
 import { getTransactionByTxIdInternal } from './redux/features/transaction/transactionSlice';
 axios.defaults.withCredentials = true;
@@ -222,7 +222,7 @@ function App() {
           }`}
         >
           <Routes>
-            <Route path="/resetpassword/:resetToken" element={<Reset />} />
+            {/* <Route path="/resetpassword/:resetToken" element={<Reset />} /> */}
             <Route
               path="/otp"
               element={<Otp setUser={setUser} setIsLoggedIn={setIsLoggedIn} />}
