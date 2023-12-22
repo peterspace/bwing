@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 // import { Auth } from './src/pages/Auth/Auth';
+// import { Dashboard } from './src/pages/Dashboard/Dashboard';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,15 +12,15 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // Assuming these are your entry files for different pages
-        app: 'src/App.jsx',
+        app: './src/App',
         auth: './src/pages/Auth/Auth',
-        dashboard: 'src/pages/Dashboard/Dashboard.jsx',
-        buyCard: 'src/pages/BuyCard/BuyCard.jsx',
-        buyCash: 'src/pages/BuyCash/BuyCash.jsx',
-        sellCard: 'src/pages/SellCard/SellCard.jsx',
-        sellCash: 'src/pages/SellCash/SellCash.jsx',
-        defi: 'src/pages/Defi/Defi.jsx',
-        exchange: 'src/pages/Exchange/Exchange.jsx',
+        dashboard: './src/pages/Dashboard/Dashboard',
+        buyCard: './src/pages/BuyCard/BuyCard',
+        buyCash: './src/pages/BuyCash/BuyCash',
+        sellCard: './src/pages/SellCard/SellCard',
+        sellCash: './src/pages/SellCash/SellCash',
+        defi: './src/pages/Defi/Defi',
+        exchange: './src/pages/Exchange/Exchange',
         // Add more entries as needed
       },
     },
