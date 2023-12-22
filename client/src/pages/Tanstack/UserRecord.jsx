@@ -3,7 +3,7 @@ import MemoizedUserTransactionsTable from "./tables/UserTransactionsTable";
 import NoTransactionFound from "../../components/NoTransactionFound";
 
 const UserRecord = (props) => {
-  const { columns, data, mode, setMode } = props;
+  const { data, mode, setMode } = props;
 
   const themeL = localStorage.getItem("theme")
     ? JSON.parse(localStorage.getItem("theme"))
@@ -61,16 +61,9 @@ const UserRecord = (props) => {
 
   return (
     <div className="container mx-auto bg-white dark:bg-bgDarkMode text-black' dark:text-gray-100">
-      {/* <UserDataTable
-        columns={columns}
-        data={data}
-        setTheme={setTheme}
-        theme={theme}
-      /> */}
 
       {tableData.length ? (
         <MemoizedUserTransactionsTable
-          columns={columns}
           data={data}
           tableData={tableData}
           setTheme={setTheme}

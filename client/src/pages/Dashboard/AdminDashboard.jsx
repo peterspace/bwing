@@ -19,7 +19,6 @@ import {
 } from "../../services/apiService";
 import { getTransactionByTxIdInternal } from "../../redux/features/transaction/transactionSlice";
 import AdminRecord from "../Tanstack/AdminRecord";
-import { ColumnsAdminRecords } from "../Tanstack/ColumnsAdminRecords";
 import { CardUpdateInfo } from "../../components/CardUpdateInfo";
 import CircularProgress from "../../components/CircularProgress";
 
@@ -264,7 +263,6 @@ export const AdminDashboard = (props) => {
           {page === "Exchange" &&
             (allExchangeTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allExchangeTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}
@@ -277,7 +275,6 @@ export const AdminDashboard = (props) => {
           {page === "Defi" &&
             (allDefiTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allDefiTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}
@@ -290,7 +287,6 @@ export const AdminDashboard = (props) => {
           {page === "Buy (Cash)" &&
             (allBuyCashTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allBuyCashTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}
@@ -303,7 +299,6 @@ export const AdminDashboard = (props) => {
           {page === "Buy (Card)" &&
             (allBuyCardTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allBuyCardTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}
@@ -316,7 +311,6 @@ export const AdminDashboard = (props) => {
           {page === "Sell (Cash)" &&
             (allSellCashTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allSellCashTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}
@@ -329,7 +323,6 @@ export const AdminDashboard = (props) => {
           {page === "Sell (Card)" &&
             (allSellCardTransactionsAdmin ? (
               <AdminRecord
-                columns={ColumnsAdminRecords}
                 data={allSellCardTransactionsAdmin}
                 mode={mode}
                 setMode={setMode}

@@ -3,7 +3,7 @@ import MemoizedAdminTransactionsTable from "./tables/AdminTransactionsTable";
 import NoTransactionFound from "../../components/NoTransactionFound";
 
 const AdminRecord = (props) => {
-  const { columns, data, mode, setMode } = props;
+  const { data, mode, setMode } = props;
   const themeL = localStorage.getItem("theme")
     ? JSON.parse(localStorage.getItem("theme"))
     : false;
