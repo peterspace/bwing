@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-const errorHandler = require('./middleWare/errorMiddleware.js');
+const { errorHandler } = require('./middleware/errorMiddleware.js');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const multer = require('multer');
@@ -34,7 +34,6 @@ const chainsPolygonRoute = require('./routes/chainsPolygonRoute');
 const tokensRoutes = require('./routes/tokensRoutes');
 const storeRoutes = require('./routes/storeRoutes');
 
-
 //======={Other Routes}============================
 const chatRoutes = require('./routes/chatRoutes');
 const messageRoutes = require('./routes/messageRoutes');
@@ -49,6 +48,8 @@ const GitHubStrategy = require('passport-github2').Strategy;
 //====================={AUTH}==============================
 
 const app = express();
+const backendURL = process.env.BACKEND_URL;
+const frontendURL = process.env.FRONTEND_URL;
 
 // Middlewares
 app.use(express.json());
@@ -83,7 +84,9 @@ const loginGoogle = passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       // callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
-      callbackURL: 'http://localhost:4000/auth/google/callback',
+      // callbackURL: 'http://localhost:4000/auth/google/callback',
+      callbackURL: `${backendURL}/auth/google/callback`,
+
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
@@ -133,18 +136,18 @@ passport.deserializeUser(function (user, done) {
 
 //======={GET USER IP ADDRESS}============================
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
   const ip =
-  req.headers['cf-connecting-ip'] ||
-  req.headers['x-real-ip'] ||
-  req.headers['x-forwarded-for'] ||
-  req.socket.remoteAddress || '';
-  console.log({ip,})
+    req.headers['cf-connecting-ip'] ||
+    req.headers['x-real-ip'] ||
+    req.headers['x-forwarded-for'] ||
+    req.socket.remoteAddress ||
+    '';
+  console.log({ ip });
   return res.json({
     ip,
-  })
-}
-);
+  });
+});
 
 //======={Google}============================
 
@@ -234,13 +237,11 @@ app.use('/chainsPolygonMumbai', chainsPolygonMumbaiRoute);
 app.use('/token', tokensRoutes);
 app.use('/store ', storeRoutes);
 
-
 //=================={Payment Routes}===============================================
 const paymentRoute = require('./routes/paymentRoute');
 //=================={Chains Routes}===============================================
 
 //=================={Network Routes}===============================================
-
 
 //=================={Other Routes}===============================================
 // app.use('/api/chat', chatRoutes);
@@ -321,7 +322,8 @@ mongoose
 const io = require('socket.io')(server, {
   pingTimeout: 60000,
   cors: {
-    origin: 'http://localhost:3000',
+    origin: frontendURL,
+    // origin: 'http://localhost:3000',
     // origin:'http://127.0.0.1:5173',
     // credentials: true,
   },

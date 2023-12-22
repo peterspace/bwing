@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const validateMongoDbId = require('../utils/validateMongodbId');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
+const frontendURL = process.env.FRONTEND_URL;
 
 //======{Change: adding email activation link}======
 // Generate Token
@@ -705,8 +706,7 @@ const authSucessGoogle1 = asyncHandler(async (req, res) => {
       expiresAt: Date.now() + 5 * (60 * 1000), // 5 minutes
     }).save();
 
-    // const url = `http://localhost:5173/auth/${email}/${accountId}/`;
-    const url = `http://localhost:5173/auth/success/${authId}`;
+    const url = `${frontendURL}/auth/success/${authId}`;
     res.redirect(url);
   }
 });
@@ -747,8 +747,8 @@ const authSucessGoogle = asyncHandler(async (req, res) => {
     // const newSession = req.session?.passport?.user;
     // console.log({ 'new session': newSession });
 
-    // const url = `http://localhost:5173/auth/${email}/${accountId}/`;
-    const url = `http://localhost:5173/auth/success/${authId}`;
+    // const url = `${frontendURL}/auth/${email}/${accountId}/`;
+    const url = `${frontendURL}/auth/success/${authId}`;
     res.redirect(url);
   }
 });
@@ -756,7 +756,7 @@ const authSucessGoogle = asyncHandler(async (req, res) => {
 const authErrorGoogle = asyncHandler(async (req, res) => {
   if (!req.user) {
     const message = `Failed to authenticate..`;
-    const url = `http://localhost:5173/auth/failure/${message}`;
+    const url = `${frontendURL}/auth/failure/${message}`;
     res.redirect(url);
   }
 });
@@ -769,8 +769,8 @@ const authSucessFacebook = asyncHandler(async (req, res) => {
     const email = req.user.email;
     const name = req.user.displayName;
     const provider = req.user.provider;
-    // const url = `http://localhost:5173/auth/${email}/${accountId}/`;
-    const url = `http://localhost:5173/auth/success/${name}/${email}/${accountId}/${provider}`;
+    // const url = `${frontendURL}/auth/${email}/${accountId}/`;
+    const url = `${frontendURL}/auth/success/${name}/${email}/${accountId}/${provider}`;
     res.redirect(url);
   }
 });
@@ -778,7 +778,7 @@ const authSucessFacebook = asyncHandler(async (req, res) => {
 const authErrorFacebook = asyncHandler(async (req, res) => {
   if (!req.user) {
     const message = `Failed to authenticate..`;
-    const url = `http://localhost:5173/auth/failure/${message}`;
+    const url = `${frontendURL}/auth/failure/${message}`;
     res.redirect(url);
   }
 });
@@ -793,7 +793,7 @@ const loginByFacebook = asyncHandler(async (req, res) => {
   if (req.user) {
     const accountId = req.user.id;
     const email = req.user.email;
-    const url = `http://localhost:5173/auth/${email}/${accountId}/`;
+    const url = `${frontendURL}/auth/${email}/${accountId}/`;
     res.redirect(url);
   }
 });
@@ -923,7 +923,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }).save();
 
   // Construct Reset Url
-  const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+  const resetUrl = `${frontendURL}/resetpassword/${resetToken}`;
 
   // Reset Email
   const message = `<!DOCTYPE html>
@@ -1825,8 +1825,8 @@ const registrationConfirmationMsg = async (email, name) => {
 
   // Delete token if it exists in DB
 
-  // const userLogin = `${process.env.FRONTEND_URL}/login`;
-  const userLogin = `${process.env.FRONTEND_URL}/auth`;
+  // const userLogin = `${frontendURL}/login`;
+  const userLogin = `${frontendURL}/auth`;
 
   // Reset Email
   const message = `<!DOCTYPE html>
@@ -2679,8 +2679,8 @@ const registrationConfirmationMsgTest = async () => {
 
   // Delete token if it exists in DB
 
-  // const userLogin = `${process.env.FRONTEND_URL}/login`;
-  const userLogin = `${process.env.FRONTEND_URL}/auth`;
+  // const userLogin = `${frontendURL}/login`;
+  const userLogin = `${frontendURL}/auth`;
 
   // Reset Email
   const message = `<!DOCTYPE html>
@@ -3540,7 +3540,7 @@ async function generateOTP() {
   const send_to = email;
   // const send_to = emailTest;
   const sent_from = process.env.EMAIL_USER;
-  const userLogin = `${process.env.FRONTEND_URL}/auth`;
+  const userLogin = `${frontendURL}/auth`;
   const message = `<!DOCTYPE html>
 
   <html
@@ -4407,7 +4407,7 @@ const forgotOtp = asyncHandler(async (req, res) => {
     expiresAt: Date.now() + 5 * (60 * 1000), // 5 minutes
   }).save();
 
-  const resetUrl = `${process.env.FRONTEND_URL}/otp/${authId}`;
+  const resetUrl = `${frontendURL}/otp/${authId}`;
   // Reset Email
   const message = `<!DOCTYPE html>
   <html
