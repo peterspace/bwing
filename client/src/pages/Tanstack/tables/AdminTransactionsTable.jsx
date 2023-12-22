@@ -16,8 +16,6 @@ import {
 } from 'react-icons/ai';
 import { MdOutlineMoreHoriz } from 'react-icons/md';
 import { IoCopyOutline } from 'react-icons/io5';
-
-import { Button } from '../components/ui/button';
 import { DownloadToExcel } from '../components/lib/XlsxAdmin';
 import { IoSearch } from 'react-icons/io5';
 import { CiEdit } from 'react-icons/ci';
@@ -342,15 +340,15 @@ const AdminTransactionsTable = ({ data, tableData, theme, setTheme }) => {
             </div>
 
             <div className="flex items-center">
-              <Button
+              <button
                 onClick={() => DownloadToExcel(data)}
-                className="bg-bgPrimary hover:opacity-90 m-0"
+                className="m-0 cursor-pointer shadow-lg hover:-translate-y-0.5 transform transition flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white shrink-0 rounded px-2 py-2 w-fit"
               >
+                {' '}
                 <div className="flex flex-row gap-2">
                   <PiExportBold size={20} color="#ffffff" />
                 </div>
-              </Button>
-              {/* <ThemeToggle setTheme={setTheme} theme={theme} /> */}
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useLayoutEffect } from "react";
-import AdminDataTable from "./tables/AdminDataTable";
 import MemoizedAdminTransactionsTable from "./tables/AdminTransactionsTable";
 import NoTransactionFound from "../../components/NoTransactionFound";
 
@@ -61,12 +60,6 @@ const AdminRecord = (props) => {
 
   return (
     <div className="container mx-auto dark:bg-bgDarkMode text-black' dark:text-gray-100 bg-[#F3F3F3]">
-      {/* <AdminDataTable
-        columns={columns}
-        data={data}
-        setTheme={setTheme}
-        theme={theme}
-      /> */}
 
       {tableData.length ? (
         <MemoizedAdminTransactionsTable

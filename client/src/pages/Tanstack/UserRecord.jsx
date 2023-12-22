@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import UserDataTable from "./tables/UserDataTable";
 import MemoizedUserTransactionsTable from "./tables/UserTransactionsTable";
 import NoTransactionFound from "../../components/NoTransactionFound";
 
