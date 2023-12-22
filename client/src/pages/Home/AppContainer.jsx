@@ -25,7 +25,8 @@ import {
 import { HowToCard } from '../../components/HowToCard';
 import { FaqCard } from '../../components/FaqCard';
 import { faqExchange, faqBuy, faqSell, faqDefi } from '../../constants';
-import { FeedBack } from '../../components/Feedback';
+import { FeedBackContainer } from '../../components/FeedBackContainer';
+
 import { feedback } from '../../constants';
 
 import { HelpGuide } from '../../components/HelpGuide';
@@ -420,7 +421,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -440,7 +441,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -466,7 +467,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
@@ -483,7 +484,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
@@ -506,7 +507,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
@@ -523,7 +524,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
@@ -546,7 +547,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -566,7 +567,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -592,7 +593,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -612,7 +613,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -638,7 +639,7 @@ export const AppContainer = (props) => {
             {isLightMode ? (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard
@@ -658,7 +659,7 @@ export const AppContainer = (props) => {
             ) : (
               <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
                 <div className="mt-[64px]">
-                  <FeedBack data={feedback} title={'Testimonials'} />
+                  <FeedBackContainer data={feedback} title={'Testimonials'} />
                 </div>
 
                 <HowToCard

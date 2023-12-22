@@ -52,7 +52,7 @@ export const HowToComponent = (props) => {
   );
   return <>{newCard}</>;
 };
-export const FeedBack = (props) => {
+export const FeedBackContainer = (props) => {
   const { data, title } = props;
 
   const newCard = (
