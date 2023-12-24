@@ -108,7 +108,6 @@ export const DefiScreen2 = (props) => {
               toBalance={toBalance}
               priceDeviation={priceDeviation}
               tValue={tValue}
-              fromBalancePercent={fromBalancePercent}
               //======================{modals control}===================================
               isConnected={isConnected}
               isFromTokenPage={isFromTokenPage}

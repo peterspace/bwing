@@ -26,7 +26,7 @@ import DebouncedInput from '../components/ui/DebouncedInput';
 import { statuses } from '../../../constants/statuses';
 import Popover from '../../../components/Popover';
 
-const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
+const UserTransactionsTable = ({ data, tableData }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isGoToPageDisabled, setIsGoToPageDisabled] = useState(false);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
@@ -51,7 +51,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
               <span
                 className={`w-2.5 h-2.5 mr-2 rounded-md ${statuses[status].color}`}
               />
-              <span className="text-black font-normal text-sm">{status}</span>
+             <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">{status}</span>
             </div>
           );
         },
@@ -104,33 +104,33 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
           };
 
           return (
-            <div className="flex justify-center select-none">
+            <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
               <Popover
                 content={
-                  <div className="flex flex-col text-[#111] font-normal">
+                  <div className="flex flex-col bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid rounded font-normal">
                     <div
                       onClick={() => copyToClipboard(orderNo)}
-                      className="flex items-center p-2 gap-2 hover:bg-[#F6F6F6] cursor-pointer transition-all"
+                      className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                     >
                       <IoCopyOutline size={24} />
                       <div>Copy transaction ID</div>
                     </div>
                     <div
                       onClick={() => copyToClipboard(userAddress)}
-                      className="flex items-center p-2 gap-2 hover:bg-[#F6F6F6] cursor-pointer transition-all"
+                      className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                     >
                       <IoCopyOutline size={24} />
                       <div>Copy user address</div>
                     </div>
                     <div
                       onClick={() => copyToClipboard(blenderyAddress)}
-                      className="flex items-center p-2 gap-2 hover:bg-[#F6F6F6] cursor-pointer transition-all"
+                      className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                     >
                       <IoCopyOutline size={24} />
                       <div>Copy blendery address</div>
                     </div>
                     <div
-                      className="flex items-center p-2 gap-2 hover:bg-[#F6F6F6] cursor-pointer transition-all"
+                      className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                       onClick={() => {
                         localStorage.setItem(
                           'txDataUpdate',
@@ -271,7 +271,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                       setGlobalFilter('');
                     }
                   }}
-                  className="w-80 h-10 py-4 px-2 pl-10 pr-2 bg-white rounded-lg border border-solid border-[#E7E7E7] shadow-md outline-none box-border"
+                  className="w-80 h-10 py-4 px-2 pl-10 pr-2 rounded-lg shadow-md outline-none active:bg-white dark:active:bg-app-container-dark active:shadow-none border border-solid border-[#E7E7E7] dark:border-lightslategray-300 box-border text-darkslategray-200 dark:text-gray-100 bg-white dark:bg-app-container-dark placeholder-darkgray-700 dark:placeholder-darkgray-500"
                   placeholder="Search"
                 />
               </div>
@@ -280,7 +280,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                 <div>
                   <button
                     type="button"
-                    className="inline-flex w-80 h-10 mt-0 mx-0 p-4 justify-between items-center text-xs rounded-lg leading-[18px] text-[#111111] gap-[8px] bg-white shadow-md active:bg-white active:shadow-none border border-solid border-[#E7E7E7] box-border"
+                    className="inline-flex w-80 h-10 mt-0 mx-0 p-4 justify-between items-center text-xs rounded-lg leading-[18px] gap-[8px] shadow-md active:bg-white dark:active:bg-app-container-dark active:shadow-none border border-solid border-[#E7E7E7] dark:border-lightslategray-300 box-border text-darkslategray-200 dark:text-gray-100 bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     onClick={handleToggleDropdown}
                   >
                     <div className="flex w-full justify-between items-center">
@@ -291,7 +291,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                               <span
                                 className={`w-2.5 h-2.5 mr-2 rounded-md ${status.color}`}
                               />
-                              <span className="text-black font-normal text-sm">
+                              <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">
                                 {status.name}
                               </span>
                             </div>
@@ -306,7 +306,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                         </>
                       ) : (
                         <div className="flex w-full items-center justify-between">
-                          <span className="text-[#B4B4B4]">{'Status'}</span>
+                          <span className="text-gray-500 dark:text-gray-700">{'Status'}</span>
                           {isStatusDropdownOpen ? (
                             <FaChevronUp size={16} />
                           ) : (
@@ -318,12 +318,12 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                   </button>
                 </div>
                 {isStatusDropdownOpen && (
-                  <div className="origin-top-right w-80 absolute right-0 mt-2 rounded-md bg-white shadow-2xl z-50">
+                  <div className="origin-top-right w-80 absolute right-0 mt-2 rounded-md bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
                     <div className="max-h-62 overflow-y-auto">
                       {statuses.statusList.map((status, i) => (
                         <div
                           key={i}
-                          className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 cursor-pointer"
+                          className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer"
                           onClick={() => handleSelectStatus(statuses[status])}
                         >
                           <div className="flex items-center">
@@ -355,7 +355,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
         </div>
       </div>
 
-      <div className="rounded-lg bg-white min-h-[580px]">
+      <div className="rounded-lg bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 min-h-[595px]">
         <div className="relative mt-2">
           <table
             {...getTableProps()}
@@ -370,7 +370,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps()}
-                      className="px-6 py-4 text-base leading-6 font-medium text-[#636060]"
+                      className="px-6 py-4 text-base leading-6 font-medium text-gray-900 dark:text-gray-100"
                     >
                       <div className="flex">{column.render('Header')}</div>
                     </th>
@@ -402,7 +402,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
       </div>
 
       {pageCount !== 1 ? (
-        <div className="pagination mt-2 mt-8 flex items-center justify-center self-center">
+        <div className="pagination mt-8 flex items-center justify-center self-center">
           <button
             onClick={() => gotoPage(0)}
             disabled={!canPreviousPage}
@@ -431,7 +431,7 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
               color={!canPreviousPage ? '#BAB9C1' : '#5046E5'}
             />
           </button>
-          <span className="mx-6 text-base font-medium text-[#2C2C2C] ">
+          <span className="mx-6 text-base font-medium text-gray-900 dark:text-gray-100 ">
             {`Page ${pageIndex + 1} of ${pageCount}`}
           </span>
           <button
@@ -464,14 +464,14 @@ const UserTransactionsTable = ({ data, tableData, theme, setTheme }) => {
           </button>
 
           <div className="flex items-center">
-            <span className="ml-6 mr-2 text-base font-medium text-[#2C2C2C]">
+            <span className="ml-6 mr-2 text-base font-medium text-gray-900 dark:text-gray-100">
               Go to
             </span>
             <input
               type="number"
               value={pageNumber}
               onChange={handlePageInputChange}
-              className="h-[40px] w-[60px] p-2 rounded-lg bg-transparent border border-solid border-[#5046E5] box-border"
+              className="h-[40px] w-[60px] p-2 rounded-lg bg-transparent border border-solid border-[#5046E5] text-gray-900 dark:text-gray-100 box-border"
             />
             <button
               disabled={isGoToPageDisabled}

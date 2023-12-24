@@ -122,7 +122,6 @@ export const Auth = (props) => {
         dispatch(LoginUser(data));
         localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem('user', JSON.stringify(data));
-        // setUser(data);
         setIsLoggedIn(true);
         setTimeout(() => {
           setRedirectLogin(true);

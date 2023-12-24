@@ -90,10 +90,6 @@ export const AppContainer = (props) => {
   //====={Controllers}===========================
 
   useEffect(() => {
-    setIsLightMode(mode);
-  }, [mode]);
-
-  useEffect(() => {
     if (percentageProgress) {
       localStorage.setItem(
         'percentageProgress',
@@ -142,36 +138,6 @@ export const AppContainer = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  async function nextFuncExchange() {
-    setService('exchange');
-    setSubService('exchange');
-  }
-
-  async function nextFuncSellCash() {
-    setService('sell');
-    setSubService('sellCash');
-  }
-
-  async function nextFuncSellCard() {
-    setService('sell');
-    setSubService('sellCard');
-  }
-
-  async function nextFuncBuyCard() {
-    setService('buy');
-    setSubService('buyCard');
-  }
-
-  async function nextFuncBuyCash() {
-    setService('buy');
-    setSubService('buyCash');
-  }
-
-  async function nextFuncDefi() {
-    setService('defi');
-    setSubService('defi');
-  }
-
   return (
     <>
       <div className="flex flex-col">
@@ -180,146 +146,90 @@ export const AppContainer = (props) => {
             <div
               className={`${styles.hero} flex flex-col justify-center items-center`}
             >
-              <div
-                className={`mt-[64px] mb-[64px] flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4`}
-              >
-                <div className="flex flex-col gap-[10px]">
-                  <div className="flex flex-row gap-4 mt-2">
-                    <div
-                      className={`cursor-pointer hover:text-bgPrimary leading-[24px] ${
-                        service === 'exchange' && subService === 'exchange'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      }`}
-                      onClick={nextFuncExchange}
-                    >
-                      Exchange
-                    </div>
-                    <div
-                      className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block ${
-                        service === 'buy' && subService === 'buyCash'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      } ${
-                        service === 'buy' && subService === 'buyCard'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      }`}
-                      onClick={nextFuncBuyCard}
-                    >
-                      Buy
-                    </div>
-                    <div
-                      className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block ${
-                        service === 'sell' && subService === 'sellCash'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      } ${
-                        service === 'sell' && subService === 'sellCard'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      }`}
-                      onClick={nextFuncSellCard}
-                    >
-                      Sell
-                    </div>
+              <div className={`mt-[64px] mb-[64px] flex justify-center`}>
+                <>
+                  {service === 'exchange' && subService === 'exchange' && (
+                    <ExchangeHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
+                  {service === 'buy' && subService === 'buyCash' && (
+                    <BuyCashHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
+                  {service === 'buy' && subService === 'buyCard' && (
+                    <BuyCardHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
 
-                    <div
-                      className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block ${
-                        service === 'defi' && subService === 'defi'
-                          ? 'text-bgPrimary text-base font-black inline-block underline underline-offset-[16px]'
-                          : 'text-darkgray-200 text-mini'
-                      }`}
-                      onClick={nextFuncDefi}
-                    >
-                      DeFi
-                    </div>
-                  </div>
-                  <div className="flex bg-lightslategray-300 w-full h-px" />
-                  <>
-                    {service === 'exchange' && subService === 'exchange' && (
-                      <ExchangeHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
-                    {service === 'buy' && subService === 'buyCash' && (
-                      <BuyCashHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
-                    {service === 'buy' && subService === 'buyCard' && (
-                      <BuyCardHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
+                  {service === 'sell' && subService === 'sellCash' && (
+                    <SellCashHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
 
-                    {service === 'sell' && subService === 'sellCash' && (
-                      <SellCashHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
+                  {service === 'sell' && subService === 'sellCard' && (
+                    <SellCardHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
 
-                    {service === 'sell' && subService === 'sellCard' && (
-                      <SellCardHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
-
-                    {service === 'defi' && subService === 'defi' && (
-                      <DefiHome
-                        mode={mode}
-                        service={service}
-                        setService={setService}
-                        subService={subService}
-                        setSubService={setSubService}
-                        setTxInfo={setTxInfo}
-                        txInfo={txInfo}
-                        user={user}
-                        setPercentageProgressHome={setPercentageProgress}
-                      />
-                    )}
-                  </>
-                </div>
+                  {service === 'defi' && subService === 'defi' && (
+                    <DefiHome
+                      mode={mode}
+                      service={service}
+                      setService={setService}
+                      subService={subService}
+                      setSubService={setSubService}
+                      setTxInfo={setTxInfo}
+                      txInfo={txInfo}
+                      user={user}
+                      setPercentageProgressHome={setPercentageProgress}
+                    />
+                  )}
+                </>
               </div>
             </div>
           </>
@@ -418,270 +328,111 @@ export const AppContainer = (props) => {
         {/* =============={others}=======================*/}
         {service === 'exchange' && subService === 'exchange' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard
-                  data={stepsExchange}
-                  title={`How to ${service} Crypto`}
-                />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpExchange}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqExchange} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard
-                  data={stepsExchange}
-                  title={`How to ${service} Crypto`}
-                />
+              <HowToCard
+                data={stepsExchange}
+                title={`How to ${service} Crypto`}
+              />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpExchange}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqExchange} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpExchange} title={'Helpful guides'} />
+                <FaqCard data={faqExchange} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
 
         {service === 'buy' && subService === 'buyCash' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpBuy}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
+              <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpBuy}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpBuy} title={'Helpful guides'} />
+                <FaqCard data={faqBuy} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
 
         {service === 'buy' && subService === 'buyCard' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpBuy}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
+              <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpBuy}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpBuy} title={'Helpful guides'} />
+                <FaqCard data={faqBuy} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
 
         {service === 'sell' && subService === 'sellCash' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard
-                  data={stepsSell}
-                  title={`How to ${service} Crypto`}
-                />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpSell}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqSell} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard
-                  data={stepsSell}
-                  title={`How to ${service} Crypto`}
-                />
+              <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpSell}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqSell} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpSell} title={'Helpful guides'} />
+                <FaqCard data={faqSell} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
 
         {service === 'sell' && subService === 'sellCard' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard
-                  data={stepsSell}
-                  title={`How to ${service} Crypto`}
-                />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpSell}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqSell} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard
-                  data={stepsSell}
-                  title={`How to ${service} Crypto`}
-                />
+              <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpSell}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqSell} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpSell} title={'Helpful guides'} />
+                <FaqCard data={faqSell} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
 
         {service === 'defi' && subService === 'defi' && (
           <>
-            {isLightMode ? (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
-
-                <HowToCard
-                  data={stepsDefi}
-                  title={`How to ${service} Crypto`}
-                />
-
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpDefi}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqDefi} title={`FaQ ${service}`} />
-                </div>
+            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+              <div className="mt-[64px]">
+                <FeedBackContainer data={feedback} title={'Testimonials'} />
               </div>
-            ) : (
-              <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px] bg-black">
-                <div className="mt-[64px]">
-                  <FeedBackContainer data={feedback} title={'Testimonials'} />
-                </div>
 
-                <HowToCard
-                  data={stepsDefi}
-                  title={`How to ${service} Crypto`}
-                />
+              <HowToCard data={stepsDefi} title={`How to ${service} Crypto`} />
 
-                <div className="flex flex-col md:flex-row gap-[16px]">
-                  <HelpGuide
-                    data={helpDefi}
-                    title={'Helpful guides'}
-                    isLightMode={isLightMode}
-                  />
-                  <FaqCard data={faqDefi} title={`FaQ ${service}`} />
-                </div>
+              <div className="flex flex-col md:flex-row gap-[16px]">
+                <HelpGuide data={helpDefi} title={'Helpful guides'} />
+                <FaqCard data={faqDefi} title={`FaQ ${service}`} />
               </div>
-            )}
+            </div>
           </>
         )}
       </div>
 
-      <div className="relative bg-white w-full overflow-auto text-left text-sm text-gray-400 font-montserrat">
+      <div className="relative bg-white dark:bg-app-container-dark text-gray-400 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
         <div className="mt-8 flex flex-col justify-center items-center gap-4 mb-8">
           <div className="flex bg-lightslategray-300 w-full h-px" />
           <Footer />

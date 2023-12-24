@@ -52,7 +52,7 @@ const menu = [
 ];
 
 export const UserDashboard = (props) => {
-  const { mode, user, setService, setSubService, setTxInfo, setMode } = props;
+  const { user, setService, setSubService, setTxInfo } = props;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -316,25 +316,16 @@ export const UserDashboard = (props) => {
   //====================================================================================================
 
   return (
-    <div className="flex gap-[64px]">
+    <div className="flex gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
       <DashboardMenuUser
         setPage={setPage}
-        mode={mode}
         user={user}
         page={page}
       />
       <div className="container mx-auto p-1">
         {page === 'Exchange' &&
           (allExchangeTransactions ? (
-            <UserRecord
-              data={allExchangeTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allExchangeTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
@@ -342,15 +333,7 @@ export const UserDashboard = (props) => {
           ))}
         {page === 'Defi' &&
           (allDefiTransactions ? (
-            <UserRecord
-              data={allDefiTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allDefiTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
@@ -358,15 +341,7 @@ export const UserDashboard = (props) => {
           ))}
         {page === 'Buy (Cash)' &&
           (allBuyCashTransactions ? (
-            <UserRecord
-              data={allBuyCashTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allBuyCashTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
@@ -374,15 +349,7 @@ export const UserDashboard = (props) => {
           ))}
         {page === 'Buy (Card)' &&
           (allBuyCardTransactions ? (
-            <UserRecord
-              data={allBuyCardTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allBuyCardTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
@@ -390,15 +357,7 @@ export const UserDashboard = (props) => {
           ))}
         {page === 'Sell (Cash)' &&
           (allSellCashTransactions ? (
-            <UserRecord
-              data={allSellCashTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allSellCashTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
@@ -406,15 +365,7 @@ export const UserDashboard = (props) => {
           ))}
         {page === 'Sell (Card)' &&
           (allSellCardTransactions ? (
-            <UserRecord
-              data={allSellCardTransactions}
-              setTxInfo={setTxInfo}
-              setRefetchTxData={setRefetchTxData}
-              setService={setService}
-              setSubService={setSubService}
-              mode={mode}
-              setMode={setMode}
-            />
+            <UserRecord data={allSellCardTransactions} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />

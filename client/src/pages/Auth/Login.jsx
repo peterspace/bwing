@@ -209,13 +209,23 @@ export const Login = (props) => {
                 ) : null}
               </div>
             </div>
-            <div className="flex flex-row justify-center items-center">
+            {/* <div className="flex flex-row justify-center items-center">
               <div
                 className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
                 onClick={handleSubmit}
               >
                 Login
               </div>
+            </div> */}
+
+            <div className="flex flex-row justify-center items-center">
+              <button
+                type="submit"
+                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
+                // onClick={handleSubmit}
+              >
+                Login
+              </button>
             </div>
           </div>
         </form>

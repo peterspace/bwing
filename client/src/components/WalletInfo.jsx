@@ -43,11 +43,19 @@ export const WalletInfo = (props) => {
       <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[10px]">
-            <div className="flex flex-row gap-4 mt-2">
+            <div className="flex flex-row justify-between mt-[24px]">
               <div
-                className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[24px]`}
+                className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[14px] md:text-[24px]`}
               >
                 Wallet address
+              </div>
+              <div
+                className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
+                onClick={() => {
+                  setPercentageProgress(1);
+                }}
+              >
+                Back
               </div>
             </div>
             <div className="flex bg-lightslategray-300 w-[276px]  md:w-[452px] h-px" />

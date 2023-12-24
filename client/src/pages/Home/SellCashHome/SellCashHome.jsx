@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SellCashScreen1 } from './SellCashScreen1';
+import SellCashApp from '../components/SellCashApp';
 import { SellCashScreen2 } from './SellCashScreen2';
 import { SellCashScreen3 } from './SellCashScreen3';
 import { Footer } from '../../../components/Footer';
@@ -236,7 +236,7 @@ export const SellCashHome = (props) => {
 
   useEffect(() => {
     if (allTokensToL && !tToken) {
-      setToToken(allTokensToL[0]);
+      setToToken(allTokensToL[2]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensToL]);
@@ -515,41 +515,43 @@ export const SellCashHome = (props) => {
   return (
     <>
       {percentageProgress === 1 && (
-        <SellCashScreen1
-          percentageProgress={percentageProgress}
-          setPercentageProgress={setPercentageProgress}
-          fTitle={fTitle}
-          tTitle={tTitle}
-          fToken={fToken}
-          setFromToken={setFromToken}
-          tToken={tToken}
-          setToToken={setToToken}
-          fValue={fValue}
-          setFromValue={setFromValue}
-          loading={loading}
-          mode={mode}
-          service={service}
-          setService={setService}
-          subService={subService}
-          setSubService={setSubService}
-          setTxInfo={setTxInfo}
-          allTokensFrom={allTokensFrom}
-          allTokensTo={allTokensTo}
-          exchangeRate={exchangeRate}
-          paymentMethod={paymentMethod}
-          setPaymentMethod={setPaymentMethod}
-          paymentOptions={paymentOptions}
-          cities={cities}
-          setCountry={setCountry}
-          setCityData={setCityData}
-          setCity={setCity}
-          country={country}
-          cityData={cityData}
-          city={city}
-          tValue={tValue}
-          transactionRates={transactionRates}
-          loadingExchangeRate={loadingExchangeRate}
-        />
+        <>
+          <SellCashApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            exchangeRate={exchangeRate}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentOptions={paymentOptions}
+            cities={cities}
+            setCountry={setCountry}
+            setCityData={setCityData}
+            setCity={setCity}
+            country={country}
+            cityData={cityData}
+            city={city}
+            tValue={tValue}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          />
+        </>
       )}
       {percentageProgress === 2 && (
         <SellCashScreen2

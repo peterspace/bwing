@@ -1,7 +1,7 @@
 export const Footer = () => {
   const infoRate = (
     // <div className="mt-[64px] bg-black w-[1440px] h-[942px] gap-[16px]">
-    <div className="mt-[64px] bg-white h-[942px] md:gap-[16px]">
+    <div className="mt-[64px] g-white dark:bg-app-container-dark text-gray-400 dark:text-gray-100 h-[942px] md:gap-[16px]">
       {/* ==============================={Main Block}=============================== */}
       <div className="flex flex-col md:flex-row gap-[64px]">
         <div className="flex flex-col gap-[16px] w-[150px]">

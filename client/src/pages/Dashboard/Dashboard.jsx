@@ -54,12 +54,11 @@ export const Dashboard = (props) => {
   }
 
   return (
-    <div className="max-h-[92vh] overflow-hidden">
+    // <div className="grid grid-cols-1 overflow-hidden">
+  <div className="max-h-[92vh] overflow-hidden">
       <>
         {user?.role === 'Admin' && (
           <AdminDashboard
-            mode={mode}
-            setMode={setMode}
             user={user}
             setTxInfo={setTxInfo}
             isUpdate={isUpdate}
@@ -68,8 +67,6 @@ export const Dashboard = (props) => {
 
         {user?.role == 'User' && (
           <UserDashboard
-            mode={mode}
-            setMode={setMode}
             user={user}
             setService={setService}
             setSubService={setSubService}

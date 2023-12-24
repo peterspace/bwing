@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BuyCardScreen1 } from './BuyCardScreen1';
+import BuyCardApp from '../components/BuyCardApp';
 import { BuyCardScreen2 } from './BuyCardScreen2';
 import { BuyCardScreen3 } from './BuyCardScreen3';
 import { useDispatch, useSelector } from 'react-redux';
@@ -303,7 +303,7 @@ export const BuyCardHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[3]);
+      setFromToken(allTokensFromL[4]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);
@@ -599,41 +599,44 @@ export const BuyCardHome = (props) => {
   return (
     <>
       {percentageProgress === 1 && (
-        <BuyCardScreen1
-          percentageProgress={percentageProgress}
-          setPercentageProgress={setPercentageProgress}
-          fTitle={fTitle}
-          tTitle={tTitle}
-          fToken={fToken}
-          setFromToken={setFromToken}
-          tToken={tToken}
-          setToToken={setToToken}
-          fValue={fValue}
-          setFromValue={setFromValue}
-          loading={loading}
-          mode={mode}
-          service={service}
-          setService={setService}
-          subService={subService}
-          setSubService={setSubService}
-          setTxInfo={setTxInfo}
-          allTokensFrom={allTokensFrom}
-          allTokensTo={allTokensTo}
-          exchangeRate={exchangeRate}
-          paymentMethod={paymentMethod}
-          setPaymentMethod={setPaymentMethod}
-          paymentOptions={paymentOptions}
-          cities={cities}
-          setCountry={setCountry}
-          setCityData={setCityData}
-          setCity={setCity}
-          country={country}
-          cityData={cityData}
-          city={city}
-          tValue={tValue}
-          transactionRates={transactionRates}
-          loadingExchangeRate={loadingExchangeRate}
-        />
+        <>
+        <BuyCardApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            exchangeRate={exchangeRate}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentOptions={paymentOptions}
+            cities={cities}
+            setCountry={setCountry}
+            setCityData={setCityData}
+            setCity={setCity}
+            country={country}
+            cityData={cityData}
+            city={city}
+            tValue={tValue}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          />
+          
+        </>
       )}
       {percentageProgress === 2 && (
         <BuyCardScreen2

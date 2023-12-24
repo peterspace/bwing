@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
 import { Progress } from '../../../components/Progress';
-import { EstimatorSellCash } from '../../../components/EstimatorSellCash';
 import { CashInfo } from '../../../components/CashInfo';
 import { DetailsCashLocal } from '../../../components/DetailsCashLocal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,34 +57,6 @@ export const SellCashScreen2 = (props) => {
           <Progress percentageProgress={percentageProgress} />
         </div>
         <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-          <EstimatorSellCash
-           service={service}
-           subService={subService}
-           fToken={fToken}
-           setFromToken={setFromToken}
-           tToken={tToken}
-           setToToken={setToToken}
-           fValue={fValue}
-           setFromValue={setFromValue}
-           setCountry={setCountry}
-           country={country}
-           cityData={cityData}
-           setCityData={setCityData}
-           city={city}
-           setCity={setCity}
-           loading={loading}
-           fTitle={fTitle}
-           tTitle={tTitle}
-           allTokensFrom={allTokensFrom}
-           allTokensTo={allTokensTo}
-           tValue={tValue}
-           exchangeRate={exchangeRate}
-           cities={cities}
-           transactionRates={transactionRates}
-           setPercentageProgress={setPercentageProgress}
-           loadingExchangeRate={loadingExchangeRate}
-
-          />
           <CashInfo
            setPercentageProgress={setPercentageProgress}
            userAddress={userAddress}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BuyCashScreen1 } from './BuyCashScreen1';
+import BuyCashApp from '../components/ BuyCashApp';
 import { BuyCashScreen2 } from './BuyCashScreen2';
 import { BuyCashScreen3 } from './BuyCashScreen3';
 import { useDispatch, useSelector } from 'react-redux';
@@ -202,7 +202,6 @@ export const BuyCashHome = (props) => {
     dispatch(getTokenListExchange());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
 
   useEffect(() => {
     if (percentageProgress) {
@@ -231,7 +230,7 @@ export const BuyCashHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[0]);
+      setFromToken(allTokensFromL[2]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);
@@ -532,41 +531,44 @@ export const BuyCashHome = (props) => {
   return (
     <>
       {percentageProgress === 1 && (
-        <BuyCashScreen1
-          percentageProgress={percentageProgress}
-          setPercentageProgress={setPercentageProgress}
-          fTitle={fTitle}
-          tTitle={tTitle}
-          fToken={fToken}
-          setFromToken={setFromToken}
-          tToken={tToken}
-          setToToken={setToToken}
-          fValue={fValue}
-          setFromValue={setFromValue}
-          loading={loading}
-          mode={mode}
-          service={service}
-          setService={setService}
-          subService={subService}
-          setSubService={setSubService}
-          setTxInfo={setTxInfo}
-          allTokensFrom={allTokensFrom}
-          allTokensTo={allTokensTo}
-          exchangeRate={exchangeRate}
-          paymentMethod={paymentMethod}
-          setPaymentMethod={setPaymentMethod}
-          paymentOptions={paymentOptions}
-          cities={cities}
-          setCountry={setCountry}
-          setCityData={setCityData}
-          setCity={setCity}
-          country={country}
-          cityData={cityData}
-          city={city}
-          tValue={tValue}
-          transactionRates={transactionRates}
-          loadingExchangeRate={loadingExchangeRate}
-        />
+        <>
+          <BuyCashApp 
+           percentageProgress={percentageProgress}
+           setPercentageProgress={setPercentageProgress}
+           fTitle={fTitle}
+           tTitle={tTitle}
+           fToken={fToken}
+           setFromToken={setFromToken}
+           tToken={tToken}
+           setToToken={setToToken}
+           fValue={fValue}
+           setFromValue={setFromValue}
+           loading={loading}
+           mode={mode}
+           service={service}
+           setService={setService}
+           subService={subService}
+           setSubService={setSubService}
+           setTxInfo={setTxInfo}
+           allTokensFrom={allTokensFrom}
+           allTokensTo={allTokensTo}
+           exchangeRate={exchangeRate}
+           paymentMethod={paymentMethod}
+           setPaymentMethod={setPaymentMethod}
+           paymentOptions={paymentOptions}
+           cities={cities}
+           setCountry={setCountry}
+           setCityData={setCityData}
+           setCity={setCity}
+           country={country}
+           cityData={cityData}
+           city={city}
+           tValue={tValue}
+           transactionRates={transactionRates}
+           loadingExchangeRate={loadingExchangeRate}
+          
+          />
+        </>
       )}
       {percentageProgress === 2 && (
         <BuyCashScreen2

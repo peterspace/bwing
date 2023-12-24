@@ -1,38 +1,10 @@
-import { useState, useEffect, useCallback, useLayoutEffect } from "react";
-import MemoizedAdminTransactionsTable from "./tables/AdminTransactionsTable";
-import NoTransactionFound from "../../components/NoTransactionFound";
+import { useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import MemoizedAdminTransactionsTable from './tables/AdminTransactionsTable';
+import NoTransactionFound from '../../components/NoTransactionFound';
 
 const AdminRecord = (props) => {
-  const { data, mode, setMode } = props;
-  const themeL = localStorage.getItem("theme")
-    ? JSON.parse(localStorage.getItem("theme"))
-    : false;
-  const [theme, setTheme] = useState(themeL); // default light mode
+  const { data } = props;
   const [tableData, setTableData] = useState([]);
-
-  useEffect(() => {
-    if (theme) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", JSON.stringify(theme));
-      setMode(false);
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", JSON.stringify(theme));
-      setMode(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
-
-  useEffect(() => {
-    if (mode === false) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", JSON.stringify(mode));
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", JSON.stringify(theme));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode]);
 
   useEffect(() => {
     formatTableData(data);
@@ -59,15 +31,9 @@ const AdminRecord = (props) => {
   }, []);
 
   return (
-    <div className="container mx-auto dark:bg-bgDarkMode text-black' dark:text-gray-100 bg-[#F3F3F3]">
-
+    <div className="container mx-auto bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
       {tableData.length ? (
-        <MemoizedAdminTransactionsTable
-          data={data}
-          tableData={tableData}
-          setTheme={setTheme}
-          theme={theme}
-        />
+        <MemoizedAdminTransactionsTable data={data} tableData={tableData} />
       ) : (
         <NoTransactionFound />
       )}

@@ -53,8 +53,7 @@ export const SellCardScreen2 = (props) => {
   } = props;
 
   const dispatch = useDispatch();
-  const [selectedProvider, setSelectedProvider] = useState("Phone");
-
+  const [selectedProvider, setSelectedProvider] = useState('Phone');
 
   useEffect(() => {
     dispatch(getTokenListExchange());
@@ -67,42 +66,6 @@ export const SellCardScreen2 = (props) => {
           <Progress percentageProgress={percentageProgress} />
         </div>
         <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-          <EstimatorSellCard
-            service={service}
-            subService={subService}
-            fToken={fToken}
-            setFromToken={setFromToken}
-            tToken={tToken}
-            setToToken={setToToken}
-            fValue={fValue}
-            setFromValue={setFromValue}
-            setCountry={setCountry}
-            country={country}
-            cityData={cityData}
-            setCityData={setCityData}
-            city={city}
-            setCity={setCity}
-            loading={loading}
-            fTitle={fTitle}
-            tTitle={tTitle}
-            allTokensFrom={allTokensFrom}
-            allTokensTo={allTokensTo}
-            tValue={tValue}
-            exchangeRate={exchangeRate}
-            cities={cities}
-            transactionRates={transactionRates}
-            setPercentageProgress={setPercentageProgress}
-            loadingExchangeRate={loadingExchangeRate}
-          />
-          {providers?.map((provider, i) => (
-            <Providers
-              key={i}
-              setProvider={setProvider}
-              provider={provider}
-              selectedProvider={selectedProvider}
-              setSelectedProvider={setSelectedProvider}
-            />
-          ))}
           {/* <Banking Info /> */}
           {provider && (
             <>
@@ -126,6 +89,15 @@ export const SellCardScreen2 = (props) => {
               />
             </>
           )}
+          {providers?.map((provider, i) => (
+            <Providers
+              key={i}
+              setProvider={setProvider}
+              provider={provider}
+              selectedProvider={selectedProvider}
+              setSelectedProvider={setSelectedProvider}
+            />
+          ))}
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
           <DetailsCardLocal

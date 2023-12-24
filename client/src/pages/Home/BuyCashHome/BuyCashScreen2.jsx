@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
 import { Progress } from '../../../components/Progress';
-import { EstimatorBuyCash } from '../../../components/EstimatorBuyCash';
 import { CashInfo } from '../../../components/CashInfo';
 import { DetailsLocal } from '../../../components/DetailsLocal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,33 +12,10 @@ export const BuyCashScreen2 = (props) => {
     fTitle,
     tTitle,
     fToken,
-    setFromToken,
     tToken,
-    setToToken,
     fValue,
-    setFromValue,
-    loading,
-    mode,
     service,
-    setService,
-    subService,
-    setSubService,
-    setTxInfo,
-    allTokensFrom,
-    allTokensTo,
-    exchangeRate,
     transactionRates,
-    paymentMethod,
-    setPaymentMethod,
-    paymentOptions,
-    cities,
-    setCountry,
-    setCityData,
-    setCity,
-    country,
-    cityData,
-    city,
-    tValue,
     userAddress,
     setUserAddress,
     telegram,
@@ -62,35 +37,6 @@ export const BuyCashScreen2 = (props) => {
           <Progress percentageProgress={percentageProgress} />
         </div>
         <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-          <EstimatorBuyCash
-            service={service}
-            subService={subService}
-            fToken={fToken}
-            setFromToken={setFromToken}
-            tToken={tToken}
-            setToToken={setToToken}
-            fValue={fValue}
-            setFromValue={setFromValue}
-            setCountry={setCountry}
-            country={country}
-            cityData={cityData}
-            setCityData={setCityData}
-            city={city}
-            setCity={setCity}
-            loading={loading}
-            fTitle={fTitle}
-            tTitle={tTitle}
-            allTokensFrom={allTokensFrom}
-            allTokensTo={allTokensTo}
-            tValue={tValue}
-            exchangeRate={exchangeRate}
-            cities={cities}
-            transactionRates={transactionRates}
-            setPercentageProgress={setPercentageProgress}
-            loadingExchangeRate={loadingExchangeRate}
-
-
-          />
           <CashInfo
             setPercentageProgress={setPercentageProgress}
             userAddress={userAddress}

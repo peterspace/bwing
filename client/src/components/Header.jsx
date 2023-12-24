@@ -113,10 +113,10 @@ export const Header = (props) => {
   };
 
   return (
-    <div className="flex w-full h-[68px] px-10 justify-between items-center bg-white box-border select-none">
-      <div className="flex items-center">
+    <div className="flex flex-row w-full h-[68px] px-10 justify-between items-center bg-white dark:bg-app-container-dark box-border select-none pb-2">
+      <div className="flex justify-center items-center">
         <div
-          className="text-[#111111] text-11xl leading-8 font-bold cursor-pointer"
+          className="text-gray-900 dark:text-gray-100 text-11xl leading-8 font-bold cursor-pointer"
           onClick={() => {
             setIsRedirectHome(true);
             setActiveTab(tabs[0]);
@@ -138,13 +138,13 @@ export const Header = (props) => {
             <BsFillMoonStarsFill size={18} color={"#4f46e5"} />
           )}
         </div>
-        <div className="text-base text-[#111111] font-normal cursor-pointer">
+        <div className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer">
           Support
         </div>
         {user?.token ? (
           <>
             <div
-              className="text-base text-[#111111] font-normal cursor-pointer"
+              className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer"
               onClick={() => {
                 setIsRedirectDashboard(true);
               }}
@@ -152,7 +152,7 @@ export const Header = (props) => {
               Dashboard
             </div>
             <div
-              className="flex text-base text-[#111111] font-normal cursor-pointer"
+              className="flex text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer"
               onClick={() => {
                 handleLogout();
               }}
@@ -163,7 +163,7 @@ export const Header = (props) => {
           </>
         ) : (
           <div
-            className="flex text-base text-[#111111] font-normal cursor-pointer"
+            className="flex text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer"
             onClick={() => setIsLogin(true)}
           >
             <div className="mr-2">Login</div>

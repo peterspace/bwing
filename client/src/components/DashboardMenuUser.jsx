@@ -22,7 +22,7 @@ import {
 import { FaConnectdevelop } from "react-icons/fa6";
 
 export const DashboardMenuUser = (props) => {
-  const { setPage, page, mode, user } = props;
+  const { setPage, page, user } = props;
 
   const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(0);
   const [activePage, setActivePage] = useState("");
@@ -43,7 +43,7 @@ export const DashboardMenuUser = (props) => {
   };
 
   return (
-    <Card className="h-[calc(100vh-2rem)] w-[18%] p-10 pr-6 shadow-xl shadow-blue-gray-900/5 box-border rounded-none">
+    <Card className="h-[calc(100vh-2rem)] w-[18%] p-10 pr-6 shadow-xl shadow-blue-gray-900/5 box-border rounded-none bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100">
       <div className="flex mb-14 items-center">
         <div
           style={{
@@ -51,12 +51,12 @@ export const DashboardMenuUser = (props) => {
           }}
           className="w-12 h-12 rounded-[24px] bg-cover bg-center"
         ></div>
-        <div className="flex flex-col ml-2 text-base text-[#111111] font-normal">
+        <div className="flex flex-col ml-2 text-base text-gray-900 dark:text-gray-100 font-normal">
           <div>{name}</div>
           <div>{surname}</div>
         </div>
       </div>
-      <List className="text-[#111111] w-[92%] p-0 font-normal gap-2">
+      <List className="text-gray-900 dark:text-gray-100 w-[92%] p-0 font-normal gap-2">
         <ListItem
           ripple={false}
           className={`cursor-pointer p-2 rounded-lg ${
@@ -98,7 +98,7 @@ export const DashboardMenuUser = (props) => {
                 handleOpen(1);
                 setPage("Buy (Cash)");
               }}
-              className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-[#111111]"
+              className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-gray-900 dark:text-gray-100"
             >
               <ListItemPrefix>
                 <WalletSellIcon
@@ -163,7 +163,7 @@ export const DashboardMenuUser = (props) => {
                 handleOpen(2);
                 setPage("Sell (Cash)");
               }}
-              className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-[#111111]"
+              className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-gray-900 dark:text-gray-100"
             >
               <ListItemPrefix>
                 <WalletSellIcon

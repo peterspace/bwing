@@ -17,6 +17,7 @@ import { Auth } from './pages/Auth/Auth';
 // import { Reset } from './pages/auth/Reset';
 // import { Otp } from './pages/auth/Otp';
 import { getTransactionByTxIdInternal } from './redux/features/transaction/transactionSlice';
+import { AppContainerChecker } from './pages/Home/AppContainerChecker';
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -38,12 +39,19 @@ function App() {
   const isLoggedInL = localStorage.getItem('isLoggedIn')
     ? JSON.parse(localStorage.getItem('isLoggedIn'))
     : false;
-
+//======={mode and theme}=================================
   const modeL = localStorage.getItem('mode')
     ? JSON.parse(localStorage.getItem('mode'))
     : true;
 
   const [mode, setMode] = useState(modeL);
+
+  const themeL = localStorage.getItem("theme")
+  ? JSON.parse(localStorage.getItem("theme"))
+  : false;
+const [theme, setTheme] = useState(themeL); // default light mode
+//======={mode and theme}=================================
+
   const serviceL = localStorage.getItem('service')
     ? JSON.parse(localStorage.getItem('service'))
     : 'exchange';
@@ -203,25 +211,57 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txInfo]);
 
+
+
+//======={mode and theme}=================================
+
+useEffect(() => {
+  if (theme) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", JSON.stringify(theme));
+    setMode(false);
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", JSON.stringify(theme));
+    setMode(true);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [theme]);
+
+useEffect(() => {
+  if (mode === false) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", JSON.stringify(mode));
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", JSON.stringify(theme));
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [mode]);
+
   return (
     <div
-      className={`flex flex-col justify-between w-full h-screen text-left text-sm text-gray-400 font-montserrat ${
-        mode === true ? 'bg-white' : 'bg-bgDarkMode'
-      }`}
+      className={`flex flex-col justify-between w-full h-screen text-left text-sm text-gray-400 font-montserrat bg-white dark:bg-app-container-dark`}
     >
       {' '}
       <BrowserRouter>
-        <ToastContainer />
         <div className="h-[50px]">
           <Header mode={mode} setMode={setMode} user={user} />
         </div>
-        {/* <div className="flex bg-lightslategray-300 h-px mt-4 mb-8" /> */}
+        {/* <div className="flex bg-lightslategray-300 h-px mt-11" /> */}
         <div
-          className={`relative overflow-auto ${
-            mode === true ? 'bg-white' : 'bg-bgDarkMode'
-          }`}
+          className={`relative overflow-auto bg-white dark:bg-app-container-dark`}
         >
           <Routes>
+            <Route
+              path="/view"
+              element={
+                <AppContainerChecker
+                  setUser={setUser}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              }
+            />
             {/* <Route path="/resetpassword/:resetToken" element={<Reset />} /> */}
             {/* <Route
               path="/otp"

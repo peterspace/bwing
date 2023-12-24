@@ -1,37 +1,56 @@
-import { useEffect, useState } from "react";
-import { useConnect } from "wagmi";
-import Modal from "react-modal";
-import { FiSearch } from "react-icons/fi";
+import { useEffect, useState } from 'react';
 
-import CloseIcon from "../assets/icons/close.svg";
-import { SlippageCard } from "./SlippageCard";
+import {
+  useAccount,
+  useSwitchNetwork,
+  useBalance,
+  useNetwork,
+  useDisconnect,
+  useConnect,
+} from 'wagmi';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getChainRateSwapService,
+  getChainPriceService,
+} from "../services/apiService";
+import {
+  getChainPrice,
+  getChainRateSwap,
+} from "../redux/features/swap/swapSlice";
+
+import { updateSlippage } from '../redux/features/swap/swapSlice';
+import Modal from 'react-modal';
+import { FiSearch } from 'react-icons/fi';
+
+import CloseIcon from '../assets/icons/close.svg';
+import { SlippageCard } from './SlippageCard';
 //======={for wallet connect only}================
 
 const customStyles = {
   overlay: {
-    position: "fixed",
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.40)",
+    backgroundColor: 'rgba(0, 0, 0, 0.40)',
   },
   content: {
-    width: "412px",
-    height: "538px",
-    borderRadius: "1.25rem",
-    border: "none",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    overflow: "hidden",
+    width: '412px',
+    height: '538px',
+    borderRadius: '1.25rem',
+    border: 'none',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    overflow: 'hidden',
   },
 };
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 
 function SlippageModal(props) {
   const {
@@ -45,7 +64,7 @@ function SlippageModal(props) {
     title,
   } = props;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [tokensList, setTokensList] = useState([]);
   const { connect, connectors } = useConnect();
 
@@ -68,29 +87,28 @@ function SlippageModal(props) {
 
   const setTokenChainBg = (tokenChain) => {
     switch (tokenChain) {
-      case "Bitcoin":
-        return "bg-[#FFBC6C]";
-      case "Tron":
-        return "bg-[#3EDFAD]";
-      case "Ethereum":
-        return "bg-[#B3C2FF]";
-      case "Binance":
-        return "bg-[#FBD953]";
-      case "Polygon":
-        return "bg-[#D9B9FF]";
-      case "Arbitrum":
-        return "bg-[#C1DAFF]";
-      case "Optimism":
-        return "bg-[#FF9993]";
+      case 'Bitcoin':
+        return 'bg-[#FFBC6C]';
+      case 'Tron':
+        return 'bg-[#3EDFAD]';
+      case 'Ethereum':
+        return 'bg-[#B3C2FF]';
+      case 'Binance':
+        return 'bg-[#FBD953]';
+      case 'Polygon':
+        return 'bg-[#D9B9FF]';
+      case 'Arbitrum':
+        return 'bg-[#C1DAFF]';
+      case 'Optimism':
+        return 'bg-[#FF9993]';
       default:
         return;
     }
   };
 
   const handleSearchToken = () => {
-    const searchResult = filteredTokens?.filter(
-      (token) =>
-        token.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchResult = filteredTokens?.filter((token) =>
+      token.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTokensList(searchResult);
   };
@@ -115,7 +133,7 @@ function SlippageModal(props) {
           />
         </div>
         <div className="flex flex-col justify-between">
-        <SlippageCard />
+          <SlippageCard />
         </div>
       </div>
     </Modal>

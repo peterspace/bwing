@@ -57,8 +57,11 @@ export const CheckoutDefi = (props) => {
             </div>
             <div
               className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded px-6 py-3"
+              // onClick={() => {
+              //   setPercentageProgress(2);
+              // }}
               onClick={() => {
-                setPercentageProgress(2);
+                setPercentageProgress(1);
               }}
             >
               Back

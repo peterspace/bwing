@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Progress } from '../../../components/Progress';
 import { WalletInfo } from '../../../components/WalletInfo';
 import { DetailsLocal } from '../../../components/DetailsLocal';
-import { EstimatorExchange } from '../../../components/EstimatorExchange';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 
@@ -13,21 +12,9 @@ export const ExchangeScreen2 = (props) => {
     fTitle,
     tTitle,
     fToken,
-    setFromToken,
     tToken,
-    setToToken,
     fValue,
-    setFromValue,
-    loading,
-    mode,
     service,
-    setService,
-    subService,
-    setSubService,
-    setTxInfo,
-    allTokensFrom,
-    allTokensTo,
-    exchangeRate,
     transactionRates,
     userAddress,
     setUserAddress,
@@ -47,25 +34,6 @@ export const ExchangeScreen2 = (props) => {
           <Progress percentageProgress={percentageProgress} />
         </div>
         <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-          {/* the exchange rate is set inside the estimator */}
-          <EstimatorExchange
-            fTitle={fTitle}
-            tTitle={tTitle}
-            fToken={fToken}
-            setFromToken={setFromToken}
-            tToken={tToken}
-            setToToken={setToToken}
-            fValue={fValue}
-            setFromValue={setFromValue}
-            loading={loading}
-            service={service}
-            allTokensFrom={allTokensFrom}
-            allTokensTo={allTokensTo}
-            exchangeRate={exchangeRate}
-            transactionRates={transactionRates}
-            setPercentageProgress={setPercentageProgress}
-            loadingExchangeRate={loadingExchangeRate}
-          />
           <WalletInfo
             setPercentageProgress={setPercentageProgress}
             setUserAddress={setUserAddress}

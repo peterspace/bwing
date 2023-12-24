@@ -48,7 +48,6 @@ export const EstimatorDefi = (props) => {
     toBalance,
     priceDeviation,
     tValue,
-    fromBalancePercent,
     loadingExchangeRate,
   } = props;
   //======================={RATES and PRICES}========================================================
@@ -421,13 +420,13 @@ export const EstimatorDefi = (props) => {
                 </div>
                 <div className="flex flex-row justify-between w-[300px] md:w-[452px] items-center p-1">
                   <div className="ml-2 mt-2 text-xs text-darkgray-200">
-                    {/* fromBalance */}
+                    {/* toBalance */}
                     {isToLoading
                       ? ""
                       : `Balance: ${toBalance.toString() || ""}`}
                   </div>
                   <div className="ml-2 mt-2 text-xs text-darkgray-200 mr-2">
-                    {/* fromprice */}
+                    {/* toprice */}
                     {isToLoading
                       ? ""
                       : `~$${

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { MdQrCodeScanner } from 'react-icons/md';
+import { IoCopyOutline } from 'react-icons/io5';
+import { IoIosClose } from 'react-icons/io';
+import { LiaTelegramPlane } from 'react-icons/lia';
 
 import { updateTransactionByIdService } from '../services/apiService';
 import { TimerFormat } from './TimerFormat';
@@ -21,7 +24,7 @@ const paymentStatus = [
 ];
 
 export const CashInfo = (props) => {
-  const { mode, item, setRefetchTxData } = props;
+  const { item, setRefetchTxData } = props;
 
   async function handleClose() {
     setRefetchTxData(true);
@@ -30,232 +33,221 @@ export const CashInfo = (props) => {
     localStorage.removeItem('isUpdating'); // remove from local storage to allow new data
   }
 
+  const copyToClipboard = (value) => {
+    navigator.clipboard.writeText(value);
+  };
+
   return (
     <div
-      className={`flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4 ${
-        mode === true
-          ? 'bg-white outline outline-lightslategray-300 outline-[1px]'
-          : 'bg-bgDarkMode outline outline-lightslategray-300 outline-[1px]'
-      }`}
+      className={`flex bg-white dark:bg-bgDarkMode justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4 outline outline-lightslategray-300 outline-[1px]`}
     >
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex flex-row justify-between mt-2">
             <div
-              className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-[24px] ${
-                mode === true ? 'text-darkslategray-200' : 'text-gray-100'
-              }`}
+              className={`cursor-pointerleading-[24px] inline-block text-[24px] text-darkslategray-200 dark:text-gray-100`}
             >
               Transaction Detail
             </div>
-            <div className="transition-transform duration-300 hover:scale-125 cursor-pointer flex flex-row justify-center items-center p-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="#130D1A"
-                className="w-5 h-5"
-                onClick={handleClose}
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+            <span
+              className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+              onClick={handleClose}
+            >
+              {' '}
+              <IoIosClose size={32} />
+            </span>
           </div>
           <div className="flex bg-lightslategray-300 md:w-[452px] w-[320px] xs:w-[340px] h-px" />
         </div>
 
-        <div className="flex flex-col w-[320px] xs:w-[340px] md:w-[452px]">
+        <div className="flex flex-col w-[320px] xs:w-[340px] md:w-[452px] mb-8">
           <>
             <div
-              className={`cursor-pointer flex flex-col mr-2 ml-2 font-light p-4 border border-indigo-600 border-b  ${
-                mode === true
-                  ? 'hover:bg-gray-100 hover:outline hover:outline-lightslategray-300 hover:outline-[1px]'
-                  : 'hover:bg-hoverDark hover:outline hover:outline-lightslategray-300 hover:outline-[1px]'
-              }`}
+              // className={`flex flex-col mr-2 ml-2 font-light p-4 border border-indigo-600 border-b gap-2`}
+              className={`grid grid-cols-1 gap-2`}
             >
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="flex flex-row sm:justify-between">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   OrderNo:
                 </div>
-                <span
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  {item?.orderNo}
-                </span>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:justify-between">
-                <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  From:
-                </div>
-                <div className="flex flex-row items-center gap-1">
-                  <p
-                    className={`${mode === true ? 'text-black' : 'text-white'}`}
-                  >
-                    {item.fValue}
-                  </p>
+                <div className="flex flex-row gap-1">
                   <span
-                    className={`${mode === true ? 'text-black' : 'text-white'}`}
+                    className={`flex text-center text-gray-900 dark:text-gray-100`}
                   >
-                    {item.fToken?.symbol?.toUpperCase()}{' '}
-                    {`(${item.fToken?.chain})`}
+                    {item?.orderNo}
+                  </span>
+                  <span
+                    className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+                    onClick={() => copyToClipboard(item?.orderNo)}
+                  >
+                    {' '}
+                    <IoCopyOutline size={16} />
                   </span>
                 </div>
               </div>
+              <div className="border-b border-solid border-lightslategray-300" />
 
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
+                >
+                  From:
+                </div>
+
+                <div className="flex flex-row items-center gap-1">
+                  <p className={`text-gray-900 dark:text-gray-100`}>
+                    {item.fValue}
+                  </p>
+
+                  <div className="flex flex-row gap-1">
+                    <span className={`text-gray-900 dark:text-gray-100`}>
+                      {item.fToken?.symbol?.toUpperCase()}{' '}
+                      {`(${item.fToken?.chain})`}
+                    </span>
+                    <span
+                      className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+                      onClick={() => copyToClipboard(item.fValue)}
+                    >
+                      {' '}
+                      <IoCopyOutline size={16} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="border-b border-solid border-lightslategray-300" />
+
+              <div className="flex flex-row justify-between items-center">
+                <div
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   To:
                 </div>
                 <div className="flex flex-row items-center gap-1">
-                  <p
-                    className={`${mode === true ? 'text-black' : 'text-white'}`}
-                  >
+                  <p className={`text-gray-900 dark:text-gray-100`}>
                     {item.tValue}
                   </p>
-                  <span
-                    className={`${mode === true ? 'text-black' : 'text-white'}`}
-                  >
-                    {item.tToken?.symbol?.toUpperCase()}{' '}
-                    {`(${item.tToken?.chain})`}
-                  </span>
+                  <div className="flex flex-row gap-1">
+                    <span className={`text-gray-900 dark:text-gray-100`}>
+                      {item.tToken?.symbol?.toUpperCase()}{' '}
+                      {`(${item.tToken?.chain})`}
+                    </span>
+                    <span
+                      className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+                      onClick={() => copyToClipboard(item.tValue)}
+                    >
+                      {' '}
+                      <IoCopyOutline size={16} />
+                    </span>
+                  </div>
                 </div>
               </div>
+              <div className="border-b border-solid border-lightslategray-300" />
 
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   Status:
                 </div>
                 <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
                 >
                   {item?.status}
                 </span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="border-b border-solid border-lightslategray-300" />
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  Amount:
-                </div>
-                <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  {item?.amount}
-                </span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
-                <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   User:
                 </div>
-                <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  {item?.userAddress}
-                </span>
+
+                <div className="flex flex-row gap-1">
+                  <span
+                    className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
+                  >
+                    {item?.userAddress && item?.userAddress?.substring(0, 22)}
+                    ...
+                  </span>
+                  <span
+                    className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+                    onClick={() => copyToClipboard(item?.userAddress)}
+                  >
+                    {' '}
+                    <IoCopyOutline size={16} />
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="border-b border-solid border-lightslategray-300" />
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   Blendery:
                 </div>
-                <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
-                >
-                  {item?.blenderyAddress}
-                </span>
+
+                <div className="flex flex-row gap-1">
+                  <span
+                    className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
+                  >
+                    {item?.blenderyAddress &&
+                      item?.blenderyAddress?.substring(0, 22)}
+                    ...
+                  </span>
+                  <span
+                    className="transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-gray-100"
+                    onClick={() => copyToClipboard(item?.blenderyAddress)}
+                  >
+                    {' '}
+                    <IoCopyOutline size={16} />
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="border-b border-solid border-lightslategray-300" />
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   Country:
                 </div>
                 <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
                 >
                   {item?.country}
                 </span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="border-b border-solid border-lightslategray-300" />
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   City:
                 </div>
                 <span
-                  className={`flex items-center text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
                 >
                   {item?.city}
                 </span>
               </div>
-              <div className="flex flex-col sm:flex-row sm:justify-between">
+              <div className="border-b border-solid border-lightslategray-300" />
+              <div className="flex flex-row justify-between items-center">
                 <div
-                  className={`flex text-center ${
-                    mode === true ? 'text-black' : 'text-white'
-                  }`}
+                  className={`flex text-center text-gray-900 dark:text-gray-100`}
                 >
                   Timeleft:
                 </div>
                 {item?.status === 'Received' || item?.service === 'defi' ? (
                   <span
-                    className={`flex items-center text-center ${
-                      mode === true ? 'text-black' : 'text-white'
-                    }`}
+                    className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
                   >
                     {`-- : -- : --`}
                   </span>
                 ) : (
                   <span
-                    className={`flex items-center text-center ${
-                      mode === true ? 'text-black' : 'text-white'
-                    }`}
+                    className={`flex items-center text-center text-gray-900 dark:text-gray-100`}
                   >
                     {item?.timeStatus === 'Expired' ? (
                       <div className={`text-red-600 inline-block w-[69px]`}>
@@ -263,9 +255,7 @@ export const CashInfo = (props) => {
                       </div>
                     ) : (
                       <div
-                        className={`${
-                          mode === true ? 'text-black' : 'text-white'
-                        } inline-block w-[69px]`}
+                        className={`text-gray-900 dark:text-gray-100 inline-block w-[69px]`}
                       >
                         <TimerFormat duration={item?.timeLeft} />
                       </div>
@@ -284,7 +274,7 @@ export const CashInfo = (props) => {
 export const CashUpdate = (props) => {
   // const dispatch = useDispatch();
 
-  const { mode, item, setRefetchTxData } = props;
+  const { item, setRefetchTxData } = props;
   const [benderyStatus, setBenderyStatus] = useState(item?.status);
   const [dispatcherTelegram, setDispatcherTelegram] = useState('');
   const [hash, setHash] = useState('');
@@ -380,20 +370,12 @@ export const CashUpdate = (props) => {
 
   return (
     <div
-      className={`flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4 ${
-        mode === true
-          ? 'bg-white outline outline-lightslategray-300 outline-[1px]'
-          : 'bg-bgDarkMode outline outline-lightslategray-300 outline-[1px]'
-      }`}
+      className={`flex bg-white dark:bg-bgDarkMode justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4 outline outline-lightslategray-300 outline-[1px]`}
     >
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex flex-row gap-4 mt-2">
-            <div
-              className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-[24px] ${
-                mode === true ? 'text-darkslategray-200' : 'text-gray-100'
-              }`}
-            >
+            <div className="cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-[24px] text-darkslategray-200 dark:text-gray-100">
               Update Transaction
             </div>
           </div>
@@ -401,16 +383,18 @@ export const CashUpdate = (props) => {
         </div>
 
         <div className="flex flex-col w-[320px] xs:w-[340px] md:w-[452px] gap-[8px]">
-          <div className="flex flex-row bg-bgSecondary rounded h-[62px] justify-between">
+          <div
+            className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
+          >
             <div className="md:w-[452px] w-[320px] xs:w-[340px]">
-              <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+              <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                 Blendery Payment Status
               </div>
               <div className="ml-2 flex flex-row gap-[8px] items-center w-[320px] xs:w-[340px] md:w-[452px] mt-[13px]">
                 <div className="mr-4 w-[320px] xs:w-[340px] md:w-[452px]">
                   <select
                     name="benderyStatus"
-                    className={`[border:none] outline-none w-full text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block bg-[transparent]`}
+                    className={`[border:none] outline-none w-full text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block bg-[transparent]`}
                     value={benderyStatus}
                     onChange={(ev) => setBenderyStatus(ev.target.value)}
                   >
@@ -424,26 +408,28 @@ export const CashUpdate = (props) => {
                 </div>
               </div>
             </div>
-            <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+            <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
               <MdQrCodeScanner size={15} />
             </div>
           </div>
           {service === 'exchange' && subService === 'exchange' && (
             <>
-              <div className="flex flex-row bg-bgSecondary rounded h-[62px] justify-between">
+              <div
+                className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
+              >
                 <div className="md:w-[452px] w-[320px] xs:w-[340px]">
-                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                     Transaction Hash
                   </div>
                   <input
                     type="text"
-                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-bgSecondary placeholder-darkgray-100"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block w-[90%] outline-none bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     placeholder="5229ff374b04b0aa6..."
                     value={hash}
                     onChange={(ev) => setHash(ev.target.value)}
                   />
                 </div>
-                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
                   <MdQrCodeScanner size={15} />
                 </div>
               </div>
@@ -452,65 +438,65 @@ export const CashUpdate = (props) => {
           {service === 'defi' && subService === 'defi' && null}
           {service === 'buy' && subService === 'buyCash' && (
             <>
-              <div className="flex flex-row bg-bgSecondary rounded h-[62px] justify-between">
+              <div
+                className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
+              >
                 <div className="md:w-[452px] w-[320px] xs:w-[340px]">
-                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                     Transaction Hash
                   </div>
                   <input
                     type="text"
-                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-bgSecondary placeholder-darkgray-100"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block w-[90%] outline-none bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     placeholder="5229ff374b04b0aa6..."
                     value={hash}
                     onChange={(ev) => setHash(ev.target.value)}
                   />
                 </div>
-                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
                   <MdQrCodeScanner size={15} />
                 </div>
               </div>
 
               <div
-                className={`flex flex-row bg-bgSecondary rounded h-[62px] justify-between ${
-                  mode === true
-                    ? 'bg-whitesmoke-200'
-                    : 'hover:outline bg-hoverDark hover:bg-bgDark hover:outline-[1px] hover:outline-lightslategray-300'
-                }`}
+                className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
               >
                 <div className="">
-                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                     Dispatcher Telegram
                   </div>
                   <input
                     type="text"
-                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-bgSecondary placeholder-darkgray-100"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block w-[90%] outline-none bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     placeholder="@jason"
                     value={dispatcherTelegram}
                     onChange={(ev) => setDispatcherTelegram(ev.target.value)}
                   />
                 </div>
-                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                  <MdQrCodeScanner size={15} />
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
+                  <LiaTelegramPlane size={15} />
                 </div>
               </div>
             </>
           )}
           {service === 'buy' && subService === 'buyCard' && (
             <>
-              <div className="flex flex-row bg-bgSecondary rounded h-[62px] justify-between">
+              <div
+                className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
+              >
                 <div className="md:w-[452px] w-[320px] xs:w-[340px]">
-                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                     Transaction Hash
                   </div>
                   <input
                     type="text"
-                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-bgSecondary placeholder-darkgray-100"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block w-[90%] outline-none bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     placeholder="5229ff374b04b0aa6..."
                     value={hash}
                     onChange={(ev) => setHash(ev.target.value)}
                   />
                 </div>
-                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
                   <MdQrCodeScanner size={15} />
                 </div>
               </div>
@@ -519,21 +505,23 @@ export const CashUpdate = (props) => {
           {service === 'sell' && subService === 'sellCash' && (
             <>
               {' '}
-              <div className="flex flex-row bg-bgSecondary rounded h-[62px] justify-between">
+              <div
+                className={`flex flex-row bg-white dark:bg-app-container-dark rounded h-[62px] justify-between border-[1px] border-solid border-lightslategray-300`}
+              >
                 <div className="">
-                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-100">
                     Dispatcher Telegram
                   </div>
                   <input
                     type="text"
-                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-bgSecondary placeholder-darkgray-100"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block w-[90%] outline-none bg-white dark:bg-app-container-dark placeholder-darkgray-100"
                     placeholder="@jason"
                     value={dispatcherTelegram}
                     onChange={(ev) => setDispatcherTelegram(ev.target.value)}
                   />
                 </div>
-                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                  <MdQrCodeScanner size={15} />
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden text-darkslategray-200 dark:text-gray-100">
+                  <LiaTelegramPlane size={15} />
                 </div>
               </div>
             </>
@@ -552,7 +540,7 @@ export const CashUpdate = (props) => {
 };
 //setTxInfo={setTxInfo}
 export const CardUpdateInfo = (props) => {
-  const { mode, setRefetchTxData } = props;
+  const { setRefetchTxData } = props;
   const txData = useSelector(
     (state) => state.transaction?.transactionByTxIdInternal
   );
@@ -562,16 +550,8 @@ export const CardUpdateInfo = (props) => {
   return (
     <div className={`flex flex-col justify-center items-center gap-[24px]`}>
       <>
-        <CashInfo
-          item={txData}
-          mode={mode}
-          setRefetchTxData={setRefetchTxData}
-        />
-        <CashUpdate
-          item={txData}
-          mode={mode}
-          setRefetchTxData={setRefetchTxData}
-        />
+        <CashInfo item={txData} setRefetchTxData={setRefetchTxData} />
+        <CashUpdate item={txData} setRefetchTxData={setRefetchTxData} />
       </>
     </div>
   );

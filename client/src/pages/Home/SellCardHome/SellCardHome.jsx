@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { SellCardScreen1 } from './SellCardScreen1';
+import SellCardApp from '../components/SellCardApp';
 import { SellCardScreen2 } from './SellCardScreen2';
 import { SellCardScreen3 } from './SellCardScreen3';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionRate } from '../../../redux/features/transaction/transactionSlice';
 import {
@@ -304,7 +305,7 @@ export const SellCardHome = (props) => {
   useEffect(() => {
     if (allTokensToL && !tToken) {
       // setToToken(allTokensToL[0]);
-      setToToken(allTokensToL[3]);
+      setToToken(allTokensToL[4]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensToL]);
@@ -580,41 +581,43 @@ export const SellCardHome = (props) => {
   return (
     <>
       {percentageProgress === 1 && (
-        <SellCardScreen1
-          percentageProgress={percentageProgress}
-          setPercentageProgress={setPercentageProgress}
-          fTitle={fTitle}
-          tTitle={tTitle}
-          fToken={fToken}
-          setFromToken={setFromToken}
-          tToken={tToken}
-          setToToken={setToToken}
-          fValue={fValue}
-          setFromValue={setFromValue}
-          loading={loading}
-          mode={mode}
-          service={service}
-          setService={setService}
-          subService={subService}
-          setSubService={setSubService}
-          setTxInfo={setTxInfo}
-          allTokensFrom={allTokensFrom}
-          allTokensTo={allTokensTo}
-          exchangeRate={exchangeRate}
-          paymentMethod={paymentMethod}
-          setPaymentMethod={setPaymentMethod}
-          paymentOptions={paymentOptions}
-          cities={cities}
-          setCountry={setCountry}
-          setCityData={setCityData}
-          setCity={setCity}
-          country={country}
-          cityData={cityData}
-          city={city}
-          tValue={tValue}
-          transactionRates={transactionRates}
-          loadingExchangeRate={loadingExchangeRate}
-        />
+        <>
+          <SellCardApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            exchangeRate={exchangeRate}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentOptions={paymentOptions}
+            cities={cities}
+            setCountry={setCountry}
+            setCityData={setCityData}
+            setCity={setCity}
+            country={country}
+            cityData={cityData}
+            city={city}
+            tValue={tValue}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          />
+        </>
       )}
       {percentageProgress === 2 && (
         <SellCardScreen2

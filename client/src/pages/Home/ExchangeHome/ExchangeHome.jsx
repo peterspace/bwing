@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ExchangeScreen1 } from './ExchangeScreen1';
+import ExchangeApp from '../components/ExchangeApp';
 import { ExchangeScreen2 } from './ExchangeScreen2';
 import { ExchangeScreen3 } from './ExchangeScreen3';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ export const ExchangeHome = (props) => {
     setPercentageProgressHome,
   } = props;
   const location = useLocation();
- 
+
   //==================================================================
   //==================================================================
   //The type of service initiated will determine the api calls made and used by the estimator for calling token list and prices
@@ -377,30 +377,32 @@ export const ExchangeHome = (props) => {
   return (
     <>
       {percentageProgress === 1 && (
-        <ExchangeScreen1
-          percentageProgress={percentageProgress}
-          setPercentageProgress={setPercentageProgress}
-          fTitle={fTitle}
-          tTitle={tTitle}
-          fToken={fToken}
-          setFromToken={setFromToken}
-          tToken={tToken}
-          setToToken={setToToken}
-          fValue={fValue}
-          setFromValue={setFromValue}
-          loading={loading}
-          mode={mode}
-          service={service}
-          setService={setService}
-          subService={subService}
-          setSubService={setSubService}
-          setTxInfo={setTxInfo}
-          allTokensFrom={allTokensFrom}
-          allTokensTo={allTokensTo}
-          exchangeRate={exchangeRate}
-          transactionRates={transactionRates}
-          loadingExchangeRate={loadingExchangeRate}
-        />
+        <>
+          <ExchangeApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            exchangeRate={exchangeRate}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          />
+        </>
       )}
       {percentageProgress === 2 && (
         <ExchangeScreen2
