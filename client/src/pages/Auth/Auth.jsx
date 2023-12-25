@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { LoginUser } from '../../redux/features/user/userSlice';
+import styles from '../Home/AppContainer.module.css';
+// import { AppContainer } from '../Home/AppContainer';
 
 import { Login } from './Login';
 import { Register } from './Register';
 import { Forgot } from './Forgot';
 //w-[370px] ===w-[300px]z
 //w-[375px] === w-[320px] xs:w-[340px]
-import {
-  registerSocial,
-  loginSocial,
-} from '../../services/apiService';
+import { registerSocial, loginSocial } from '../../services/apiService';
 
 export const Auth = (props) => {
   const { setUser, setIsLoggedIn } = props;
@@ -56,7 +55,6 @@ export const Auth = (props) => {
   const [redirectLogin, setRedirectLogin] = useState(false);
   const [redirectRegister, setRedirectRegister] = useState(false);
   const [redirectHome, setRedirectHome] = useState(false);
-
 
   // useEffect(() => {
   //   if (redirectHome) {
@@ -166,10 +164,6 @@ export const Auth = (props) => {
 
   //===============================================================================================
   //============================={Login redirects}===============================================
-  // if (user.token) {
-  //   return window.location.replace(from);
-  // }
-
   if (user?.token) {
     return window.location.replace(prevLocation);
   }
@@ -185,12 +179,10 @@ export const Auth = (props) => {
             <div className="">Error message: {errorMessage}</div>
           </>
         )}
-
-        {/* <div className="" onClick={RegisterSubmit}>
-          Register
-        </div> */}
         {isRegister && (
-          <div className="fixed inset-0 bg-overlayBlack flex justify-center items-center overflow-auto z-[1]">
+          <div
+            className={`${styles.hero} flex flex-col justify-center items-center`}
+          >
             <Register
               setIsLogin={setIsLogin}
               setIsRegister={setIsRegister}
@@ -201,7 +193,9 @@ export const Auth = (props) => {
           </div>
         )}
         {isLogin && (
-          <div className="fixed inset-0 bg-overlayBlack flex justify-center items-center overflow-auto z-[1]">
+          <div
+            className={`${styles.hero} flex flex-col justify-center items-center`}
+          >
             <Login
               setIsLogin={setIsLogin}
               setIsRegister={setIsRegister}
@@ -214,12 +208,18 @@ export const Auth = (props) => {
           </div>
         )}
         {isForgot && (
-          <div className="fixed inset-0 bg-overlayBlack flex justify-center items-center overflow-auto z-[1]">
-            <Forgot
-              setIsLogin={setIsLogin}
-              setIsRegister={setIsRegister}
-              setIsForgot={setIsForgot}
-            />
+          <div
+            className={`${styles.hero} flex flex-col justify-center items-center`}
+          >
+            <>
+              <div className="flex flex-row items-start h-screen mt-[64px]">
+                <Forgot
+                  setIsLogin={setIsLogin}
+                  setIsRegister={setIsRegister}
+                  setIsForgot={setIsForgot}
+                />
+              </div>
+            </>
           </div>
         )}
       </div>

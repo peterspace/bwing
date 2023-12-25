@@ -31,8 +31,7 @@ export const Forgot = (props) => {
   const [redirectHome, setRedirectHome] = useState(false);
 
   const dispatch = useDispatch();
-
-  // async function LoginSubmit() {
+  
   async function forgot(email) {
     if (!validateEmail(email)) {
       return toast.error('Please enter a valid email');
@@ -62,10 +61,12 @@ export const Forgot = (props) => {
   }
 
   if (redirectHome) {
-    // return <Navigate to={'/landingPage'} />;
     return <Navigate to={'/'} />;
   }
 
+  /************************************************************************************** */
+  /**********************************************{FORGOT}******************************** */
+  /************************************************************************************** */
   const login = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
       <form onSubmit={handleSubmit}>

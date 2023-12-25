@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { resetPassword } from '../../services/apiService';
+import { IoIosClose } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import styles from '../Home/AppContainer.module.css';
 
 import { toast } from 'react-toastify';
 
@@ -11,11 +14,16 @@ import { useFormik } from 'formik';
 export const Reset = () => {
   const { resetToken } = useParams();
   // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [redirect, setRedirect] = useState(false);
   const [redirectHome, setRedirectHome] = useState(false);
+
+  const [isSucess, setIsSucess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isReset, setIsReset] = useState(true);
 
   const { values, handleChange, handleSubmit, touched, errors, resetForm } =
     useFormik({
@@ -41,8 +49,6 @@ export const Reset = () => {
       },
     });
 
-
-
   async function handleResetPassword(password, confirmPassword) {
     if (password.length < 6) {
       return toast.error('Passwords must be up to 6 characters');
@@ -58,30 +64,144 @@ export const Reset = () => {
 
     try {
       const data = await resetPassword(userData, resetToken);
-      toast.success(data.message);
+      // toast.success(data.message);
       if (data) {
-        setTimeout(() => {
-          setRedirect(true);
-        }, 200);
-
-        // window.location.reload(); // relaod to update changes m,ade by localStoarge
+        setIsSucess(true);
+        setIsError(false);
+        setIsReset(false);
+      } else {
+        setIsSucess(false);
+        setIsError(true);
+        setIsReset(false);
       }
     } catch (error) {
-      console.log(error.message);
+      setIsSucess(false);
+      setIsError(true);
+      setIsReset(false);
     }
   }
 
   if (redirect) {
-    // return <Navigate to={'/landingPage'} />;
     return <Navigate to={'/auth'} />;
   }
 
   if (redirectHome) {
-    // return <Navigate to={'/landingPage'} />;
     return <Navigate to={'/'} />;
   }
 
-  const login = (
+  /************************************************************************************** */
+  /**********************************************{RESET}********************************* */
+  /************************************************************************************** */
+
+  const toastSuccess = (
+    <>
+      <div
+        id="toast-default"
+        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
+        role="alert"
+      >
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"
+            />
+          </svg>
+          <span className="sr-only">Fire icon</span>
+        </div>
+        <div className="ms-3 text-sm font-normal">
+          Password reset successfull!
+        </div>
+        <div
+          className="ml-4 cursor-pointer text-sm font-medium text-bgPrimary p-1.5 rounded-lg dark:text-bgPrimary hover:underline hover:underline-offset-4"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/auth');
+            }, 200);
+          }}
+        >
+          Login
+        </div>
+
+        <span
+          className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/');
+            }, 200);
+          }}
+        >
+          {' '}
+          <IoIosClose size={32} />
+        </span>
+      </div>
+    </>
+  );
+
+  const toastError = (
+    <>
+      <div
+        id="toast-default"
+        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
+        role="alert"
+      >
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"
+            />
+          </svg>
+          <span className="sr-only">Fire icon</span>
+        </div>
+        <span className="ml-2 inline-flex items-center">
+          {' '}
+          Invalid credentials!
+        </span>
+        <div
+          className="ml-4 cursor-pointer text-sm font-medium text-bgPrimary p-1.5 rounded-lg dark:text-bgPrimary hover:underline hover:underline-offset-4"
+          onClick={() => {
+            setIsSucess(false);
+            setIsError(false);
+            setIsReset(true);
+          }}
+        >
+          Reset
+        </div>
+        <span
+          className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/');
+            }, 200);
+          }}
+        >
+          {' '}
+          <IoIosClose size={32} />
+        </span>
+      </div>
+    </>
+  );
+
+  const reset = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[8px] md:gap-[12px]">
@@ -194,7 +314,33 @@ export const Reset = () => {
   return (
     <>
       <div className="h-screen mt-[64px] mb-[64px] overflow-auto">
-        <Modal visible={true}>{login}</Modal>
+        <div
+          className={`${styles.hero} flex flex-col justify-center items-center`}
+        >
+          {isError && (
+            <>
+              <div className="flex flex-row items-start h-screen">
+                {toastError}
+              </div>
+            </>
+          )}
+          {isSucess && (
+            <>
+              <div className="flex flex-row items-start h-screen">
+                {toastSuccess}
+              </div>
+            </>
+          )}
+
+          {isReset && (
+            <>
+              <div className="flex flex-row items-start h-screen mt-[64px]">
+                {reset}
+              </div>
+            </>
+          )}
+          {/* {isReset && <>{reset}</>} */}
+        </div>
       </div>
     </>
   );

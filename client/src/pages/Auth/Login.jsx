@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { loginUser, validateEmail } from '../../services/apiService';
-
 import { toast } from 'react-toastify';
-
+import { IoIosClose } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import { LoginUser } from '../../redux/features/user/userSlice';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = (props) => {
   const {
@@ -20,12 +20,18 @@ export const Login = (props) => {
     setRedirectHome,
   } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [redirect, setRedirect] = useState(false);
   const [isLocal, setIsLocal] = useState(false);
   const [isFacebook, setIsFacebook] = useState(false);
   const [isGoogle, setIsGoogle] = useState(false);
+
+  const [newUser, setNewUser] = useState();
+  const [isSucess, setIsSucess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
   // const [redirectHome, setRedirectHome] = useState(false);
 
   const { values, handleChange, handleSubmit, touched, errors, resetForm } =
@@ -71,18 +77,22 @@ export const Login = (props) => {
       console.log({ userData: data });
       if (data) {
         dispatch(LoginUser(data));
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
         localStorage.setItem('user', JSON.stringify(data));
-        // setUser(data);
-        setIsLoggedIn(true);
-        setTimeout(() => {
-          setRedirect(true);
-        }, 200);
-
-        // window.location.reload(); // relaod to update changes m,ade by localStoarge
+        //=================={new}============================
+        setIsSucess(true);
+        setIsError(false);
+        setIsSignIn(false);
+        setNewUser(data);
+        //=================={new}============================
+      } else {
+        setIsSucess(false);
+        setIsError(true);
+        setIsSignIn(false);
       }
     } catch (e) {
-      alert('Login failed');
+      setIsSucess(false);
+      setIsError(true);
+      setIsSignIn(false);
     }
   }
 
@@ -122,24 +132,125 @@ export const Login = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectS]);
 
-  // useEffect(() => {
-  //   if (redirectHome) {
-  //     navigate('/');
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [redirectHome]);
+ 
 
   const handleSuccessLogin = () => {
     console.log('loggedIn sucessfull');
   };
 
   /************************************************************************************** */
-  /******************************{TODO REDIRECT TO LOGIN********************************* */
+  /**********************************************{LOGIN}********************************* */
   /************************************************************************************** */
 
-  /************************************************************************************** */
-  /******************************{TODO REDIRECT TO LOGIN********************************* */
-  /************************************************************************************** */
+  const toastSuccess = (
+    <>
+      <div
+        id="toast-default"
+        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
+        role="alert"
+      >
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"
+            />
+          </svg>
+          <span className="sr-only">Fire icon</span>
+        </div>
+        <div className="ms-3 text-sm font-normal">
+          Welcome back {newUser ? newUser?.name : ''}!
+        </div>
+        <div
+          className="ml-4 cursor-pointer text-sm font-medium text-bgPrimary p-1.5 rounded-lg dark:text-bgPrimary hover:underline hover:underline-offset-4"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/dashboard');
+            }, 200);
+          }}
+        >
+          Dashboard
+        </div>
+
+        <span
+          className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/');
+            }, 200);
+          }}
+        >
+          {' '}
+          <IoIosClose size={32} />
+        </span>
+      </div>
+    </>
+  );
+
+  const toastError = (
+    <>
+      <div
+        id="toast-default"
+        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
+        role="alert"
+      >
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
+          <svg
+            className="w-4 h-4"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"
+            />
+          </svg>
+          <span className="sr-only">Fire icon</span>
+        </div>
+        <span className="ml-2 inline-flex items-center">
+          {' '}
+          Invalid credentials!
+        </span>
+        <div
+          className="ml-4 cursor-pointer text-sm font-medium text-bgPrimary p-1.5 rounded-lg dark:text-bgPrimary hover:underline hover:underline-offset-4"
+          onClick={() => {
+            setIsSucess(false);
+            setIsError(false);
+            setIsSignIn(true);
+          }}
+        >
+          Login
+        </div>
+        <span
+          className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
+          onClick={() => {
+            setTimeout(() => {
+              navigate('/');
+            }, 200);
+          }}
+        >
+          {' '}
+          <IoIosClose size={32} />
+        </span>
+      </div>
+    </>
+  );
+
+
 
   const login = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
@@ -209,20 +320,11 @@ export const Login = (props) => {
                 ) : null}
               </div>
             </div>
-            {/* <div className="flex flex-row justify-center items-center">
-              <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
-                onClick={handleSubmit}
-              >
-                Login
-              </div>
-            </div> */}
 
             <div className="flex flex-row justify-center items-center">
               <button
                 type="submit"
                 className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
-                // onClick={handleSubmit}
               >
                 Login
               </button>
@@ -238,19 +340,6 @@ export const Login = (props) => {
           <div className="flex bg-lightslategray-300 w-[150px] h-px" />
         </div>
         <div className="flex flex-col justify-center items-center gap-[16px]">
-          {/* <a href={`${BACKEND_URL}/auth/google`}>
-            <div
-              className="cursor-pointer flex flex-row justify-center items-center bg-white hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
-              onClick={() => {
-                setIsLocal(false);
-                setIsFacebook(false);
-                setIsGoogle(true);
-              }}
-            >
-              <FcGoogle size={20} />
-              <span className="ml-2"> Continue with Google</span>
-            </div>
-          </a> */}
           <div
             className="cursor-pointer flex flex-row justify-center items-center bg-white hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
             onClick={() => {
@@ -309,5 +398,21 @@ export const Login = (props) => {
       </div>
     </div>
   );
-  return <>{login}</>;
+  return (
+    <>
+      {isError && (
+        <>
+          <div className="flex flex-row items-start h-screen">{toastError}</div>
+        </>
+      )}
+      {isSucess && (
+        <>
+          <div className="flex flex-row items-start h-screen">
+            {toastSuccess}
+          </div>
+        </>
+      )}
+      {isSignIn && <>{login}</>}
+    </>
+  );
 };

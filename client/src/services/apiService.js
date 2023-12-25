@@ -12,7 +12,7 @@ export const validateEmail = (email) => {
 //=====================================================================================================================================
 //======================================================={Local}==============================================================================
 
-// Register User
+
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
@@ -20,17 +20,13 @@ export const registerUser = async (userData) => {
       userData,
       { withCredentials: true }
     );
-    if (response.statusText === 'OK') {
-      toast.success('User Registered successfully');
-      localStorage.setItem('user', JSON.stringify(response.data));
-    }
     return response.data;
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+      console.log({ errormessageRegistration: message });
   }
 };
 
@@ -76,13 +72,11 @@ export const loginSocial = async (userData) => {
   }
 };
 
-// Login User
+
 export const loginUser = async (userData) => {
   try {
     const response = await axios.post(`${BACKEND_URL}/users/login`, userData);
     if (response.data) {
-      toast.success('Login Successful...');
-      localStorage.setItem('user', JSON.stringify(response.data));
       return response.data;
     }
   } catch (error) {
@@ -90,7 +84,7 @@ export const loginUser = async (userData) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    toast.error(message);
+    console.log({ errormessage: message });
   }
 };
 
@@ -588,7 +582,6 @@ export const updateOneBlockchainTransactionByIdService = async (userData) => {
     toast.error(message);
   }
 };
-
 
 export const updateOnePaidTransactionByIdService = async (userData) => {
   console.log({ updateinPaidTransaction: 'client input' });
