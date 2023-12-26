@@ -66,11 +66,8 @@ const BuyCardApp = (props) => {
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
-  const [isMinValue, setIsMinValue] = useState(false);
-  const [isMaxValue, setIsMaxValue] = useState(false);
-
-  const [minValue, setMinValue] = useState(15000);
-  const [maxValue, setMaxValue] = useState(200000);
+  const min = 15000;
+  const max = 150000;
 
   //============================================{Token selection}==============================
   useEffect(() => {
@@ -120,28 +117,16 @@ const BuyCardApp = (props) => {
     }
   }
 
-
-  useEffect(() => {
-    if (!fValue || fValue <= minValue) {
-      setIsMinValue(true);
-    } else {
-      setIsMinValue(false);
-    }
-
-    if (fValue > maxValue) {
-      setIsMaxValue(true);
-    } else {
-      setIsMaxValue(false);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fValue]);
-
-
   function onFromValueChanged(ev) {
     // setToValue(0);
     setFromValue(ev.target.value);
   }
+
+  // function onFromValueChanged(ev) {
+  //   const value = Math.max(min, Math.min(max, Number(ev.target.value)));
+
+  //   setFromValue(value);
+  // }
 
   //================================================================================
 
@@ -180,21 +165,39 @@ const BuyCardApp = (props) => {
     setIsOptionsModalOpen(true);
   }
 
-  //   return (
-  //     <div>
-  //       <label htmlFor="numberInput">Enter a number:</label>
-  //       <input
-  //         type="number"
-  //         id="numberInput"
-  //         name="numberInput"
-  //         value={value}
-  //         onChange={handleChange}
-  //         min={1} // Your minimum value
-  //         max={100} // Your maximum value
-  //       />
-  //     </div>
-  //   );
-  // };
+
+
+const NumberInput = () => {
+  const [value, setValue] = useState('');
+
+  const handleChange = (event) => {
+    // Validate input to ensure it is within the specified range
+    const inputValue = event.target.value;
+    const minValue = 1; // Your minimum value
+    const maxValue = 100; // Your maximum value
+
+    if (inputValue === '' || (minValue <= inputValue && inputValue <= maxValue)) {
+      setValue(inputValue);
+    }
+  };
+
+  return (
+    <div>
+      <label htmlFor="numberInput">Enter a number:</label>
+      <input
+        type="number"
+        id="numberInput"
+        name="numberInput"
+        value={value}
+        onChange={handleChange}
+        min={1} // Your minimum value
+        max={100} // Your maximum value
+      />
+    </div>
+  );
+};
+
+
 
   return (
     <>
@@ -228,27 +231,14 @@ const BuyCardApp = (props) => {
                 placeholder="0.1"
                 value={fValue}
                 onChange={onFromValueChanged}
-                // min={10000} // Your minimum value
-                // max={100000} // Your maximum value
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
                   ~${exchangeRate}
                 </div>
-                {isMinValue && (
-                  <div className="flex-1 relative text-gray-500 text-right">
-                    Min: 15000
-                  </div>
-                )}
-
-                {isMaxValue && (
-                  <div className="flex-1 relative text-gray-500 text-right">
-                    Max: 200000
-                  </div>
-                )}
-                {/* <div className="flex-1 relative text-gray-500 text-right">
+                <div className="flex-1 relative text-gray-500 text-right">
                   Min: 20000
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
@@ -302,41 +292,15 @@ const BuyCardApp = (props) => {
 
         {country === 'Russia' ? (
           <>
-            {fValue < minValue && (
-              <div
-                className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
-                // onClick={nextFunc}
-              >
-                <div className="flex-1 relative">
-                  {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
-                </div>
+            <div
+              className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
+              onClick={nextFunc}
+            >
+              <div className="flex-1 relative">
+                {' '}
+                {`${service} ${fToken?.symbol.toUpperCase()} now`}
               </div>
-            )}
-
-            {fValue > maxValue && (
-              <div
-                className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
-                // onClick={nextFunc}
-              >
-                <div className="flex-1 relative">
-                  {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
-                </div>
-              </div>
-            )}
-
-            {fValue >= minValue && fValue <= maxValue && (
-              <div
-                className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
-                onClick={nextFunc}
-              >
-                <div className="flex-1 relative">
-                  {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
-                </div>
-              </div>
-            )}
+            </div>
           </>
         ) : (
           <>
