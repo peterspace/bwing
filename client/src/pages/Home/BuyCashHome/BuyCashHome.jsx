@@ -354,14 +354,23 @@ export const BuyCashHome = (props) => {
 
   //================================================================================
 
-  useEffect(() => {
-    if (paymentMethod === 'cash') {
-      setFromValue(2000);
-    }
-    if (paymentMethod === 'card') {
-      setFromValue(150);
-    }
-  }, [paymentMethod]);
+  // useEffect(() => {
+  //   if (paymentMethod === 'cash') {
+  //     setFromValue(2000);
+  //   }
+  //   if (paymentMethod === 'card') {
+  //     setFromValue(150);
+  //   }
+  // }, [paymentMethod]);
+  // useEffect(() => {
+  //   if (paymentMethod === 'cash') {
+  //     setFromValue(2000);
+  //   }
+  //   if (paymentMethod === 'card') {
+  //     setFromValue(15000);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   //====================================================================================================
   //======================================={PRICE BLOCK}================================================
@@ -532,41 +541,40 @@ export const BuyCashHome = (props) => {
     <>
       {percentageProgress === 1 && (
         <>
-          <BuyCashApp 
-           percentageProgress={percentageProgress}
-           setPercentageProgress={setPercentageProgress}
-           fTitle={fTitle}
-           tTitle={tTitle}
-           fToken={fToken}
-           setFromToken={setFromToken}
-           tToken={tToken}
-           setToToken={setToToken}
-           fValue={fValue}
-           setFromValue={setFromValue}
-           loading={loading}
-           mode={mode}
-           service={service}
-           setService={setService}
-           subService={subService}
-           setSubService={setSubService}
-           setTxInfo={setTxInfo}
-           allTokensFrom={allTokensFrom}
-           allTokensTo={allTokensTo}
-           exchangeRate={exchangeRate}
-           paymentMethod={paymentMethod}
-           setPaymentMethod={setPaymentMethod}
-           paymentOptions={paymentOptions}
-           cities={cities}
-           setCountry={setCountry}
-           setCityData={setCityData}
-           setCity={setCity}
-           country={country}
-           cityData={cityData}
-           city={city}
-           tValue={tValue}
-           transactionRates={transactionRates}
-           loadingExchangeRate={loadingExchangeRate}
-          
+          <BuyCashApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            exchangeRate={exchangeRate}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentOptions={paymentOptions}
+            cities={cities}
+            setCountry={setCountry}
+            setCityData={setCityData}
+            setCity={setCity}
+            country={country}
+            cityData={cityData}
+            city={city}
+            tValue={tValue}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
           />
         </>
       )}

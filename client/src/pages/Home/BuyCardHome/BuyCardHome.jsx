@@ -421,14 +421,24 @@ export const BuyCardHome = (props) => {
 
   //================================================================================
 
-  useEffect(() => {
-    if (paymentMethod === 'cash') {
-      setFromValue(2000);
-    }
-    if (paymentMethod === 'card') {
-      setFromValue(15000);
-    }
-  }, [paymentMethod]);
+  // useEffect(() => {
+  //   if (paymentMethod === 'cash') {
+  //     setFromValue(2000);
+  //   }
+  //   if (paymentMethod === 'card') {
+  //     setFromValue(15000);
+  //   }
+  // }, [paymentMethod]);
+
+  // useEffect(() => {
+  //   if (paymentMethod === 'cash') {
+  //     setFromValue(2000);
+  //   }
+  //   if (paymentMethod === 'card') {
+  //     setFromValue(15000);
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   //====================================================================================================
   //======================================={PRICE BLOCK}================================================
