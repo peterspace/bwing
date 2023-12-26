@@ -7,6 +7,8 @@ import ServiceHeaderExchange from './ServiceHeaderExchange';
 import FToken from './FToken';
 import TToken from './TToken';
 
+//Laoding
+//'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
 //ExchangeDark
 const ExchangeApp = (props) => {
   const {

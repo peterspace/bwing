@@ -138,9 +138,9 @@ export const Header = (props) => {
             <BsFillMoonStarsFill size={18} color={"#4f46e5"} />
           )}
         </div>
-        <div className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer">
+        {/* <div className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer">
           Support
-        </div>
+        </div> */}
         {user?.token ? (
           <>
             <div

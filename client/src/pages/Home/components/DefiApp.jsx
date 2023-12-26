@@ -18,6 +18,9 @@ import TokenButtonLight from './TokenButtonLight';
 import FToken from './FToken';
 import TToken from './TToken';
 import Menu from './Menu';
+
+//Laoding
+//'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
 //DefiDark
 const DefiApp = (props) => {
   const {
@@ -53,6 +56,8 @@ const DefiApp = (props) => {
     isToLoading,
     toBalance,
     priceDeviation,
+    setSlippage,
+    slippage,
   } = props;
   //======================={RATES and PRICES}========================================================
   const dispatch = useDispatch();
@@ -78,6 +83,12 @@ const DefiApp = (props) => {
   const [isNetworkModalOpen, setIsNetworkModalOpen] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [isSlippageModalOpen, setIsSlippageModalOpen] = useState(false);
+  const [activeSlippage, setActiveSlippage] = useState();
+
+  console.log({ slippage: slippage });
+  console.log({ activeSlippage: activeSlippage });
+  const updatedSlippage = useSelector((state) => state?.swap?.slippage);
+  console.log({ updatedSlippage: updatedSlippage });
 
   useEffect(() => {
     setChain(checkChain);
@@ -104,6 +115,11 @@ const DefiApp = (props) => {
       setFilteredfTokens(newTokens);
     }
   }
+
+  // useEffect(() => {
+  //   setSlippage(activeSlippage);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [activeSlippage]);
 
   useEffect(() => {
     if (allTokensTo) {
@@ -382,11 +398,9 @@ const DefiApp = (props) => {
       <SlippageModal
         isTokenModalOpen={isSlippageModalOpen}
         setIsTokenModalOpen={setIsSlippageModalOpen}
-        filteredTokens={null}
-        setToken={null}
-        allTokens={null}
-        service={service}
-        title={'Settings'}
+        setSlippage={setActiveSlippage}
+        slippage={slippage}
+        title={'Slippage tolerance'}
       />
     </>
   );

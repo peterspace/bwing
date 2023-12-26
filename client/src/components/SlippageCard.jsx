@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateSlippage } from "../redux/features/swap/swapSlice";
-import stylesSlippage from "./Slippage.module.css";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSlippage } from '../redux/features/swap/swapSlice';
+import stylesSlippage from './Slippage.module.css';
 import {
   useAccount,
   useSwitchNetwork,
   useBalance,
   useNetwork,
   useDisconnect,
-} from "wagmi";
+} from 'wagmi';
 
 import {
   getChainRateSwapService,
   getChainPriceService,
-} from "../services/apiService";
+} from '../services/apiService';
 
 import {
   getChainPrice,
   getChainRateSwap,
-} from "../redux/features/swap/swapSlice";
+} from '../redux/features/swap/swapSlice';
 
 export const TokenCardContainer = (props) => {
   const { mode, setSlippage, setIsSlippageChange, slippage } = props;
@@ -28,7 +28,7 @@ export const TokenCardContainer = (props) => {
   const [isCustom, setIsCustom] = useState(false);
   const [isWarning, setIsWarning] = useState(false);
   const [isLowSlippage, setIsLowSlippage] = useState(false);
-  const [customSlippage, setCustomSlippage] = useState("");
+  const [customSlippage, setCustomSlippage] = useState('');
   // const [isSlippageChange, setIsSlippageChange] = useState(false);
   const [isSlippageAuto, setIsSlippageAuto] = useState(true); // default state is
 
@@ -41,11 +41,11 @@ export const TokenCardContainer = (props) => {
   console.log({ isConnected: isConnected });
   const { disconnect } = useDisconnect();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const chain = useSelector((state) => state?.swap?.chain);
-  const chainId = chain ? chain.chainId : "1";
-  const chainSymbol = chain ? chain?.chainSymbol : "ETH";
+  const chainId = chain ? chain.chainId : '1';
+  const chainSymbol = chain ? chain?.chainSymbol : 'ETH';
   console.log({ chainId: chainId });
 
   const chainUsdBalance = useSelector(
@@ -64,7 +64,7 @@ export const TokenCardContainer = (props) => {
     watch: true,
   });
 
-  const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState('');
 
   useEffect(() => {
     if (isConnected) {
@@ -75,7 +75,7 @@ export const TokenCardContainer = (props) => {
   }, [chainId, balance, isConnected]);
 
   useEffect(() => {
-    localStorage.setItem("chainBalance", JSON.stringify(balance));
+    localStorage.setItem('chainBalance', JSON.stringify(balance));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [balance]);
@@ -174,7 +174,7 @@ export const TokenCardContainer = (props) => {
       setIsLowSlippage(false);
       setIsWarning(false);
     }
-    if (slippage === "") {
+    if (slippage === '') {
       setIsLowSlippage(false);
       setIsWarning(false);
     }
@@ -185,8 +185,8 @@ export const TokenCardContainer = (props) => {
     <div
       className={`flex flex-col rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[300px] px-4 m-1 ${
         mode === true
-          ? "py-2 rounded-lg hover:bg-gray-100 outline outline-lightslategray-300 outline-[1px]"
-          : "hover:bg-hoverDark hover:outline hover:outline-lightslategray-300 hover:outline-[1px]"
+          ? 'py-2 rounded-lg hover:bg-gray-100 outline outline-lightslategray-300 outline-[1px]'
+          : 'hover:bg-hoverDark hover:outline hover:outline-lightslategray-300 hover:outline-[1px]'
       }`}
     >
       <>
@@ -244,8 +244,8 @@ export const TokenCardContainer = (props) => {
                 <div
                   className={`${stylesSlippage.ethereum} text-[#B27CFF]`}
                   onClick={() => {
-                    dispatch(updateSlippage("0.7"));
-                    setSlippage("0.7");
+                    dispatch(updateSlippage('0.7'));
+                    setSlippage('0.7');
                     setIsSlippageChange(true);
                     setIsSlippageAuto(true);
                     setIsCustom(false);
@@ -259,14 +259,14 @@ export const TokenCardContainer = (props) => {
             <div className={stylesSlippage.frameParent2}>
               <div
                 className={`${stylesSlippage.wrapper} ${
-                  slippage === "1" ? "rounded-2xl bg-[#AB94EB]" : "rounded-2xl"
+                  slippage === '1' ? 'rounded-2xl bg-[#AB94EB]' : 'rounded-2xl'
                 }`}
               >
                 <div
                   className={stylesSlippage.ethereum}
                   onClick={() => {
-                    dispatch(updateSlippage("1"));
-                    setSlippage("1");
+                    dispatch(updateSlippage('1'));
+                    setSlippage('1');
                     setIsSlippageChange(true);
                     setIsSlippageAuto(false);
                     setIsCustom(false);
@@ -277,14 +277,14 @@ export const TokenCardContainer = (props) => {
               </div>
               <div
                 className={`${stylesSlippage.container} ${
-                  slippage === "2" ? "rounded-2xl bg-[#AB94EB]" : "rounded-2xl"
+                  slippage === '2' ? 'rounded-2xl bg-[#AB94EB]' : 'rounded-2xl'
                 }`}
               >
                 <div
                   className={stylesSlippage.ethereum}
                   onClick={() => {
-                    dispatch(updateSlippage("2"));
-                    setSlippage("2");
+                    dispatch(updateSlippage('2'));
+                    setSlippage('2');
                     setIsSlippageChange(true);
                     setIsSlippageAuto(false);
                     setIsCustom(false);
@@ -295,14 +295,14 @@ export const TokenCardContainer = (props) => {
               </div>
               <div
                 className={`${stylesSlippage.container} ${
-                  slippage === "1" ? "rounded-2xl bg-[#AB94EB]" : "rounded-2xl"
+                  slippage === '1' ? 'rounded-2xl bg-[#AB94EB]' : 'rounded-2xl'
                 }`}
               >
                 <div
                   className={stylesSlippage.ethereum}
                   onClick={() => {
-                    dispatch(updateSlippage("3"));
-                    setSlippage("3");
+                    dispatch(updateSlippage('3'));
+                    setSlippage('3');
                     setIsSlippageChange(true);
                     setIsSlippageAuto(false);
                     setIsCustom(false);
@@ -333,9 +333,9 @@ export const TokenCardContainer = (props) => {
               ) : (
                 <div
                   className={`${stylesSlippage.customWrapper} ${
-                    slippage === "custom"
-                      ? "rounded-2xl bg-[#AB94EB]"
-                      : "rounded-2xl"
+                    slippage === 'custom'
+                      ? 'rounded-2xl bg-[#AB94EB]'
+                      : 'rounded-2xl'
                   }`}
                 >
                   <div
@@ -386,20 +386,20 @@ export const TokenCardContainer = (props) => {
           <div
             className={`self-stretch relative tracking-[0.02em] leading-[44px] ${
               isBalanceLoading
-                ? "rounded-lg bg-secondaryFillLight animate-pulse h-[44px]"
-                : ""
+                ? 'rounded-lg bg-secondaryFillLight animate-pulse h-[44px]'
+                : ''
             }`}
           >
-            {isBalanceLoading ? "" : `${balance} ${chainSymbol}`}
+            {isBalanceLoading ? '' : `${balance} ${chainSymbol}`}
           </div>
           <div
             className={`self-stretch relative text-sm tracking-[0.02em] leading-[20px] font-medium text-black ${
               isBalanceLoading
-                ? "rounded-lg bg-secondaryFillLight animate-pulse h-[20px]"
-                : ""
+                ? 'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
+                : ''
             }`}
           >
-            {isBalanceLoading ? "" : `~$ ${chainUsdBalance}`}
+            {isBalanceLoading ? '' : `~$ ${chainUsdBalance}`}
           </div>
         </div>
       </>
@@ -412,12 +412,12 @@ export const TokenCardContainer = (props) => {
           </div>
           <div className="flex-1 relative tracking-[0.02em] leading-[22px] font-medium">
             {address
-              ? address?.substring(0, 6) + "..." + address?.substring(10, 14)
-              : ""}
+              ? address?.substring(0, 6) + '...' + address?.substring(10, 14)
+              : ''}
           </div>
           <button
             className="cursor-pointer [border:none] py-4 px-3 bg-surface-tint-d-8 rounded-xl w-10 h-10 shrink-0 flex flex-row box-border items-center justify-center"
-            onClick={""}
+            onClick={''}
           >
             <img
               className="relative w-5 h-5 shrink-0 overflow-hidden"
@@ -427,7 +427,7 @@ export const TokenCardContainer = (props) => {
           </button>
           <button
             className="cursor-pointer [border:none] py-4 px-3 bg-surface-tint-d-8 rounded-xl w-10 h-10 shrink-0 flex flex-row box-border items-center justify-center"
-            onClick={""}
+            onClick={''}
           >
             <img
               className="relative w-5 h-5 shrink-0 overflow-hidden"
@@ -450,9 +450,7 @@ export const TokenCardContainer = (props) => {
           </button>
         </div>
       </>
-      {mode === true ? null : (
-        <div className="mt-2 flex bg-lightslategray-300 w-full h-px" />
-      )}
+      <div className="mt-2 flex bg-lightslategray-300 w-full h-px" />
     </div>
   );
 };
@@ -474,26 +472,18 @@ export const SlippageCard = (props) => {
   // const mode = true; // keep in light mode
   const mode = true; // keep in light mode
   const checkout = (
-    <div
-      className={`flex flex-col gap-[16px] rounded-lg p-2 outline outline-lightslategray-300 outline-[1px] ${
-        mode === true && "bg-white"
-      }`}
-    >
-      <div className="mt-2 flex flex-col gap-[16px] overflow-scroll h-[25vh]">
-        <TokenCardContainer
-          mode={mode}
-          setSlippage={setSlippage}
-          setIsSlippageChange={setIsSlippageChange}
-          setIsSlippageAuto={setIsSlippageAuto}
-          setIsCustom={setIsCustom}
-          isSlippageAuto={isSlippageAuto}
-          isWarning={isWarning}
-          isLowSlippage={isLowSlippage}
-          slippage={slippage}
-          setCustomSlippage={setCustomSlippage}
-        />
-      </div>
-    </div>
+    <TokenCardContainer
+      mode={mode}
+      setSlippage={setSlippage}
+      setIsSlippageChange={setIsSlippageChange}
+      setIsSlippageAuto={setIsSlippageAuto}
+      setIsCustom={setIsCustom}
+      isSlippageAuto={isSlippageAuto}
+      isWarning={isWarning}
+      isLowSlippage={isLowSlippage}
+      slippage={slippage}
+      setCustomSlippage={setCustomSlippage}
+    />
   );
   return <>{checkout}</>;
 

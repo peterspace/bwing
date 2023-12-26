@@ -122,7 +122,7 @@ export const DefiHome = (props) => {
   const [balance, setBalance] = useState('');
   const [fromBalance, setFromBalance] = useState(0.0);
   const [toBalance, setToBalance] = useState(0.0);
-  console.log({toBalance: toBalance})
+  console.log({ toBalance: toBalance });
 
   //====================================================================================================
   //======================================={pPice Deviation}=====================================
@@ -212,6 +212,7 @@ export const DefiHome = (props) => {
     : 1;
   const [fValue, setFromValue] = useState(fValueL);
 
+  const updatedSlippage = useSelector((state) => state?.swap?.slippage);
   const slippageL = localStorage.getItem('slippageDefi')
     ? JSON.parse(localStorage.getItem('slippageDefi'))
     : '1';
@@ -278,9 +279,9 @@ export const DefiHome = (props) => {
   const [isCustom, setIsCustom] = useState(false);
   const [isWarning, setIsWarning] = useState(false);
   const [isLowSlippage, setIsLowSlippage] = useState(false);
-  const [customSlippage, setCustomSlippage] = useState('');
-  const [isSlippageChange, setIsSlippageChange] = useState(false);
-  const [isSlippageAuto, setIsSlippageAuto] = useState(true); // default state is
+  // const [customSlippage, setCustomSlippage] = useState('');
+  // const [isSlippageChange, setIsSlippageChange] = useState(false);
+  // const [isSlippageAuto, setIsSlippageAuto] = useState(true); // default state is
 
   const [isSwapError, setIsSwapError] = useState(false);
   const [isApproveSuccess, setIsApproveSuccess] = useState(false);
@@ -507,6 +508,10 @@ export const DefiHome = (props) => {
   }, [tToken]);
 
   useEffect(() => {
+    setSlippage(updatedSlippage);
+  }, [updatedSlippage]);
+
+  useEffect(() => {
     if (slippage) {
       localStorage.setItem('slippageDefi', JSON.stringify(slippage));
     }
@@ -717,6 +722,14 @@ export const DefiHome = (props) => {
     if (isConnected) {
       const tokenbal = Number(dataBal?.formatted).toFixed(3);
       setBalance(tokenbal);
+      if (tToken?.address == '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+        // setToBalance(balance);
+        setToBalance(Number(balance));
+      }
+      if (fToken?.address == '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+        // setToBalance(balance);
+        setFromBalance(Number(balance));
+      }
       localStorage.setItem('chainBalance', JSON.stringify(tokenbal));
     }
   }
@@ -928,7 +941,6 @@ export const DefiHome = (props) => {
 
   //======================={previous approval}============================
 
-
   async function getSwapApproval() {
     if (chainId) {
       return;
@@ -1119,8 +1131,6 @@ export const DefiHome = (props) => {
     }
   }
 
-
-
   useEffect(() => {
     if (isApprove === false && isSwap === false) {
       resetStatus();
@@ -1299,10 +1309,7 @@ export const DefiHome = (props) => {
 
   async function fTokenBalance() {
     let tokenAddress = fToken?.address;
-    if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-      // setFromBalance(balance);
-      setFromBalance(Number(balance));
-    } else {
+    if (tokenAddress != '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
       const ERC20Contract = new ethers.Contract(
         tokenAddress,
         erc20ABI,
@@ -1345,10 +1352,7 @@ export const DefiHome = (props) => {
 
   async function tTokenBalance() {
     let tokenAddress = tToken?.address;
-    if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-      // setToBalance(balance);
-      setToBalance(Number(balance));
-    } else {
+    if (tokenAddress !== '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
       const ERC20Contract = new ethers.Contract(
         tokenAddress,
         erc20ABI,
@@ -1419,42 +1423,42 @@ export const DefiHome = (props) => {
     <>
       {percentageProgress === 1 && (
         <>
-          <DefiApp 
-           percentageProgress={percentageProgress}
-           setPercentageProgress={setPercentageProgress}
-           fTitle={fTitle}
-           tTitle={tTitle}
-           fToken={fToken}
-           setFromToken={setFromToken}
-           tToken={tToken}
-           setToToken={setToToken}
-           fValue={fValue}
-           setFromValue={setFromValue}
-           loading={loading}
-           mode={mode}
-           service={service}
-           setService={setService}
-           subService={subService}
-           setSubService={setSubService}
-           setTxInfo={setTxInfo}
-           allTokensFrom={allTokensFrom}
-           allTokensTo={allTokensTo}
-           transactionRates={transactionRates}
-           chain={chain}
-           setChain={setChain}
-           chainId={chainId}
-           loadingExchangeRate={loadingExchangeRate}
+          <DefiApp
+            percentageProgress={percentageProgress}
+            setPercentageProgress={setPercentageProgress}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            fToken={fToken}
+            setFromToken={setFromToken}
+            tToken={tToken}
+            setToToken={setToToken}
+            fValue={fValue}
+            setFromValue={setFromValue}
+            loading={loading}
+            mode={mode}
+            service={service}
+            setService={setService}
+            subService={subService}
+            setSubService={setSubService}
+            setTxInfo={setTxInfo}
+            allTokensFrom={allTokensFrom}
+            allTokensTo={allTokensTo}
+            transactionRates={transactionRates}
+            chain={chain}
+            setChain={setChain}
+            chainId={chainId}
+            loadingExchangeRate={loadingExchangeRate}
             //============={New}=================
-          isFromLoading={isFromLoading}
-          fromBalance={fromBalance}
-          fromPrice={fromPrice}
-          toPrice={toPrice}
-          isToLoading={isToLoading}
-          toBalance={toBalance}
-          priceDeviation={priceDeviation}
-
+            isFromLoading={isFromLoading}
+            fromBalance={fromBalance}
+            fromPrice={fromPrice}
+            toPrice={toPrice}
+            isToLoading={isToLoading}
+            toBalance={toBalance}
+            priceDeviation={priceDeviation}
+            setSlippage={setSlippage}
+            slippage={slippage}
           />
-         
         </>
       )}
       {percentageProgress === 3 && (

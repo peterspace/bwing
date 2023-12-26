@@ -191,7 +191,7 @@
 .frameChild {
   align-self: stretch;
   position: relative;
-  border-top: 1px solid #ab94eb;
+  border-top: 1px solid rgba(128, 163, 182, 0.22);
   box-sizing: border-box;
   height: 1px;
 }
@@ -224,7 +224,7 @@
   justify-content: center;
 }
 .autoContainer {
-  background-color: #8d3dff;
+  background-color: #4f46e5;
   box-shadow: 0px 0px 8px rgba(6, 17, 41, 0.06);
   width: 81.6px;
   flex-shrink: 0;
@@ -366,7 +366,7 @@
   justify-content: flex-start;
   border-radius: 12px;
   background-color: rgba(255, 178, 55, 0.12);
-  width: 432px;
+  /* width: 432px; */
   overflow: hidden;
   flex-direction: row;
   padding: 12px 16px;
@@ -380,7 +380,7 @@
   justify-content: flex-start;
   border-radius: 12px;
   background-color: rgba(255, 92, 92, 0.16);
-  width: 432px;
+  /* width: 432px; */
   overflow: hidden;
   flex-direction: row;
   padding: 12px 16px;

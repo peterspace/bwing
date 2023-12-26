@@ -5,8 +5,8 @@ import { networksOptions } from '../../../constants';
 const chainLocal = localStorage.getItem('chainDefi')
   ? JSON.parse(localStorage.getItem('chainDefi'))
   : networksOptions[0];
-const slippageLocal = localStorage.getItem('slippage')
-  ? JSON.parse(localStorage.getItem('slippage'))
+const slippageLocal = localStorage.getItem('slippageDefi')
+  ? JSON.parse(localStorage.getItem('slippageDefi'))
   : '1';
 
 export const getTokenExchangeRateSwap = createAsyncThunk(

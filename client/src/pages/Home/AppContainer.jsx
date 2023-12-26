@@ -431,13 +431,14 @@ export const AppContainer = (props) => {
           </>
         )}
       </div>
+      <div className="flex bg-lightslategray-300 w-full h-px mb-[120px]" />
 
-      <div className="relative bg-white dark:bg-app-container-dark text-gray-400 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
+      {/* <div className="relative bg-white dark:bg-app-container-dark text-gray-400 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
         <div className="mt-8 flex flex-col justify-center items-center gap-4 mb-8">
           <div className="flex bg-lightslategray-300 w-full h-px" />
           <Footer />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

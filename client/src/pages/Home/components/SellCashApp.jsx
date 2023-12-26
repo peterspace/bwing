@@ -9,6 +9,9 @@ import Menu from './Menu';
 import ServiceHeader from './ServiceHeader';
 import FToken from './FToken';
 import TToken from './TToken';
+
+//Laoding
+//'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
 //SellCashDark
 const SellCashApp = (props) => {
   const {
