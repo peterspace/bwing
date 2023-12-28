@@ -39,18 +39,18 @@ function App() {
   const isLoggedInL = localStorage.getItem('isLoggedIn')
     ? JSON.parse(localStorage.getItem('isLoggedIn'))
     : false;
-//======={mode and theme}=================================
+  //======={mode and theme}=================================
   const modeL = localStorage.getItem('mode')
     ? JSON.parse(localStorage.getItem('mode'))
     : true;
 
   const [mode, setMode] = useState(modeL);
 
-  const themeL = localStorage.getItem("theme")
-  ? JSON.parse(localStorage.getItem("theme"))
-  : false;
-const [theme, setTheme] = useState(themeL); // default light mode
-//======={mode and theme}=================================
+  const themeL = localStorage.getItem('theme')
+    ? JSON.parse(localStorage.getItem('theme'))
+    : false;
+  const [theme, setTheme] = useState(themeL); // default light mode
+  //======={mode and theme}=================================
 
   const serviceL = localStorage.getItem('service')
     ? JSON.parse(localStorage.getItem('service'))
@@ -211,33 +211,31 @@ const [theme, setTheme] = useState(themeL); // default light mode
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txInfo]);
 
+  //======={mode and theme}=================================
 
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', JSON.stringify(theme));
+      setMode(false);
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', JSON.stringify(theme));
+      setMode(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme]);
 
-//======={mode and theme}=================================
-
-useEffect(() => {
-  if (theme) {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", JSON.stringify(theme));
-    setMode(false);
-  } else {
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("theme", JSON.stringify(theme));
-    setMode(true);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [theme]);
-
-useEffect(() => {
-  if (mode === false) {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", JSON.stringify(mode));
-  } else {
-    document.documentElement.classList.remove("dark");
-    localStorage.setItem("theme", JSON.stringify(theme));
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [mode]);
+  useEffect(() => {
+    if (mode === false) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', JSON.stringify(mode));
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', JSON.stringify(theme));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
   return (
     <div
