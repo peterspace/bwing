@@ -57,6 +57,8 @@ const SellCardApp = (props) => {
   //======================={RATES and PRICES}========================================================
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
+  const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
+  const toPrice = transactionRates ? transactionRates?.toPrice : 0;
   const [filteredfTokens, setFilteredfTokens] = useState();
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
@@ -158,18 +160,18 @@ const SellCardApp = (props) => {
   return (
     <>
       <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
-      <Menu
+        <Menu
           service={service}
           setService={setService}
           subService={subService}
           setSubService={setSubService}
         />
         <ServiceHeader
-         subService="Sell"
-         image={'/card.png'}
-         symbol={paymentMethod === 'card' ? "Card": 'Cash'}
-         name={country}
-         openModal={openOptionsModal}
+          subService="Sell"
+          image={'/card.png'}
+          symbol={paymentMethod === 'card' ? 'Card' : 'Cash'}
+          name={country}
+          openModal={openOptionsModal}
         />
         <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
           <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
@@ -189,10 +191,11 @@ const SellCardApp = (props) => {
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${fromPrice}
                 </div>
                 <div className="flex-1 relative text-gray-500 text-right">
-                  Min: 20000
+                  {/* Min: 20000 */}
+                  {''}
                 </div>
               </div>
             </div>
@@ -212,12 +215,12 @@ const SellCardApp = (props) => {
                     loading ? 'animate-pulse' : ''
                   } self-stretch relative font-medium`}
                 >
-                  {loading ? 'loading' : `~ ${tValue}`}
+                  {loading ? 'loading' : `${tValue}`}
                 </div>
               </div>
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${toPrice}
                 </div>
               </div>
             </div>

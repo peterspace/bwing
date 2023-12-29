@@ -58,6 +58,8 @@ const BuyCardApp = (props) => {
   //======================={RATES and PRICES}========================================================
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
+  const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
+  const toPrice = transactionRates ? transactionRates?.toPrice : 0;
 
   const [isNotCountrySupported, setIsNotCountrySupported] = useState(false);
   const [filteredfTokens, setFilteredfTokens] = useState();
@@ -120,7 +122,6 @@ const BuyCardApp = (props) => {
     }
   }
 
-
   useEffect(() => {
     if (!fValue || fValue <= minValue) {
       setIsMinValue(true);
@@ -136,7 +137,6 @@ const BuyCardApp = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fValue]);
-
 
   function onFromValueChanged(ev) {
     // setToValue(0);
@@ -228,12 +228,10 @@ const BuyCardApp = (props) => {
                 placeholder="0.1"
                 value={fValue}
                 onChange={onFromValueChanged}
-                // min={10000} // Your minimum value
-                // max={100000} // Your maximum value
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${fromPrice}
                 </div>
                 {isMinValue && (
                   <div className="flex-1 relative text-gray-500 text-right">
@@ -267,12 +265,12 @@ const BuyCardApp = (props) => {
                     loading ? 'animate-pulse' : ''
                   } self-stretch relative font-medium`}
                 >
-                  {loading ? 'loading' : `~ ${tValue}`}
+                  {loading ? 'loading' : `${tValue}`}
                 </div>
               </div>
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${toPrice}
                 </div>
               </div>
             </div>

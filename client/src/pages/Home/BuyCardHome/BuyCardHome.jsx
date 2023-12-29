@@ -451,7 +451,7 @@ export const BuyCardHome = (props) => {
   }, [activeInterval]);
 
   useEffect(() => {
-    if (exchangeRateInfo === '0.000') {
+    if (exchangeRateInfo?.exchangeRate === '0.000') {
       setActiveInterval(initailInterval + delay);
 
       setTimeout(() => {
@@ -499,7 +499,7 @@ export const BuyCardHome = (props) => {
   }, [fToken, tToken]);
 
   useEffect(() => {
-    if (exchangeRateInfo === '0.000') {
+    if (exchangeRateInfo?.exchangeRate === '0.000') {
       setLoadingExchangeRate(true);
       setLoading(true);
       console.log({ loading: 'loading prices please hold' });
@@ -526,8 +526,6 @@ export const BuyCardHome = (props) => {
       const response = await getTokenExchangeRate(userData);
       console.log({ exchangeData: response });
 
-      // setExchangeRateInfo(response?.exchangeRate);
-
       if (response.exchangeRate === 'undefined') {
         // set is loading as true
         //too many requests
@@ -535,7 +533,7 @@ export const BuyCardHome = (props) => {
       }
       if (response.exchangeRate) {
         // set is loading as true
-        setExchangeRateInfo(response?.exchangeRate);
+        setExchangeRateInfo(response);
         setRetryMessage('');
       }
       if (response.message) {
@@ -562,10 +560,10 @@ export const BuyCardHome = (props) => {
     }
 
     if (
-      Number(exchangeRateInfo) === 0 ||
-      exchangeRateInfo === '0.000' ||
-      exchangeRateInfo === null ||
-      exchangeRateInfo === undefined
+      Number(exchangeRateInfo?.exchangeRate) === 0 ||
+      exchangeRateInfo?.exchangeRate === '0.000' ||
+      exchangeRateInfo?.exchangeRate === null ||
+      exchangeRateInfo?.exchangeRate === undefined
     ) {
       return;
     }
@@ -580,7 +578,7 @@ export const BuyCardHome = (props) => {
     const userData = {
       fToken,
       tToken,
-      exchangeRate: exchangeRateInfo,
+      exchangeRate: exchangeRateInfo?.exchangeRate,
       fValue,
       service,
       subService,
@@ -593,7 +591,12 @@ export const BuyCardHome = (props) => {
       if (response.tValueFormatted) {
         // setTransactionRates(response);
         let newRates = response;
-        let updatedRate = { ...newRates, exchangeRate: exchangeRateInfo };
+        let updatedRate = {
+          ...newRates,
+          exchangeRate: exchangeRateInfo?.exchangeRate,
+          fromPrice: exchangeRateInfo?.fUSDPrice,
+          toPrice: exchangeRateInfo?.tUSDPrice,
+        };
         setTransactionRates(updatedRate);
 
         dispatch(getTransactionRate(updatedRate));
@@ -610,7 +613,7 @@ export const BuyCardHome = (props) => {
     <>
       {percentageProgress === 1 && (
         <>
-        <BuyCardApp
+          <BuyCardApp
             percentageProgress={percentageProgress}
             setPercentageProgress={setPercentageProgress}
             fTitle={fTitle}
@@ -645,7 +648,6 @@ export const BuyCardHome = (props) => {
             transactionRates={transactionRates}
             loadingExchangeRate={loadingExchangeRate}
           />
-          
         </>
       )}
       {percentageProgress === 2 && (

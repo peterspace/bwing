@@ -2410,6 +2410,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     //=================================================================================================
     const toPrice = await geTokenPriceData(tToken?.id);
     const toPriceData = toPrice?.market_data?.current_price;
+    const tUSDPrice = Number(toPriceData?.usd); // usd price
     //=================================================================================================
 
     let exchangeRate;
@@ -2450,10 +2451,13 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     if (isNaN(exchangeRate)) {
       exchangeRate = 0;
     }
+    const fUSDPrice = tUSDPrice / exchangeRate;
 
     const response = {
       exchangeRateRaw: exchangeRate,
       exchangeRate: exchangeRate.toFixed(3),
+      tUSDPrice: tUSDPrice.toFixed(4), // usd price
+      fUSDPrice: fUSDPrice.toFixed(4),
     };
 
     res.status(200).json(response);
@@ -2462,6 +2466,8 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     //=================================================================================================
     const toPrice = await geTokenPriceData(tToken?.id);
     const toPriceData = toPrice?.market_data?.current_price;
+    const tUSDPrice = Number(toPriceData?.usd); // usd price
+
     //=================================================================================================
 
     let exchangeRate;
@@ -2503,9 +2509,12 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
       exchangeRate = 0;
     }
 
+    const fUSDPrice = tUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
       exchangeRate: exchangeRate.toFixed(3),
+      tUSDPrice: tUSDPrice.toFixed(4),
+      fUSDPrice: fUSDPrice.toFixed(4),
     };
     console.log({ responseExchangeRate: response });
     res.status(200).json(response);
@@ -2514,6 +2523,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     //=================================================================================================
     const fromPrice = await geTokenPriceData(fToken?.id);
     const fromPriceData = fromPrice?.market_data?.current_price;
+    const fUSDPrice = Number(fromPriceData?.usd); // usd price
     //=================================================================================================
 
     let exchangeRate;
@@ -2554,9 +2564,13 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     if (isNaN(exchangeRate)) {
       exchangeRate = 0;
     }
+
+    const tUSDPrice = fUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
       exchangeRate: exchangeRate.toFixed(3),
+      fUSDPrice: fUSDPrice.toFixed(4),
+      tUSDPrice: tUSDPrice.toFixed(4),
     };
 
     res.status(200).json(response);
@@ -2565,6 +2579,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     //=================================================================================================
     const fromPrice = await geTokenPriceData(fToken?.id);
     const fromPriceData = fromPrice?.market_data?.current_price;
+    const fUSDPrice = Number(fromPriceData?.usd); // usd price
     //=================================================================================================
 
     let exchangeRate;
@@ -2604,9 +2619,13 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     if (isNaN(exchangeRate)) {
       exchangeRate = 0;
     }
+
+    const tUSDPrice = fUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
       exchangeRate: exchangeRate.toFixed(3),
+      fUSDPrice: fUSDPrice.toFixed(4),
+      tUSDPrice: tUSDPrice.toFixed(4),
     };
 
     res.status(200).json(response);
@@ -2630,6 +2649,8 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     const response = {
       exchangeRateRaw: exchangeRate,
       exchangeRate: exchangeRate.toFixed(3),
+      fUSDPrice: fUSDPrice.toFixed(4),
+      tUSDPrice: tUSDPrice.toFixed(4),
     };
     res.status(200).json(response);
   }
@@ -2871,7 +2892,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     const serviceFee = (0.25 / 100) * Number(directValue); // 0.25%
 
     // const networkFees = await getTxFees(txData) // from the blockchain
-    const networkFee = 0
+    const networkFee = 0;
 
     const youSend = Number(fValue);
 
@@ -2916,7 +2937,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     const serviceFee = (0.25 / 100) * Number(directValue); // 0.25%
 
     // const networkFees = await getTxFees(txData) // from the blockchain
-    const networkFee =0
+    const networkFee = 0;
     const youSend = Number(fValue);
 
     let tValue = Number(directValue) - (serviceFee + networkFee);

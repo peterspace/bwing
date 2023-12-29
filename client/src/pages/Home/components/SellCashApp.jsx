@@ -58,6 +58,8 @@ const SellCashApp = (props) => {
   //======================={RATES and PRICES}========================================================
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
+  const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
+  const toPrice = transactionRates ? transactionRates?.toPrice : 0;
   const [filteredfTokens, setFilteredfTokens] = useState();
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
@@ -189,10 +191,11 @@ const SellCashApp = (props) => {
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${fromPrice}
                 </div>
                 <div className="flex-1 relative text-gray-500 text-right">
-                  Min: 20000
+                  {/* Min: 20000 */}
+                  {''}
                 </div>
               </div>
             </div>
@@ -212,12 +215,12 @@ const SellCashApp = (props) => {
                     loading ? 'animate-pulse' : ''
                   } self-stretch relative font-medium`}
                 >
-                  {loading ? 'loading' : `~ ${tValue}`}
+                  {loading ? 'loading' : `${tValue}`}
                 </div>
               </div>
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  ~${exchangeRate}
+                  ~${toPrice}
                 </div>
               </div>
             </div>
