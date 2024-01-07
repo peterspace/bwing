@@ -61,6 +61,8 @@ const {
   getSpender,
   getSwapApproval,
   swap,
+  //============================{Addresses}======================================================
+  validateAddress
 } = require('../controllers/transactionController');
 
 const {
@@ -188,5 +190,7 @@ router.post('/getChainPrice', getChainPrice);
 router.post('/getSpender', getSpender);
 router.post('/getSwapApproval', getSwapApproval);
 router.post('/swap', swap);
+router.post('/validateAddress', validateAddress);
+
 
 module.exports = router;

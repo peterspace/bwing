@@ -6,6 +6,7 @@ import Menu from './Menu';
 import ServiceHeaderExchange from './ServiceHeaderExchange';
 import FToken from './FToken';
 import TToken from './TToken';
+import { getMasterWalletsService } from '../../../services/apiService';
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -41,11 +42,22 @@ const ExchangeApp = (props) => {
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
   const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
   const toPrice = transactionRates ? transactionRates?.toPrice : 0;
+  const directValue = transactionRates ? transactionRates?.directValue : 0; // directValue = Number(fValue) * exchangeRate;
+  console.log({ directValue: directValue });
 
   const [filteredfTokens, setFilteredfTokens] = useState();
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
+  const [transactionLimit, setTransactionLimit] = useState();
+  const [transactionError, setTransactionError] = useState();
+  const [transactionDifference, setTransactionDifference] = useState();
+
+  console.log({ transactionLimit: transactionLimit });
+  console.log({ transactionLimitbalance: transactionLimit?.balance });
+  console.log({ tTokenChain: tToken?.chain, tTokenSymbol: tToken?.symbol });
+  console.log({ transactionError: transactionError });
+  console.log({ transactionDifference: transactionDifference });
 
   //============================================{Token selection}==============================
   useEffect(() => {
@@ -98,6 +110,7 @@ const ExchangeApp = (props) => {
   function onFromValueChanged(ev) {
     // setToValue(0);
     setFromValue(ev.target.value);
+    // verifyTransactionLimit()
   }
 
   //====================================================================================
@@ -120,6 +133,54 @@ const ExchangeApp = (props) => {
 
   function openToTokenModal() {
     setToTokenModalOpen(true);
+  }
+
+
+  useEffect(() => {
+    verifyTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tValue, tToken]);
+
+  async function verifyTransactionLimit() {
+    const response = await getMasterWalletsService();
+    // setTransactionLimit(response);
+
+    if (tToken?.chain === 'Bitcoin') {
+      setTransactionLimit(response?.walletsBitcoinMaster?.btc);
+    }
+    // if (tToken?.chain === 'Ethereum') {
+    //   setTransactionLimit(response?.walletsEVMMaster);
+    // }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'eth') {
+      setTransactionLimit(response?.walletsEVMMaster?.eth);
+    }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsEVMMaster?.usdt);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'trx') {
+      setTransactionLimit(response?.walletsTronMaster?.trx);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsTronMaster?.usdt);
+    }
+  }
+
+  useEffect(() => {
+    compareTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue, tValue, tToken, transactionLimit]);
+
+  async function compareTransactionLimit() {
+    if (Number(directValue) > Number(transactionLimit?.balance)) {
+      const difference = Number(directValue) - Number(transactionLimit?.balance);
+      setTransactionDifference(difference);
+      setTransactionError(
+        `Transaction limit exceeded by: ${difference} ${tToken?.symbol.toUpperCase()}`
+      );
+    } else {
+      setTransactionDifference(null);
+      setTransactionError('');
+    }
   }
 
   return (
@@ -216,7 +277,7 @@ const ExchangeApp = (props) => {
         >
           <div className="flex-1 relative">
             {' '}
-            {`${service} ${fToken?.symbol.toUpperCase()} now`}
+            {`Exchange ${fToken?.symbol.toUpperCase()} now`}
           </div>
         </div>
       </div>

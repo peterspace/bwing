@@ -65,8 +65,11 @@ const SellCardApp = (props) => {
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
-  const min = 15000;
-  const max = 150000;
+  const [isMinValue, setIsMinValue] = useState(false);
+  const [isMaxValue, setIsMaxValue] = useState(false);
+
+  const [minValue, setMinValue] = useState();
+  const [maxValue, setMaxValue] = useState();
   //============================================{Token selection}==============================
   useEffect(() => {
     dispatch(getTokenListExchange());
@@ -157,6 +160,51 @@ const SellCardApp = (props) => {
     setIsOptionsModalOpen(true);
   }
 
+  //==================================={RANGE}=================================================
+  useEffect(() => {
+    if (!tValue || Number(tValue) <= minValue) {
+      setIsMinValue(true);
+    } else {
+      setIsMinValue(false);
+    }
+
+    if (Number(tValue) > maxValue) {
+      setIsMaxValue(true);
+    } else {
+      setIsMaxValue(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tValue]);
+
+  useEffect(() => {
+    updateTransactionsRange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tToken, tValue]);
+
+  async function updateTransactionsRange() {
+    if (tToken?.symbol === 'gbp') {
+      setMinValue(150);
+      setMaxValue(2000);
+    }
+    if (tToken?.symbol === 'eur') {
+      setMinValue(150);
+      setMaxValue(20000);
+    }
+    if (tToken?.symbol === 'usd') {
+      setMinValue(150);
+      setMaxValue(2000);
+    }
+    if (tToken?.symbol === 'aed') {
+      setMinValue(1000);
+      setMaxValue(10000);
+    }
+    if (tToken?.symbol === 'rub') {
+      setMinValue(30000);
+      setMaxValue(300000);
+    }
+  }
+
   return (
     <>
       <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
@@ -222,6 +270,17 @@ const SellCardApp = (props) => {
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
                   ~${toPrice}
                 </div>
+                {isMinValue && (
+                  <div className="flex-1 relative text-gray-500 text-right">
+                    {`Min: ${minValue}`}
+                  </div>
+                )}
+
+                {isMaxValue && (
+                  <div className="flex-1 relative text-gray-500 text-right">
+                    {` Max: ${maxValue}`}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -250,20 +309,40 @@ const SellCardApp = (props) => {
 
         {country === 'Russia' ? (
           <>
-            <div
-              className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
-              onClick={nextFunc}
-            >
-              <div className="flex-1 relative">
-                {' '}
-                {`${service} ${fToken?.symbol.toUpperCase()} now`}
+            {tValue < minValue && (
+              <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto">
+                <div className="flex-1 relative">
+                  {' '}
+                  {`Sell ${fToken?.symbol.toUpperCase()} now`}
+                </div>
               </div>
-            </div>
+            )}
+
+            {tValue > maxValue && (
+              <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto">
+                <div className="flex-1 relative">
+                  {' '}
+                  {`Sell ${fToken?.symbol.toUpperCase()} now`}
+                </div>
+              </div>
+            )}
+
+            {tValue >= minValue && tValue <= maxValue && (
+              <div
+                className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
+                onClick={nextFunc}
+              >
+                <div className="flex-1 relative">
+                  {' '}
+                  {`Sell ${fToken?.symbol.toUpperCase()} now`}
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <>
             {' '}
-            <div className="cursor-pointer self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white dark:text-yellowgreen font-roboto">
+            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white dark:text-yellowgreen font-roboto">
               <div className="flex-1 relative">
                 Not available in your country
               </div>

@@ -8,6 +8,7 @@ import Menu from './Menu';
 import ServiceHeader from './ServiceHeader';
 import FToken from './FToken';
 import TToken from './TToken';
+import { getMasterWalletsService } from '../../../services/apiService';
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -59,6 +60,8 @@ const BuyCashApp = (props) => {
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
   const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
   const toPrice = transactionRates ? transactionRates?.toPrice : 0;
+  const directValue = transactionRates ? transactionRates?.directValue : 0; // directValue = Number(fValue) * exchangeRate;
+  console.log({ directValue: directValue });
 
   const [filteredfTokens, setFilteredfTokens] = useState();
   const [filteredtTokens, setFilteredtTokens] = useState();
@@ -66,8 +69,21 @@ const BuyCashApp = (props) => {
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
-  const min = 15000;
-  const max = 150000;
+  const [isMinValue, setIsMinValue] = useState(false);
+  const [isMaxValue, setIsMaxValue] = useState(false);
+  const [minValue, setMinValue] = useState();
+  const [maxValue, setMaxValue] = useState();
+
+  const [transactionLimit, setTransactionLimit] = useState();
+  const [transactionError, setTransactionError] = useState();
+  const [transactionDifference, setTransactionDifference] = useState();
+
+  console.log({ transactionLimit: transactionLimit });
+  console.log({ transactionLimitbalance: transactionLimit?.balance });
+  console.log({ tTokenChain: tToken?.chain, tTokenSymbol: tToken?.symbol });
+  console.log({ transactionError: transactionError });
+  console.log({ transactionDifference: transactionDifference });
+
   //============================================{Token selection}==============================
   useEffect(() => {
     dispatch(getTokenListExchange());
@@ -163,6 +179,100 @@ const BuyCashApp = (props) => {
     setIsOptionsModalOpen(true);
   }
 
+  useEffect(() => {
+    verifyTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tValue, tToken]);
+
+  async function verifyTransactionLimit() {
+    const response = await getMasterWalletsService();
+    // setTransactionLimit(response);
+
+    if (tToken?.chain === 'Bitcoin') {
+      setTransactionLimit(response?.walletsBitcoinMaster?.btc);
+    }
+    // if (tToken?.chain === 'Ethereum') {
+    //   setTransactionLimit(response?.walletsEVMMaster);
+    // }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'eth') {
+      setTransactionLimit(response?.walletsEVMMaster?.eth);
+    }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsEVMMaster?.usdt);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'trx') {
+      setTransactionLimit(response?.walletsTronMaster?.trx);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsTronMaster?.usdt);
+    }
+  }
+
+  useEffect(() => {
+    compareTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue, tValue, tToken, transactionLimit]);
+
+  async function compareTransactionLimit() {
+    if (Number(directValue) > Number(transactionLimit?.balance)) {
+      const difference =
+        Number(directValue) - Number(transactionLimit?.balance);
+      setTransactionDifference(difference);
+      setTransactionError(
+        `Transaction limit exceeded by: ${difference} ${tToken?.symbol.toUpperCase()}`
+      );
+    } else {
+      setTransactionDifference(null);
+      setTransactionError('');
+    }
+  }
+
+  //==================================={RANGE}=================================================
+
+  useEffect(() => {
+    if (!fValue || fValue <= minValue) {
+      setIsMinValue(true);
+    } else {
+      setIsMinValue(false);
+    }
+
+    if (fValue > maxValue) {
+      setIsMaxValue(true);
+    } else {
+      setIsMaxValue(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue]);
+
+  useEffect(() => {
+    updateTransactionsRange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fToken, fValue]);
+
+  async function updateTransactionsRange() {
+    if (fToken?.symbol === 'gbp') {
+      setMinValue(2000);
+      setMaxValue(100000);
+    }
+    if (fToken?.symbol === 'eur') {
+      setMinValue(2000);
+      setMaxValue(100000);
+    }
+    if (fToken?.symbol === 'usd') {
+      setMinValue(2000);
+      setMaxValue(100000);
+    }
+    if (fToken?.symbol === 'aed') {
+      setMinValue(10000);
+      setMaxValue(400000);
+    }
+    if (fToken?.symbol === 'rub') {
+      setMinValue(200000);
+      setMaxValue(10000000);
+    }
+  }
+
   return (
     <>
       <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
@@ -198,13 +308,19 @@ const BuyCashApp = (props) => {
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                 ~${fromPrice}
+                  ~${fromPrice}
                 </div>
-                <div className="flex-1 relative text-gray-500 text-right">
-                  {/* Min: 20000 */}
-                  {/* ~${exchangeRate} */}
-                  {''}
-                </div>
+                {isMinValue && (
+                  <div className="flex-1 relative text-gray-500 text-right">
+                    {`Min: ${minValue}`}
+                  </div>
+                )}
+
+                {isMaxValue && (
+                  <div className="flex-1 relative text-gray-500 text-right">
+                    {` Max: ${maxValue}`}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -228,7 +344,7 @@ const BuyCashApp = (props) => {
               </div>
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                ~${toPrice}
+                  ~${toPrice}
                 </div>
               </div>
             </div>
@@ -256,28 +372,37 @@ const BuyCashApp = (props) => {
           </div>
         </div>
 
-        {country === 'Russia' ? (
-          <>
+        <>
+          {fValue < minValue && (
+            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto">
+              <div className="flex-1 relative">
+                {' '}
+                {`Buy ${tToken?.symbol.toUpperCase()} now`}
+              </div>
+            </div>
+          )}
+
+          {fValue > maxValue && (
+            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto">
+              <div className="flex-1 relative">
+                {' '}
+                {`Buy ${tToken?.symbol.toUpperCase()} now`}
+              </div>
+            </div>
+          )}
+
+          {fValue >= minValue && fValue <= maxValue && (
             <div
               className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
               onClick={nextFunc}
             >
               <div className="flex-1 relative">
                 {' '}
-                {`${service} ${fToken?.symbol.toUpperCase()} now`}
+                {`Buy ${tToken?.symbol.toUpperCase()} now`}
               </div>
             </div>
-          </>
-        ) : (
-          <>
-            {' '}
-            <div className="cursor-pointer self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white dark:text-yellowgreen font-roboto">
-              <div className="flex-1 relative">
-                Not available in your country
-              </div>
-            </div>
-          </>
-        )}
+          )}
+        </>
       </div>
       {/* From Token Modal */}
       <TokenModal

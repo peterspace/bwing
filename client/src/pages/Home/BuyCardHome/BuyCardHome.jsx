@@ -11,6 +11,7 @@ import {
 } from '../../../services/apiService';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 
+
 //w-[370px] ===w-[300px]
 //w-[375px] === w-[320px] xs:w-[340px]
 const paymentOptions = ['card', 'cash'];

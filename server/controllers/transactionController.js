@@ -31,6 +31,10 @@ const {
   addTransactionWalletTron,
 } = require('../controllers/hdWalletController.js');
 
+const {
+  validateCryptoAddress,
+} = require('../controllers/addressValidatorController.js');
+
 let fee = process.env.SWAP_FEE;
 let dexAddress = process.env.DEX_ADDRESS;
 const token = process.env.ONE_INCH_TOKEN;
@@ -2780,8 +2784,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -2829,8 +2833,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -2878,8 +2882,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -2925,8 +2929,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -2971,8 +2975,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -3019,8 +3023,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -3067,8 +3071,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue,
-      directValueRaw: directValue.toFixed(3),
+      directValue: directValue.toFixed(3),
+      directValueRaw: directValue,
     };
 
     res.status(200).json(response);
@@ -3895,6 +3899,148 @@ const swap = asyncHandler(async (req, res) => {
   }
 });
 
+const cryptoAPI = asyncHandler(async () => {
+  const params = {
+    // src: fToken.address,
+    // dst: tToken?.address,
+    // amount: validatedValue,
+    // from: walletAddress,
+    // slippage: Number(slippage),
+    // fee,
+    // referrer: dexAddress,
+  };
+
+  console.log({ params: params });
+  const host = 'https://rest.cryptoapis.io';
+  const path = '/v2/blockchain-tools/ethereum/goerli/fees/eip1559';
+
+  const url = host + `${path}?context=Blendery`;
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': `6705354ea837940701ff17f4a70446e8d7822601`,
+    },
+    params,
+  };
+
+  console.log({ config: config });
+
+  try {
+    const response = await axios.get(url, config);
+    console.log({ dataServerBefore: response?.data });
+
+    if (response?.data) {
+      // console.log({ dataServerAfter: response?.data?.data });
+
+      console.log({ response: response?.data?.data });
+      let item = response?.data?.data.item;
+      const baseFeePerGas = item?.baseFeePerGas;
+      const maxFeePerGas = item?.maxFeePerGas;
+      const maxPriorityFeePerGas = item?.maxPriorityFeePerGas;
+
+      console.log({
+        baseFeePerGas,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+      });
+
+      // res.status(200).json(response);
+    }
+  } catch (error) {
+    console.log({ swapError: error });
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+    // res.status(400).json(message);
+  }
+});
+
+// cryptoAPI()
+
+const cryptoAPIEthereumGasLimit = asyncHandler(async () => {
+  // const params = {
+  // };
+
+  const userData = {
+    context: 'Blendery',
+    data: {
+      item: {
+        amount: '0.12',
+        contract: '0x092de782a7e1e0a92991ad829a0a33aef3c7545e',
+        contractType: 'ERC-20',
+        recipient: '0xc065b539490f81b6c297c37b1925c3be2f190738',
+        sender: '0x6f61e3c2fbb8c8be698bd0907ba6c04b62800fe5',
+      },
+    },
+  };
+  const host = 'https://rest.cryptoapis.io';
+  const path = '/blockchain-tools/ethereum/goerli/gas-limit/contract';
+
+  const url = host + `${path}?context=Blendery`;
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': `6705354ea837940701ff17f4a70446e8d7822601`,
+    },
+    body: userData,
+  };
+
+  console.log({ config: config });
+
+  try {
+    const response = await axios({
+      method: 'post',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': `6705354ea837940701ff17f4a70446e8d7822601`,
+      },
+      data: userData,
+    });
+    const response1 = await axios.post(url, config);
+    console.log({ dataServerBefore: response?.data });
+
+    if (response?.data) {
+      // console.log({ dataServerAfter: response?.data?.data });
+
+      console.log({ response: response?.data?.data });
+      let item = response?.data?.data.item;
+      const gasLimit = item?.gasLimit;
+
+      console.log({
+        gasLimit,
+      });
+
+      // res.status(200).json(response);
+    }
+  } catch (error) {
+    console.log({ swapError: error });
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+    // res.status(400).json(message);
+  }
+});
+
+// cryptoAPIEthereumGasLimit()
+
+const cryptoAPIEthereumGasLimitResponse = {
+  apiVersion: '2023-04-25',
+  requestId: '659a8f6ff658d6c5bdfc7e2a',
+  context: 'Blendery',
+  data: {
+    item: {
+      gasLimit: '28028',
+    },
+  },
+};
+
 var options = {
   hostname: 'rest.cryptoapis.io',
   path: '/v2/blockchain-tools/ethereum/goerli/fees/eip1559',
@@ -3929,6 +4075,47 @@ var options = {
 //sucess 1: #
 // {"apiVersion":"2023-04-25","requestId":"65837af40ce8aa80c0c06bd2","data":{"item":{"baseFeePerGas":{"unit":"WEI","value":"10"},"maxFeePerGas":{"fast":"3000000000","slow":"1000000000","standard":"2000000000","unit":"WEI"},"maxPriorityFeePerGas":{"fast":"3000000000","slow":"1000000000","standard":"2000000000","unit":"WEI"}}}}
 //============================================================================================================================
+
+// {
+//   address: 'mououTnjG5mXa5NJGqfdcyQPN4Qr1BZUAf',
+//   privateKey: '7b82bc819906c9401d269b892d81af3f943be403001c79270b722e607d642b5c'
+// }
+// {
+//   address: '0xC5fa054DDC662794944FB9D50BF6412504D30b2b',
+//   privateKey: '0x21d9380ff5c311d8cb461ee9f9ff35cb4f01a84dd86245b1a6480f95a43388b7'
+// }
+// {
+//   address: 'TGsHt3zdb6S9Pg8Vgy2Mnsq5geLoYSYTLb',
+//   privateKey: '0x08b0cddb61af1f296c41a774303809a545f79d76dc2076a971e3ccb824b7e9dd'
+// }
+async function checkCryptoAddress() {
+  const walletAddressBitcoin = 'mououTnjG5mXa5NJGqfdcyQPN4Qr1BZUAf';
+  // const walletAddressBitcoin = '19Uq4R9HDjAwNAuLUvfiaGiXTBdsEp8mp7';
+  // const walletAddressBitcoin = 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4'; //beck32
+
+  const walletAddressEthereum = '0x2754897d2B0493Fd0463281e36db83BB202f6343';
+  const walletAddressTron = 'TWo1bbdmV67hyL5747WMzSeD3uwW5P9tCa';
+
+  // const walletAddress = walletAddressBitcoin;
+  // const walletAddress = walletAddressEthereum
+  const walletAddress = walletAddressTron;
+
+  const response = await validateCryptoAddress(walletAddress);
+
+  console.log({ response: response });
+}
+
+// checkCryptoAddress()
+// { checkCryptoaddress: { valid: true, network: 'bitcoin' } }
+
+const validateAddress = asyncHandler(async (req, res) => {
+  const { walletAddress } = req.body;
+  const response = await validateCryptoAddress(walletAddress);
+
+  console.log({ response: response });
+
+  res.status(200).json(response);
+});
 
 module.exports = {
   createTransaction,
@@ -3993,4 +4180,6 @@ module.exports = {
   getSpender,
   getSwapApproval,
   swap,
+  //============================{Addresses}======================================================
+  validateAddress,
 };

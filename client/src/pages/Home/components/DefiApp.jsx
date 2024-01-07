@@ -345,7 +345,7 @@ const DefiApp = (props) => {
           >
             <div className="flex-1 relative">
               {' '}
-              {`${service} ${fToken?.symbol.toUpperCase()} now`}
+              {`Defi ${fToken?.symbol.toUpperCase()} now`}
             </div>
           </div>
         )}

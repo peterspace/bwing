@@ -13,7 +13,9 @@ const transactionSchema = new mongoose.Schema(
     walletAddress: String, // users address // not needed
     orderNo: String,
     txId: String,
-    userAddress: String, // blendery hd child wallet address
+    userAddress: String, // user wallet address
+    userSendingAddress: String, // userSending wallet address
+    userReceivingAddress: String, // userReceiving wallet address
     blenderyAddress: String, // blendery hd child wallet address
     blenderyAddressOut: String, // only for exchange
 

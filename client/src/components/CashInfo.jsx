@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
+import { validateAddressService } from '../services/apiService';
 
 import { MdQrCodeScanner } from 'react-icons/md';
 
@@ -15,17 +17,70 @@ export const CashInfo = (props) => {
     setTelegram,
   } = props;
 
+  const [recipientAddressInfo, setRecipientAddressInfo] = useState();
+  console.log({ recipientAddressInfo: recipientAddressInfo });
+
+  console.log({tTokenNetwork: tToken?.chain})
+  console.log({fTokenNetwork: fToken?.chain})
+
+
+  async function checkAddress(walletAddress) {
+    const userData = {
+      walletAddress,
+    };
+    const response = await validateAddressService(userData);
+    return response;
+  }
+
+
   const { values, handleChange, handleSubmit, touched, errors } = useFormik({
     initialValues: {
       recipientAddress: '',
       telegram: '',
       isTermsChecked: false,
     },
-    validate: (values) => {
+    validate: async(values) => {
       const errors = {};
 
       if (!values.recipientAddress) {
         errors.recipientAddress = 'Recipient address is required!';
+      }
+
+      const validityRecipientAddress = await checkAddress(
+        values.recipientAddress
+      );
+
+      if (validityRecipientAddress) {
+        setRecipientAddressInfo(validityRecipientAddress);
+      }
+
+      //========={Receiving wallet}================================================
+
+      if (values.recipientAddress && service === 'buy') {
+        if (validityRecipientAddress?.valid == false) {
+          errors.recipientAddress = 'Invalid recieiving address!';
+        }
+
+        if (
+          validityRecipientAddress?.valid == true &&
+          validityRecipientAddress.network !== tToken?.chain
+        ) {
+          errors.recipientAddress = `${tToken?.chain} wallet address required!`;
+        }
+      }
+
+      //========={sending wallet}================================================
+
+      if (values.recipientAddress && service === 'sell') {
+        if (validityRecipientAddress?.valid == false) {
+          errors.recipientAddress = 'Invalid recieiving address!';
+        }
+        if (
+          validityRecipientAddress?.valid == true &&
+          validityRecipientAddress.network !== fToken?.chain
+        ) {
+          errors.recipientAddress = `${fToken?.chain} wallet address required!`;
+        }
       }
 
       if (!values.telegram) {

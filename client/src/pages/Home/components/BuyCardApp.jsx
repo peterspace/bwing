@@ -8,6 +8,7 @@ import Menu from './Menu';
 import ServiceHeader from './ServiceHeader';
 import FToken from './FToken';
 import TToken from './TToken';
+import { getMasterWalletsService } from '../../../services/apiService';
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -60,6 +61,8 @@ const BuyCardApp = (props) => {
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
   const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
   const toPrice = transactionRates ? transactionRates?.toPrice : 0;
+  const directValue = transactionRates ? transactionRates?.directValue : 0; // directValue = Number(fValue) * exchangeRate;
+  console.log({ directValue: directValue });
 
   const [isNotCountrySupported, setIsNotCountrySupported] = useState(false);
   const [filteredfTokens, setFilteredfTokens] = useState();
@@ -70,9 +73,18 @@ const BuyCardApp = (props) => {
 
   const [isMinValue, setIsMinValue] = useState(false);
   const [isMaxValue, setIsMaxValue] = useState(false);
+  const [minValue, setMinValue] = useState();
+  const [maxValue, setMaxValue] = useState();
 
-  const [minValue, setMinValue] = useState(15000);
-  const [maxValue, setMaxValue] = useState(200000);
+  const [transactionLimit, setTransactionLimit] = useState();
+  const [transactionError, setTransactionError] = useState();
+  const [transactionDifference, setTransactionDifference] = useState();
+
+  console.log({ transactionLimit: transactionLimit });
+  console.log({ transactionLimitbalance: transactionLimit?.balance });
+  console.log({ tTokenChain: tToken?.chain, tTokenSymbol: tToken?.symbol });
+  console.log({ transactionError: transactionError });
+  console.log({ transactionDifference: transactionDifference });
 
   //============================================{Token selection}==============================
   useEffect(() => {
@@ -122,22 +134,6 @@ const BuyCardApp = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (!fValue || fValue <= minValue) {
-      setIsMinValue(true);
-    } else {
-      setIsMinValue(false);
-    }
-
-    if (fValue > maxValue) {
-      setIsMaxValue(true);
-    } else {
-      setIsMaxValue(false);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fValue]);
-
   function onFromValueChanged(ev) {
     // setToValue(0);
     setFromValue(ev.target.value);
@@ -180,21 +176,99 @@ const BuyCardApp = (props) => {
     setIsOptionsModalOpen(true);
   }
 
-  //   return (
-  //     <div>
-  //       <label htmlFor="numberInput">Enter a number:</label>
-  //       <input
-  //         type="number"
-  //         id="numberInput"
-  //         name="numberInput"
-  //         value={value}
-  //         onChange={handleChange}
-  //         min={1} // Your minimum value
-  //         max={100} // Your maximum value
-  //       />
-  //     </div>
-  //   );
-  // };
+  useEffect(() => {
+    verifyTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tValue, tToken]);
+
+  async function verifyTransactionLimit() {
+    const response = await getMasterWalletsService();
+    // setTransactionLimit(response);
+
+    if (tToken?.chain === 'Bitcoin') {
+      setTransactionLimit(response?.walletsBitcoinMaster?.btc);
+    }
+    // if (tToken?.chain === 'Ethereum') {
+    //   setTransactionLimit(response?.walletsEVMMaster);
+    // }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'eth') {
+      setTransactionLimit(response?.walletsEVMMaster?.eth);
+    }
+    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsEVMMaster?.usdt);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'trx') {
+      setTransactionLimit(response?.walletsTronMaster?.trx);
+    }
+    if (tToken?.chain === 'Tron' && tToken?.symbol === 'usdt') {
+      setTransactionLimit(response?.walletsTronMaster?.usdt);
+    }
+  }
+
+  useEffect(() => {
+    compareTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue, tValue, tToken, transactionLimit]);
+
+  async function compareTransactionLimit() {
+    if (Number(directValue) > Number(transactionLimit?.balance)) {
+      const difference =
+        Number(directValue) - Number(transactionLimit?.balance);
+      setTransactionDifference(difference);
+      setTransactionError(
+        `Transaction limit exceeded by: ${difference} ${tToken?.symbol.toUpperCase()}`
+      );
+    } else {
+      setTransactionDifference(null);
+      setTransactionError('');
+    }
+  }
+
+  //==================================={RANGE}=================================================
+
+  useEffect(() => {
+    if (!fValue || fValue <= minValue) {
+      setIsMinValue(true);
+    } else {
+      setIsMinValue(false);
+    }
+
+    if (fValue > maxValue) {
+      setIsMaxValue(true);
+    } else {
+      setIsMaxValue(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue]);
+
+  useEffect(() => {
+    updateTransactionsRange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fToken, fValue]);
+
+  async function updateTransactionsRange() {
+    if (fToken?.symbol === 'gbp') {
+      setMinValue(150);
+      setMaxValue(2000);
+    }
+    if (fToken?.symbol === 'eur') {
+      setMinValue(150);
+      setMaxValue(20000);
+    }
+    if (fToken?.symbol === 'usd') {
+      setMinValue(150);
+      setMaxValue(2000);
+    }
+    if (fToken?.symbol === 'aed') {
+      setMinValue(1000);
+      setMaxValue(10000);
+    }
+    if (fToken?.symbol === 'rub') {
+      setMinValue(30000);
+      setMaxValue(300000);
+    }
+  }
 
   return (
     <>
@@ -235,18 +309,15 @@ const BuyCardApp = (props) => {
                 </div>
                 {isMinValue && (
                   <div className="flex-1 relative text-gray-500 text-right">
-                    Min: 15000
+                    {`Min: ${minValue}`}
                   </div>
                 )}
 
                 {isMaxValue && (
                   <div className="flex-1 relative text-gray-500 text-right">
-                    Max: 200000
+                    {` Max: ${maxValue}`}
                   </div>
                 )}
-                {/* <div className="flex-1 relative text-gray-500 text-right">
-                  Min: 20000
-                </div> */}
               </div>
             </div>
           </div>
@@ -307,7 +378,7 @@ const BuyCardApp = (props) => {
               >
                 <div className="flex-1 relative">
                   {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
+                  {`Buy ${tToken?.symbol.toUpperCase()} now`}
                 </div>
               </div>
             )}
@@ -319,7 +390,7 @@ const BuyCardApp = (props) => {
               >
                 <div className="flex-1 relative">
                   {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
+                  {`Buy ${tToken?.symbol.toUpperCase()} now`}
                 </div>
               </div>
             )}
@@ -331,7 +402,7 @@ const BuyCardApp = (props) => {
               >
                 <div className="flex-1 relative">
                   {' '}
-                  {`${service} ${fToken?.symbol.toUpperCase()} now`}
+                  {`Buy ${tToken?.symbol.toUpperCase()} now`}
                 </div>
               </div>
             )}
@@ -339,7 +410,7 @@ const BuyCardApp = (props) => {
         ) : (
           <>
             {' '}
-            <div className="cursor-pointer self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white dark:text-yellowgreen font-roboto">
+            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white dark:text-yellowgreen font-roboto">
               <div className="flex-1 relative">
                 Not available in your country
               </div>

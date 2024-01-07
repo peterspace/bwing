@@ -12,7 +12,6 @@ export const validateEmail = (email) => {
 //=====================================================================================================================================
 //======================================================={Local}==============================================================================
 
-
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
@@ -26,7 +25,7 @@ export const registerUser = async (userData) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-      console.log({ errormessageRegistration: message });
+    console.log({ errormessageRegistration: message });
   }
 };
 
@@ -71,7 +70,6 @@ export const loginSocial = async (userData) => {
     toast.error(message);
   }
 };
-
 
 export const loginUser = async (userData) => {
   try {
@@ -1003,5 +1001,26 @@ export const getMasterWalletsAdminService = async () => {
       error.message ||
       error.toString();
     toast.error(message);
+  }
+};
+
+export const validateAddressService = async (userData) => {
+  if (!userData) return;
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/transaction/validateAddress`,
+      userData
+    );
+
+    // console.log()
+  console.log({ response: response.data });
+
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
   }
 };

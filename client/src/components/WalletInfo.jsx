@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
+import { validateAddressService } from '../services/apiService';
 
 import { MdQrCodeScanner } from 'react-icons/md';
 
@@ -13,17 +15,101 @@ export const WalletInfo = (props) => {
     tToken,
   } = props;
 
+  // const [walletValidation, setWalletValiadtion] = useState();
+  const [senderAddressInfo, setSenderAddressInfo] = useState();
+  const [recipientAddressInfo, setRecipientAddressInfo] = useState();
+
+  console.log({ senderAddressInfo: senderAddressInfo });
+  console.log({ recipientAddressInfo: recipientAddressInfo });
+
+  console.log({tTokenNetwork: tToken?.chain})
+  console.log({fTokenNetwork: fToken?.chain})
+
+
+  // async function checkAddress(walletAddress) {
+  //   const userData = {
+  //     walletAddress,
+  //   };
+  //   const response = await validateAddressService(userData);
+  //   if (response?.valid) {
+  //     console.log(response);
+  //   } else {
+  //     const message = 'invalid address';
+  //     console.log(message);
+  //   }
+  // }
+
+  async function checkAddress(walletAddress) {
+    const userData = {
+      walletAddress,
+    };
+    const response = await validateAddressService(userData);
+    return response;
+  }
+
   const { values, handleChange, handleSubmit, touched, errors } = useFormik({
     initialValues: {
+      senderAddress: '',
       recipientAddress: '',
       isTermsChecked: false,
     },
-    validate: (values) => {
-      const errors = {};
+    validate: async (values) => {
+      let errors = {};
 
-      if (!values.recipientAddress) {
-        errors.recipientAddress = 'Recipient address is required!';
+      if (!values.senderAddress) {
+        errors.senderAddress = `Sending address is required!`;
       }
+      if (!values.recipientAddress) {
+        errors.recipientAddress = 'Recieiving address is required!';
+      }
+
+      const validitySenderAddress = await checkAddress(values.senderAddress);
+      if(validitySenderAddress){
+        setSenderAddressInfo(validitySenderAddress);
+      }
+
+      const validityRecipientAddress = await checkAddress(
+        values.recipientAddress
+      );
+
+      if(validityRecipientAddress){
+        setRecipientAddressInfo(validityRecipientAddress);
+      }
+      
+
+      //========================{Sending wallet}================================================
+
+      if (values.senderAddress) {
+        if (validitySenderAddress?.valid == false) {
+          errors.senderAddress = 'Invalid sending address!';
+        }
+
+        if (
+          validitySenderAddress?.valid == true &&
+          validitySenderAddress.network !==
+            fToken?.chain
+        ) {
+          errors.senderAddress = `${fToken?.chain} wallet address required!`;
+        }
+      }
+
+      //========={Receiving wallet}================================================
+
+      if (values.recipientAddress) {
+        if (validityRecipientAddress?.valid == false) {
+          errors.recipientAddress = 'Invalid recieiving address!';
+        }
+
+        if (
+          validityRecipientAddress?.valid == true &&
+          validityRecipientAddress.network !==
+            tToken?.chain
+        ) {
+          errors.recipientAddress = `${tToken?.chain} wallet address required!`;
+        }
+      }
+
+      //========={TermsChecked}================================================
 
       if (!values.isTermsChecked) {
         errors.isTermsChecked =
@@ -73,15 +159,15 @@ export const WalletInfo = (props) => {
                   type="text"
                   className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
                   placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                  // value={values.senderAddress}
-                  // onChange={handleChange}
+                  value={values.senderAddress}
+                  onChange={handleChange}
                 />
                 <div>
-                  {/* {touched.senderAddress && errors.senderAddress ? (
+                  {touched.senderAddress && errors.senderAddress ? (
                     <div className="mt-4 text-[#ef4444]">
                       {errors.senderAddress}
                     </div>
-                  ) : null} */}
+                  ) : null}
                 </div>
               </div>
               <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">

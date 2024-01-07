@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import { validateAddressService } from '../services/apiService';
 
 import { MdQrCodeScanner } from 'react-icons/md';
 import BanksDropdown from './BanksDropdown';
@@ -24,6 +25,20 @@ export const BankInfo = (props) => {
 
   console.log({ selectedBank: selectedBank });
 
+  const [recipientAddressInfo, setRecipientAddressInfo] = useState();
+  console.log({ recipientAddressInfo: recipientAddressInfo });
+
+  console.log({ tTokenNetwork: tToken?.chain });
+  console.log({ fTokenNetwork: fToken?.chain });
+
+  async function checkAddress(walletAddress) {
+    const userData = {
+      walletAddress,
+    };
+    const response = await validateAddressService(userData);
+    return response;
+  }
+
   const {
     values,
     handleChange,
@@ -34,18 +49,55 @@ export const BankInfo = (props) => {
     setFieldValue,
   } = useFormik({
     initialValues: {
-      receiverAddress: '',
+      recipientAddress: '',
       name: '',
       phoneNumber: '',
       bankName: '',
       cardNumber: '',
       isTermsChecked: false,
     },
-    validate: (values) => {
-      const errors = {};
+    validate: async (values) => {
+      let errors = {};
 
-      if (!values.receiverAddress) {
-        errors.receiverAddress = 'Receiver address is required!';
+      if (!values.recipientAddress) {
+        errors.recipientAddress = 'Receiver address is required!';
+      }
+
+      const validityRecipientAddress = await checkAddress(
+        values.recipientAddress
+      );
+
+      if (validityRecipientAddress) {
+        setRecipientAddressInfo(validityRecipientAddress);
+      }
+
+      //========={Receiving wallet}================================================
+
+      if (values.recipientAddress && service === 'buy') {
+        if (validityRecipientAddress?.valid == false) {
+          errors.recipientAddress = 'Invalid recieiving address!';
+        }
+
+        if (
+          validityRecipientAddress?.valid == true &&
+          validityRecipientAddress.network !== tToken?.chain
+        ) {
+          errors.recipientAddress = `${tToken?.chain} wallet address required!`;
+        }
+      }
+
+      //========={sending wallet}================================================
+
+      if (values.recipientAddress && service === 'sell') {
+        if (validityRecipientAddress?.valid == false) {
+          errors.recipientAddress = 'Invalid recieiving address!';
+        }
+        if (
+          validityRecipientAddress?.valid == true &&
+          validityRecipientAddress.network !== fToken?.chain
+        ) {
+          errors.recipientAddress = `${fToken?.chain} wallet address required!`;
+        }
       }
 
       if (!values.name) {
@@ -72,7 +124,7 @@ export const BankInfo = (props) => {
       return errors;
     },
     onSubmit: (values) => {
-      setUserAddress(values.receiverAddress);
+      setUserAddress(values.recipientAddress);
       setFullName(values.name);
       setPhone(values.phoneNumber);
       setBankName(values.bankName);
@@ -121,7 +173,7 @@ export const BankInfo = (props) => {
       <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] xl:w-[500px] p-4">
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[10px]">
-             <div className="flex flex-row justify-between mt-[24px]">
+            <div className="flex flex-row justify-between mt-[24px]">
               <div
                 className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[14px] xl:text-[24px]`}
               >
@@ -136,19 +188,19 @@ export const BankInfo = (props) => {
                 Back
               </div>
             </div>
-           
+
             <div className="flex bg-lightslategray-300 w-[276px] md:w-[452px] h-px" />
           </div>
           {provider?.name === 'Phone' && (
             <>
               <div>
                 <div className="w-full">
-                <BanksDropdown
-                  selectedBank={selectedBank}
-                  setSelectedBank={setSelectedBank}
-                />
+                  <BanksDropdown
+                    selectedBank={selectedBank}
+                    setSelectedBank={setSelectedBank}
+                  />
                 </div>
-                
+
                 <div>
                   {touched.bankName && errors.bankName ? (
                     <div className="text-[#ef4444]">{errors.bankName}</div>
@@ -163,18 +215,18 @@ export const BankInfo = (props) => {
                         Receiving wallet address
                       </div>
                       <input
-                        id="receiverAddress"
-                        name="receiverAddress"
+                        id="recipientAddress"
+                        name="recipientAddress"
                         type="text"
                         className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
                         placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                        value={values.receiverAddress}
+                        value={values.recipientAddress}
                         onChange={handleChange}
                       />
                       <div>
-                        {touched.receiverAddress && errors.receiverAddress ? (
+                        {touched.recipientAddress && errors.recipientAddress ? (
                           <div className="mt-4 text-[#ef4444]">
-                            {errors.receiverAddress}
+                            {errors.recipientAddress}
                           </div>
                         ) : null}
                       </div>
@@ -192,18 +244,18 @@ export const BankInfo = (props) => {
                         Sending address
                       </div>
                       <input
-                        id="receiverAddress"
-                        name="receiverAddress"
+                        id="recipientAddress"
+                        name="recipientAddress"
                         type="text"
                         className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
                         placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                        value={values.receiverAddress}
+                        value={values.recipientAddress}
                         onChange={handleChange}
                       />
                       <div>
-                        {touched.receiverAddress && errors.receiverAddress ? (
+                        {touched.recipientAddress && errors.recipientAddress ? (
                           <div className="mt-4 text-[#ef4444]">
-                            {errors.receiverAddress}
+                            {errors.recipientAddress}
                           </div>
                         ) : null}
                       </div>
@@ -302,18 +354,18 @@ export const BankInfo = (props) => {
                         Receiving wallet address
                       </div>
                       <input
-                        id="receiverAddress"
-                        name="receiverAddress"
+                        id="recipientAddress"
+                        name="recipientAddress"
                         type="text"
                         className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
                         placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                        value={values.receiverAddress}
+                        value={values.recipientAddress}
                         onChange={handleChange}
                       />
                       <div>
-                        {touched.receiverAddress && errors.receiverAddress ? (
+                        {touched.recipientAddress && errors.recipientAddress ? (
                           <div className="mt-4 text-[#ef4444]">
-                            {errors.receiverAddress}
+                            {errors.recipientAddress}
                           </div>
                         ) : null}
                       </div>
@@ -331,18 +383,18 @@ export const BankInfo = (props) => {
                         Sending address
                       </div>
                       <input
-                        id="receiverAddress"
-                        name="receiverAddress"
+                        id="recipientAddress"
+                        name="recipientAddress"
                         type="text"
                         className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
                         placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                        value={values.receiverAddress}
+                        value={values.recipientAddress}
                         onChange={handleChange}
                       />
                       <div>
-                        {touched.receiverAddress && errors.receiverAddress ? (
+                        {touched.recipientAddress && errors.recipientAddress ? (
                           <div className="mt-4 text-[#ef4444]">
-                            {errors.receiverAddress}
+                            {errors.recipientAddress}
                           </div>
                         ) : null}
                       </div>
