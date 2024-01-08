@@ -18,50 +18,55 @@ import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 const paymentOptions = ['card', 'cash'];
 const cities = [
   {
-    country: 'United States',
+    country: 'USA',
     cities: ['New york'],
-    flag: '',
+    flag: '/usa.png',
   },
   {
-    country: 'United Kingdom',
+    country: 'UK',
     cities: ['London'],
-    flag: '',
+    flag: '/uk.png',
   },
   {
     country: 'France',
     cities: ['Paris'],
-    flag: '',
+    flag: '/france.png',
   },
 
   {
     country: 'Germany',
     cities: ['Berlin'],
-    flag: '',
+    flag: '/germany.png',
   },
   {
     country: 'Spain',
     cities: ['Barcelona'],
-    flag: '',
+    flag: '/spain.png',
   },
   {
     country: 'Russia',
     cities: ['Saint Petersburg', 'Moscow'],
-    flag: '',
+    flag: '/russia.png',
   },
   {
     country: 'Finland',
     cities: ['Helsinki'],
-    flag: '',
+    flag: '/finland.png',
   },
   {
     country: 'Hungary',
     cities: ['Budapest'],
-    flag: '',
+    flag: '/hungary.png',
   },
   {
     country: 'Czech',
     cities: ['Prague'],
-    flag: '',
+    flag: '/czech.png',
+  },
+  {
+    country: 'UAE',
+    cities: ['Dubai'],
+    flag: '/uae.png',
   },
 ];
 

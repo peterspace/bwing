@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 import { useDispatch } from 'react-redux';
 import TokenModal from '../../../components/TokenModal';
-import OptionsModalBuy from '../../../components/OptionsModalBuy';
+import CountriesModal from '../../../components/CountriesModal';
+import PaymenOptionsModal from '../../../components/PaymenOptionsModal';
+import ServiceHeaderBuy from './ServiceHeaderBuy';
 
 import Menu from './Menu';
-import ServiceHeader from './ServiceHeader';
 import FToken from './FToken';
 import TToken from './TToken';
 import { getMasterWalletsService } from '../../../services/apiService';
@@ -68,6 +69,8 @@ const BuyCashApp = (props) => {
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
+  const [isSubServiceModalOpen, setIsSubServiceModalOpen] = useState(false);
+
 
   const [isMinValue, setIsMinValue] = useState(false);
   const [isMaxValue, setIsMaxValue] = useState(false);
@@ -179,6 +182,11 @@ const BuyCashApp = (props) => {
     setIsOptionsModalOpen(true);
   }
 
+  function openSubServiceModal() {
+    setIsSubServiceModalOpen(true);
+  }
+
+
   useEffect(() => {
     verifyTransactionLimit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -282,13 +290,13 @@ const BuyCashApp = (props) => {
           subService={subService}
           setSubService={setSubService}
         />
-        <ServiceHeader
-          // subService="Buy Cash"
-          subService="Buy"
-          image={'/cash.png'}
-          symbol={paymentMethod === 'card' ? 'Card' : 'Cash'}
-          name={country}
-          openModal={openOptionsModal}
+       <ServiceHeaderBuy
+          symbolSubService={paymentMethod === 'card' ? 'Card' : 'Cash'}
+          symbolCountry={country}
+          openSubServiceModal={openSubServiceModal}
+          openCountryModal={openOptionsModal}
+          countries={cities}
+
         />
         <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
           <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
@@ -428,24 +436,31 @@ const BuyCashApp = (props) => {
         title={'Select Token'}
       />
 
-      {/* To Token Modal */}
-      <OptionsModalBuy
+      {/* Countries Modal */}
+      <CountriesModal
         isTokenModalOpen={isOptionsModalOpen}
         setIsTokenModalOpen={setIsOptionsModalOpen}
-        isNotCrypto={false}
-        title={'Select Token'}
-        service={service}
-        setService={setService}
-        setSubService={setSubService}
+        title={'Select Country'}
         paymentMethod={paymentMethod}
-        setPaymentMethod={setPaymentMethod}
-        paymentOptions={paymentOptions}
         cities={cities}
         setCountry={setCountry}
         setCity={setCity}
         country={country}
         cityData={cityData}
         city={city}
+      />
+
+      {/* Payment Modal */}
+      <PaymenOptionsModal
+        isTokenModalOpen={isSubServiceModalOpen}
+        setIsTokenModalOpen={setIsSubServiceModalOpen}
+        title={'Select Method'}
+        service={service}
+        setService={setService}
+        setSubService={setSubService}
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
+        paymentOptions={paymentOptions}
       />
     </>
   );

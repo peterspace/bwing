@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import TokenModal from '../../../components/TokenModal';
 import OptionsModalBuy from '../../../components/OptionsModalBuy';
 import OptionsModalSell from '../../../components/OptionsModalSell';
+import CountriesModal from '../../../components/CountriesModal';
+import PaymenOptionsModal from '../../../components/PaymenOptionsModal';
+import ServiceHeaderBuy from './ServiceHeaderBuy';
 
 import Menu from './Menu';
 import ServiceHeader from './ServiceHeader';
@@ -65,6 +68,8 @@ const SellCashApp = (props) => {
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
+  const [isSubServiceModalOpen, setIsSubServiceModalOpen] = useState(false);
+
 
   const [isMinValue, setIsMinValue] = useState(false);
   const [isMaxValue, setIsMaxValue] = useState(false);
@@ -159,6 +164,9 @@ const SellCashApp = (props) => {
   function openOptionsModal() {
     setIsOptionsModalOpen(true);
   }
+  function openSubServiceModal() {
+    setIsSubServiceModalOpen(true);
+  }
 
   //==================================={RANGE}=================================================
   useEffect(() => {
@@ -213,12 +221,12 @@ const SellCashApp = (props) => {
           subService={subService}
           setSubService={setSubService}
         />
-        <ServiceHeader
-          subService="Sell"
-          image={'/cash.png'}
-          symbol={paymentMethod === 'card' ? 'Card' : 'Cash'}
-          name={country}
-          openModal={openOptionsModal}
+       <ServiceHeaderBuy
+          symbolSubService={paymentMethod === 'card' ? 'Card' : 'Cash'}
+          symbolCountry={country}
+          openSubServiceModal={openSubServiceModal}
+          openCountryModal={openOptionsModal}
+          countries={cities}
         />
         <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
           <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
@@ -362,24 +370,31 @@ const SellCashApp = (props) => {
         title={'Select Token'}
       />
 
-      {/* OptionsModalSell */}
-      <OptionsModalSell
+      {/* Countries Modal */}
+      <CountriesModal
         isTokenModalOpen={isOptionsModalOpen}
         setIsTokenModalOpen={setIsOptionsModalOpen}
-        isNotCrypto={false}
-        title={'Select Token'}
-        service={service}
-        setService={setService}
-        setSubService={setSubService}
+        title={'Select Country'}
         paymentMethod={paymentMethod}
-        setPaymentMethod={setPaymentMethod}
-        paymentOptions={paymentOptions}
         cities={cities}
         setCountry={setCountry}
         setCity={setCity}
         country={country}
         cityData={cityData}
         city={city}
+      />
+
+      {/* Payment Modal */}
+      <PaymenOptionsModal
+        isTokenModalOpen={isSubServiceModalOpen}
+        setIsTokenModalOpen={setIsSubServiceModalOpen}
+        title={'Select Method'}
+        service={service}
+        setService={setService}
+        setSubService={setSubService}
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
+        paymentOptions={paymentOptions}
       />
     </>
   );
