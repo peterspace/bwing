@@ -10,7 +10,8 @@ import { SellCardHome } from './SellCardHome/SellCardHome';
 import { SellCashHome } from './SellCashHome/SellCashHome';
 //===============================================================
 import styles from './AppContainer.module.css';
-import { Footer } from '../../components/Footer';
+import Footer from '../../components/Footer';
+import FooterMini from '../../components/FooterMini';
 
 import {
   stepsExchange,
@@ -431,14 +432,14 @@ export const AppContainer = (props) => {
           </>
         )}
       </div>
-      <div className="flex bg-lightslategray-300 w-full h-px mb-[120px]" />
+      <div className="flex bg-lightslategray-300 w-full h-px mb-[24px]" />
 
-      {/* <div className="relative bg-white dark:bg-app-container-dark text-gray-400 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
-        <div className="mt-8 flex flex-col justify-center items-center gap-4 mb-8">
-          <div className="flex bg-lightslategray-300 w-full h-px" />
+      <div className="relative text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
+        <div className="flex flex-col justify-center items-center">
           <Footer />
+          <FooterMini />
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

@@ -4,6 +4,7 @@ import { CashInfo } from '../../../components/CashInfo';
 import { DetailsCashLocal } from '../../../components/DetailsCashLocal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
+import RatesLocalModel from '../../../components/RatesLocalModel';
 export const SellCashScreen2 = (props) => {
   const {
     percentageProgress,
@@ -70,7 +71,16 @@ export const SellCashScreen2 = (props) => {
           />
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
-          <DetailsCashLocal
+          {/* <DetailsCashLocal
+            fToken={fToken}
+            tToken={tToken}
+            fValue={fValue}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          /> */}
+          <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
             fValue={fValue}

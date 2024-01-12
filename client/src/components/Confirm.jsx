@@ -4,11 +4,11 @@ export const Confirm = (props) => {
   const { submitTransaction } = props;
 
   const confirm = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-row justify-center items-center md:w-[452px] w-[276px]">
           <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
+            className="cursor-pointer flex flex-row justify-center items-center bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
             onClick={() => {
               submitTransaction(true);
             }}

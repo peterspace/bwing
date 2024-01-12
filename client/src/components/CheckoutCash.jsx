@@ -47,15 +47,15 @@ export const CheckoutCash = (props) => {
     : null;
 
   const checkout = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[8px] md:gap-[12px]">
           <div className="flex flex-row justify-between mt-[24px]">
-            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] text-black dark:text-white inline-block">
               Checkout
             </div>
             <div
-              className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded px-6 py-3"
+              className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-3"
               onClick={() => {
                 setPercentageProgress(1);
               }}

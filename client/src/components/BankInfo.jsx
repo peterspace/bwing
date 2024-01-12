@@ -5,6 +5,7 @@ import { validateAddressService } from '../services/apiService';
 import { MdQrCodeScanner } from 'react-icons/md';
 import BanksDropdown from './BanksDropdown';
 import { useCardPaymentSystemIcon } from '../hooks/useCardDetector';
+import { banksOptions } from '../constants';
 
 export const BankInfo = (props) => {
   const {
@@ -22,8 +23,13 @@ export const BankInfo = (props) => {
   } = props;
 
   const [selectedBank, setSelectedBank] = useState(null);
+  const [banks, setBanks] = useState([]);
+
+  const [isBank, setIsBank] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   console.log({ selectedBank: selectedBank });
+  console.log({ banksOptions: banksOptions });
 
   const [recipientAddressInfo, setRecipientAddressInfo] = useState();
   console.log({ recipientAddressInfo: recipientAddressInfo });
@@ -168,19 +174,42 @@ export const BankInfo = (props) => {
     setFieldValue(name, formattedValue);
   };
 
+  function openBanksModal() {
+    setIsBank((prev) => !prev);
+  }
+
+
+  const handleSelectBank = (bank) => {
+    setSelectedBank(bank);
+    setIsBank(false);
+  };
+
+  useEffect(() => {
+    handleSearchBank(selectedBank?.name);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
+
+  const handleSearchBank = () => {
+    const filteredBanks = banksOptions.filter((bank) =>
+      bank.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setBanks(filteredBanks);
+  };
+
   const bankInfo = (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] xl:w-[500px] p-4">
+      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px]">
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[10px]">
             <div className="flex flex-row justify-between mt-[24px]">
               <div
-                className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[14px] xl:text-[24px]`}
+                className={`cursor-pointer leading-[24px] inline-block text-black dark:text-silver text-[14px] md:text-[24px]`}
               >
                 Payment Details
               </div>
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded py-1 px-3 xl:px-6 xl:py-3"
+                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
                 onClick={() => {
                   setPercentageProgress(1);
                 }}
@@ -193,7 +222,7 @@ export const BankInfo = (props) => {
           </div>
           {provider?.name === 'Phone' && (
             <>
-              <div>
+              {/* <div>
                 <div className="w-full">
                   <BanksDropdown
                     selectedBank={selectedBank}
@@ -206,115 +235,159 @@ export const BankInfo = (props) => {
                     <div className="text-[#ef4444]">{errors.bankName}</div>
                   ) : null}
                 </div>
+              </div> */}
+
+              <div className="w-[375px] flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                <b className="relative leading-[28px] inline-block w-[167px] text-black dark:text-silver">
+                  <span>{`Select a bank `}</span>
+                  <span className="text-rose-600">*</span>
+                </b>
+
+                <div
+                  className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start py-1 px-3 gap-[8px]"
+                  onClick={openBanksModal}
+                >
+                  {/* {selectedBank && (
+                    <img
+                      className="relative rounded-full w-5 h-5 overflow-hidden shrink-0 object-cover"
+                      alt=""
+                      src={`${selectedBank ? selectedBank?.image : ``}`}
+                    />
+                  )} */}
+
+                  <div className="relative text-black dark:text-silver">{`${
+                    selectedBank ? selectedBank?.name : `Select`
+                  }`}</div>
+                  <img
+                    className="relative w-4 h-4 overflow-hidden shrink-0"
+                    alt=""
+                    src="/chevrondown.svg"
+                  />
+                </div>
+                <div>
+                  {touched.bankName && errors.bankName ? (
+                    <div className="text-[#ef4444]">{errors.bankName}</div>
+                  ) : null}
+                </div>
               </div>
+              {/* service list */}
+              {isBank && (
+                <>
+                  <div className="rounded-lg bg-chizzySnow dark:bg-gray-1000 flex flex-col gap-1 border-[1px] box-border border-solid border-lightslategray-300">
+                    <div className="flex flex-col items-start justify-start p-2 box-border border-solid border-lightslategray-300 gap-[10px]">
+                      <input
+                        type="text"
+                        placeholder="Search banks..."
+                        className="w-full rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none  border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-300"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </div>
+                    <div className="rounded-lg bg-chizzySnow dark:bg-gray-1000 flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] h-[200px] overflow-auto">
+                      <div className="flex flex-col justify-between items-center">
+                        <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm text-gray-500">
+                          {banks &&
+                            banks.map((bank, index) => (
+                              <div
+                                key={index}
+                                className="cursor-pointer self-stretch flex flex-row hover:text-gray-900 dark:hover:text-white"
+                                onClick={() => handleSelectBank(bank)}
+                              >
+                                <div className="relative font-medium">
+                                  {bank?.name}
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* service list */}
               <div className="flex flex-col gap-[8px]">
                 {service === 'buy' && (
-                  <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                    <div className="w-full">
-                      <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                        Receiving wallet address
+                  <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                    <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                      <span>{`Receiving wallet address `}</span>
+                      <span className="text-rose-600">*</span>
+                    </b>
+                    <input
+                      id="recipientAddress"
+                      name="recipientAddress"
+                      type="text"
+                      className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                      placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
+                      value={values.recipientAddress}
+                      onChange={handleChange}
+                    />
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="text-[#ef4444]">
+                        {errors.recipientAddress}
                       </div>
-                      <input
-                        id="recipientAddress"
-                        name="recipientAddress"
-                        type="text"
-                        className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                        placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                        value={values.recipientAddress}
-                        onChange={handleChange}
-                      />
-                      <div>
-                        {touched.recipientAddress && errors.recipientAddress ? (
-                          <div className="mt-4 text-[#ef4444]">
-                            {errors.recipientAddress}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                      <MdQrCodeScanner size={15} />
-                    </div>
+                    ) : null}
                   </div>
                 )}
 
                 {service === 'sell' && (
-                  <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                    <div className="w-full">
-                      <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                        Sending address
+                  <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                    <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                      <span>{`Sending address `}</span>
+                      <span className="text-rose-600">*</span>
+                    </b>
+                    <input
+                      id="recipientAddress"
+                      name="recipientAddress"
+                      type="text"
+                      className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                      placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
+                      value={values.recipientAddress}
+                      onChange={handleChange}
+                    />
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="text-[#ef4444]">
+                        {errors.recipientAddress}
                       </div>
-                      <input
-                        id="recipientAddress"
-                        name="recipientAddress"
-                        type="text"
-                        className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                        placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                        value={values.recipientAddress}
-                        onChange={handleChange}
-                      />
-                      <div>
-                        {touched.recipientAddress && errors.recipientAddress ? (
-                          <div className="mt-4 text-[#ef4444]">
-                            {errors.recipientAddress}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                      <MdQrCodeScanner size={15} />
-                    </div>
+                    ) : null}
                   </div>
                 )}
 
-                <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                  <div className="w-full">
-                    <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                      Name
-                    </div>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                      placeholder="Aleksadra Romanova"
-                      value={values.name}
-                      onChange={handleChange}
-                    />
-                    <div>
-                      {touched.name && errors.name ? (
-                        <div className="mt-4 text-[#ef4444]">{errors.name}</div>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                    <MdQrCodeScanner size={15} />
-                  </div>
+                <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                  <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                    <span>{`Name`}</span>
+                    <span className="text-rose-600">*</span>
+                  </b>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                    placeholder="Aleksadra Romanova"
+                    value={values.name}
+                    onChange={handleChange}
+                  />
+                  {touched.name && errors.name ? (
+                    <div className="text-[#ef4444]">{errors.name}</div>
+                  ) : null}
                 </div>
-                <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                  <div className="w-full">
-                    <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                      Phone
-                    </div>
-                    <input
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      type="text"
-                      className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                      placeholder="79031234567"
-                      value={values.phoneNumber}
-                      onChange={handleChange}
-                    />
-                    <div>
-                      {touched.phoneNumber && errors.phoneNumber ? (
-                        <div className="mt-4 text-[#ef4444]">
-                          {errors.phoneNumber}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                    <MdQrCodeScanner size={15} />
-                  </div>
+                <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                  <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                    <span>{`Phone`}</span>
+                    <span className="text-rose-600">*</span>
+                  </b>
+                  <input
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    type="text"
+                    className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                    placeholder="79031234567"
+                    value={values.phoneNumber}
+                    onChange={handleChange}
+                  />
+                  {touched.phoneNumber && errors.phoneNumber ? (
+                    <div className="text-[#ef4444]">{errors.phoneNumber}</div>
+                  ) : null}
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="flex flex-row gap-2">
@@ -328,7 +401,7 @@ export const BankInfo = (props) => {
                     />
 
                     <div className="flex flex-row gap-1 text-xs md:text-smi">
-                      <div className="leading-[20px] text-darkslategray-200 inline-block">
+                      <div className="leading-[20px] text-black dark:text-silver inline-block">
                         I agree with Terms of Use, Privacy Policy and AML/KYC
                       </div>
                     </div>
@@ -348,114 +421,95 @@ export const BankInfo = (props) => {
             <>
               <div className="flex flex-col gap-[8px]">
                 {service === 'buy' && (
-                  <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                    <div className="w-full">
-                      <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                        Receiving wallet address
+                  <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                    <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                      <span>{`Receiving wallet address`}</span>
+                      <span className="text-rose-600">*</span>
+                    </b>
+                    <input
+                      id="recipientAddress"
+                      name="recipientAddress"
+                      type="text"
+                      className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                      placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
+                      value={values.recipientAddress}
+                      onChange={handleChange}
+                    />
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="text-[#ef4444]">
+                        {errors.recipientAddress}
                       </div>
-                      <input
-                        id="recipientAddress"
-                        name="recipientAddress"
-                        type="text"
-                        className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                        placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                        value={values.recipientAddress}
-                        onChange={handleChange}
-                      />
-                      <div>
-                        {touched.recipientAddress && errors.recipientAddress ? (
-                          <div className="mt-4 text-[#ef4444]">
-                            {errors.recipientAddress}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                      <MdQrCodeScanner size={15} />
-                    </div>
+                    ) : null}
                   </div>
                 )}
 
                 {service === 'sell' && (
-                  <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                    <div className="w-full">
-                      <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                        Sending address
+                  <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                    <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                      <span>{`Sending address`}</span>
+                      <span className="text-rose-600">*</span>
+                    </b>
+                    <input
+                      id="recipientAddress"
+                      name="recipientAddress"
+                      type="text"
+                      className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                      placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
+                      value={values.recipientAddress}
+                      onChange={handleChange}
+                    />
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="text-[#ef4444]">
+                        {errors.recipientAddress}
                       </div>
-                      <input
-                        id="recipientAddress"
-                        name="recipientAddress"
-                        type="text"
-                        className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                        placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                        value={values.recipientAddress}
-                        onChange={handleChange}
-                      />
-                      <div>
-                        {touched.recipientAddress && errors.recipientAddress ? (
-                          <div className="mt-4 text-[#ef4444]">
-                            {errors.recipientAddress}
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                      <MdQrCodeScanner size={15} />
-                    </div>
+                    ) : null}
                   </div>
                 )}
 
-                <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                  <div className="w-full">
-                    <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                      Name
-                    </div>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                      placeholder="Aleksadra Romanova"
-                      value={values.name}
-                      onChange={handleChange}
-                    />
-                    <div>
-                      {touched.name && errors.name ? (
-                        <div className="mt-4 text-[#ef4444]">{errors.name}</div>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                    <MdQrCodeScanner size={15} />
-                  </div>
+                <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                  <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                    <span>{`Name`}</span>
+                    <span className="text-rose-600">*</span>
+                  </b>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                    placeholder="Aleksadra Romanova"
+                    value={values.name}
+                    onChange={handleChange}
+                  />
+                  {touched.name && errors.name ? (
+                    <div className="text-[#ef4444]">{errors.name}</div>
+                  ) : null}
                 </div>
-                <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-                  <div className="w-full">
-                    <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                      Card
-                    </div>
+                <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                  <b className="relative leading-[28px] inline-block text-black dark:text-silver">
+                    <span>{`Card`}</span>
+                    <span className="text-rose-600">*</span>
+                  </b>
+                  <div className="flex flex-row w-full justify-between items-center">
                     <input
                       id="cardNumber"
                       name="cardNumber"
                       type="text"
-                      className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
+                      className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
                       placeholder="Card Number"
                       value={values.cardNumber}
                       onChange={handleCardNumberChange}
                     />
-                    <div>
-                      {touched.cardNumber && errors.cardNumber ? (
-                        <div className="mt-4 text-[#ef4444]">
-                          {errors.cardNumber}
-                        </div>
-                      ) : null}
+
+                    <div className="cursor-pointer ml-2 flex justify-center items-center w-[36px] h-[64px] overflow-hidden">
+                      {paymentSystemIcon && (
+                        <img src={paymentSystemIcon} alt="Payment system" />
+                      )}
                     </div>
                   </div>
-                  <div className="cursor-pointer mr-2 flex justify-center items-center w-[36px] h-[64px] overflow-hidden">
-                    {paymentSystemIcon && (
-                      <img src={paymentSystemIcon} alt="Payment system" />
-                    )}
-                  </div>
+
+                  {touched.cardNumber && errors.cardNumber ? (
+                    <div className="text-[#ef4444]">{errors.cardNumber}</div>
+                  ) : null}
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="flex flex-row gap-2">
@@ -469,7 +523,7 @@ export const BankInfo = (props) => {
                     />
 
                     <div className="flex flex-row gap-1 text-xs md:text-smi">
-                      <div className="leading-[20px] text-darkslategray-200 inline-block">
+                      <div className="leading-[20px] text-black dark:text-silver inline-block">
                         I agree with Terms of Use, Privacy Policy and AML/KYC
                       </div>
                     </div>

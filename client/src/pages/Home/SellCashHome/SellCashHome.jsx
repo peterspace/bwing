@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SellCashApp from '../components/SellCashApp';
 import { SellCashScreen2 } from './SellCashScreen2';
 import { SellCashScreen3 } from './SellCashScreen3';
-import { Footer } from '../../../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserTransactions,

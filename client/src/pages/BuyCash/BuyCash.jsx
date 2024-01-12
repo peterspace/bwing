@@ -3,7 +3,7 @@ import { useLocation, Navigate } from 'react-router-dom';
 import { Exchange3of4 } from './Exchange3of4';
 import { Exchange4of4 } from './Exchange4of4';
 import { Exchange5of5 } from './Exchange5of5';
-import { Footer } from '../../components/Footer';
+import FooterMini from "../../components/FooterMini";
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import {
@@ -141,10 +141,9 @@ useEffect(() => {
         )}
       </div>
 
-      <div className="relative bg-white w-full overflow-auto text-left text-sm text-gray-400 font-montserrat">
-        <div className="mt-8 flex flex-col justify-center items-center gap-4 mb-8">
-          <div className="flex bg-lightslategray-300 w-full h-px" />
-          <Footer />
+      <div className="relative text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
+        <div className="flex flex-col justify-center items-center">
+          <FooterMini />
         </div>
       </div>
     </>

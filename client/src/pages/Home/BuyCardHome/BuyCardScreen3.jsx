@@ -69,6 +69,7 @@ export const BuyCardScreen3 = (props) => {
   console.log({ transactionRatesLoading: transactionRatesLoading });
   //===={To be added}========
   const amount = transactionRates ? transactionRates?.amount : 0;
+  console.log({bankName:bankName})
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */

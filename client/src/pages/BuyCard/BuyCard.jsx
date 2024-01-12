@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, Navigate } from "react-router-dom";
-import { Exchange3of4 } from "./Exchange3of4";
-import { Exchange4of4 } from "./Exchange4of4";
-import { Exchange5of5 } from "./Exchange5of5";
-import { Footer } from "../../components/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { getTransactionByTxIdInternal } from "../../redux/features/transaction/transactionSlice";
+import React, { useState, useEffect } from 'react';
+import { useLocation, Navigate } from 'react-router-dom';
+import { Exchange3of4 } from './Exchange3of4';
+import { Exchange4of4 } from './Exchange4of4';
+import { Exchange5of5 } from './Exchange5of5';
+import FooterMini from '../../components/FooterMini';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import {
   getTransactionByTxIdService,
   updateOnePaidTransactionByIdService,
-} from "../../services/apiService";
+} from '../../services/apiService';
 
 export const BuyCard = (props) => {
   const { mode, user, service, subService, setTxInfo, txInfo } = props;
@@ -29,11 +29,11 @@ export const BuyCard = (props) => {
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   const [refetchTxData, setRefetchTxData] = useState(false);
-  const [fTitle, setFTitle] = useState("You send");
-  const [tTitle, setTTitle] = useState("You get");
+  const [fTitle, setFTitle] = useState('You send');
+  const [tTitle, setTTitle] = useState('You get');
 
-  const isReceivedL = localStorage.getItem("isReceivedByCard")
-    ? JSON.parse(localStorage.getItem("isReceivedByCard"))
+  const isReceivedL = localStorage.getItem('isReceivedByCard')
+    ? JSON.parse(localStorage.getItem('isReceivedByCard'))
     : true;
 
   const [isReceived, setIsReceived] = useState(isReceivedL);
@@ -44,7 +44,7 @@ export const BuyCard = (props) => {
 
   useEffect(() => {
     if (isReceived) {
-      localStorage.setItem("isReceivedByCard", JSON.stringify(isReceived));
+      localStorage.setItem('isReceivedByCard', JSON.stringify(isReceived));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,7 +52,7 @@ export const BuyCard = (props) => {
   //====================================================================================================
 
   useEffect(() => {
-    localStorage.setItem("prevLocation", JSON.stringify(location?.pathname));
+    localStorage.setItem('prevLocation', JSON.stringify(location?.pathname));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -74,7 +74,7 @@ export const BuyCard = (props) => {
 
   //====================={Pay user automatically}====================================
   useEffect(() => {
-    if (txData?.status === "Received" && isReceived) {
+    if (txData?.status === 'Received' && isReceived) {
       updatePaidTransaction();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,10 +124,9 @@ export const BuyCard = (props) => {
         )}
       </div>
 
-      <div className="relative bg-white w-full overflow-auto text-left text-sm text-gray-400 font-montserrat">
-        <div className="mt-8 flex flex-col justify-center items-center gap-4 mb-8">
-          <div className="flex bg-lightslategray-300 w-full h-px" />
-          <Footer />
+      <div className="relative text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
+        <div className="flex flex-col justify-center items-center">
+          <FooterMini />
         </div>
       </div>
     </>

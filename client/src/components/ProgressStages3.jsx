@@ -11,7 +11,7 @@ import { FiCheckCircle } from 'react-icons/fi';
 
 export const ProgressStages3 = () => {
   const progressStage1 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-gray-100">
+    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -19,10 +19,10 @@ export const ProgressStages3 = () => {
         </div>
 
         <div className="flex flex-col">
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-white">
             Exchange pair
           </div>
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-silver">
             Set the preferred exchange pair
           </div>
         </div>
@@ -30,7 +30,7 @@ export const ProgressStages3 = () => {
     </div>
   );
   const progressStage2 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-gray-100">
+    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -38,10 +38,10 @@ export const ProgressStages3 = () => {
         </div>
 
         <div className="flex flex-col">
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-white">
             Wallet address
           </div>
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-silver">
             Fill in the crypto wallet address details
           </div>
         </div>
@@ -49,7 +49,7 @@ export const ProgressStages3 = () => {
     </div>
   );
   const progressStage3 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-gray-100">
+    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -57,8 +57,10 @@ export const ProgressStages3 = () => {
         </div>
 
         <div className="flex flex-col">
-          <div className="text-xs leading-[17px] inline-block">Payment</div>
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-white">
+            Payment
+          </div>
+          <div className="text-xs leading-[17px] inline-block dark:text-silver">
             Deposit the amount required for the exchange
           </div>
         </div>
@@ -66,17 +68,19 @@ export const ProgressStages3 = () => {
     </div>
   );
   const progressStage4 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-gray-100">
+    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
-        <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0 bg-gainsboro-100 p-1 rounded">
+        <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0 bg-white p-1 rounded">
           <div className="text-xs leading-[17px] text-black inline-block w-[7px]">
             4
           </div>
         </div>
 
         <div className="flex flex-col">
-          <div className="text-xs leading-[17px] inline-block">Exchange</div>
-          <div className="text-xs leading-[17px] inline-block">
+          <div className="text-xs leading-[17px] inline-block dark:text-white">
+            Exchange
+          </div>
+          <div className="text-xs leading-[17px] inline-block dark:text-silver">
             Wait for your transaction to be completed
           </div>
         </div>
@@ -85,20 +89,20 @@ export const ProgressStages3 = () => {
   );
 
   const processBar = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex flex-row gap-4 mt-2">
             {/* ========================{step 3 of 4}===================================== */}
-            <div className="leading-[20px] text-black inline-block w-[202px]">
+            <div className="leading-[20px] text-black dark:text-silver inline-block w-[202px]">
               Send funds to the displayed address
             </div>
           </div>
           <div className="flex flex-row items-center justify-between w-[260px]">
-            <div className="flex flex-row w-[160px] bg-whitesmoke-200 rounded-lg">
+            <div className="flex flex-row w-[160px] bg-chizzySnow rounded-lg">
               <div className="flex bg-bgPrimary rounded-lg w-[70%] h-[12px]" />
             </div>
-            <div className="flex flex-row justify-center items-center text-gray-200 bg-bgSecondary rounded w-[49px] h-[20px] text-[10px]">
+            <div className="flex flex-row justify-center items-center text-gray-200 bg-chizzySnow dark:bg-exchange-rate-dark rounded w-[49px] h-[20px] text-[10px]">
               3 of 4
             </div>
           </div>

@@ -22,9 +22,8 @@ export const WalletInfo = (props) => {
   console.log({ senderAddressInfo: senderAddressInfo });
   console.log({ recipientAddressInfo: recipientAddressInfo });
 
-  console.log({tTokenNetwork: tToken?.chain})
-  console.log({fTokenNetwork: fToken?.chain})
-
+  console.log({ tTokenNetwork: tToken?.chain });
+  console.log({ fTokenNetwork: fToken?.chain });
 
   // async function checkAddress(walletAddress) {
   //   const userData = {
@@ -64,7 +63,7 @@ export const WalletInfo = (props) => {
       }
 
       const validitySenderAddress = await checkAddress(values.senderAddress);
-      if(validitySenderAddress){
+      if (validitySenderAddress) {
         setSenderAddressInfo(validitySenderAddress);
       }
 
@@ -72,10 +71,9 @@ export const WalletInfo = (props) => {
         values.recipientAddress
       );
 
-      if(validityRecipientAddress){
+      if (validityRecipientAddress) {
         setRecipientAddressInfo(validityRecipientAddress);
       }
-      
 
       //========================{Sending wallet}================================================
 
@@ -86,8 +84,7 @@ export const WalletInfo = (props) => {
 
         if (
           validitySenderAddress?.valid == true &&
-          validitySenderAddress.network !==
-            fToken?.chain
+          validitySenderAddress.network !== fToken?.chain
         ) {
           errors.senderAddress = `${fToken?.chain} wallet address required!`;
         }
@@ -102,8 +99,7 @@ export const WalletInfo = (props) => {
 
         if (
           validityRecipientAddress?.valid == true &&
-          validityRecipientAddress.network !==
-            tToken?.chain
+          validityRecipientAddress.network !== tToken?.chain
         ) {
           errors.recipientAddress = `${tToken?.chain} wallet address required!`;
         }
@@ -126,17 +122,17 @@ export const WalletInfo = (props) => {
 
   const walletInfo = (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
+      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px]">
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[10px]">
             <div className="flex flex-row justify-between mt-[24px]">
               <div
-                className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[14px] md:text-[24px]`}
+                className={`cursor-pointer leading-[24px] inline-block text-black dark:text-silver text-[14px] md:text-[24px]`}
               >
                 Wallet address
               </div>
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
+                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
                 onClick={() => {
                   setPercentageProgress(1);
                 }}
@@ -148,78 +144,44 @@ export const WalletInfo = (props) => {
           </div>
 
           <div className="flex flex-col gap-[8px]">
-            <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-              <div className="w-full">
-                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                  Sending address
-                </div>
-                <input
-                  id="senderAddress"
-                  name="senderAddress"
-                  type="text"
-                  className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                  placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                  value={values.senderAddress}
-                  onChange={handleChange}
-                />
-                <div>
-                  {touched.senderAddress && errors.senderAddress ? (
-                    <div className="mt-4 text-[#ef4444]">
-                      {errors.senderAddress}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-              <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                <MdQrCodeScanner size={15} />
-              </div>
-            </div>
-            <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
-              <div className="w-full">
-                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
-                  Receiving address
-                </div>
-                <input
-                  id="recipientAddress"
-                  name="recipientAddress"
-                  type="text"
-                  className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
-                  placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                  value={values.recipientAddress}
-                  onChange={handleChange}
-                />
-                <div>
-                  {touched.recipientAddress && errors.recipientAddress ? (
-                    <div className="mt-4 text-[#ef4444]">
-                      {errors.recipientAddress}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-              <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
-                <MdQrCodeScanner size={15} />
-              </div>
+            <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+              <b className="relative leading-[28px] inline-block w-[167px] text-black dark:text-silver">
+                <span>{`Sending address `}</span>
+                <span className="text-rose-600">*</span>
+              </b>
+              <input
+                id="senderAddress"
+                name="senderAddress"
+                type="text"
+                className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
+                value={values.senderAddress}
+                onChange={handleChange}
+              />
+              {touched.senderAddress && errors.senderAddress ? (
+                <div className="text-[#ef4444]">{errors.senderAddress}</div>
+              ) : null}
             </div>
 
-            <div className="flex flex-col gap-1 mt-6">
-              <div className="flex flex-row gap-2">
-                <div className="flex flex-row justify-center items-center bg-gray-400 rounded-[4px] w-[26px] h-[16px]">
-                  <span className="text-3xs uppercase text-white inline-block">
-                    fio
-                  </span>
-                </div>
-                <div className="flex flex-row justify-center items-center bg-steelblue rounded-[4px] w-[26px] h-[16px]">
-                  <span className="text-3xs uppercase text-white inline-block">
-                    ud
-                  </span>
-                </div>
-                <div className="flex flex-row justify-start items-center">
-                  <span className="text-2xs inline-block py-1 px-1.5">
-                    FIO protocol and Unstoppable Domains are supported
-                  </span>
-                </div>
-              </div>
+            <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+              <b className="relative leading-[28px] inline-block w-[167px] text-black dark:text-silver">
+                <span>{`Receiving address `}</span>
+                <span className="text-rose-600">*</span>
+              </b>
+              <input
+                id="recipientAddress"
+                name="recipientAddress"
+                type="text"
+                className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+                placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
+                value={values.recipientAddress}
+                onChange={handleChange}
+              />
+              {touched.recipientAddress && errors.recipientAddress ? (
+                <div className="text-[#ef4444]">{errors.recipientAddress}</div>
+              ) : null}
             </div>
+
             <div className="flex flex-col gap-1">
               <div className="flex flex-row gap-2">
                 <input
@@ -228,11 +190,11 @@ export const WalletInfo = (props) => {
                   type="checkbox"
                   value={values.isTermsChecked}
                   onChange={handleChange}
-                  className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
+                  className="outline-none bg-chizzySnow dark:bg-gray-1000 accent-bgPrimary focus:accent-bgPrimary/30"
                 />
 
                 <div className="flex flex-row gap-1 text-xs md:text-smi">
-                  <div className="leading-[20px] text-darkslategray-200 inline-block">
+                  <div className="leading-[20px] text-black dark:text-silver inline-block">
                     I agree with Terms of Use, Privacy Policy and AML/KYC
                   </div>
                 </div>
@@ -251,7 +213,8 @@ export const WalletInfo = (props) => {
             className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white w-full hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150"
             onClick={handleSubmit}
           >
-            {service} {fValue} {fToken?.symbol}
+            {/* {service} {fValue} {fToken?.symbol} */}
+            {`Exchange`} {fValue} {fToken?.symbol.toUpperCase()}
           </div>
         </div>
       </div>

@@ -21,8 +21,6 @@ export const DetailsLocal = (props) => {
   const serviceFee = transactionRates ? transactionRates?.serviceFee : 0;
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
-  //===={To be added}========
-  const estimatedGas = transactionRates ? transactionRates?.estimatedGas : 0;
 
   const details = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] p-4">

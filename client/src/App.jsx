@@ -15,6 +15,7 @@ import LogoMarkets from './components/coins/LogoMarkets';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Auth } from './pages/Auth/Auth';
 import { Reset } from './pages/Auth/Reset';
+import { Support } from './pages/Support/ Support';
 // import { Otp } from './pages/auth/Otp';
 import { getTransactionByTxIdInternal } from './redux/features/transaction/transactionSlice';
 import { AppContainerChecker } from './pages/Home/AppContainerChecker';
@@ -260,6 +261,8 @@ function App() {
                 />
               }
             />
+            <Route path="/support" element={<Support />} />
+
             <Route path="/resetpassword/:resetToken" element={<Reset />} />
             {/* <Route
               path="/otp"

@@ -46,15 +46,15 @@ export const CheckoutCard = (props) => {
 
 
   const checkout = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark  shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[8px] md:gap-[12px]">
           <div className="flex flex-row justify-between mt-[24px] ml-2 mr-2">
-            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] text-black dark:text-white inline-block">
               Checkout
             </div>
             <div
-              className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded px-6 py-3"
+              className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-3"
               onClick={() => {
                 setPercentageProgress(2);
               }}
@@ -71,7 +71,7 @@ export const CheckoutCard = (props) => {
               <div className="text-smi leading-[22px] text-darkgray-100 inline-block">
                 {fTitle}
               </div>
-              <div className="text-base leading-[24px] text-gray-300 inline-block">
+              <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
                 {fValue} {fToken?.symbol.toUpperCase()}
               </div>
               {fToken?.chain ? (
@@ -89,8 +89,8 @@ export const CheckoutCard = (props) => {
                 {tTitle}
               </div>
               <div className="flex flex-row gap-2">
-                <div className="text-base leading-[24px] text-gray-300 inline-block">
-                  {'~'} {tValue} {tToken?.symbol.toUpperCase()}
+                <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
+                 {tValue} {tToken?.symbol.toUpperCase()}
                 </div>
               </div>
               {tToken?.chain ? (
@@ -114,7 +114,7 @@ export const CheckoutCard = (props) => {
               <div className="leading-[20px] text-darkgray-200 inline-block">
                 Processing fee
               </div>
-              <div className="text-base leading-[24px] text-black inline-block w-40">
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                 {processingFee} {tToken?.symbol.toUpperCase()}
               </div>
               <div className="text-3xs leading-[12px] text-darkgray-100 inline-block w-[216px]">
@@ -126,7 +126,7 @@ export const CheckoutCard = (props) => {
               <div className="text-smi leading-[20px] text-darkgray-200 inline-block">
                 Payment Method
               </div>
-              <div className="text-base leading-[24px] text-black inline-block">
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block">
                 {provider?.name}
               </div>
               <div className="text-3xs leading-[12px] text-darkgray-100 inline-block w-52">
@@ -151,17 +151,17 @@ export const CheckoutCard = (props) => {
                 </div>
               )}
 
-              <div className="text-base leading-[24px] text-black inline-block w-[237px]">
-                {userAddress && userAddress?.substring(0, 22)}
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block w-[237px]">
+                {userAddress && userAddress?.substring(0, 20)}
                 <br />
-                {userAddress && userAddress?.substring(22, userAddress.length)}
+                {userAddress && userAddress?.substring(20, userAddress.length)}
               </div>
             </div>
             <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
               <div className="leading-[20px] text-darkgray-200 inline-block">
                 Exchange rate
               </div>
-              <div className="text-base leading-[24px] text-black inline-block w-[177px]">
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block w-[177px]">
                 {1} {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
                 {tToken?.symbol.toUpperCase()}
               </div>
@@ -180,7 +180,7 @@ export const CheckoutCard = (props) => {
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Full Name
                       </div>
-                      <div className="text-base leading-[24px] text-black inline-block w-40">
+                      <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                         {fullName ? fullName.toUpperCase() : ''}
                       </div>
                     </div>
@@ -188,7 +188,7 @@ export const CheckoutCard = (props) => {
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Phone
                       </div>
-                      <div className="text-base leading-[24px] text-black inline-block w-40">
+                      <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                         {phone ? phone : ''}
                       </div>
                     </div>
@@ -196,7 +196,7 @@ export const CheckoutCard = (props) => {
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Bank Name
                       </div>
-                      <div className="text-base leading-[24px] text-black inline-block w-40">
+                      <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                         {bankName ? bankName : ''}
                       </div>
                     </div>
@@ -212,7 +212,7 @@ export const CheckoutCard = (props) => {
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Full Name
                       </div>
-                      <div className="text-base leading-[24px] text-black inline-block w-40">
+                      <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                         {fullName ? fullName.toUpperCase() : ''}
                       </div>
                     </div>
@@ -220,7 +220,7 @@ export const CheckoutCard = (props) => {
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Card Number
                       </div>
-                      <div className="text-base leading-[24px] text-black inline-block w-40">
+                      <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
                         {cardNumber ? cardNumber : ''}
                       </div>
                     </div>

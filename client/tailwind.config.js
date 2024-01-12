@@ -12,7 +12,8 @@ export default {
           300: 'rgba(179, 180, 180, 0.7)',
         },
         gray: {
-          100: '#f3f4f6', // tailwind
+          // 100: '#f3f4f6', // tailwind
+          100: '#f3f4f6', // chizzySnow
           // 100: "#fafafa",
           200: '#8e8e8e',
           300: '#222729',
@@ -24,6 +25,7 @@ export default {
           800: 'rgba(0, 0, 0, 0.87)',
           // 900: "rgba(255, 255, 255, 0.87)",
           900: '#111827', //tailwind
+          1000: 'rgba(27, 27, 43, 0.5)',
         },
         darkslategray: {
           100: '#404b51',

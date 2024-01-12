@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Logout } from "../redux/features/user/userSlice";
-import { BsFillMoonStarsFill, BsMoonStars } from "react-icons/bs"; // Bitcoin
-import { useDispatch } from "react-redux";
-const tabs = ["Home", "Exchange", "Buy", "Sell", "Defi"];
-import { TbLogout, TbLogin } from "react-icons/tb";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Logout } from '../redux/features/user/userSlice';
+import { BsFillMoonStarsFill, BsMoonStars } from 'react-icons/bs'; // Bitcoin
+import { useDispatch } from 'react-redux';
+const tabs = ['Home', 'Exchange', 'Buy', 'Sell', 'Defi'];
+import { TbLogout, TbLogin } from 'react-icons/tb';
 
 export const Header = (props) => {
   const { mode, setMode, user } = props;
@@ -19,12 +19,14 @@ export const Header = (props) => {
   const [isRedirectSell, setIsRedirectSell] = useState(false);
   const [isRedirectDefi, setIsRedirectDefi] = useState(false);
   const [isRedirectDashboard, setIsRedirectDashboard] = useState(false);
+  const [isRedirectSupport, setIsRedirectSupport] = useState(false);
+
   const [isLogin, setIsLogin] = useState(false);
   const [activeTab, setActiveTab] = useState(tabs[1]);
 
   useEffect(() => {
     if (isLogin) {
-      navigate("/auth");
+      navigate('/auth');
       setIsLogin(false);
     }
 
@@ -33,7 +35,7 @@ export const Header = (props) => {
 
   useEffect(() => {
     if (isRedirectExchange) {
-      navigate("/exchange");
+      navigate('/exchange');
       setIsRedirectExchange(false);
     }
 
@@ -42,7 +44,7 @@ export const Header = (props) => {
 
   useEffect(() => {
     if (isRedirectBuy) {
-      navigate("/buyCard");
+      navigate('/buyCard');
       setIsRedirectBuy(true);
     }
 
@@ -51,7 +53,7 @@ export const Header = (props) => {
 
   useEffect(() => {
     if (isRedirectSell) {
-      navigate("/sellCard");
+      navigate('/sellCard');
       setIsRedirectSell(true);
     }
 
@@ -60,7 +62,7 @@ export const Header = (props) => {
 
   useEffect(() => {
     if (isRedirectDefi) {
-      navigate("/defi");
+      navigate('/defi');
       setIsRedirectDefi(false);
     }
 
@@ -70,7 +72,7 @@ export const Header = (props) => {
   useEffect(() => {
     if (isRedirectHome) {
       newFunc();
-      navigate("/");
+      navigate('/');
       setIsRedirectHome(false);
     }
 
@@ -80,30 +82,39 @@ export const Header = (props) => {
   useEffect(() => {
     if (isRedirectDashboard) {
       newFunc();
-      navigate("/dashboard");
+      navigate('/dashboard');
       setIsRedirectDashboard(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedirectDashboard]);
 
+  useEffect(() => {
+    if (isRedirectSupport) {
+      navigate('/support');
+      setIsRedirectSupport(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRedirectSupport]);
+
   async function newFunc() {
-    localStorage.removeItem("fTokenE");
-    localStorage.removeItem("tTokenE");
-    localStorage.removeItem("telegram");
-    localStorage.removeItem("userAddress");
-    localStorage.removeItem("benderyAddress");
-    localStorage.removeItem("country");
-    localStorage.removeItem("cityData");
-    localStorage.removeItem("city");
-    localStorage.removeItem("paymentMethod");
-    localStorage.removeItem("txInfo");
-    localStorage.removeItem("percentageProgress");
-    localStorage.removeItem("blockchainNetworkE");
-    localStorage.removeItem("provider");
-    localStorage.removeItem("service");
-    localStorage.removeItem("subService");
-    navigate("/");
+    localStorage.removeItem('fTokenE');
+    localStorage.removeItem('tTokenE');
+    localStorage.removeItem('telegram');
+    localStorage.removeItem('userAddress');
+    localStorage.removeItem('benderyAddress');
+    localStorage.removeItem('country');
+    localStorage.removeItem('cityData');
+    localStorage.removeItem('city');
+    localStorage.removeItem('paymentMethod');
+    localStorage.removeItem('txInfo');
+    localStorage.removeItem('percentageProgress');
+    localStorage.removeItem('blockchainNetworkE');
+    localStorage.removeItem('provider');
+    localStorage.removeItem('service');
+    localStorage.removeItem('subService');
+    navigate('/');
   }
 
   const handleLogout = () => {
@@ -133,9 +144,9 @@ export const Header = (props) => {
           }}
         >
           {mode === true ? (
-            <BsMoonStars size={18} color={"#111111"} />
+            <BsMoonStars size={18} color={'#111111'} />
           ) : (
-            <BsFillMoonStarsFill size={18} color={"#4f46e5"} />
+            <BsFillMoonStarsFill size={18} color={'#4f46e5'} />
           )}
         </div>
         {/* <div className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer">
@@ -143,6 +154,14 @@ export const Header = (props) => {
         </div> */}
         {user?.token ? (
           <>
+            <div
+              className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer"
+              onClick={() => {
+                setIsRedirectSupport(true);
+              }}
+            >
+              Support
+            </div>
             <div
               className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer"
               onClick={() => {

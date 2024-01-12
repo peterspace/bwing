@@ -18,7 +18,7 @@ export const Providers = (props) => {
         selectedProvider == provider?.name
           ? `border-2 border-solid border-bgPrimary`
           : ``
-      } cursor-pointer h-[46px] md:h-[86px] box-border flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] xs:w-[308px] md:w-[532px] p-4`}
+      } cursor-pointer h-[30px] md:h-[60px] box-border flex justify-center rounded-lg bg-white dark:bg-background-dark text-gray-300 dark:text-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4`}
       onClick={() => {
         setSelectedProvider(provider?.name);
         setProvider(provider);

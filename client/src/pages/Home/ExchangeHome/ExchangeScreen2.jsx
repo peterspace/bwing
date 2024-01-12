@@ -4,6 +4,7 @@ import { WalletInfo } from '../../../components/WalletInfo';
 import { DetailsLocal } from '../../../components/DetailsLocal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
+import RatesLocalModel from '../../../components/RatesLocalModel';
 
 export const ExchangeScreen2 = (props) => {
   const {
@@ -45,7 +46,7 @@ export const ExchangeScreen2 = (props) => {
           />
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
-          <DetailsLocal
+          <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
             fValue={fValue}

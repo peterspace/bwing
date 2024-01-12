@@ -7,6 +7,7 @@ import { Providers } from '../../../components/Providers';
 import { BankInfo } from '../../../components/BankInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
+import RatesLocalModel from '../../../components/RatesLocalModel';
 
 export const BuyCardScreen2 = (props) => {
   const {
@@ -87,7 +88,16 @@ export const BuyCardScreen2 = (props) => {
           ))}
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
-          <DetailsCardLocal
+          {/* <DetailsCardLocal
+            fToken={fToken}
+            tToken={tToken}
+            fValue={fValue}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+          /> */}
+          <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
             fValue={fValue}
