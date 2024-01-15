@@ -31,7 +31,7 @@ export const Forgot = (props) => {
   const [redirectHome, setRedirectHome] = useState(false);
 
   const dispatch = useDispatch();
-  
+
   async function forgot(email) {
     if (!validateEmail(email)) {
       return toast.error('Please enter a valid email');
@@ -144,5 +144,12 @@ export const Forgot = (props) => {
       </form>
     </div>
   );
-  return <>{login}</>;
+  return (
+    <>
+      <div className="flex flex-row justify-center items-center h-screen">
+        {login}
+      </div>
+    </>
+  );
 };
+

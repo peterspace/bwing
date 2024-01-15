@@ -20,8 +20,9 @@ export const CashInfo = (props) => {
   const [recipientAddressInfo, setRecipientAddressInfo] = useState();
   console.log({ recipientAddressInfo: recipientAddressInfo });
 
-  console.log({ tTokenNetwork: tToken?.chain });
-  console.log({ fTokenNetwork: fToken?.chain });
+  console.log({tTokenNetwork: tToken?.chain})
+  console.log({fTokenNetwork: fToken?.chain})
+
 
   async function checkAddress(walletAddress) {
     const userData = {
@@ -31,13 +32,14 @@ export const CashInfo = (props) => {
     return response;
   }
 
+
   const { values, handleChange, handleSubmit, touched, errors } = useFormik({
     initialValues: {
       recipientAddress: '',
       telegram: '',
       isTermsChecked: false,
     },
-    validate: async (values) => {
+    validate: async(values) => {
       const errors = {};
 
       if (!values.recipientAddress) {
@@ -103,17 +105,18 @@ export const CashInfo = (props) => {
 
   const cashInfo = (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]">
+      <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] xl:w-[500px] p-4">
         <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col gap-[10px] m-2">
+          <div className="flex flex-col gap-[10px]">
+
             <div className="flex flex-row justify-between mt-[24px]">
               <div
-                className={`text-[18px] font-extrabold leading-[32px] text-black dark:text-white inline-block`}
+                className={`cursor-pointer hover:text-bgPrimary leading-[24px] inline-block text-darkslategray-200 text-[14px] xl:text-[24px]`}
               >
-                Payment Details
+               Cash Payment Detail
               </div>
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-1"
+                className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary shrink-0 rounded py-1 px-3 xl:px-6 xl:py-3"
                 onClick={() => {
                   setPercentageProgress(1);
                 }}
@@ -126,69 +129,87 @@ export const CashInfo = (props) => {
 
           <div className="flex flex-col gap-[8px]">
             {service === 'buy' && (
-              <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-                <b className="relative leading-[28px] inline-block text-black dark:text-silver">
-                  <span>{`Receiving wallet address `}</span>
-                  <span className="text-rose-600">*</span>
-                </b>
-                <input
-                  id="recipientAddress"
-                  name="recipientAddress"
-                  type="text"
-                  className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
-                  placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
-                  value={values.recipientAddress}
-                  onChange={handleChange}
-                />
-                {touched.recipientAddress && errors.recipientAddress ? (
-                  <div className="text-[#ef4444]">
-                    {errors.recipientAddress}
+              <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
+                <div className="w-full">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                    Receiving wallet address
                   </div>
-                ) : null}
+                  <input
+                    id="recipientAddress"
+                    name="recipientAddress"
+                    type="text"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
+                    placeholder={`Enter your ${tToken?.symbol.toUpperCase()} receiving address`}
+                    value={values.recipientAddress}
+                    onChange={handleChange}
+                  />
+                  <div>
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="mt-4 text-[#ef4444]">
+                        {errors.recipientAddress}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                  <MdQrCodeScanner size={15} />
+                </div>
               </div>
             )}
 
             {service === 'sell' && (
-              <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-                <b className="relative leading-[28px] inline-block text-black dark:text-silver">
-                  <span>{`Sending address `}</span>
-                  <span className="text-rose-600">*</span>
-                </b>
-                <input
-                  id="recipientAddress"
-                  name="recipientAddress"
-                  type="text"
-                  className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
-                  placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
-                  value={values.recipientAddress}
-                  onChange={handleChange}
-                />
-                {touched.recipientAddress && errors.recipientAddress ? (
-                  <div className="text-[#ef4444]">
-                    {errors.recipientAddress}
+              <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
+                <div className="w-full">
+                  <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                    Sending address
                   </div>
-                ) : null}
+                  <input
+                    id="recipientAddress"
+                    name="recipientAddress"
+                    type="text"
+                    className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
+                    placeholder={`Enter your ${fToken?.symbol.toUpperCase()} sending address`}
+                    value={values.recipientAddress}
+                    onChange={handleChange}
+                  />
+                  <div>
+                    {touched.recipientAddress && errors.recipientAddress ? (
+                      <div className="mt-4 text-[#ef4444]">
+                        {errors.recipientAddress}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                  <MdQrCodeScanner size={15} />
+                </div>
               </div>
             )}
-            <div className="w-full flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-              <b className="relative leading-[28px] inline-block text-black dark:text-silver">
-                <span>{`Telegram`}</span>
-                <span className="text-rose-600">*</span>
-              </b>
-              <input
-                id="telegram"
-                name="telegram"
-                type="text"
-                className="rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-base py-2 px-2.5 resize-none w-full  border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
-                placeholder="@jason"
-                value={values.telegram}
-                onChange={handleChange}
-              />
-              {touched.telegram && errors.telegram ? (
-                <div className="text-[#ef4444]">{errors.telegram}</div>
-              ) : null}
-            </div>
 
+            <div className="flex flex-row bg-whitesmoke-100 rounded h-[62px] justify-between mb-5">
+              <div className="">
+                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200">
+                  Telegram
+                </div>
+                <input
+                  id="telegram"
+                  name="telegram"
+                  type="text"
+                  className="ml-2 text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 inline-block w-[90%] outline-none bg-whitesmoke-100 placeholder-darkgray-100"
+                  placeholder="@jason"
+                  value={values.telegram}
+                  onChange={handleChange}
+                />
+                <div>
+                  {touched.telegram && errors.telegram ? (
+                    <div className="mt-4 text-[#ef4444]">{errors.telegram}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="cursor-pointer mr-2 flex justify-center items-center w-[18px] h-[64px] overflow-hidden">
+                <MdQrCodeScanner size={15} />
+              </div>
+            </div>
             <div className="flex flex-col gap-1">
               <div className="flex flex-row gap-2">
                 <input
@@ -200,8 +221,8 @@ export const CashInfo = (props) => {
                   className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
                 />
 
-                <div className="flex flex-row gap-1 text-xs md:text-[12px]">
-                  <div className="leading-[20px] text-black dark:text-silver inline-block">
+                <div className="flex flex-row gap-1 text-xs md:text-smi">
+                  <div className="leading-[20px] text-darkslategray-200 inline-block">
                     I agree with Terms of Use, Privacy Policy and AML/KYC
                   </div>
                 </div>
@@ -215,9 +236,8 @@ export const CashInfo = (props) => {
               </div>
             </div>
           </div>
-
           <div
-            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150 m-4"
+            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white w-full hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150"
             onClick={handleSubmit}
           >
             {service} {fValue} {fToken?.symbol}

@@ -18,7 +18,7 @@ export const CheckoutCard = (props) => {
     userAddress,
     transactionRates,
     loadingExchangeRate,
-    submitTransaction,
+    submitTransaction
   } = props;
 
   /********************************************************************************************************************** */
@@ -45,16 +45,17 @@ export const CheckoutCard = (props) => {
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
 
+
   const checkout = (
-    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark  shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[350px]">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark  shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[8px] md:gap-[12px]">
           <div className="flex flex-row justify-between mt-[24px] ml-2 mr-2">
-            <div className={`text-[18px] font-extrabold leading-[32px] text-black dark:text-white inline-block`}>
+            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] text-black dark:text-white inline-block">
               Checkout
             </div>
             <div
-               className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-1"
+              className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-3"
               onClick={() => {
                 setPercentageProgress(2);
               }}
@@ -62,12 +63,12 @@ export const CheckoutCard = (props) => {
               Back
             </div>
           </div>
-          <div className="flex bg-lightslategray-300 w-full h-px" />
+          <div className="flex bg-lightslategray-300 w-full md:w-[452px] h-px" />
         </div>
         {/* ==========================={You send}==================================== */}
-        <div className="flex flex-col w-[300px] gap-[8px]">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col w-full justify-center items-start">
+        <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+          <div className="flex flex-col gap-4  md:flex-row md:gap-0">
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
               <div className="text-smi leading-[22px] text-darkgray-100 inline-block">
                 {fTitle}
               </div>
@@ -84,14 +85,13 @@ export const CheckoutCard = (props) => {
                 </div>
               )}
             </div>
-            <div className="flex bg-lightslategray-300 h-px" />
-            <div className="flex flex-col w-full justify-center items-start">
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
               <div className="text-smi leading-[22px] text-darkgray-100 inline-block">
                 {tTitle}
               </div>
               <div className="flex flex-row gap-2">
                 <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
-                  {tValue} {tToken?.symbol.toUpperCase()}
+                 {tValue} {tToken?.symbol.toUpperCase()}
                 </div>
               </div>
               {tToken?.chain ? (
@@ -106,11 +106,41 @@ export const CheckoutCard = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex bg-lightslategray-300 h-px" />
+
+        <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+        {/* ==========================={Exchange fee}==================================== */}
+        <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+          <div className="flex flex-col gap-4  md:flex-row md:gap-0">
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
+              <div className="leading-[20px] text-darkgray-200 inline-block">
+                Processing fee
+              </div>
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
+                {processingFee} {tToken?.symbol.toUpperCase()}
+              </div>
+              <div className="text-3xs leading-[12px] text-darkgray-100 inline-block w-[216px]">
+                The exchange fee is already included in the displayed amount
+                you’ll get
+              </div>
+            </div>
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
+              <div className="text-smi leading-[20px] text-darkgray-200 inline-block">
+                Payment Method
+              </div>
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block">
+                {provider?.name}
+              </div>
+              <div className="text-3xs leading-[12px] text-darkgray-100 inline-block w-52">
+                {service} via card is powered by Blendery
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
         {/* ==========================={Recepient address}==================================== */}
-        <div className="flex flex-col w-[300px] gap-[8px]">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col w-full justify-center items-start">
+        <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+          <div className="flex flex-col gap-4  md:flex-row md:gap-0">
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
               {service === 'buy' && (
                 <div className="leading-[20px] text-darkgray-200 inline-block w-[126px]">
                   {`Receiver's address`}
@@ -128,7 +158,15 @@ export const CheckoutCard = (props) => {
                 {userAddress && userAddress?.substring(20, userAddress.length)}
               </div>
             </div>
-            <div className="flex bg-lightslategray-300 h-px" />
+            <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
+              <div className="leading-[20px] text-darkgray-200 inline-block">
+                Exchange rate
+              </div>
+              <div className="text-base leading-[24px] text-black dark:text-white inline-block w-[177px]">
+                {1} {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                {tToken?.symbol.toUpperCase()}
+              </div>
+            </div>
           </div>
         </div>
         {/* ==========================={Banking information}==================================== */}
@@ -137,17 +175,17 @@ export const CheckoutCard = (props) => {
           <>
             {provider?.name === 'Phone' && (
               <>
-                <div className="flex flex-col w-[300px] gap-[8px]">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-col w-full justify-center items-start">
+                <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+                  <div className="flex flex-col gap-4  md:flex-row md:gap-0">
+                    <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Full Name
                       </div>
                       <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
-                        {fullName ? fullName : ''}
+                        {fullName ? fullName.toUpperCase() : ''}
                       </div>
                     </div>
-                    <div className="flex flex-col w-full justify-center items-start">
+                    <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Phone
                       </div>
@@ -155,7 +193,7 @@ export const CheckoutCard = (props) => {
                         {phone ? phone : ''}
                       </div>
                     </div>
-                    <div className="flex flex-col w-full justify-center items-start">
+                    <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Bank Name
                       </div>
@@ -169,17 +207,17 @@ export const CheckoutCard = (props) => {
             )}
             {provider?.name === 'Card' && (
               <>
-                <div className="flex flex-col w-[300px] gap-[8px]">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-col w-full justify-center items-start">
+                <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+                  <div className="flex flex-col gap-4  md:flex-row md:gap-0">
+                    <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Full Name
                       </div>
                       <div className="text-base leading-[24px] text-black dark:text-white inline-block w-40">
-                        {fullName ? fullName : ''}
+                        {fullName ? fullName.toUpperCase() : ''}
                       </div>
                     </div>
-                    <div className="flex flex-col w-full justify-center items-start">
+                    <div className="flex flex-col w-full justify-center items-center md:items-start md:w-[50%]">
                       <div className="leading-[20px] text-darkgray-200 inline-block">
                         Card Number
                       </div>
@@ -193,16 +231,8 @@ export const CheckoutCard = (props) => {
             )}
           </>
         )}
-        <div
-          className="flex flex-row justify-center items-center"
-          onClick={() => {
-            submitTransaction(true);
-          }}
-        >
-          <div className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full mb-4">
-            Confirm & make payment
-          </div>
-        </div>
+        <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+        <div className="flex flex-row w-full" />
       </div>
     </div>
   );

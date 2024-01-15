@@ -63,8 +63,10 @@ export const SellCardScreen2 = (props) => {
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
       <div className="flex flex-col justify-center items-center xl:flex-row xl:items-start gap-[32px] mt-[8px]">
-        <div className="flex-col xl:flex-row h-[500px]">
-          <Progress percentageProgress={percentageProgress} />
+      <div className="ss:hidden xl:flex">
+          <div className="flex-col xl:flex-row h-[500px]">
+            <Progress percentageProgress={percentageProgress} />
+          </div>
         </div>
         <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
           {/* <Banking Info /> */}
@@ -101,15 +103,6 @@ export const SellCardScreen2 = (props) => {
           ))}
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
-          {/* <DetailsCardLocal
-            fToken={fToken}
-            tToken={tToken}
-            fValue={fValue}
-            fTitle={fTitle}
-            tTitle={tTitle}
-            transactionRates={transactionRates}
-            loadingExchangeRate={loadingExchangeRate}
-          /> */}
           <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
@@ -119,6 +112,11 @@ export const SellCardScreen2 = (props) => {
             transactionRates={transactionRates}
             loadingExchangeRate={loadingExchangeRate}
           />
+        </div>
+        <div className="ss:flex xl:hidden">
+          <div className="flex-col xl:flex-row h-[500px]">
+            <Progress percentageProgress={percentageProgress} />
+          </div>
         </div>
       </div>
     </div>

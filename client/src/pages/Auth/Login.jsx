@@ -132,8 +132,6 @@ export const Login = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectS]);
 
- 
-
   const handleSuccessLogin = () => {
     console.log('loggedIn sucessfull');
   };
@@ -249,8 +247,6 @@ export const Login = (props) => {
       </div>
     </>
   );
-
-
 
   const login = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
@@ -412,7 +408,12 @@ export const Login = (props) => {
           </div>
         </>
       )}
-      {isSignIn && <>{login}</>}
+
+      {isSignIn && (
+        <>
+          <div className="flex flex-row justify-center items-center h-screen">{login}</div>
+        </>
+      )}
     </>
   );
 };

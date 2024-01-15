@@ -23,7 +23,7 @@ import { FaFacebookSquare } from 'react-icons/fa';
 
 export const ProgressStages5 = () => {
   const progressStage1 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
+    <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -41,7 +41,7 @@ export const ProgressStages5 = () => {
     </div>
   );
   const progressStage2 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
+    <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -59,7 +59,7 @@ export const ProgressStages5 = () => {
     </div>
   );
   const progressStage3 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
+    <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -75,7 +75,7 @@ export const ProgressStages5 = () => {
     </div>
   );
   const progressStage4 = (
-    <div className="flex justify-center rounded-lg w-[228px] p-4 bg-chizzySnow dark:bg-gray-1000">
+    <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
           {' '}
@@ -93,7 +93,7 @@ export const ProgressStages5 = () => {
   );
 
   const processBar = (
-    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px]p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex flex-row gap-4 mt-2">
@@ -102,11 +102,11 @@ export const ProgressStages5 = () => {
               Transaction completed
             </div>
           </div>
-          <div className="flex flex-row items-center justify-between w-[260px]">
-            <div className="flex flex-row w-[160px] bg-chizzySnow rounded-lg">
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row w-full bg-chizzySnow rounded-lg">
               <div className="flex bg-bgPrimary rounded-lg w-[100%] h-[12px]" />
             </div>
-            <div className="flex flex-row justify-center items-center text-gray-200 bg-chizzySnow dark:bg-exchange-rate-dark rounded w-[49px] h-[20px] text-[10px]">
+            <div className="ml-4 flex flex-row justify-center items-center text-gray-200 bg-chizzySnow dark:bg-exchange-rate-dark rounded w-[49px] h-[20px] text-[10px]">
               4 of 4
             </div>
           </div>

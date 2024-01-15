@@ -178,6 +178,7 @@ export const BankInfo = (props) => {
     setIsBank((prev) => !prev);
   }
 
+
   const handleSelectBank = (bank) => {
     setSelectedBank(bank);
     setIsBank(false);
@@ -198,17 +199,17 @@ export const BankInfo = (props) => {
 
   const bankInfo = (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]">
+      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px]">
         <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col gap-[10px] m-2">
+          <div className="flex flex-col gap-[10px]">
             <div className="flex flex-row justify-between mt-[24px]">
               <div
-                className={`text-[18px] font-extrabold leading-[32px] text-black dark:text-white inline-block`}
+                className={`cursor-pointer leading-[24px] inline-block text-black dark:text-silver text-[14px] md:text-[24px]`}
               >
                 Payment Details
               </div>
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-1"
+                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
                 onClick={() => {
                   setPercentageProgress(1);
                 }}
@@ -217,11 +218,26 @@ export const BankInfo = (props) => {
               </div>
             </div>
 
-            <div className="flex bg-lightslategray-300 h-px" />
+            <div className="flex bg-lightslategray-300 w-[276px] md:w-[452px] h-px" />
           </div>
           {provider?.name === 'Phone' && (
             <>
-              <div className="flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+              {/* <div>
+                <div className="w-full">
+                  <BanksDropdown
+                    selectedBank={selectedBank}
+                    setSelectedBank={setSelectedBank}
+                  />
+                </div>
+
+                <div>
+                  {touched.bankName && errors.bankName ? (
+                    <div className="text-[#ef4444]">{errors.bankName}</div>
+                  ) : null}
+                </div>
+              </div> */}
+
+              <div className="w-[375px] flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
                 <b className="relative leading-[28px] inline-block w-[167px] text-black dark:text-silver">
                   <span>{`Select a bank `}</span>
                   <span className="text-rose-600">*</span>
@@ -231,6 +247,14 @@ export const BankInfo = (props) => {
                   className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start py-1 px-3 gap-[8px]"
                   onClick={openBanksModal}
                 >
+                  {/* {selectedBank && (
+                    <img
+                      className="relative rounded-full w-5 h-5 overflow-hidden shrink-0 object-cover"
+                      alt=""
+                      src={`${selectedBank ? selectedBank?.image : ``}`}
+                    />
+                  )} */}
+
                   <div className="relative text-black dark:text-silver">{`${
                     selectedBank ? selectedBank?.name : `Select`
                   }`}</div>
@@ -376,7 +400,7 @@ export const BankInfo = (props) => {
                       className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
                     />
 
-                    <div className="flex flex-row gap-1 text-xs md:text-[12px]">
+                    <div className="flex flex-row gap-1 text-xs md:text-smi">
                       <div className="leading-[20px] text-black dark:text-silver inline-block">
                         I agree with Terms of Use, Privacy Policy and AML/KYC
                       </div>
@@ -498,7 +522,7 @@ export const BankInfo = (props) => {
                       className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
                     />
 
-                    <div className="flex flex-row gap-1 text-xs md:text-[12px]">
+                    <div className="flex flex-row gap-1 text-xs md:text-smi">
                       <div className="leading-[20px] text-black dark:text-silver inline-block">
                         I agree with Terms of Use, Privacy Policy and AML/KYC
                       </div>
@@ -517,7 +541,7 @@ export const BankInfo = (props) => {
           )}
 
           <div
-            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150 m-4"
+            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white w-full hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150"
             onClick={handleSubmit}
           >
             {service} {fValue} {fToken?.symbol}

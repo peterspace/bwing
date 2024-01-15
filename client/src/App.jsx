@@ -19,6 +19,9 @@ import { Support } from './pages/Support/ Support';
 // import { Otp } from './pages/auth/Otp';
 import { getTransactionByTxIdInternal } from './redux/features/transaction/transactionSlice';
 import { AppContainerChecker } from './pages/Home/AppContainerChecker';
+import { TermsOfUse } from './pages/Support/TermsOfUse';
+import { PrivacyPolicy } from './pages/Support/PrivacyPolicy';
+import { AML } from './pages/Support/AML';
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -41,15 +44,23 @@ function App() {
     ? JSON.parse(localStorage.getItem('isLoggedIn'))
     : false;
   //======={mode and theme}=================================
+  // const modeL = localStorage.getItem('mode')
+  //   ? JSON.parse(localStorage.getItem('mode'))
+  //   : true;
+
   const modeL = localStorage.getItem('mode')
     ? JSON.parse(localStorage.getItem('mode'))
-    : true;
+    : false;
 
   const [mode, setMode] = useState(modeL);
 
+  // const themeL = localStorage.getItem('theme')
+  //   ? JSON.parse(localStorage.getItem('theme'))
+  //   : false;
+
   const themeL = localStorage.getItem('theme')
     ? JSON.parse(localStorage.getItem('theme'))
-    : false;
+    : true;
   const [theme, setTheme] = useState(themeL); // default light mode
   //======={mode and theme}=================================
 
@@ -262,6 +273,9 @@ function App() {
               }
             />
             <Route path="/support" element={<Support />} />
+            <Route path="/termsOfUse" element={<TermsOfUse />} />
+            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route path="/aml" element={<AML />} />
 
             <Route path="/resetpassword/:resetToken" element={<Reset />} />
             {/* <Route

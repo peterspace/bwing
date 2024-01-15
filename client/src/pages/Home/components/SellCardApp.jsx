@@ -52,6 +52,9 @@ const SellCardApp = (props) => {
   } = props;
   const dispatch = useDispatch();
 
+  // const loading = true;
+  // const loadingExchangeRate = true;
+
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   /*********************************************     LOCAL STATES    **************************************************** */
@@ -220,7 +223,8 @@ const SellCardApp = (props) => {
 
   return (
     <>
-      <>
+     <div className="flex sm:flex-col md:flex-row">
+     <>
         <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
           <Menu
             service={service}
@@ -251,15 +255,15 @@ const SellCardApp = (props) => {
                   value={fValue}
                   onChange={onFromValueChanged}
                 />
-                <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                  <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                    ~${fromPrice}
+                 {loading ? (
+                  <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
+                ) : (
+                  <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                    <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                      ~${fromPrice}
+                    </div>
                   </div>
-                  <div className="flex-1 relative text-gray-500 text-right">
-                    {/* Min: 20000 */}
-                    {''}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300">
@@ -270,47 +274,57 @@ const SellCardApp = (props) => {
                 openModal={openToTokenModal}
               />
               <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
-                <div className="self-stretch relative font-medium">
-                  {' '}
-                  <div
-                    className={`${
-                      loading ? 'animate-pulse' : ''
-                    } self-stretch relative font-medium`}
-                  >
-                    {loading ? 'loading' : `${tValue}`}
-                  </div>
-                </div>
-                <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                  <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                    ~${toPrice}
-                  </div>
-                  {isMinValue && (
-                    <div className="flex-1 relative text-gray-500 text-right">
-                      {`Min: ${minValue}`}
+                <div className="self-stretch relative font-medium"> </div>
+                {loading ? (
+                  <>
+                    <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
+                    <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                      <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mb-2"></div>
                     </div>
-                  )}
+                  </>
+                ) : (
+                  <>
+                    <div className="self-stretch relative font-medium">
+                      {tValue}
+                    </div>
+                    <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                      <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                        ~${toPrice}
+                      </div>
+                      {isMinValue && (
+                        <div className="flex-1 relative text-gray-500 text-right">
+                          {`Min: ${minValue}`}
+                        </div>
+                      )}
 
-                  {isMaxValue && (
-                    <div className="flex-1 relative text-gray-500 text-right">
-                      {` Max: ${maxValue}`}
+                      {isMaxValue && (
+                        <div className="flex-1 relative text-gray-500 text-right">
+                          {` Max: ${maxValue}`}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </>
+                )}
               </div>
             </div>
             <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center text-xl text-darkblue dark:text-indigo-500  font-roboto">
-              <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
-                <div className="flex-1 relative">
-                  1 {fToken?.symbol.toUpperCase()} ~{' '}
-                  {loadingExchangeRate ? 'fetching rates' : exchangeRate}{' '}
-                  {tToken?.symbol.toUpperCase()}
-                </div>
-                <img
-                  className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
-                  alt=""
-                  src="/chevronup@2x.png"
-                  onClick={openRatesModal}
-                />
+            <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
+                {loadingExchangeRate ? (
+                  <div className="relative animate-pulse h-4 bg-indigo-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mt-1 mb-1"></div>
+                ) : (
+                  <>
+                    <div className="flex-1 relative">
+                      1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                      {tToken?.symbol.toUpperCase()}
+                    </div>
+                    <img
+                      className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
+                      alt=""
+                      src="/chevronup@2x.png"
+                      onClick={openRatesModal}
+                    />
+                  </>
+                )}
               </div>
             </div>
             <div className="my-0 mx-[!important] absolute top-[calc(50%_-_60.5px)] left-[calc(50%_-_30px)] rounded-3xl bg-indigo-600 box-border h-[61px] flex flex-row items-start justify-start p-2 border-[12px] border-solid border-gray-100 dark:border-exchange-rate-dark">
@@ -416,19 +430,37 @@ const SellCardApp = (props) => {
           paymentOptions={paymentOptions}
         />
       </>
-      {ratesModalOpen && (
-        <div className="ml-8">
-          <RatesLocalModel
-            fToken={fToken}
-            tToken={tToken}
-            fValue={fValue}
-            fTitle={fTitle}
-            tTitle={tTitle}
-            transactionRates={transactionRates}
-            loadingExchangeRate={loadingExchangeRate}
-          />
-        </div>
-      )}
+      <>
+          {ratesModalOpen && (
+            <>
+              <div className="sm:flex md:hidden mt-4">
+                <RatesLocalModel
+                  fToken={fToken}
+                  tToken={tToken}
+                  fValue={fValue}
+                  fTitle={fTitle}
+                  tTitle={tTitle}
+                  transactionRates={transactionRates}
+                  loadingExchangeRate={loadingExchangeRate}
+                />
+              </div>
+              <div className="sm:hidden md:flex md:ml-8">
+                <RatesLocalModel
+                  fToken={fToken}
+                  tToken={tToken}
+                  fValue={fValue}
+                  fTitle={fTitle}
+                  tTitle={tTitle}
+                  transactionRates={transactionRates}
+                  loadingExchangeRate={loadingExchangeRate}
+                />
+              </div>
+            </>
+          )}
+        </>
+     </div>
+    
+      
     </>
   );
 };

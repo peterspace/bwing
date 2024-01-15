@@ -52,18 +52,34 @@ function PaymenOptionsModal(props) {
 
   function handleChange(ev) {
     let newValue = ev.target.value;
-
-    if (newValue === 'card') {
-      setPaymentMethod(newValue);
-      setService('buy');
-      setSubService('buyCard');
-      localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+    if (service === 'buy') {
+      if (newValue === 'card') {
+        setPaymentMethod(newValue);
+        setService('buy');
+        setSubService('buyCard');
+        localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+      }
+      if (newValue === 'cash') {
+        setPaymentMethod(newValue);
+        setService('buy');
+        setSubService('buyCash');
+        localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+      }
     }
-    if (newValue === 'cash') {
-      setPaymentMethod(newValue);
-      setService('buy');
-      setSubService('buyCash');
-      localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+
+    if (service === 'sell') {
+      if (newValue === 'card') {
+        setPaymentMethod(newValue);
+        setService('sell');
+        setSubService('sellCard');
+        localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+      }
+      if (newValue === 'cash') {
+        setPaymentMethod(newValue);
+        setService('sell');
+        setSubService('sellCash');
+        localStorage.setItem('paymentMethod', JSON.stringify(newValue));
+      }
     }
   }
 

@@ -122,9 +122,9 @@ export const WalletInfo = (props) => {
 
   const walletInfo = (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-[1px]">
+      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] md:w-[500px]">
         <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col gap-[10px] m-4">
+          <div className="flex flex-col gap-[10px]">
             <div className="flex flex-row justify-between mt-[24px]">
               <div
                 className={`cursor-pointer leading-[24px] inline-block text-black dark:text-silver text-[14px] md:text-[24px]`}
@@ -140,7 +140,7 @@ export const WalletInfo = (props) => {
                 Back
               </div>
             </div>
-            <div className="flex bg-lightslategray-300  h-px" />
+            <div className="flex bg-lightslategray-300 w-[276px]  md:w-[452px] h-px" />
           </div>
 
           <div className="flex flex-col gap-[8px]">
@@ -182,8 +182,8 @@ export const WalletInfo = (props) => {
               ) : null}
             </div>
 
-            <div className="flex flex-col gap-1 m-2 ">
-              <div className="flex flex-row gap-1">
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-row gap-2">
                 <input
                   id="isTermsChecked"
                   name="isTermsChecked"
@@ -193,7 +193,7 @@ export const WalletInfo = (props) => {
                   className="outline-none bg-chizzySnow dark:bg-gray-1000 accent-bgPrimary focus:accent-bgPrimary/30"
                 />
 
-                <div className="flex flex-row gap-1 text-xs md:text-[12px]">
+                <div className="flex flex-row gap-1 text-xs md:text-smi">
                   <div className="leading-[20px] text-black dark:text-silver inline-block">
                     I agree with Terms of Use, Privacy Policy and AML/KYC
                   </div>
@@ -210,7 +210,7 @@ export const WalletInfo = (props) => {
           </div>
 
           <div
-            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150 m-4"
+            className="mb-4 cursor-pointer flex flex-row justify-center items-center bg-bgPrimary text-white w-full hover:opacity-90 h-[49px] shrink-0 rounded transition ease-in-out delay-150"
             onClick={handleSubmit}
           >
             {/* {service} {fValue} {fToken?.symbol} */}

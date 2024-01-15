@@ -1,5 +1,5 @@
 const RatesLocalModel = (props) => {
-  const { fToken, tToken, fValue, fTitle, tTitle, transactionRates } = props;
+  const { fToken, tToken, fValue, fTitle, tTitle, transactionRates, loadingExchangeRate } = props;
 
   const youSend = transactionRates ? transactionRates?.youSend : 0;
   const youGet = transactionRates ? transactionRates?.youGet : 0;

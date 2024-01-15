@@ -59,6 +59,9 @@ const DefiApp = (props) => {
     setSlippage,
     slippage,
   } = props;
+
+  // const loading = true;
+  // const loadingExchangeRate = true;
   //======================={RATES and PRICES}========================================================
   const dispatch = useDispatch();
   const { switchNetwork } = useSwitchNetwork();
@@ -237,18 +240,22 @@ const DefiApp = (props) => {
                 onChange={onFromValueChanged}
               />
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  {/* fromprice */}
-                  {isFromLoading
-                    ? ''
-                    : `~$${
+                {isFromLoading || loading ? (
+                  <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
+                ) : (
+                  <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                    <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                      {`~$${
                         fValue
                           ? new Intl.NumberFormat().format(
                               Number(fValue) * Number(fromPrice)
                             )
                           : ''
                       }`}
-                </div>
+                    </div>
+                  </div>
+                )}
+
                 {isConnected && (
                   <div className="flex-1 relative text-gray-500 text-right">
                     {/* fromBalance */}
@@ -268,30 +275,41 @@ const DefiApp = (props) => {
               openModal={openToTokenModal}
             />
             <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
-              <div className="self-stretch relative font-medium">
-                {' '}
-                <div
-                  className={`${
-                    loading ? 'animate-pulse' : ''
-                  } self-stretch relative font-medium`}
-                >
-                  {loading ? 'loading' : `~ ${tValue}`}
-                </div>
-              </div>
+              {loading ? (
+                <>
+                  <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
+                </>
+              ) : (
+                <>
+                  <div className="self-stretch relative font-medium">
+                    ${tValue}
+                  </div>
+                </>
+              )}
 
               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                  {/* toprice */}
-                  {isToLoading
-                    ? ''
-                    : `~$${
+                {isToLoading || loading ? (
+                  <>
+                    <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                      <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                        <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[60%] mb-2"></div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                      {/* toprice */}
+                      {`~$${
                         tValue
                           ? new Intl.NumberFormat().format(
                               Number(tValue) * Number(toPrice)
                             )
                           : ''
                       } (-${priceDeviation ? priceDeviation : ''}%)`}
-                </div>
+                    </div>
+                  </>
+                )}
                 {isConnected && (
                   <div className="flex-1 relative text-gray-500 text-right">
                     {/* toBalance */}
@@ -303,7 +321,7 @@ const DefiApp = (props) => {
               </div>
             </div>
           </div>
-          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center text-xl text-darkblue dark:text-indigo-500  font-roboto">
+          {/* <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center text-xl text-darkblue dark:text-indigo-500  font-roboto">
             <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
               <div className="flex-1 relative">
                 1 {fToken?.symbol.toUpperCase()} ~{' '}
@@ -315,6 +333,25 @@ const DefiApp = (props) => {
                 alt=""
                 src="/chevronup@2x.png"
               />
+            </div>
+          </div> */}
+          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center text-xl text-darkblue dark:text-indigo-500  font-roboto">
+            <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
+              {loadingExchangeRate ? (
+                <div className="relative animate-pulse h-4 bg-indigo-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mt-1 mb-1"></div>
+              ) : (
+                <>
+                  <div className="flex-1 relative">
+                    1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                    {tToken?.symbol.toUpperCase()}
+                  </div>
+                  {/* <img
+                      className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
+                      alt=""
+                      src="/chevronup@2x.png"
+                    /> */}
+                </>
+              )}
             </div>
           </div>
           <div

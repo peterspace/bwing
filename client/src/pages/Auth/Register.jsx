@@ -442,7 +442,14 @@ export const Register = (props) => {
           </div>
         </>
       )}
-      {isSignup && <>{signup}</>}
+      {isSignup && (
+        <>
+          {' '}
+          <div className="flex flex-row justify-center items-center h-screen">
+            {signup}
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from '../../../components/Progress';
 import { CheckoutReceiveCash } from '../../../components/CheckoutReceiveCash';
+import { Checkout } from '../../../components/Checkout';
+
 import { Signup } from '../../../components/Signup';
 import { Confirm } from '../../../components/Confirm';
 import {
@@ -13,6 +15,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTransactionService } from '../../../services/apiService';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
+import RatesLocalModel from '../../../components/RatesLocalModel';
+
 export const SellCashScreen3 = (props) => {
   const {
     percentageProgress,
@@ -151,13 +155,15 @@ export const SellCashScreen3 = (props) => {
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
       <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
-        <div className="flex-col xl:flex-row h-[500px]">
-          <Progress percentageProgress={percentageProgress} />
+        <div className="ss:hidden xl:flex">
+          <div className="flex-col xl:flex-row h-[500px]">
+            <Progress percentageProgress={percentageProgress} />
+          </div>
         </div>
         {isCheckout && (
           <>
-           <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-              <CheckoutReceiveCash
+            <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
+              <Checkout
                 setPercentageProgress={setPercentageProgress}
                 fTitle={fTitle}
                 tTitle={tTitle}
@@ -167,6 +173,7 @@ export const SellCashScreen3 = (props) => {
                 userAddress={userAddress}
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
+                submitTransaction={setIsSend}
               />
               <Signup
                 setIsCheckout={setIsCheckout}
@@ -177,8 +184,8 @@ export const SellCashScreen3 = (props) => {
         )}
         {isConfirm && (
           <>
-           <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
-              <CheckoutReceiveCash
+            <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
+              <Checkout
                 setPercentageProgress={setPercentageProgress}
                 fTitle={fTitle}
                 tTitle={tTitle}
@@ -188,11 +195,28 @@ export const SellCashScreen3 = (props) => {
                 userAddress={userAddress}
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
+                submitTransaction={setIsSend}
               />
-              <Confirm submitTransaction={setIsSend} />
             </div>
           </>
         )}
+        <div className="flex-col xl:flex-row h-[374px]">
+          <RatesLocalModel
+            fToken={fToken}
+            tToken={tToken}
+            fValue={fValue}
+            fTitle={fTitle}
+            tTitle={tTitle}
+            transactionRates={transactionRates}
+            loadingExchangeRate={loadingExchangeRate}
+            submitTransaction={setIsSend}
+          />
+        </div>
+        <div className="ss:flex xl:hidden">
+          <div className="flex-col xl:flex-row h-[500px]">
+            <Progress percentageProgress={percentageProgress} />
+          </div>
+        </div>
       </div>
     </div>
   );

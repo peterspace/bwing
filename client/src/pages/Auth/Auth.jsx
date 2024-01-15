@@ -212,7 +212,7 @@ export const Auth = (props) => {
             className={`${styles.hero} flex flex-col justify-center items-center`}
           >
             <>
-              <div className="flex flex-row items-start h-screen mt-[64px]">
+              <div className="flex flex-row items-start h-screen">
                 <Forgot
                   setIsLogin={setIsLogin}
                   setIsRegister={setIsRegister}

@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Icons:wght@400&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,6 +18,107 @@ body {
 @layer components {
   .wrapper-container {
     @apply w-[100%] ss:max-w-[360px] xs:max-w-[375px] sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px] 2xl:max-w-[1536px];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3;
+  }
+
+  .btn-tertiary {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center bg-gray-300 hover:bg-gray-200 focus:ring-gray-300 active:bg-gray-400 text-gray-800 rounded-lg focus:ring-4 focus:outline-none;
+  }
+  .box {
+    @apply max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+  }
+  .grid-box-2 {
+    @apply grid grid-cols-2 gap-4;
+  }
+  .grid-box-3 {
+    @apply grid grid-cols-2 md:grid-cols-3 gap-4;
+  }
+  .grid-box-4 {
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+  }
+  .grid-box-6 {
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-4;
+  }
+  .h5 {
+    @apply mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white;
+  }
+  .button-with-icon {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+  .p {
+    @apply mb-3 font-normal text-gray-700 dark:text-gray-400;
+  }
+  .img {
+    @apply rounded-t-lg;
+  }
+
+  .box-list {
+    @apply relative w-full max-w-sm overflow-y-scroll bg-white border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600 h-96;
+  }
+  .border-list {
+    @apply border-b border:gray-100 dark:border-gray-600;
+  }
+  .frame-list {
+    @apply flex items-center justify-center w-full px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800;
+  }
+  .img-list {
+    @apply me-3 rounded-full w-11 h-11;
+  }
+
+  .box-table {
+    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
+  }
+  .container-table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
+  }
+  .header-table {
+    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+  }
+  .header-title-table {
+    @apply px-6 py-3;
+  }
+  .button-dropDown {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+
+  .section {
+    @apply flex md:flex-row flex-col sm:py-16 py-6;
+  }
+  .sectionReverse {
+    @apply flex md:flex-row flex-col-reverse sm:py-16 py-6;
+  }
+  .sectionImg {
+    @apply flex-1 flex justify-center items-center md:ml-10 ml-0 md:mt-0 mt-10 relative;
+  }
+  .sectionImgReverse {
+    @apply flex-1 flex justify-center items-center md:mr-10 mr-0 md:mt-0 mt-10 relative;
+  }
+  .sectionInfo {
+    @apply flex-1 flex justify-center items-start flex-col;
+  }
+
+  .heading {
+    @apply font-semibold xs:text-[48px] text-[40px] text-white xs:leading-[76.8px] leading-[66.8px] w-full;
+  }
+
+  .paragraph {
+    @apply font-poppins font-normal text-dimWhite text-[18px] leading-[30.8px];
+  }
+  .paddingX {
+    @apply sm:px-16 px-6;
+  }
+  .paddingY {
+    @apply sm:py-16 py-6;
+  }
+
+  .padding {
+    @apply sm:px-16 px-6 sm:py-12 py-4;
   }
 }
 
