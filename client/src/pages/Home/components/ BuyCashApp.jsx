@@ -289,9 +289,9 @@ const BuyCashApp = (props) => {
 
   return (
     <>
-      <div className="flex sm:flex-col md:flex-row">
+      <div className="flex sm:flex-col xl:flex-row">
         <>
-          <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
+          <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
             <Menu
               service={service}
               setService={setService}
@@ -487,7 +487,7 @@ const BuyCashApp = (props) => {
         <>
           {ratesModalOpen && (
             <>
-              <div className="sm:flex md:hidden mt-4">
+              <div className="sm:flex xl:hidden mt-4">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}
@@ -498,7 +498,7 @@ const BuyCashApp = (props) => {
                   loadingExchangeRate={loadingExchangeRate}
                 />
               </div>
-              <div className="sm:hidden md:flex md:ml-8">
+              <div className="sm:hidden xl:flex xl:ml-8">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}

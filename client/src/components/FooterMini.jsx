@@ -3,51 +3,50 @@ import { useNavigate } from 'react-router-dom';
 const FooterMini = () => {
   const navigate = useNavigate();
 
-  return (
-    <div className="mt-[64px] overflow-hidden text-left text-xl text-gray-900 dark:text-gray-200 w-full">
-      <div className="bottom-[0px] flex flex-col items-start justify-start p-5 box-border gap-[20px]">
-        <div className="relative bg-lightslategray-300 w-full h-px overflow-hidden shrink-0" />
-
-        <div className="self-stretch flex flex-col items-end justify-start gap-[10px] text-sm font-medium text-gray-900 dark:text-gray-100 font-roboto">
-          <div className="self-stretch relative h-5">
-            {/* <div
-              className="cursor-pointer absolute top-[0px] left-[125px] h-5 flex flex-row items-center justify-center py-px px-0 box-border"
-              onClick={() => navigate('/termsOfUse')}
-            >
-              <div className="relative">Terms of Use</div>
-            </div> */}
-            <div
-              className="cursor-pointer absolute top-[0px] left-[125px] h-5 flex flex-row items-center justify-center py-px px-0 box-border"
-              onClick={() => navigate('/support')}
-            >
-              <div className="relative">Support</div>
-            </div>
-            {/* <div
-              className="cursor-pointer absolute top-[0px] left-[0px] h-5 flex flex-row items-center justify-center py-px px-0 box-border"
-              onClick={() => navigate('/support')}
-            >
-              <div className="relative">Support</div>
-            </div> */}
-            <div
-              className="cursor-pointer absolute top-[0px] left-[229px] h-5 flex flex-row items-center justify-center py-px px-0 box-border"
-              onClick={() => navigate('/privacyPolicy')}
-            >
-              <div className="relative">Privacy Policy</div>
-            </div>
-            <div
-              className="cursor-pointer absolute top-[0px] left-[337px] h-5 flex flex-row items-center justify-center py-px px-0 box-border"
-              onClick={() => navigate('/aml')}
-            >
-              <div className="relative">AML/KYC</div>
+  const footer = (
+    <div className="self-stretch h-[70px] px-6 py-5 flex-col justify-start items-end gap-2.5 flex text-gray-900 dark:text-gray-200">
+      <div className="relative bg-lightslategray-300 w-full h-px overflow-hidden shrink-0 mb-2" />
+      <div className="self-stretch justify-between items-end inline-flex">
+        <div className="grow shrink basis-0 h-5 justify-start items-end gap-5 flex">
+          <div
+            className="cursor-pointer w-[50px] py-px justify-center items-center gap-2.5 flex"
+            onClick={() => navigate('/support')}
+          >
+            <div className="text-sm font-medium font-['Roboto']">Support</div>
+          </div>
+          <div
+            className="cursor-pointer w-[84px] py-px justify-center items-center gap-2.5 flex"
+            onClick={() => navigate('/termsOfUse')}
+          >
+            <div className="text-sm font-medium font-['Roboto']">
+              Terms of Use
             </div>
           </div>
-          <div className="flex flex-row items-center justify-center text-right text-smi text-gray-500 dark:text-gray-200">
-            <div className="relative leading-[16.1px]">© Blendery 2024</div>
+          <div
+            className="cursor-pointer w-[88px] py-px justify-center items-center gap-2.5 flex"
+            onClick={() => navigate('/privacyPolicy')}
+          >
+            <div className="text-sm font-medium font-['Roboto']">
+              Privacy Policy
+            </div>
+          </div>
+          <div
+            className="cursor-pointer w-[61px] py-px justify-center items-center gap-2.5 flex"
+            onClick={() => navigate('/aml')}
+          >
+            <div className="text-sm font-medium font-['Roboto']">AML/KYC</div>
+          </div>
+        </div>
+        <div className="justify-center items-center gap-2.5 flex">
+          <div className="text-right text-gray-500 text-[13px] font-normal font-['Montserrat'] leading-none">
+            © Blendery 2024
           </div>
         </div>
       </div>
     </div>
   );
+
+  return <div className="mt-[64px] overflow-hidden w-full">{footer}</div>;
 };
 
 export default FooterMini;

@@ -208,7 +208,7 @@ const DefiApp = (props) => {
 
   return (
     <>
-      <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] md:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
+      <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
         <Menu
           service={service}
           setService={setService}
@@ -361,7 +361,7 @@ const DefiApp = (props) => {
             <img
               className="relative w-5 h-5 overflow-hidden shrink-0 object-cover"
               alt=""
-              src="/arrowdown@2x.png"
+              src="/switch.png"
             />
           </div>
         </div>

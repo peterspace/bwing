@@ -8,10 +8,13 @@ import { DefiHome } from './DefiHome/DefiHome';
 import { ExchangeHome } from './ExchangeHome/ExchangeHome';
 import { SellCardHome } from './SellCardHome/SellCardHome';
 import { SellCashHome } from './SellCashHome/SellCashHome';
+
 //===============================================================
 import styles from './AppContainer.module.css';
 import Footer from '../../components/Footer';
 import FooterMini from '../../components/FooterMini';
+import Sectioning from '../../components/Sectioning';
+
 
 import {
   stepsExchange,
@@ -339,7 +342,7 @@ export const AppContainer = (props) => {
                 title={`How to ${service} Crypto`}
               />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpExchange} title={'Helpful guides'} />
                 <FaqCard data={faqExchange} title={`FaQ ${service}`} />
               </div>
@@ -356,7 +359,7 @@ export const AppContainer = (props) => {
 
               <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpBuy} title={'Helpful guides'} />
                 <FaqCard data={faqBuy} title={`FaQ ${service}`} />
               </div>
@@ -373,7 +376,7 @@ export const AppContainer = (props) => {
 
               <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpBuy} title={'Helpful guides'} />
                 <FaqCard data={faqBuy} title={`FaQ ${service}`} />
               </div>
@@ -390,7 +393,7 @@ export const AppContainer = (props) => {
 
               <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpSell} title={'Helpful guides'} />
                 <FaqCard data={faqSell} title={`FaQ ${service}`} />
               </div>
@@ -407,7 +410,7 @@ export const AppContainer = (props) => {
 
               <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpSell} title={'Helpful guides'} />
                 <FaqCard data={faqSell} title={`FaQ ${service}`} />
               </div>
@@ -424,7 +427,7 @@ export const AppContainer = (props) => {
 
               <HowToCard data={stepsDefi} title={`How to ${service} Crypto`} />
 
-              <div className="flex flex-col md:flex-row gap-[16px]">
+              <div className="flex flex-col xl:flex-row gap-[16px]">
                 <HelpGuide data={helpDefi} title={'Helpful guides'} />
                 <FaqCard data={faqDefi} title={`FaQ ${service}`} />
               </div>
@@ -432,11 +435,11 @@ export const AppContainer = (props) => {
           </>
         )}
       </div>
-      <div className="flex bg-lightslategray-300 w-full h-px mb-[24px]" />
+      {/* <div className="flex bg-lightslategray-300 w-full h-px mb-[24px]" /> */}
+      <Sectioning />
 
       <div className="relative text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
         <div className="flex flex-col justify-center items-center">
-          <Footer />
           <FooterMini />
         </div>
       </div>

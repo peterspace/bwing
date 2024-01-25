@@ -8,7 +8,7 @@ export const HowToComponent = (props) => {
 
   const newCard = (
     // <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[328px] h-[100px] p-4 bg-gray-100">
-    <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] lg:w-[320px] h-[100px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:border dark:border-solid">
+    <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] xl:w-[320px] h-[100px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:border dark:border-solid">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <div className="text-base font-sans font-medium leading-[24px] inline-block">
