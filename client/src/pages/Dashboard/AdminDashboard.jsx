@@ -16,9 +16,13 @@ import {
   getAdminBuyCard,
   getAdminSellCash,
   getAdminSellCard,
+  getProfits,
+  getMasterWalletsHealthCheck,
 } from '../../services/apiService';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import AdminRecord from '../Tanstack/AdminRecord';
+import AdminProfitRecord from '../Tanstack/AdminProfitRecord';
+import AdminWallets from '../Tanstack/AdminWallets';
 import { CardUpdateInfo } from '../../components/CardUpdateInfo';
 import CircularProgress from '../../components/CircularProgress';
 
@@ -57,7 +61,7 @@ const menu = [
 ];
 
 export const AdminDashboard = (props) => {
-  const { user, setTxInfo, } = props;
+  const { user, setTxInfo } = props;
 
   const location = useLocation();
 
@@ -103,6 +107,12 @@ export const AdminDashboard = (props) => {
 
   const [allSellCardTransactionsAdmin, setAllSellCardTransactionsAdmin] =
     useState();
+
+  const [allProfits, setAllProfits] = useState();
+  const [allWallets, setAllWallets] = useState();
+
+  console.log({ allProfits: allProfits });
+  console.log({ allExchangeTransactionsAdmin: allExchangeTransactionsAdmin });
 
   //=========={Pages}================================================================
   const pageL = localStorage.getItem('page')
@@ -190,6 +200,23 @@ export const AdminDashboard = (props) => {
     }
   }
 
+  //====={Profits}===========================
+
+  async function fetchAllProfits() {
+    const response = await getProfits();
+    if (response) {
+      setAllProfits(response);
+    }
+  }
+  //====={Master Wallets balances}===========================
+
+  async function fetchAllWallets() {
+    const response = await getMasterWalletsHealthCheck();
+    if (response) {
+      setAllWallets(response);
+    }
+  }
+
   useEffect(() => {
     fetchAllTransactionAdmin();
 
@@ -227,6 +254,20 @@ export const AdminDashboard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allSellCardTransactionsAdmin]);
 
+  //===================={Profits}======================================
+  useEffect(() => {
+    fetchAllProfits();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allProfits]);
+
+  //===================={Wallets}======================================
+  useEffect(() => {
+    fetchAllWallets();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allWallets]);
+
   //==================================={TX DATA}=================================================================
 
   //==================================={setting and refetching and updating txData}=======================================================
@@ -252,11 +293,7 @@ export const AdminDashboard = (props) => {
 
   return (
     <div className="flex gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
-      <DashboardMenuAdmin
-        setPage={setPage}
-        user={user}
-        page={page}
-      />
+      <DashboardMenuAdmin setPage={setPage} user={user} page={page} />
       {!isUpdating && (
         <div className="w-[78%]">
           {page === 'Exchange' &&
@@ -302,6 +339,36 @@ export const AdminDashboard = (props) => {
           {page === 'Sell (Card)' &&
             (allSellCardTransactionsAdmin ? (
               <AdminRecord data={allSellCardTransactionsAdmin} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {/* ======================{Main}==================== */}
+
+          {page === 'Profit' &&
+            (allProfits ? (
+              <AdminProfitRecord data={allProfits} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+
+            
+          {/* ======================{Test}==================== */}
+
+          {/* {page === 'Profit' &&
+            (allExchangeTransactionsAdmin ? (
+              <AdminProfitRecord data={allExchangeTransactionsAdmin} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))} */}
+          {page === 'Wallet' &&
+            (allWallets ? (
+              <AdminWallets data={allWallets} />
             ) : (
               <div className="w-full h-full flex justify-center items-center">
                 <CircularProgress />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Typography,
@@ -10,7 +10,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react';
 
 import {
   WalletSellIcon,
@@ -18,21 +18,21 @@ import {
   NotificationIcon,
   UpArrowIcon,
   DownArrowIcon,
-} from "../assets/smart-icons";
-import { FaConnectdevelop } from "react-icons/fa6";
+} from '../assets/smart-icons';
+import { FaConnectdevelop } from 'react-icons/fa6';
 
 export const DashboardMenuAdmin = (props) => {
   const { setPage, page, mode, user } = props;
 
   const [isSubMenuOpen, setIsSubMenuOpen] = React.useState(0);
-  const [activePage, setActivePage] = useState("");
+  const [activePage, setActivePage] = useState('');
 
-  const [name, surname] = user.name.split(" ");
+  const [name, surname] = user.name.split(' ');
 
   useEffect(() => {
-    if (page.includes("Buy")) {
+    if (page.includes('Buy')) {
       setIsSubMenuOpen(1);
-    } else if (page.includes("Sell")) {
+    } else if (page.includes('Sell')) {
       setIsSubMenuOpen(2);
     }
     setActivePage(page);
@@ -60,17 +60,17 @@ export const DashboardMenuAdmin = (props) => {
         <ListItem
           ripple={false}
           className={`cursor-pointer p-2 rounded-lg ${
-            activePage === "Exchange" ? "bg-[#ECEAFF] text-[#5046E5]" : ""
+            activePage === 'Exchange' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
           }`}
           onClick={() => {
             setIsSubMenuOpen(0);
-            setPage("Exchange");
+            setPage('Exchange');
           }}
         >
           <ListItemPrefix>
             <ExchangeIcon
               size={20}
-              stroke={activePage === "Exchange" ? "#5046E5" : "#111111"}
+              stroke={activePage === 'Exchange' ? '#5046E5' : '#111111'}
             />
           </ListItemPrefix>
           Exchange
@@ -80,35 +80,35 @@ export const DashboardMenuAdmin = (props) => {
           open={isSubMenuOpen === 1}
           icon={
             isSubMenuOpen === 1 ? (
-              <UpArrowIcon size={12} fill={"#5046E5"} />
+              <UpArrowIcon size={12} fill={'#5046E5'} />
             ) : (
-              <DownArrowIcon size={12} fill={"#111111"} />
+              <DownArrowIcon size={12} fill={'#111111'} />
             )
           }
         >
           <ListItem
             ripple={false}
             className={`p-0 w-full ${
-              isSubMenuOpen === 1 ? "bg-[#ECEAFF]" : ""
+              isSubMenuOpen === 1 ? 'bg-[#ECEAFF]' : ''
             }`}
             selected={isSubMenuOpen === 2}
           >
             <AccordionHeader
               onClick={() => {
                 handleOpen(1);
-                setPage("Buy (Cash)");
+                setPage('Buy (Cash)');
               }}
               className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-gray-900 dark:text-gray-100"
             >
               <ListItemPrefix>
                 <WalletSellIcon
                   size={20}
-                  stroke={isSubMenuOpen === 1 ? "#5046E5" : "#111111"}
+                  stroke={isSubMenuOpen === 1 ? '#5046E5' : '#111111'}
                 />
               </ListItemPrefix>
               <Typography
                 className={`mr-auto font-normal ${
-                  isSubMenuOpen === 1 ? "text-[#5046E5]" : ""
+                  isSubMenuOpen === 1 ? 'text-[#5046E5]' : ''
                 }`}
               >
                 Buy
@@ -119,22 +119,22 @@ export const DashboardMenuAdmin = (props) => {
             <List className="p-0">
               <ListItem
                 className={`cursor-pointer w-[80%] p-2 rounded-lg ${
-                  activePage === "Buy (Cash)" ? "text-[#5046E5] font-bold" : ""
+                  activePage === 'Buy (Cash)' ? 'text-[#5046E5] font-bold' : ''
                 }`}
                 ripple={false}
                 onClick={() => {
-                  setPage("Buy (Cash)");
+                  setPage('Buy (Cash)');
                 }}
               >
                 Cash
               </ListItem>
               <ListItem
                 className={`cursor-pointer w-[80%] p-2 rounded-lg ${
-                  activePage === "Buy (Card)" ? "text-[#5046E5] font-bold" : ""
+                  activePage === 'Buy (Card)' ? 'text-[#5046E5] font-bold' : ''
                 }`}
                 ripple={false}
                 onClick={() => {
-                  setPage("Buy (Card)");
+                  setPage('Buy (Card)');
                 }}
               >
                 Card
@@ -147,33 +147,33 @@ export const DashboardMenuAdmin = (props) => {
           open={isSubMenuOpen === 2}
           icon={
             isSubMenuOpen === 2 ? (
-              <UpArrowIcon size={12} fill={"#5046E5"} />
+              <UpArrowIcon size={12} fill={'#5046E5'} />
             ) : (
-              <DownArrowIcon size={12} fill={"#111111"} />
+              <DownArrowIcon size={12} fill={'#111111'} />
             )
           }
         >
           <ListItem
             ripple={false}
-            className={`p-0 ${isSubMenuOpen === 2 ? "bg-[#ECEAFF]" : ""}`}
+            className={`p-0 ${isSubMenuOpen === 2 ? 'bg-[#ECEAFF]' : ''}`}
             selected={isSubMenuOpen === 2}
           >
             <AccordionHeader
               onClick={() => {
                 handleOpen(2);
-                setPage("Sell (Cash)");
+                setPage('Sell (Cash)');
               }}
               className="border-b-0 py-3 px-2 m-0 bg-transparent focus:bg-transparent shadow-none focus:shadow-none text-gray-900 dark:text-gray-100"
             >
               <ListItemPrefix>
                 <WalletSellIcon
                   size={20}
-                  stroke={isSubMenuOpen === 2 ? "#5046E5" : "#111111"}
+                  stroke={isSubMenuOpen === 2 ? '#5046E5' : '#111111'}
                 />
               </ListItemPrefix>
               <Typography
                 className={`mr-auto font-normal ${
-                  isSubMenuOpen === 2 ? "text-[#5046E5]" : ""
+                  isSubMenuOpen === 2 ? 'text-[#5046E5]' : ''
                 }`}
               >
                 Sell
@@ -184,22 +184,22 @@ export const DashboardMenuAdmin = (props) => {
             <List className="p-0">
               <ListItem
                 className={`cursor-pointer w-[80%] p-2 rounded-lg ${
-                  activePage === "Sell (Cash)" ? "text-[#5046E5] font-bold" : ""
+                  activePage === 'Sell (Cash)' ? 'text-[#5046E5] font-bold' : ''
                 }`}
                 ripple={false}
                 onClick={() => {
-                  setPage("Sell (Cash)");
+                  setPage('Sell (Cash)');
                 }}
               >
                 Cash
               </ListItem>
               <ListItem
                 className={`cursor-pointer w-[80%] p-2 rounded-lg ${
-                  activePage === "Sell (Card)" ? "text-[#5046E5] font-bold" : ""
+                  activePage === 'Sell (Card)' ? 'text-[#5046E5] font-bold' : ''
                 }`}
                 ripple={false}
                 onClick={() => {
-                  setPage("Sell (Card)");
+                  setPage('Sell (Card)');
                 }}
               >
                 Card
@@ -211,17 +211,17 @@ export const DashboardMenuAdmin = (props) => {
         <ListItem
           ripple={false}
           className={`cursor-pointer p-2 pl-1.5 rounded-lg ${
-            activePage === "Defi" ? "bg-[#ECEAFF] text-[#5046E5]" : ""
+            activePage === 'Defi' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
           }`}
           onClick={() => {
             setIsSubMenuOpen(0);
-            setPage("Defi");
+            setPage('Defi');
           }}
         >
           <ListItemPrefix>
             <FaConnectdevelop
               size={20}
-              color={activePage === "Defi" ? "#5046E5" : "#111111"}
+              color={activePage === 'Defi' ? '#5046E5' : '#111111'}
             />
           </ListItemPrefix>
           Defi
@@ -230,17 +230,55 @@ export const DashboardMenuAdmin = (props) => {
         <ListItem
           ripple={false}
           className={`cursor-pointer p-2 pl-1.5 rounded-lg ${
-            activePage === "Notifications" ? "bg-[#ECEAFF] text-[#5046E5]" : ""
+            activePage === 'Profit' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
           }`}
           onClick={() => {
             setIsSubMenuOpen(0);
-            setPage("Notifications");
+            setPage('Profit');
+          }}
+        >
+          <ListItemPrefix>
+            <FaConnectdevelop
+              size={20}
+              color={activePage === 'Profit' ? '#5046E5' : '#111111'}
+            />
+          </ListItemPrefix>
+          Profit
+        </ListItem>
+
+        <ListItem
+          ripple={false}
+          className={`cursor-pointer p-2 pl-1.5 rounded-lg ${
+            activePage === 'Wallet' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
+          }`}
+          onClick={() => {
+            setIsSubMenuOpen(0);
+            setPage('Wallet');
+          }}
+        >
+          <ListItemPrefix>
+            <FaConnectdevelop
+              size={20}
+              color={activePage === 'Wallet' ? '#5046E5' : '#111111'}
+            />
+          </ListItemPrefix>
+          Wallet
+        </ListItem>
+
+        <ListItem
+          ripple={false}
+          className={`cursor-pointer p-2 pl-1.5 rounded-lg ${
+            activePage === 'Notifications' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
+          }`}
+          onClick={() => {
+            setIsSubMenuOpen(0);
+            setPage('Notifications');
           }}
         >
           <ListItemPrefix>
             <NotificationIcon
               size={20}
-              stroke={activePage === "Notifications" ? "#5046E5" : "#111111"}
+              stroke={activePage === 'Notifications' ? '#5046E5' : '#111111'}
             />
           </ListItemPrefix>
           Notifications

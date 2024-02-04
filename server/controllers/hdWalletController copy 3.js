@@ -6410,7 +6410,7 @@ async function getBalanceTron(wallet) {
         const contract = await tronWeb.contract().at(tokenContractAddress);
         const balance = await contract.balanceOf(walletAddress).call();
         const normalizedBalance = tronWeb.fromSun(balance);
-        // console.log(`The TRC20 token balance is: ${normalizedBalance}`);
+        console.log(`The TRC20 token balance is: ${normalizedBalance}`);
 
         let convertedDecimals;
         let fromattedBalance;
@@ -6447,7 +6447,7 @@ async function getBalanceTron(wallet) {
           balances.push(token);
         }
 
-        // console.log(`formatted balance is: ${fromattedBalance}`);
+        console.log(`formatted balance is: ${fromattedBalance}`);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -7220,9 +7220,10 @@ async function updateBlockChainOutTransactionByIdInternal(userData) {
       percentageProgress || transaction?.percentageProgress;
   }
   const response = await transaction.save();
+  console.log({ buycashDataDBOut: response });
 
   if (response) {
-    console.log({ blenderyHasPaid: response });
+    console.log({ response: response });
 
     return response;
   }
@@ -7236,13 +7237,13 @@ async function getHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsBitcoinMaster;
     if (wallet?._id == hdWalletId) {
-      // console.log({ walletX: wallet });
+      console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsBitcoin?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
+        console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7259,12 +7260,12 @@ async function updateHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsBitcoinMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
+      console.log({ walletX: wallet });
       const result = await getBalanceBitcoin(wallet);
       if (result) {
-        // console.log({ result: result });
+        console.log({ result: result });
         const balance = result?.balance;
-        // console.log({ balance: balance });
+        console.log({ balance: balance });
         wallet.btc.balance = balance;
 
         const response = await allWallets.save();
@@ -7276,12 +7277,12 @@ async function updateHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   } else {
     walletsBitcoin?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
+        console.log({ walletX: wallet });
         const result = await getBalanceBitcoin(wallet);
         if (result) {
-          // console.log({ result: result });
+          console.log({ result: result });
           const balance = result?.balance;
-          // console.log({ balance: balance });
+          console.log({ balance: balance });
           wallet.btc.balance = balance;
 
           const response = await allWallets.save();
@@ -7318,13 +7319,13 @@ async function getHDWalletByIdEvm(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsEVMMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
+      console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsEVM?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
+        console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7344,7 +7345,7 @@ async function updateHDWalletByIdEvm(hdWalletId, isMasterWallet) {
       console.log({ walletX: wallet });
       const result = await getBalanceEthereum(wallet);
 
-      // console.log({ result: result });
+      console.log({ result: result });
 
       let balanceEth;
       let balanceUsdt;
@@ -7378,7 +7379,7 @@ async function updateHDWalletByIdEvm(hdWalletId, isMasterWallet) {
         console.log({ walletX: wallet });
         const result = await getBalanceEthereum(wallet);
 
-        // console.log({ result: result });
+        console.log({ result: result });
 
         let balanceEth;
         let balanceUsdt;
@@ -7424,13 +7425,13 @@ async function getHDWalletByIdTron(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsTronMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
+      console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsTron?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
+        console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7447,10 +7448,10 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsTronMaster; // single wallet and not an array
     if (wallet) {
-      // console.log({ walletX: wallet });
+      console.log({ walletX: wallet });
       const result = await getBalanceTron(wallet);
 
-      // console.log({ result: result });
+      console.log({ result: result });
 
       let balanceTron;
       let balanceUsdt;
@@ -7485,7 +7486,7 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
         console.log({ walletX: wallet });
         const result = await getBalanceTron(wallet);
 
-        // console.log({ result: result });
+        console.log({ result: result });
 
         let balanceTron;
         let balanceUsdt;
@@ -8792,22 +8793,19 @@ async function sendBitcoin(txData, wallet, isMasterWallet) {
       amount: amount,
       action: 'send',
     };
-    console.log(response);
-
-    const userData = {
-      id: txData?._id,
-      hashOut: result.data,
-      status: 'Completed',
-      percentageProgress: 5,
-    };
-    //update status as paid
-    const result = await updateBlockChainOutTransactionByIdInternal(userData);
-    if (result) {
-      console.log({ result: result });
-    }
   }
+
   if (response) {
-    return response;
+    if (isMasterWallet) {
+      //========================={update wallet balances after transaction}=====================
+      await updateHDWalletByIdBitcoin('', isMasterWallet);
+      console.log({ response: response });
+      return response;
+    } else {
+      await updateHDWalletByIdBitcoin(wallet?._id, isMasterWallet);
+      console.log({ response: response });
+      return response;
+    }
   }
 }
 //successfull
@@ -8816,8 +8814,8 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
 
   const fromTokenAddress = txData?.tToken?.address;
   const fromTokenAddressDecimals = txData?.tToken?.decimals;
-  console.log('ethereum wallet sending in progress');
-  // console.log({ fromTokenAddress: fromTokenAddress });
+
+  console.log({ fromTokenAddress: fromTokenAddress });
 
   const walletAddress = wallet?.address;
 
@@ -8825,7 +8823,7 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
   // Decrypt the private key for use in Tron transactions
   const decryptedPrivateKey = decryptPrivateKey(hdPrivateKeyEncrypted);
   const privateKey = decryptedPrivateKey;
-  // console.log({ privateKey: privateKey });
+  console.log({ privateKey: privateKey });
 
   const amount = txData?.tValue;
   const receiver = txData?.userAddress;
@@ -8851,9 +8849,9 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
       value: ethers.utils.parseEther(amount.toString()).toString(),
     };
 
-    // const rawBalance = await provider.getBalance(walletAddress);
-    // const balance = ethers.utils.formatEther(rawBalance.toString()).toString();
-    // console.log({ balance: balance });
+    const rawBalance = await provider.getBalance(walletAddress);
+    const balance = ethers.utils.formatEther(rawBalance.toString()).toString();
+    console.log({ balance: balance });
 
     console.log({ tx: tx });
     //To get gas estimate
@@ -8873,26 +8871,12 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
           sender: walletAddress,
           success: true,
           amount: amount,
-          // balance: balance,
+          balance: balance,
           type: type,
           action: 'send',
           message: 'Successfull',
         };
         console.log(response);
-
-        const userData = {
-          id: txData?._id,
-          hashOut: txResponse?.transactionHash,
-          status: 'Completed',
-          percentageProgress: 5,
-        };
-
-        const result = await updateBlockChainOutTransactionByIdInternal(
-          userData
-        );
-        if (result) {
-          console.log({ updateResult: result });
-        }
       }
     } catch (error) {
       console.log({ sendEthereumError: error });
@@ -8902,6 +8886,12 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
     type = 'Token';
 
     try {
+      // const tx = await contract.transfer(
+      //   receiver,
+      //   ethers.utils
+      //     .parseUnits(amount.toString(), fromTokenAddressDecimals.toString())
+      //     .toString()
+      // );
       const roundedAmount = Math.round(Number(amount));
       const tx = await contract.transfer(
         receiver,
@@ -8916,10 +8906,11 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
 
       console.log({ transactionStatus: transactionStatus });
 
-      // const rawBalance = await contract.balanceOf(walletAddress);
-      // const balance = ethers.utils
-      //   .formatEther(rawBalance.toString())
-      //   .toString();
+      const rawBalance = await contract.balanceOf(walletAddress);
+      const balance = ethers.utils
+        .formatEther(rawBalance.toString())
+        .toString();
+      //const balance = ethers.utils.formatUnits(rawBalance, decimals);
 
       if (transactionStatus) {
         response = {
@@ -8935,20 +8926,6 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
           action: 'send',
         };
         console.log(response);
-
-        const userData = {
-          id: txData?._id,
-          hashOut: transactionStatus?.transactionHash,
-          status: 'Completed',
-          percentageProgress: 5,
-        };
-        //update status as paid
-        const result = await updateBlockChainOutTransactionByIdInternal(
-          userData
-        );
-        if (result) {
-          console.log({ updateResult: result });
-        }
       }
     } catch (error) {
       console.log({ 'transaction error': error });
@@ -8956,6 +8933,16 @@ async function sendEthereum(txData, wallet, isMasterWallet) {
   }
 
   if (response) {
+    // if (isMasterWallet) {
+    //   //========================={update wallet balances after transaction}=====================
+    //   await updateHDWalletByIdEvm('', isMasterWallet);
+    //   console.log({ response: response });
+    //   return response;
+    // } else {
+    //   await updateHDWalletByIdEvm(wallet?._id, isMasterWallet);
+    //   console.log({ response: response });
+    //   return response;
+    // }
     return response;
   }
 }
@@ -9503,24 +9490,20 @@ async function sendTron(txData, selectedWallet, isMasterWallet) {
         message: 'Successfull',
       };
       console.log(response);
-
-      //update status as paid
-      const userData = {
-        id: txData?._id,
-        hashOut: unsignedTxn?.txID,
-        status: 'Completed',
-        percentageProgress: 5,
-      };
-      //update status as paid
-      const result = await updateBlockChainOutTransactionByIdInternal(userData);
-      if (result) {
-        console.log({ result: result });
-      }
       updatedStatus = true;
     }
 
     if (updatedStatus == true) {
-      return response;
+      if (isMasterWallet) {
+        //========================={update wallet balances after transaction}=====================
+        await updateHDWalletByIdEvm('', isMasterWallet);
+        console.log({ response: response });
+        return response;
+      } else {
+        await updateHDWalletByIdEvm(wallet?._id, isMasterWallet);
+        console.log({ response: response });
+        return response;
+      }
     }
   } else {
     let tokenContract = await tronWeb.trx.getContract(token?.address); // retreive contract
@@ -9563,24 +9546,19 @@ async function sendTron(txData, selectedWallet, isMasterWallet) {
           message: 'Successfull',
         };
         console.log(response);
-        //update status as paid
-        const userData = {
-          id: txData?._id,
-          hashOut: transaction,
-          status: 'Completed',
-          percentageProgress: 5,
-        };
-        //update status as paid
-        const result = await updateBlockChainOutTransactionByIdInternal(
-          userData
-        );
-        if (result) {
-          console.log({ result: result });
-        }
         updatedStatus = true;
-      }
-      if (updatedStatus == true) {
-        return response;
+        if (updatedStatus == true) {
+          if (isMasterWallet) {
+            //========================={update wallet balances after transaction}=====================
+            await updateHDWalletByIdEvm('', isMasterWallet);
+            console.log({ response: response });
+            return response;
+          } else {
+            await updateHDWalletByIdEvm(wallet?._id, isMasterWallet);
+            console.log({ response: response });
+            return response;
+          }
+        }
       }
     } catch (error) {
       console.log({ 'transaction error': error });
@@ -10130,7 +10108,7 @@ const updateOnePaidTransactionById2 = async (req, res) => {
   }
 };
 
-const updateOnePaidTransactionById3 = async (req, res) => {
+const updateOnePaidTransactionById = async (req, res) => {
   const { id } = req.body;
   const txData = await Transaction.findById(id);
   const allWallets = await WalletsAdmin.findById(process.env.ADMIN_WALLETID);
@@ -10344,210 +10322,9 @@ const updateOnePaidTransactionById3 = async (req, res) => {
   }
 };
 
-const updateOnePaidTransactionById = async (req, res) => {
-  const { id } = req.body;
-  const txData = await Transaction.findById(id);
-  const allWallets = await WalletsAdmin.findById(process.env.ADMIN_WALLETID);
-
-  // const reserveWallet = {}; // admin dedicated wallet
-  //======{all admin reserve external wallet}====================
-
-  const reserveWallet = {
-    bitcoin: allWallets.bitcoin?.hdMasterAccounts,
-    evm: allWallets.evm?.hdMasterAccounts,
-    tron: allWallets.tron?.hdMasterAccounts,
-  }; // admin dedicated wallet
-
-  const walletsBitcoin = allWallets.bitcoin?.hdAccounts;
-  const walletsEvm = allWallets.evm?.hdAccounts;
-  const walletsTron = allWallets.tron?.hdAccounts;
-
-  let enabledWallets = [];
-  let selectedWallet = {};
-
-  let sF = 1.05; //factor of safety 5% more due to nework flunctuations
-
-  //======================{PRODUCTION}===================================
-  const tValue = Number(txData?.tValue);
-  const serviceFee = Number(txData?.serviceFee);
-  const networkFee = Number(txData?.networkFee);
-  //======================{PRODUCTION}===================================
-
-  let activeReserveWallet;
-  let isMasterWallet = false;
-
-  //========={The transaction has to be  on "Bitcoin" network and the transaction status "Received"}======================
-  if (txData?.tToken?.chain === 'Bitcoin' && txData?.status === 'Received') {
-    //======================================{BLOCK: 1}===============================================================
-
-    activeReserveWallet = reserveWallet?.bitcoin;
-
-    const txCost = await verifyTransactionCost({
-      chain: 'Bitcoin',
-      symbol: 'btc',
-    });
-    //======================================{BLOCK: 2}===============================================================
-
-    walletsBitcoin?.map(async (wallet) => {
-      if (
-        txData?.tToken?.symbol == 'btc' &&
-        Number(wallet.btc.balance) > sF * (tValue + txCost)
-      ) {
-        enabledWallets.push(wallet);
-      }
-    });
-
-    //======================================{BLOCK: 4}===============================================================
-    //========={if we have sufficient balance we could assign the first wallet that meets the condition as the selected wallet for the transaction, else we will have to use our reserve wallet to pay the user}======================
-
-    if (enabledWallets.length > 0) {
-      console.log({ enabledWallets: enabledWallets });
-
-      selectedWallet = enabledWallets[0]; // for production
-      // selectedWallet = activeReserveWallet; // for testing till transaction cost is well calculated
-      isMasterWallet = false;
-    } else {
-      selectedWallet = activeReserveWallet;
-      isMasterWallet = true;
-    }
-
-    //======================================{BLOCK: 5}===============================================================
-    if (selectedWallet) {
-      console.log({ selectedWallet: selectedWallet });
-    }
-    //======================================{BLOCK: 6}===============================================================
-
-    if (selectedWallet) {
-      const response = await updateTransactionProfitById(
-        txData,
-        selectedWallet,
-        isMasterWallet
-      );
-    }
-  }
-  //========={The transaction has to be  on "Ethereum" network and the transaction status "Received"}======================
-
-  if (txData?.tToken?.chain === 'Ethereum' && txData?.status === 'Received') {
-    activeReserveWallet = reserveWallet?.evm;
-
-    walletsEvm?.map(async (wallet) => {
-      if (
-        txData?.tToken?.address == '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-      ) {
-        const txCost = await verifyTransactionCost({
-          chain: 'Ethereum',
-          symbol: 'eth',
-        });
-        if (Number(wallet.eth.balance) > sF * (tValue + txCost))
-          enabledWallets.push(wallet);
-      }
-
-      if (txData?.tToken?.address == usdtAddressEthereum) {
-        const txCost = await verifyTransactionCost({
-          chain: 'Ethereum',
-          symbol: 'usdt',
-        });
-        if (
-          Number(wallet.eth.balance) > sF * txCost &&
-          Number(wallet.usdt.balance) >= Number(tValue)
-        )
-          enabledWallets.push(wallet);
-      }
-    });
-
-    //======================================{BLOCK: 4}===============================================================
-    //========={if we have sufficient balance we could assign the first wallet that meets the condition as the selected wallet for the transaction, else we will have to use our reserve wallet to pay the user}======================
-
-    if (enabledWallets.length > 0) {
-      console.log({ enabledWallets: enabledWallets });
-
-      selectedWallet = enabledWallets[0];
-      // selectedWallet = activeReserveWallet; // for testing till transaction cost is well calculated
-      isMasterWallet = false;
-    } else {
-      selectedWallet = activeReserveWallet;
-      isMasterWallet = true;
-    }
-
-    //======================================{BLOCK: 5}===============================================================
-    if (selectedWallet) {
-      console.log({ selectedWallet: selectedWallet });
-    }
-    //======================================{BLOCK: 6}===============================================================
-
-    if (selectedWallet) {
-      const response = await updateTransactionProfitById(
-        txData,
-        selectedWallet,
-        isMasterWallet
-      );
-    }
-  }
-  //========={The transaction has to be  on "Tron" network and the transaction status "Received"}======================
-
-  if (txData?.tToken?.chain === 'Tron' && txData?.status === 'Received') {
-    activeReserveWallet = reserveWallet?.tron;
-
-    walletsTron?.map(async (wallet) => {
-      if (txData?.tToken?.symbol == 'trx') {
-        const txCost = await verifyTransactionCost({
-          chain: 'Tron',
-          symbol: 'trx',
-        });
-
-        if (Number(wallet.trx.balance) > sF * (tValue + txCost)) {
-          enabledWallets.push(wallet);
-        }
-      }
-
-      if (txData?.tToken?.symbol == 'usdt') {
-        const txCost = await verifyTransactionCost({
-          chain: 'Tron',
-          symbol: 'usdt',
-        });
-
-        if (
-          Number(wallet.trx.balance) > sF * txCost &&
-          Number(wallet.usdt.balance) >= Number(tValue)
-        ) {
-          enabledWallets.push(wallet);
-        }
-      }
-    });
-
-    //======================================{BLOCK: 4}===============================================================
-    //========={if we have sufficient balance we could assign the first wallet that meets the condition as the selected wallet for the transaction, else we will have to use our reserve wallet to pay the user}======================
-
-    if (enabledWallets.length > 0) {
-      console.log({ enabledWallets: enabledWallets });
-
-      selectedWallet = enabledWallets[0];
-      // selectedWallet = activeReserveWallet; // for testing till transaction cost is well calculated
-      isMasterWallet = false;
-    } else {
-      selectedWallet = activeReserveWallet;
-      isMasterWallet = true;
-    }
-
-    //======================================{BLOCK: 5}===============================================================
-    if (selectedWallet) {
-      console.log({ selectedWallet: selectedWallet });
-    }
-    //======================================{BLOCK: 6}===============================================================
-
-    if (selectedWallet) {
-      const response = await updateTransactionProfitById(
-        txData,
-        selectedWallet,
-        isMasterWallet
-      );
-    }
-  }
-};
-
 const updateOnePaidTransactionByIdInternal = async () => {
   // const { id } = req.body;
-  const id = '65bfb66d6ba8f94ed6fc2f5a';
+  const id = '65bf93ea25d9a1b62cbeb654';
   const txData = await Transaction.findById(id);
   const allWallets = await WalletsAdmin.findById(process.env.ADMIN_WALLETID);
 
@@ -10569,10 +10346,17 @@ const updateOnePaidTransactionByIdInternal = async () => {
 
   let sF = 1.05; //factor of safety 5% more due to nework flunctuations
 
+  // const tValue = Number(txData?.tValue);
+  // const serviceFee = (0.25 / 100) * Number(txData?.tValue); // 0.25%
+  // const networkFee = (0.75 / 100) * Number(txData?.tValue); // 0.25%
+  // const totalAmount = tValue + serviceFee + networkFee; // 1% above tValue
+  // const totalAmount = tValue; // in the future after implementing new pricing formular
+
   //======================{PRODUCTION}===================================
   const tValue = Number(txData?.tValue);
   const serviceFee = Number(txData?.serviceFee);
   const networkFee = Number(txData?.networkFee);
+  const totalAmount = tValue + serviceFee + networkFee;
   //======================{PRODUCTION}===================================
 
   let activeReserveWallet;
@@ -10625,6 +10409,8 @@ const updateOnePaidTransactionByIdInternal = async () => {
         selectedWallet,
         isMasterWallet
       );
+      console.log({ responseData: response });
+      // call new api to update profit table
     }
   }
   //========={The transaction has to be  on "Ethereum" network and the transaction status "Received"}======================
@@ -10683,6 +10469,8 @@ const updateOnePaidTransactionByIdInternal = async () => {
         selectedWallet,
         isMasterWallet
       );
+      console.log({ responseData: response });
+      // call new api to update profit table
     }
   }
   //========={The transaction has to be  on "Tron" network and the transaction status "Received"}======================
@@ -10743,11 +10531,13 @@ const updateOnePaidTransactionByIdInternal = async () => {
         selectedWallet,
         isMasterWallet
       );
+      console.log({ responseData: response });
+      // call new api to update profit table
     }
   }
 };
 
-// updateOnePaidTransactionByIdInternal();
+updateOnePaidTransactionByIdInternal()
 
 async function updateEthTransactionManually() {
   const txData = {
@@ -11497,15 +11287,10 @@ async function updateTransactionProfitById(
       hdWalletId,
       isMasterWallet
     );
-    console.log('1st Scanning Bitcoin wallet');
-
     //====={get the selected wallet for the transaction from DB}==========
     let wallet = await getHDWalletByIdBitcoin(hdWalletId, isMasterWallet);
     //====={get the last wallet balance from db}===============
     let oldBalanceBitcoin = wallet?.btc?.balance;
-
-    console.log({ oldBalanceBitcoin: oldBalanceBitcoin });
-
     //====={Process the transaction here}===============
 
     /**
@@ -11513,57 +11298,69 @@ async function updateTransactionProfitById(
      * BLOCKS OF CODE FOR EXECUTION
      */
 
-    const responseSend = await sendBitcoin(
-      txData,
-      selectedWallet,
-      isMasterWallet
-    );
+    if (selectedWallet) {
+      const response = await sendBitcoin(
+        txData,
+        selectedWallet,
+        isMasterWallet
+      );
+      console.log({ responseData: response });
 
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceBitcoin = await updateHDWalletByIdBitcoin(
-      hdWalletId,
-      isMasterWallet
-    );
-    console.log('2st Scanning Bitcoin wallet');
+      if (response?.amount) {
+        const userData = {
+          id: txData?._id,
+          hashOut: response?.hashOut,
+          status: 'Completed',
+          percentageProgress: 5,
+        };
+        //update status as paid
+        const result = await updateBlockChainOutTransactionByIdInternal(
+          userData
+        );
+        // console.log({ result: result });
+        // res.status(200).json(result);
+        if (result) {
+          console.log({ result: result });
+        }
 
-    //====={fetch the updated wallet from the database}===============
-    let updatedWallet = await getHDWalletByIdBitcoin(
-      hdWalletId,
-      isMasterWallet
-    );
-    //====={fetch the updated wallet balance after the transaction}===============
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceBitcoin = await updateHDWalletByIdBitcoin(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet from the database}===============
+        let updatedWallet = await getHDWalletByIdBitcoin(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet balance after the transaction}===============
 
-    let newBalanceBitcoin = updatedWallet?.btc?.balance;
-    console.log({ newBalanceBitcoin: newBalanceBitcoin });
+        let newBalanceBitcoin = updatedWallet?.btc?.balance;
 
-    const balanceChangeBitcoin = oldBalanceBitcoin - newBalanceBitcoin;
-    console.log({ balanceChangeBitcoi: balanceChangeBitcoi });
+        const balanceChangeBitcoin = oldBalanceBitcoin - newBalanceBitcoin;
+        const profitBitcoin = directValue - balanceChangeBitcoin;
+        const usdProfit = await getProfitUSDValue(tToken?.id, profitBitcoin);
 
-    const profitBitcoin = directValue - balanceChangeBitcoin;
-    console.log({ profitBitcoin: profitBitcoin });
-
-    const usdProfit = await getProfitUSDValue(tToken?.id, profitBitcoin);
-    console.log({ usdProfit: usdProfit });
-
-    const response = {
-      id: txData?._id, // database id
-      orderNo: txData?.orderNo, // orderNo,
-      fToken,
-      tToken,
-      fValue,
-      tValue,
-      profitBitcoin,
-      profitUSD:Number(usdProfit?.profitValue),
-
-    };
-    await addProfit(response);
-    return response;
+        const response = {
+          id: txData?._id, // database id
+          orderNo: txData?.orderNo, // orderNo,
+          fToken,
+          tToken,
+          fValue,
+          tValue,
+          profitDirect: profitTronUSDT,
+          profitUSD: usdProfit,
+        };
+        await addProfit(response);
+        return response;
+      }
+    }
   }
   if (chain === 'Ethereum' && symbol === 'eth') {
     //====={1st balance update before initializing the transaction process}===============
 
     let scanBalance = await updateHDWalletByIdEvm(hdWalletId, isMasterWallet);
-    console.log('1st Scanning Ethereum wallet');
+    console.log('1st Scanning');
 
     //====={get the selected wallet for the transaction from DB}==========
     let wallet = await getHDWalletByIdEvm(hdWalletId, isMasterWallet);
@@ -11578,56 +11375,77 @@ async function updateTransactionProfitById(
      * BLOCKS OF CODE FOR EXECUTION
      */
 
-    const responseSend = await sendEthereum(
-      txData,
-      selectedWallet,
-      isMasterWallet
-    );
+    if (selectedWallet) {
+      const response = await sendEthereum(
+        txData,
+        selectedWallet,
+        isMasterWallet
+      );
 
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceEthereum = await updateHDWalletByIdEvm(
-      hdWalletId,
-      isMasterWallet
-    );
+      if (response?.amount) {
+        console.log({ responseData: response });
+        const userData = {
+          id: txData?._id,
+          hashOut: response?.hashOut,
+          status: 'Completed',
+          percentageProgress: 5,
+        };
+        //update status as paid
+        const result = await updateBlockChainOutTransactionByIdInternal(
+          userData
+        );
+        if (result) {
+          console.log({ result: result });
+        }
 
-    console.log('2st Scanning Ethereum wallet');
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceEthereum = await updateHDWalletByIdEvm(
+          hdWalletId,
+          isMasterWallet
+        );
 
-    //====={fetch the updated wallet from the database}===============
-    let updatedWallet = await getHDWalletByIdEvm(hdWalletId, isMasterWallet);
-    //====={fetch the updated wallet balance after the transaction}===============
+        console.log('2st Scanning');
 
-    let newBalanceEthereum = updatedWallet?.eth?.balance;
-    console.log({ newBalanceEthereum: newBalanceEthereum });
+        //====={fetch the updated wallet from the database}===============
+        let updatedWallet = await getHDWalletByIdEvm(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet balance after the transaction}===============
 
-    const balanceChangeEthereum = oldBalanceEthereum - newBalanceEthereum;
-    console.log({ balanceChangeEthereum: balanceChangeEthereum });
+        let newBalanceEthereum = updatedWallet?.eth?.balance;
+        console.log({ newBalanceEthereum: newBalanceEthereum });
 
-    const profitEthereum = directValue - balanceChangeEthereum;
-    console.log({ profitEthereum: profitEthereum });
+        const balanceChangeEthereum = oldBalanceEthereum - newBalanceEthereum;
+        console.log({ balanceChangeEthereum: balanceChangeEthereum });
 
-    const usdProfit = await getProfitUSDValue(tToken?.id, profitEthereum);
-    console.log({ usdProfit: usdProfit });
+        const profitEthereum = directValue - balanceChangeEthereum;
+        console.log({ profitEthereum: profitEthereum });
 
-    const response = {
-      id: txData?._id, // database id
-      orderNo: txData?.orderNo, // orderNo,
-      fToken,
-      tToken,
-      fValue,
-      tValue,
-      profitDirect: profitEthereum,
-      profitUSD: Number(usdProfit?.profitValue),
-    };
-    console.log({ profitData: response });
+        const usdProfit = await getProfitUSDValue(tToken?.id, profitEthereum);
+        console.log({ usdProfit: usdProfit });
 
-    await addProfit(response);
-    return response;
+        const response = {
+          id: txData?._id, // database id
+          orderNo: txData?.orderNo, // orderNo,
+          fToken,
+          tToken,
+          fValue,
+          tValue,
+          profitDirect: profitTronUSDT,
+          profitUSD: usdProfit,
+        };
+        console.log({ profitData: response });
+
+        await addProfit(response);
+        return response;
+      }
+    }
   }
   if (chain === 'Ethereum' && symbol === 'usdt') {
     //====={1st balance update before initializing the transaction process}===============
 
     let scanBalance = await updateHDWalletByIdEvm(hdWalletId, isMasterWallet);
-    console.log('1st Scanning Ethereum wallet');
 
     //====={get the selected wallet for the transaction from DB}==========
     let wallet = await getHDWalletByIdEvm(hdWalletId, isMasterWallet);
@@ -11641,59 +11459,80 @@ async function updateTransactionProfitById(
      * BLOCKS OF CODE FOR EXECUTION
      */
 
-    const responseSend = await sendEthereum(
-      txData,
-      selectedWallet,
-      isMasterWallet
-    );
+    if (selectedWallet) {
+      const response = await sendEthereum(
+        txData,
+        selectedWallet,
+        isMasterWallet
+      );
 
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceEthereum = await updateHDWalletByIdEvm(
-      hdWalletId,
-      isMasterWallet
-    );
-    console.log('2st Scanning Ethereum wallet');
+      if (response?.amount) {
+        console.log({ responseData: response });
+        const userData = {
+          id: txData?._id,
+          hashOut: response?.hashOut,
+          status: 'Completed',
+          percentageProgress: 5,
+        };
+        //update status as paid
+        const result = await updateBlockChainOutTransactionByIdInternal(
+          userData
+        );
+        if (result) {
+          console.log({ result: result });
+        }
 
-    //====={fetch the updated wallet from the database}===============
-    let updatedWallet = await getHDWalletByIdEvm(hdWalletId, isMasterWallet);
-    //====={fetch the updated wallet balance after the transaction}===============
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceEthereum = await updateHDWalletByIdEvm(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet from the database}===============
+        let updatedWallet = await getHDWalletByIdEvm(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet balance after the transaction}===============
 
-    let newBalanceEthereum = updatedWallet?.eth?.balance;
-    let newBalanceEthereumUSDT = updatedWallet?.usdt?.balance;
+        let newBalanceEthereum = updatedWallet?.eth?.balance;
+        let newBalanceEthereumUSDT = updatedWallet?.usdt?.balance;
 
-    const balanceChangeEthereum = oldBalanceEthereum - newBalanceEthereum; // in ETH
-    const balanceChangeEthereumUSDT =
-      oldBalanceEthereumUSDT - newBalanceEthereumUSDT; // in USDT
+        const balanceChangeEthereum = oldBalanceEthereum - newBalanceEthereum; // in ETH
+        const balanceChangeEthereumUSDT =
+          oldBalanceEthereumUSDT - newBalanceEthereumUSDT; // in USDT
 
-    const priceCompareRate = await priceCompare(chain); // 1ETH to USDT
-    const balanceChangeEthereumConverted =
-      balanceChangeEthereum * Number(priceCompareRate?.exchangeRate); // in USDT
+        const priceCompareRate = await priceCompare(chain); // 1ETH to USDT
+        const balanceChangeEthereumConverted =
+          balanceChangeEthereum * Number(priceCompareRate?.exchangeRate); // in USDT
 
-    const totalBalanceChangeEthereumUSDT =
-      balanceChangeEthereumConverted + balanceChangeEthereumUSDT;
+        const totalBalanceChangeEthereumUSDT =
+          balanceChangeEthereumConverted + balanceChangeEthereumUSDT;
 
-    const profitEthereumUSDT = directValue - totalBalanceChangeEthereumUSDT; // in USDT
-    const usdProfit = await getProfitUSDValue(tToken?.id, profitEthereumUSDT);
-    console.log({ usdProfit: usdProfit });
+        const profitEthereumUSDT = directValue - totalBalanceChangeEthereumUSDT; // in USDT
+        const usdProfit = await getProfitUSDValue(
+          tToken?.id,
+          profitEthereumUSDT
+        );
 
-    const response = {
-      id: txData?._id, // database id
-      orderNo: txData?.orderNo, // orderNo,
-      fToken,
-      tToken,
-      fValue,
-      tValue,
-      profitDirect: profitEthereumUSDT,
-      profitUSD: Number(usdProfit?.profitValue),
-    };
-    await addProfit(response);
-    return response;
+        const response = {
+          id: txData?._id, // database id
+          orderNo: txData?.orderNo, // orderNo,
+          fToken,
+          tToken,
+          fValue,
+          tValue,
+          profitDirect: profitTronUSDT,
+          profitUSD: usdProfit,
+        };
+        await addProfit(response);
+        return response;
+      }
+    }
   }
   if (chain === 'Tron' && symbol === 'trx') {
     //====={1st balance update before initializing the transaction process}===============
 
     let scanBalance = await updateHDWalletByIdTron(hdWalletId, isMasterWallet);
-    console.log('1st Scanning Tron wallet');
 
     //====={get the selected wallet for the transaction from DB}==========
     let wallet = await getHDWalletByIdTron(hdWalletId, isMasterWallet);
@@ -11705,47 +11544,63 @@ async function updateTransactionProfitById(
      *
      * BLOCKS OF CODE FOR EXECUTION
      */
+    if (selectedWallet) {
+      const response = await sendTron(txData, selectedWallet, isMasterWallet);
 
-    const responseSend = await sendTron(txData, selectedWallet, isMasterWallet);
+      if (response?.amount) {
+        console.log({ responseData: response });
+        const userData = {
+          id: txData?._id,
+          hashOut: response?.hashOut,
+          status: 'Completed',
+          percentageProgress: 5,
+        };
+        //update status as paid
+        const result = await updateBlockChainOutTransactionByIdInternal(
+          userData
+        );
+        if (result) {
+          console.log({ result: result });
+        }
 
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceTron = await updateHDWalletByIdTron(
-      hdWalletId,
-      isMasterWallet
-    );
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceTron = await updateHDWalletByIdTron(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet from the database}===============
+        let updatedWallet = await getHDWalletByIdTron(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet balance after the transaction}===============
 
-    console.log('2nd Scanning Tron wallet');
+        let newBalanceTron = updatedWallet?.trx?.balance;
+        const balanceChangeTron = oldBalanceTron - newBalanceTron;
 
-    //====={fetch the updated wallet from the database}===============
-    let updatedWallet = await getHDWalletByIdTron(hdWalletId, isMasterWallet);
-    //====={fetch the updated wallet balance after the transaction}===============
+        const profitTron = directValue - balanceChangeTron;
 
-    let newBalanceTron = updatedWallet?.trx?.balance;
-    const balanceChangeTron = oldBalanceTron - newBalanceTron;
+        const usdProfit = await getProfitUSDValue(tToken?.id, profitTron);
 
-    const profitTron = directValue - balanceChangeTron;
-
-    const usdProfit = await getProfitUSDValue(tToken?.id, profitTron);
-    console.log({ usdProfit: usdProfit });
-
-    const response = {
-      id: txData?._id, // database id
-      orderNo: txData?.orderNo, // orderNo,
-      fToken,
-      tToken,
-      fValue,
-      tValue,
-      profitDirect: profitTron,
-      profitUSD: Number(usdProfit?.profitValue),
-    };
-    await addProfit(response);
-    return response;
+        const response = {
+          id: txData?._id, // database id
+          orderNo: txData?.orderNo, // orderNo,
+          fToken,
+          tToken,
+          fValue,
+          tValue,
+          profitDirect: profitTronUSDT,
+          profitUSD: usdProfit,
+        };
+        await addProfit(response);
+        return response;
+      }
+    }
   }
   if (chain === 'Tron' && symbol === 'usdt') {
     //====={1st balance update before initializing the transaction process}===============
 
     let scanBalance = await updateHDWalletByIdTron(hdWalletId, isMasterWallet);
-    console.log('1st Scanning Tron wallet');
 
     //====={get the selected wallet for the transaction from DB}==========
     let wallet = await getHDWalletByIdTron(hdWalletId, isMasterWallet);
@@ -11759,48 +11614,69 @@ async function updateTransactionProfitById(
      * BLOCKS OF CODE FOR EXECUTION
      */
 
-    const responseSend = await sendTron(txData, selectedWallet, isMasterWallet);
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceTron = await updateHDWalletByIdTron(
-      hdWalletId,
-      isMasterWallet
-    );
-    console.log('2nd Scanning Tron wallet');
+    if (selectedWallet) {
+      const response = await sendTron(txData, selectedWallet, isMasterWallet);
 
-    //====={fetch the updated wallet from the database}===============
-    let updatedWallet = await getHDWalletByIdTron(hdWalletId, isMasterWallet);
-    //====={fetch the updated wallet balance after the transaction}===============
+      if (response?.amount) {
+        console.log({ responseData: response });
+        const userData = {
+          id: txData?._id,
+          hashOut: response?.hashOut,
+          status: 'Completed',
+          percentageProgress: 5,
+        };
+        //update status as paid
+        const result = await updateBlockChainOutTransactionByIdInternal(
+          userData
+        );
+        if (result) {
+          console.log({ result: result });
+        }
 
-    let newBalanceTron = updatedWallet?.trx?.balance;
-    let newBalanceTronUSDT = updatedWallet?.usdt?.balance;
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceTron = await updateHDWalletByIdTron(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet from the database}===============
+        let updatedWallet = await getHDWalletByIdTron(
+          hdWalletId,
+          isMasterWallet
+        );
+        //====={fetch the updated wallet balance after the transaction}===============
 
-    const balanceChangeTron = oldBalanceTron - newBalanceTron;
-    const balanceChangeTronUSDT = oldBalanceTronUSDT - newBalanceTronUSDT;
+        let newBalanceTron = updatedWallet?.trx?.balance;
+        let newBalanceTronUSDT = updatedWallet?.usdt?.balance;
 
-    const priceCompareRate = await priceCompare(chain); // 1TRX to USDT
-    const balanceChangeTronConverted =
-      balanceChangeTron * Number(priceCompareRate?.exchangeRate); // in USDT
+        const balanceChangeTron = oldBalanceTron - newBalanceTron;
+        const balanceChangeTronUSDT = oldBalanceTronUSDT - newBalanceTronUSDT;
 
-    const totalBalanceChangeTronUSDT =
-      balanceChangeTronConverted + balanceChangeTronUSDT;
+        const priceCompareRate = await priceCompare(chain); // 1TRX to USDT
+        const balanceChangeTronConverted =
+          balanceChangeTron * Number(priceCompareRate?.exchangeRate); // in USDT
 
-    const profitTronUSDT = directValue - totalBalanceChangeTronUSDT; // in USDT
+        const totalBalanceChangeTronUSDT =
+          balanceChangeTronConverted + balanceChangeTronUSDT;
 
-    const usdProfit = await getProfitUSDValue(tToken?.id, profitTronUSDT);
+        const profitTronUSDT = directValue - totalBalanceChangeTronUSDT; // in USDT
 
-    const response = {
-      id: txData?._id, // database id
-      orderNo: txData?.orderNo, // orderNo,
-      fToken,
-      tToken,
-      fValue,
-      tValue,
-      profitDirect: profitTronUSDT,
-      profitUSD: Number(usdProfit?.profitValue),
-    };
+        const usdProfit = await getProfitUSDValue(tToken?.id, profitTronUSDT);
 
-    await addProfit(response);
-    return response;
+        const response = {
+          id: txData?._id, // database id
+          orderNo: txData?.orderNo, // orderNo,
+          fToken,
+          tToken,
+          fValue,
+          tValue,
+          profitDirect: profitTronUSDT,
+          profitUSD: usdProfit,
+        };
+
+        await addProfit(response);
+        return response;
+      }
+    }
   }
 }
 

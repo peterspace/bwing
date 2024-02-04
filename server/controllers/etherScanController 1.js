@@ -16,20 +16,6 @@ const blockchainUrlMainnet = 'https://etherscan.io/tx'; // goerli test net
 const blockchainUrlGoerli = 'https://goerli.etherscan.io/tx'; // goerli test net
 const blockchainUrlEndpoint = blockchainUrlGoerli;
 //==============================================={Etherscan native}==================================================
-
-/**
- *
- * TRANSACTION COST ESTIMATOR
- */
-
-const networkRPCMainnet = 'https://cloudflare-eth.com';
-const networkRPCGoreli = 'https://rpc.ankr.com/eth_goerli';
-// const networkRPC = networkRPCGoreli;
-const networkRPC = networkRPCMainnet;
-
-//// const provider = ethers.getDefaultProvider("homestead");
-//networkRPC = 'https://cloudflare-eth.com';
-
 // Define a function to get the transaction history of the address.
 async function getTransactionHistory() {
   try {
@@ -418,71 +404,6 @@ const getGasEstimateEthereum = async () => {
   }
 };
 
-const getTransactionCost = async () => {
-  // The gas price (in wei)...
-  // const provider = new ethers.getDefaultProvider("homestead"); // default is ethereum homestead provider
-  const provider = new ethers.providers.JsonRpcProvider(networkRPC);
-  const feeData = await provider.getFeeData();
-  console.log({ feeData: feeData });
-
-  const gasPrice = ethers.utils.formatUnits(feeData.gasPrice, 'gwei');
-  const maxFeePerGas = ethers.utils.formatUnits(feeData.maxFeePerGas, 'gwei');
-
-  //==========={Total Transaction cost calculation}====================
-  const gasLimitEthereum = 21000; // standard {G(Transaction): Paid for every transaction}
-  const gasLimitERC20 = 100000; // {G(Transaction): Paid for every transaction but it varies for ERC20 Transactions like USDT from above 45,000 - 200,000 and in rare cases up to 500,000}
-  //====================={Other ERC20 Conditions}=====================================================================
-  const gasGasLimitMax = 200000;
-  // const gasLimit = 46097; // ERC20 Tokens (testing)
-  // const gasLimit = 46200; // ERC20 Tokens (min)
-  // const gasLimit = 70000; // ERC20 Tokens (max)
-  //==================================================================================================================
-
-  const lastBaseFeePerGas = ethers.utils.formatUnits(
-    feeData.lastBaseFeePerGas,
-    'gwei'
-  );
-  const maxPriorityFeePerGas = ethers.utils.formatUnits(
-    feeData.maxPriorityFeePerGas,
-    'gwei'
-  );
-
-  const totalGasGweiEthereum =
-    gasLimitEthereum *
-    (Number(lastBaseFeePerGas) + Number(maxPriorityFeePerGas));
-  const totalGasEthereum = totalGasGweiEthereum / 1e9;
-
-  const totalGasGweiERC20 =
-    gasLimitERC20 * (Number(lastBaseFeePerGas) + Number(maxPriorityFeePerGas));
-  const totalGasERC20 = totalGasGweiERC20 / 1e9;
-
-  const priceData = {
-    gasPrice,
-    lastBaseFeePerGas,
-    maxFeePerGas,
-    maxPriorityFeePerGas,
-  };
-  console.log({ priceData: priceData });
-
-  const response = {
-    eth: {
-      gasLimit: gasLimitEthereum,
-      baseFee: lastBaseFeePerGas,
-      priorityFee: maxPriorityFeePerGas,
-      txCost: totalGasEthereum,
-    },
-    usdt: {
-      gasLimit: gasLimitERC20,
-      baseFee: lastBaseFeePerGas,
-      priorityFee: maxPriorityFeePerGas,
-      txCost: totalGasERC20, // to be used in checking wallet balance's difference
-    },
-  };
-
-  console.log({ response: response });
-  return response;
-};
-
 const gasPriceResult = {
   currentGasPrice: '0.000000052008469874',
   currentGasPriceGwei: 52.008469874,
@@ -524,6 +445,12 @@ const latestResult = {
   isError: '0',
 };
 
+
+
+
+
+
+
 module.exports = {
   getNativeTransactionToBlendery,
   getNativeTransactionToUser,
@@ -531,5 +458,4 @@ module.exports = {
   getERC20TransactionToUser,
   getGasEstimatesEthereum,
   getGasPriceEthereum,
-  getTransactionCost,
 };

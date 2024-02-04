@@ -308,7 +308,7 @@ export const BuyCardHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[4]);
+      setFromToken(allTokensFromL[3]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);

@@ -3804,6 +3804,7 @@ const getSwapApproval = asyncHandler(async (req, res) => {
     res.status(400).json(message);
   }
 });
+
 const swap = asyncHandler(async (req, res) => {
   const { chainId, fToken, tToken, walletAddress, slippage, fValue } = req.body;
   console.log('swapping in progress');

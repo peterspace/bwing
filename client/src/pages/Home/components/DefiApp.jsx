@@ -18,6 +18,10 @@ import TokenButtonLight from './TokenButtonLight';
 import FToken from './FToken';
 import TToken from './TToken';
 import Menu from './Menu';
+import {
+  getSwapApprovalService,
+  swapService,
+} from '../../../services/apiService';
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -58,6 +62,13 @@ const DefiApp = (props) => {
     priceDeviation,
     setSlippage,
     slippage,
+    getSwapInfo,
+    setApprovingData,
+    setSwappingData,
+    walletAddress,
+    getApprovalData,
+    swap,
+    getSwapApprovalAndSwap,
   } = props;
 
   // const loading = true;
@@ -87,11 +98,9 @@ const DefiApp = (props) => {
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [isSlippageModalOpen, setIsSlippageModalOpen] = useState(false);
   const [activeSlippage, setActiveSlippage] = useState();
-
-  console.log({ slippage: slippage });
-  console.log({ activeSlippage: activeSlippage });
   const updatedSlippage = useSelector((state) => state?.swap?.slippage);
-  console.log({ updatedSlippage: updatedSlippage });
+  // const [approvingData, setApprovingData] = useState();
+  // console.log({ approvingData: approvingData });
 
   useEffect(() => {
     setChain(checkChain);
@@ -152,11 +161,25 @@ const DefiApp = (props) => {
   }
   //====================================================================================
 
+  // async function nextFunc() {
+  //   setService('defi');
+  //   setSubService('defi');
+  //   // setPercentageProgress(2);
+  //   setPercentageProgress(3);
+  // }
+
+  // async function nextFunc() {
+  //   setService('defi');
+  //   setSubService('defi');
+  //   getSwapInfo()
+  //   // getApprovalData();
+  //   // getSwapApprovalAndSwap()
+  // }
+
   async function nextFunc() {
     setService('defi');
     setSubService('defi');
-    // setPercentageProgress(2);
-    setPercentageProgress(3);
+    getSwapInfo()
   }
 
   //====================================={Token Switchh}===============================================
@@ -205,6 +228,87 @@ const DefiApp = (props) => {
   function openSlippageModal() {
     setIsSlippageModalOpen(true);
   }
+
+  // async function getApprovalData() {
+  //   const userData = { chainId, fToken, fValue };
+
+  //   try {
+  //     const response = await getSwapApprovalService(userData);
+  //     setApprovingData(response);
+
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     // setErrorSwapApprove(
+  //     //   error?.message ? error?.message : error?.data?.message
+  //     // );
+  //     console.error(error);
+  //   }
+  // }
+
+  async function getSwapData() {
+    const userData = {
+      chainId,
+      fToken,
+      tToken,
+      walletAddress,
+      slippage,
+      fValue,
+    };
+
+    try {
+      const response = await getSwapApprovalService(userData);
+      setSwappingData(response);
+
+      console.log(response.data);
+    } catch (error) {
+      // setErrorSwapApprove(
+      //   error?.message ? error?.message : error?.data?.message
+      // );
+      console.error(error);
+    }
+  }
+
+  //==============={approve data}=======
+  //   {
+  //     "data": "0x095ea7b30000000000000000000000001111111254eeb25477b68fb85ed929f73a960582000000000000000000000000000000000000000000000000000000174876e800",
+  //     "gasPrice": "15662551827",
+  //     "to": "0x111111111117dc0aa78b770fa6a738034120c302",
+  //     "value": "0"
+  // }
+
+  //===={usdt}=======
+  // {
+  //   "data": "0x095ea7b30000000000000000000000001111111254eeb25477b68fb85ed929f73a9605820000000000000000000000000000000000000000000000000000000000989680",
+  //   "gasPrice": "15769126964",
+  //   "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  //   "value": "0"
+  // }
+  //===={eurt}=======
+
+  //   {
+  //     "data": "0x095ea7b30000000000000000000000001111111254eeb25477b68fb85ed929f73a9605820000000000000000000000000000000000000000000000000000000000989680",
+  //     "gasPrice": "14871458590",
+  //     "to": "0xc581b735a1688071a1746c968e0798d642ede491",
+  //     "value": "0"
+  // }
+
+  //===={enj}=======
+
+  //   {
+  //     "data": "0x095ea7b30000000000000000000000001111111254eeb25477b68fb85ed929f73a9605820000000000000000000000000000000000000000000000008ac7230489e80000",
+  //     "gasPrice": "18088247910",
+  //     "to": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+  //     "value": "0"
+  // }
+
+  //============================={swapping Data}===============================
+  //===={usdt/eurt}=======
+  //   {
+  //     "data": "0x095ea7b30000000000000000000000001111111254eeb25477b68fb85ed929f73a9605820000000000000000000000000000000000000000000000000000000000989680",
+  //     "gasPrice": "14842199675",
+  //     "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  //     "value": "0"
+  // }
 
   return (
     <>
@@ -282,7 +386,7 @@ const DefiApp = (props) => {
               ) : (
                 <>
                   <div className="self-stretch relative font-medium">
-                    ${tValue}
+                    {tValue}
                   </div>
                 </>
               )}

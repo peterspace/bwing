@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 export const ConfirmSwap = (props) => {
-  const { submitTransaction, isValidTransaction, setIsSendTransaction } = props;
+  const { submitTransaction, setIsSendTransaction, setPercentageProgress } = props;
 
   const confirm = (
     <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
@@ -28,6 +28,7 @@ export const ConfirmSwap = (props) => {
             className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
             onClick={() => {
               setIsSendTransaction(true);
+              setPercentageProgress(4);
             }}
           >
             Swap
@@ -36,5 +37,6 @@ export const ConfirmSwap = (props) => {
       </div>
     </div>
   );
-  return <>{isValidTransaction ? <>{send}</> : <>{confirm}</>}</>;
+  // return <>{isValidTransaction ? <>{send}</> : <>{confirm}</>}</>;
+  return <>{send}</>;
 };

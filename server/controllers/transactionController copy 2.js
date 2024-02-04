@@ -3967,6 +3967,7 @@ const getSwapApproval = asyncHandler(async (req, res) => {
   }
 });
 
+
 const swapOriginal = asyncHandler(async (req, res) => {
   const { chainId, fToken, tToken, walletAddress, slippage, fValue } = req.body;
   console.log('swapping in progress');
@@ -4061,240 +4062,6 @@ const swapOriginal = asyncHandler(async (req, res) => {
 const swap = asyncHandler(async (req, res) => {
   const { chainId, fToken, tToken, walletAddress, slippage, fValue } = req.body;
   console.log({ status1: `initiating swap process` });
-  let response;
-  let swapError;
-  let swapData;
-
-  // console.log({ swappDtataIn: req.body });
-  if (!chainId) {
-    res.status(400);
-    throw new Error('chainId not found');
-  }
-
-  if (!fToken) {
-    res.status(400);
-    throw new Error('fromToken not found');
-  }
-
-  if (!tToken) {
-    res.status(400);
-    throw new Error('tToken not found');
-  }
-
-  if (!walletAddress) {
-    res.status(400);
-    throw new Error('walletAddress not found');
-  }
-
-  let validatedValue;
-  if (fToken.address != '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-    validatedValue = parseUnits(
-      fValue.toString(),
-      fToken?.decimals.toString()
-    ).toString();
-  } else {
-    validatedValue = parseEther(fValue.toString()).toString();
-  }
-
-  console.log({ validatedValue: validatedValue });
-
-  const params = {
-    src: fToken.address,
-    dst: tToken?.address,
-    amount: validatedValue,
-    from: walletAddress,
-    slippage: Number(slippage),
-    fee,
-    referrer: dexAddress,
-  };
-
-  // console.log({ swapParams: params });
-
-  const url = `https://api.1inch.dev/swap/${version}/${Number(chainId)}/swap`;
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      src: fToken.address, // string
-      dst: tToken?.address, // string
-      amount: validatedValue,
-      from: walletAddress, // string
-      slippage: Number(slippage), // number
-      fee: Number(fee), // number
-      referrer: dexAddress, // string
-    },
-  };
-  console.log({ status2: `getting swap data` });
-
-  try {
-    const result = await axios.get(url, config);
-
-    if (result?.data) {
-      console.log({ status3: `swap data given` });
-      swapData = result?.data;
-    }
-  } catch (error) {
-    swapError = {
-      errorMessage: error?.response?.data.error,
-      errorDescription: error?.response?.data.description,
-    };
-  }
-
-  response = {
-    data: swapData ? swapData : '',
-    error: swapError ? swapError : '',
-  };
-
-  console.log({ response: response });
-
-  res.status(200).json(response);
-});
-
-const getSwapApprovalInternal = asyncHandler(async () => {
-  // const { chainId, fToken, fValue } = req.body;
-
-  const chainId = '1';
-
-  const walletAddress1 = '0x56c8b61DB2A5bF5679172901585E76EedB6Bc3e6'; // empty wallet for error response
-  const walletAddress2 = '0xd19BaD7038157286defef6578273994b51Cc2ac5'; // wallet with little fund
-
-  const walletAddress = walletAddress1;
-
-  const slippage = '1';
-  let fToken;
-  // const fValue = '0.0005'; // ethereum: '0.001' balance
-  const fValue = '1'; // for usdt
-  //amount: '100000000000',
-  //========{Ethereum}================================
-  const fToken1 = {
-    address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-    decimals: 18,
-  };
-
-  //========{USDT}================================
-  const fToken2 = {
-    address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-    decimals: 6,
-  };
-
-  fToken = fToken2;
-
-  //========{eurt: tether-eurt}================================
-  const tToken = {
-    address: '0xc581b735a1688071a1746c968e0798d642ede491',
-    decimals: 6,
-  };
-
-  let approveError;
-
-  console.log({ status1: `initiating swap approval` });
-
-  if (!chainId) {
-    res.status(400);
-    throw new Error('chainId not found');
-  }
-
-  if (!fToken) {
-    res.status(400);
-    throw new Error('fromToken not found');
-  }
-
-  let validatedValue;
-  if (fToken?.address != '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-    validatedValue = parseUnits(
-      fValue.toString(),
-      fToken?.decimals.toString()
-    ).toString();
-  } else {
-    validatedValue = parseEther(fValue.toString()).toString();
-  }
-
-  console.log({ validatedValue: validatedValue });
-  const url = `https://api.1inch.dev/swap/${version}/${Number(
-    chainId
-  )}/approve/transaction`;
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      tokenAddress: fToken?.address, // string
-      amount: validatedValue, // string
-    },
-  };
-  console.log({ status2: `getting approval` });
-
-  try {
-    const result = await axios.get(url, config);
-
-    if (result?.data) {
-      console.log({ status3: `approval granted` });
-
-      console.log({ approveData: result?.data });
-      // res.status(200).json(result?.data);
-    }
-  } catch (error) {
-    console.log({ status4: `approval denied` });
-
-    approveError = {
-      error: error,
-    };
-
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    console.log(message);
-    console.log({ swapDataError: message });
-
-    // res.status(400).json(message);
-    res.status(400).json(approveError);
-  }
-});
-const swapInternal = asyncHandler(async () => {
-  // const { chainId, fToken, tToken, walletAddress, slippage, fValue } = req.body;
-  console.log({ status1: `initiating swap process` });
-
-  let response;
-  let swapError;
-  let swapData;
-
-  const chainId = '1';
-
-  const walletAddress1 = '0x56c8b61DB2A5bF5679172901585E76EedB6Bc3e6'; // empty wallet for error response
-  const walletAddress2 = '0xd19BaD7038157286defef6578273994b51Cc2ac5'; // wallet with little fund
-
-  const walletAddress = walletAddress2;
-
-  const slippage = '1';
-  let fToken;
-  // const fValue = '0.0005'; // ethereum: '0.001' balance
-  // const fValue = '1'; // for ethereum
-  const fValue = '0.001'; // for usdt
-
-  //amount: '100000000000',
-  //========{Ethereum}================================
-  const fToken1 = {
-    address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-    decimals: 18,
-  };
-
-  //========{USDT}================================
-  const fToken2 = {
-    address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-    decimals: 6,
-  };
-
-  fToken = fToken1;
-
-  //========{eurt: tether-eurt}================================
-  const tToken = {
-    address: '0xc581b735a1688071a1746c968e0798d642ede491',
-    decimals: 6,
-  };
 
   // console.log({ swappDtataIn: req.body });
   if (!chainId) {
@@ -4362,28 +4129,29 @@ const swapInternal = asyncHandler(async () => {
   try {
     const result = await axios.get(url, config);
 
+    // if (result?.data) {
+    //   console.log({ swappingDataServer: result?.data });
+    //   const response = {
+    //     swapData: result?.data,
+    //   };
+    //   res.status(200).json(response);
+    // }
+
     if (result?.data) {
       console.log({ status3: `swap data given` });
-      swapData = result?.data;
+      res.status(200).json(result?.data);
     }
+
   } catch (error) {
-    swapError = {
-      errorMessage: error?.response?.data.error,
-      errorDescription: error?.response?.data.description,
-    };
+    console.log({ swapError: error });
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+    res.status(400).json(message);
   }
-
-  response = {
-    data: swapData ? swapData : '',
-    error: swapError ? swapError : '',
-  };
-
-  console.log({ response: response });
-
-  // res.status(200).json(response);
 });
-
-// swapInternal()
 
 const cryptoAPI = asyncHandler(async () => {
   const params = {

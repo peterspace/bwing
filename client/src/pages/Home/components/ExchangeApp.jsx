@@ -257,7 +257,7 @@ const ExchangeApp = (props) => {
                   ) : (
                     <>
                       <div className="self-stretch relative font-medium">
-                        ${tValue}
+                        {tValue}
                       </div>
                       <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                         <div className="relative inline-block w-[109px] h-[17px] shrink-0">

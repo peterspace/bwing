@@ -1013,7 +1013,7 @@ export const validateAddressService = async (userData) => {
     );
 
     // console.log()
-  console.log({ response: response.data });
+    console.log({ response: response.data });
 
     return response.data;
   } catch (error) {
@@ -1024,3 +1024,67 @@ export const validateAddressService = async (userData) => {
     console.log(message);
   }
 };
+
+//=========={update Transaction costs}=====================================
+export const updateTransactionCosts = async () => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/hdWallet/updateTransactionCosts`
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+//=========={profits}=====================================
+export const getProfits = async () => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/hdWallet/getProfits`
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+//=========={profits}=====================================
+export const getMasterWalletsHealthCheck = async () => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/hdWallet/getMasterWalletsHealthCheck`
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+export const updateMasterWalletBalances = async () => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/hdWallet/updateMasterWalletBalances`
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+

@@ -138,7 +138,7 @@ export const BuyCashHome = (props) => {
   const [tToken, setToToken] = useState(tTokenL);
   const fValueL = localStorage.getItem('fValueBuyCash')
     ? JSON.parse(localStorage.getItem('fValueBuyCash'))
-    : 2000;
+    : 20000;
   const [fValue, setFromValue] = useState(fValueL);
 
   const [fTitle, setFTitle] = useState('You give');
@@ -235,7 +235,7 @@ export const BuyCashHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[2]);
+      setFromToken(allTokensFromL[3]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);

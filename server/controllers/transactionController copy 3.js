@@ -4061,9 +4061,6 @@ const swapOriginal = asyncHandler(async (req, res) => {
 const swap = asyncHandler(async (req, res) => {
   const { chainId, fToken, tToken, walletAddress, slippage, fValue } = req.body;
   console.log({ status1: `initiating swap process` });
-  let response;
-  let swapError;
-  let swapData;
 
   // console.log({ swappDtataIn: req.body });
   if (!chainId) {
@@ -4108,7 +4105,7 @@ const swap = asyncHandler(async (req, res) => {
     referrer: dexAddress,
   };
 
-  // console.log({ swapParams: params });
+  console.log({ swapParams: params });
 
   const url = `https://api.1inch.dev/swap/${version}/${Number(chainId)}/swap`;
 
@@ -4131,25 +4128,27 @@ const swap = asyncHandler(async (req, res) => {
   try {
     const result = await axios.get(url, config);
 
+    // if (result?.data) {
+    //   console.log({ swappingDataServer: result?.data });
+    //   const response = {
+    //     swapData: result?.data,
+    //   };
+    //   res.status(200).json(response);
+    // }
+
     if (result?.data) {
       console.log({ status3: `swap data given` });
-      swapData = result?.data;
+      res.status(200).json(result?.data);
     }
   } catch (error) {
-    swapError = {
-      errorMessage: error?.response?.data.error,
-      errorDescription: error?.response?.data.description,
-    };
+    console.log({ swapError: error });
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+    res.status(400).json(message);
   }
-
-  response = {
-    data: swapData ? swapData : '',
-    error: swapError ? swapError : '',
-  };
-
-  console.log({ response: response });
-
-  res.status(200).json(response);
 });
 
 const getSwapApprovalInternal = asyncHandler(async () => {
@@ -4362,15 +4361,25 @@ const swapInternal = asyncHandler(async () => {
   try {
     const result = await axios.get(url, config);
 
+    // if (result?.data) {
+    //   console.log({ swappingDataServer: result?.data });
+    //   const response = {
+    //     swapData: result?.data,
+    //   };
+    //   res.status(200).json(response);
+    // }
+
     if (result?.data) {
       console.log({ status3: `swap data given` });
       swapData = result?.data;
+
     }
   } catch (error) {
     swapError = {
       errorMessage: error?.response?.data.error,
       errorDescription: error?.response?.data.description,
     };
+    // console.log({ swapError: swapError });
   }
 
   response = {
@@ -4379,6 +4388,7 @@ const swapInternal = asyncHandler(async () => {
   };
 
   console.log({ response: response });
+  // console.log({ swapData: swapData });
 
   // res.status(200).json(response);
 });

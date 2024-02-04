@@ -319,10 +319,11 @@
   position: absolute;
   top: 132px;
   left: calc(50% - 240px);
-  border-radius: var(--br-13xl);
+  /* border-radius: var(--br-13xl); */
+  border-radius: 12px;
   background-color: #e8e8e8;
   box-shadow: var(--effect);
-  border: 1px solid #ab94eb;
+  border: 2px solid #d4d2da;
   box-sizing: border-box;
   width: 480px;
   flex-direction: column;

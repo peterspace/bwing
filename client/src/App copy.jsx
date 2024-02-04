@@ -22,7 +22,6 @@ import { AppContainerChecker } from './pages/Home/AppContainerChecker';
 import { TermsOfUse } from './pages/Support/TermsOfUse';
 import { PrivacyPolicy } from './pages/Support/PrivacyPolicy';
 import { AML } from './pages/Support/AML';
-import AdminWallets from './pages/Tanstack/AdminWallets';
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -127,44 +126,6 @@ function App() {
       refetchOnMount: true,
     }
   );
-
-  //=========={update Transaction costs}=====================================
-  const { data: txCostsData } = useQuery(
-    ['UPDATE_TRANSACTION_COSTS'],
-    async () => {
-      const { data } = await axios.get(
-        `${BACKEND_URL}/hdWallet/updateTransactionCosts`
-      );
-      console.log({ txCostsResult: data });
-      return data;
-    },
-    {
-      refetchInterval: 60000, // every minute
-      refetchIntervalInBackground: true, // when tab is not on focus
-      refetchOnMount: true,
-    }
-  );
-
-  // console.log({ txCostsData: txCostsData });
-
-    //=========={update Transaction costs}=====================================
-    const { data: walletUpdates } = useQuery(
-      ['UPDATE_MASTER_WALLET_BALANCES'],
-      async () => {
-        const { data } = await axios.get(
-          `${BACKEND_URL}/hdWallet/updateMasterWalletBalances`
-        );
-        console.log({ txCostsResult: data });
-        return data;
-      },
-      {
-        refetchInterval: 120000, // every 2 minute
-        refetchIntervalInBackground: true, // when tab is not on focus
-        refetchOnMount: true,
-      }
-    );
-  
-    // console.log({ walletUpdates: walletUpdates });
 
   //====================={Global txData dispatch}==================================
   useEffect(() => {
@@ -311,8 +272,6 @@ function App() {
                 />
               }
             />
-            <Route path="/adminWallets" element={<AdminWallets />} />
-
             <Route path="/support" element={<Support />} />
             <Route path="/termsOfUse" element={<TermsOfUse />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />

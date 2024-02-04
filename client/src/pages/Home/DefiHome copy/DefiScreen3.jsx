@@ -37,6 +37,7 @@ export const DefiScreen3 = (props) => {
     chain,
     chainId,
     swappingData,
+    isValidTransaction,
     setIsSendTransaction,
     isSwapSuccess,
   } = props;
@@ -264,9 +265,8 @@ export const DefiScreen3 = (props) => {
               />
               <ConfirmSwap
                 submitTransaction={setIsSwapping}
+                isValidTransaction={isValidTransaction}
                 setIsSendTransaction={setIsSendTransaction}
-                setPercentageProgress={setPercentageProgress}
-
               />
             </div>
           </>

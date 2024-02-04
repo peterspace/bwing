@@ -1,0 +1,37 @@
+
+//0.001 ETH each
+const ethWalletsWithRealBalance = [
+  {
+    eth: [Object],
+    usdt: [Object],
+    accountName: 'Account 19',
+    address: '0x412da48e3DADA618A7e73280aeE355C75320Fdc2',
+    privateKey:
+      'fed56093fcf55d8b9601438039a765154f5f3c1a04b9520ae5405c6439b7e0d215a8227ddbf61fdaa02758ab52471e9251d2a3a78d222442ba3f62accfcdc47ae09258d7d49ddad99072c558b936ba24',
+    phrase:
+      '86712b4cd25b7b3cfd91d7b7cc8c05485f1d873a643e4863664ed325d6815c383808d307b78e58a95d7757c163630c3ae6d519680611eb2da3c7282c0ad002383ac7b541867dc8c25a741b86e7e6899c',
+    _id: new ObjectId('65648bae3d96f06358773863'),
+  },
+  {
+    eth: [Object],
+    usdt: [Object],
+    accountName: 'Account 23',
+    address: '0x2c84865B7DF57A714910d6f441cb9ff597efE304',
+    privateKey:
+      '427775c454585649db3663603c9e356ad1aa23555234856343154c2a91a117b01a26f827bf150348f29611fcf0f0e8c8c8f1171947c56cef2320e4d5e591d565a97577bf8090e13a13dfe0cfd3273b52',
+    phrase:
+      '86712b4cd25b7b3cfd91d7b7cc8c05485f1d873a643e4863664ed325d6815c383808d307b78e58a95d7757c163630c3ae6d519680611eb2da3c7282c0ad002383ac7b541867dc8c25a741b86e7e6899c',
+    _id: new ObjectId('6564c70d105a564cae777049'),
+  },,
+  {
+    eth: [Object],
+    usdt: [Object],
+    accountName: 'Account 25',
+    address: '0xd19BaD7038157286defef6578273994b51Cc2ac5',
+    privateKey:
+      '1f24ff7f54a62d31e8bb7436ea3c564f8f056d9571ee1fad1319844996f3d0842dafa003e014a896f8d44030a631c3ccc18bae96b295325fdce4da0339c5cf0eb2706260d3a543032bfa76e2e089a5f4',
+    phrase:
+      '86712b4cd25b7b3cfd91d7b7cc8c05485f1d873a643e4863664ed325d6815c383808d307b78e58a95d7757c163630c3ae6d519680611eb2da3c7282c0ad002383ac7b541867dc8c25a741b86e7e6899c',
+    _id: new ObjectId('65660765ea67a26b5669f9cb'),
+  },
+]

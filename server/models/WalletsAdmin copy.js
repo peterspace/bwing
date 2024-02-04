@@ -59,7 +59,7 @@ const walletsAdminSchema = new mongoose.Schema(
           balanceMax: {
             // maximum reserve value
             type: Number,
-            default: 10,
+            default: 100,
           },
           symbol: {
             type: String,
@@ -133,7 +133,7 @@ const walletsAdminSchema = new mongoose.Schema(
           balanceMax: {
             // maximum reserve value
             type: Number,
-            default: 10000,
+            default: 1000000,
           },
           symbol: {
             type: String,
@@ -262,7 +262,7 @@ const walletsAdminSchema = new mongoose.Schema(
           balanceMax: {
             // maximum reserve value
             type: Number,
-            default: 100,
+            default: 10000,
           },
           symbol: {
             type: String,
