@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const profitSchema = new mongoose.Schema(
   {
     id: {
-      type: mongoose.Schema.Types.ObjectId, ref: 'Transaction',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Transaction',
     },
     orderNo: String,
     fToken: {
@@ -16,6 +17,9 @@ const profitSchema = new mongoose.Schema(
     tValue: String,
     profitDirect: Number,
     profitUSD: Number,
+    payingAddress: String, // wallet address
+    isMasterWallet: { type: Boolean, default: false },
+    network: String,
   },
   { timestamps: true }
 );

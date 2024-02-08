@@ -1085,6 +1085,7 @@ export const DefiHome = (props) => {
       amount: transactionRates ? transactionRates?.amount : 0,
       hash: swappingData?.hash || '',
       tx: swappingData?.tx, // transaction data
+      directValue: transactionRates ? transactionRates?.directValue : 0,
     };
 
     const response = await createTransactionService(userData);

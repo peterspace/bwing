@@ -65,6 +65,8 @@ export const SellCardScreen3 = (props) => {
     : false;
   console.log({ transactionRatesLoading: transactionRatesLoading });
   const amount = transactionRates ? transactionRates?.amount : 0;
+  const directValue = transactionRates ? transactionRates?.directValue : 0;
+
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
@@ -132,6 +134,7 @@ export const SellCardScreen3 = (props) => {
       bankName,
       cardNumber,
       phone,
+      directValue
     };
     const response = await createTransactionService(userData);
     if (response?._id) {

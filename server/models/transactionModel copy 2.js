@@ -33,7 +33,6 @@ const transactionSchema = new mongoose.Schema(
     subService: String,
     youSend: Number,
     youGet: Number,
-    directValue: Number,
     networkFee: Number,
     serviceFee: Number,
     processingFee: Number,

@@ -21,8 +21,9 @@ const txCostsSchema = new mongoose.Schema(
       usdt: {
         txCost: {
           type: Number,
-          default: 35,
+          default: 35, // TRX value (USDT === 4USDT for getNetworkFee())
         },
+        
       },
     },
     evm: {

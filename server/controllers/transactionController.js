@@ -753,6 +753,7 @@ const createTransaction = asyncHandler(async (req, res) => {
     bankName,
     cardNumber,
     phone,
+    directValue,
   } = req.body;
 
   console.log({ userData: req.body });
@@ -790,6 +791,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
+      directValue
     });
     // console.log()
 
@@ -823,6 +825,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
+      directValue
     });
 
     if (savedTransaction) {
@@ -862,6 +865,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
+      directValue
     });
 
     if (savedTransaction) {
@@ -897,6 +901,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       youSend,
       youGet,
       processingFee,
+      networkFee,
       exchangeRate,
       tValue,
       amount,
@@ -906,6 +911,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       bankName,
       cardNumber,
       phone,
+      directValue
     });
 
     if (savedTransaction) {
@@ -946,6 +952,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
+      directValue
     });
 
     if (savedTransaction) {
@@ -992,6 +999,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       bankName,
       cardNumber,
       phone,
+      directValue
     });
 
     if (savedTransaction) {
@@ -2744,53 +2752,58 @@ async function getNetworkFee1(token) {
 async function getNetworkFee(token) {
   let networkFee;
   if (token?.chain === 'Bitcoin' && token?.symbol === 'btc') {
-    const txCost = await verifyTransactionCost({
-      chain: 'Bitcoin',
-      symbol: 'btc',
-    });
+    // const txCost = await verifyTransactionCost({
+    //   chain: 'Bitcoin',
+    //   symbol: 'btc',
+    // });
+    // networkFee = txCost; //BTC
     // networkFee = 0.001; //BTC
-    networkFee = txCost; //BTC
+    networkFee = 0.000555//BTC
+   
   }
   if (token?.chain === 'Tron' && token?.symbol === 'trx') {
     //TRX case
-    const txCost = await verifyTransactionCost({
-      chain: 'Tron',
-      symbol: 'trx',
-    });
-    networkFee = txCost; // TRX
-    // networkFee = 2; // TRX
+    // const txCost = await verifyTransactionCost({
+    //   chain: 'Tron',
+    //   symbol: 'trx',
+    // });
+    // networkFee = txCost; // TRX
+    networkFee = 2; // TRX
   }
 
   if (token?.chain === 'Tron' && token?.symbol !== 'trx') {
-    const txCost = await verifyTransactionCost({
-      chain: 'Tron',
-      symbol: 'usdt',
-    });
-    networkFee = txCost; //USDTRX
-    // networkFee = 4; //USDTRX
+    // const txCost = await verifyTransactionCost({
+    //   chain: 'Tron',
+    //   symbol: 'usdt',
+    // });
+    // networkFee = txCost; //35 TRX
+    networkFee = 4; //USDTRX
   }
   //====================={EVM CASES}================================
   if (token?.chain === 'Ethereum' && token?.symbol === 'eth') {
     //ETH case
-    const txCost = await verifyTransactionCost({
-      chain: 'Ethereum',
-      symbol: 'eth',
-    });
+    // const txCost = await verifyTransactionCost({
+    //   chain: 'Ethereum',
+    //   symbol: 'eth',
+    // });
 
     // networkFee = 0.0023625; //ETH
-    networkFee = txCost; //ETH
+    networkFee = 0.0021735; //ETH
+
+    // networkFee = txCost; //ETH
   }
 
   if (token?.chain === 'Ethereum' && token?.symbol !== 'eth') {
     //ERC20 case
 
-    const txCost = await verifyTransactionCost({
-      chain: 'Ethereum',
-      symbol: 'usdt',
-    });
+    // const txCost = await verifyTransactionCost({
+    //   chain: 'Ethereum',
+    //   symbol: 'usdt',
+    // });
 
-    // networkFee = 10.5; //USDT20
-    networkFee = txCost; //USDT20
+   
+    // networkFee = txCost; //USDT20
+     networkFee = 10.5; //USDT20
   }
 
   return networkFee;
@@ -3206,7 +3219,7 @@ const updateTransactionRatesById = asyncHandler(async (req, res) => {
     transaction.exchangeRate = exchangeRate || transaction.exchangeRate;
     transaction.tValue = tValue || transaction.tValue;
     transaction.amount = amount || transaction.amount;
-    // transaction.directValue = directValue || transaction.directValue;
+    transaction.directValue = directValue || transaction.directValue;
   }
   const response = await transaction.save();
 

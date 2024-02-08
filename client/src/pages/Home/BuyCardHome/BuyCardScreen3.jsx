@@ -72,6 +72,8 @@ export const BuyCardScreen3 = (props) => {
   //===={To be added}========
   const amount = transactionRates ? transactionRates?.amount : 0;
   console.log({bankName:bankName})
+  const directValue = transactionRates ? transactionRates?.directValue : 0;
+
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
@@ -140,6 +142,7 @@ export const BuyCardScreen3 = (props) => {
       bankName,
       cardNumber,
       phone,
+      directValue
     };
 
     const response = await createTransactionService(userData);

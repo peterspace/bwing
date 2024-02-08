@@ -6,15 +6,30 @@ import {
   updateOneBlockchainTransactionByIdService,
 } from '../services/apiService';
 export const SendFund = (props) => {
-  const { txData, setRefetchTxData } = props;
+  const { txData, setRefetchTxData, transactionRates } = props;
   const [blockChainData, setBlockChainData] = useState();
 
   //========{begin to monitor transaction after this click}=========================
+  // const updateTransaction = async () => {
+  //   const userData = {
+  //     id: txData?._id,
+  //     status: 'Paid',
+  //     percentageProgress: 4,
+  //   };
+
   const updateTransaction = async () => {
     const userData = {
       id: txData?._id,
       status: 'Paid',
       percentageProgress: 4,
+      youSend: transactionRates?.youSend,
+      youGet: transactionRates?.youGet,
+      serviceFee: transactionRates?.serviceFee,
+      networkFee: transactionRates?.networkFee,
+      exchangeRate: transactionRates?.exchangeRate,
+      tValue: transactionRates?.tValue,
+      amount: transactionRates?.amount,
+      directValue: transactionRates?.directValue,
     };
 
     const response = await updateTransactionsAutomatically(userData);

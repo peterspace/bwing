@@ -7476,6 +7476,7 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
 
       const response = await allWallets.save();
       if (response) {
+        // console.log({ response: response });
         console.log('ok');
       }
     }
@@ -7511,6 +7512,7 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
 
         const response = await allWallets.save();
         if (response) {
+          // console.log({ response: response });
           console.log('ok');
         }
       }
@@ -9454,6 +9456,7 @@ async function sendTron(txData, selectedWallet, isMasterWallet) {
   const token = txData?.tToken;
 
   const wallet = selectedWallet;
+  const hdWalletId = selectedWallet?._id;
 
   const sender = wallet?.address; // String type // owner_address
   const receiver = txData?.userAddress;
@@ -9515,6 +9518,11 @@ async function sendTron(txData, selectedWallet, isMasterWallet) {
       const result = await updateBlockChainOutTransactionByIdInternal(userData);
       if (result) {
         console.log({ result: result });
+        //====={2nd balance updatecheck after completing the transaction}===============
+        let updateBalanceTron = await updateHDWalletByIdTron(
+          hdWalletId,
+          isMasterWallet
+        );
       }
       updatedStatus = true;
     }
@@ -9576,6 +9584,11 @@ async function sendTron(txData, selectedWallet, isMasterWallet) {
         );
         if (result) {
           console.log({ result: result });
+          //====={2nd balance updatecheck after completing the transaction}===============
+          let updateBalanceTron = await updateHDWalletByIdTron(
+            hdWalletId,
+            isMasterWallet
+          );
         }
         updatedStatus = true;
       }
@@ -11484,7 +11497,9 @@ async function updateTransactionProfitById(
   const networkFee = Number(txData?.networkFee);
   const exchangeRate = Number(txData?.exchangeRate);
   const tValue = Number(txData?.tValue);
-  const directValue = Number(tValue) + Number(serviceFee) + Number(networkFee);
+  // const directValue = Number(tValue) + Number(serviceFee) + Number(networkFee);
+  const directValue = Number(txData?.directValue);
+
   const totalFees = Number(serviceFee) + Number(networkFee);
   const difference = tValue;
 
@@ -11553,8 +11568,10 @@ async function updateTransactionProfitById(
       fValue,
       tValue,
       profitBitcoin,
-      profitUSD:Number(usdProfit?.profitValue),
-
+      profitUSD: Number(usdProfit?.profitValue),
+      payingAddress: selectedWallet?.address,
+      isMasterWallet,
+      network: tToken?.chain,
     };
     await addProfit(response);
     return response;
@@ -11617,6 +11634,9 @@ async function updateTransactionProfitById(
       tValue,
       profitDirect: profitEthereum,
       profitUSD: Number(usdProfit?.profitValue),
+      payingAddress: selectedWallet?.address,
+      isMasterWallet,
+      network: tToken?.chain,
     };
     console.log({ profitData: response });
 
@@ -11685,6 +11705,9 @@ async function updateTransactionProfitById(
       tValue,
       profitDirect: profitEthereumUSDT,
       profitUSD: Number(usdProfit?.profitValue),
+      payingAddress: selectedWallet?.address,
+      isMasterWallet,
+      network: tToken?.chain,
     };
     await addProfit(response);
     return response;
@@ -11708,11 +11731,11 @@ async function updateTransactionProfitById(
 
     const responseSend = await sendTron(txData, selectedWallet, isMasterWallet);
 
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceTron = await updateHDWalletByIdTron(
-      hdWalletId,
-      isMasterWallet
-    );
+    // //====={2nd balance updatecheck after completing the transaction}===============
+    // let updateBalanceTron = await updateHDWalletByIdTron(
+    //   hdWalletId,
+    //   isMasterWallet
+    // );
 
     console.log('2nd Scanning Tron wallet');
 
@@ -11722,8 +11745,19 @@ async function updateTransactionProfitById(
 
     let newBalanceTron = updatedWallet?.trx?.balance;
     const balanceChangeTron = oldBalanceTron - newBalanceTron;
+    console.log({
+      tValue: tValue,
+      directValue: directValue,
+      oldBalanceTron: oldBalanceTron,
+      newBalanceTron: newBalanceTron,
+      balanceChangeTron: balanceChangeTron,
+    });
 
-    const profitTron = directValue - balanceChangeTron;
+    const profitTron = directValue - balanceChangeTron; // directvalue-0 =directvalue since: oldBalanceTron === newBalanceTron (no api result)
+    //========================{expected to be}================================
+    // const profitTronUSDT = 87.46188340807174 - (5146.264306 - 5058.534); // in USDT
+    // const profitTronUSDT = 87.46188340807174 - 87.7303;
+    console.log({ profitTron: profitTron });
 
     const usdProfit = await getProfitUSDValue(tToken?.id, profitTron);
     console.log({ usdProfit: usdProfit });
@@ -11737,6 +11771,9 @@ async function updateTransactionProfitById(
       tValue,
       profitDirect: profitTron,
       profitUSD: Number(usdProfit?.profitValue),
+      payingAddress: selectedWallet?.address,
+      isMasterWallet,
+      network: tToken?.chain,
     };
     await addProfit(response);
     return response;
@@ -11760,11 +11797,11 @@ async function updateTransactionProfitById(
      */
 
     const responseSend = await sendTron(txData, selectedWallet, isMasterWallet);
-    //====={2nd balance updatecheck after completing the transaction}===============
-    let updateBalanceTron = await updateHDWalletByIdTron(
-      hdWalletId,
-      isMasterWallet
-    );
+    // //====={2nd balance updatecheck after completing the transaction}===============
+    // let updateBalanceTron = await updateHDWalletByIdTron(
+    //   hdWalletId,
+    //   isMasterWallet
+    // );
     console.log('2nd Scanning Tron wallet');
 
     //====={fetch the updated wallet from the database}===============
@@ -11797,12 +11834,24 @@ async function updateTransactionProfitById(
       tValue,
       profitDirect: profitTronUSDT,
       profitUSD: Number(usdProfit?.profitValue),
+      payingAddress: selectedWallet?.address,
+      isMasterWallet,
+      network: tToken?.chain,
     };
 
     await addProfit(response);
     return response;
   }
 }
+
+//========{Tron issues}=======================
+// {
+//   tValue: 87.46188340807174,
+//   directValue: 89.686,
+//   oldBalanceTron: 5146.264306, //5,058.534
+//   newBalanceTron: 5146.264306,
+//   balanceChangeTron: 0
+// }
 
 const geTokenPriceData = async (id) => {
   //==============={Free API}===================================
@@ -11908,6 +11957,9 @@ async function addProfit(data) {
     tValue,
     profitDirect,
     profitUSD,
+    payingAddress,
+    isMasterWallet,
+    network,
   } = data;
 
   const savedProfit = await Profit.create({
@@ -11919,6 +11971,9 @@ async function addProfit(data) {
     tValue,
     profitDirect,
     profitUSD,
+    payingAddress,
+    isMasterWallet,
+    network,
   });
   // console.log()
 

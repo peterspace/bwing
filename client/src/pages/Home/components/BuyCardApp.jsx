@@ -280,8 +280,8 @@ const BuyCardApp = (props) => {
       setMaxValue(10000);
     }
     if (fToken?.symbol === 'rub') {
-      setMinValue(30000);
-      // setMinValue(3000);// for testing
+      // setMinValue(30000);
+      setMinValue(1000);// for testing
       setMaxValue(300000);
     }
   }
