@@ -124,7 +124,7 @@ export const Header = (props) => {
   };
 
   return (
-    <div className="flex flex-row w-full h-[68px] px-10 justify-between items-center bg-white dark:bg-app-container-dark box-border select-none pb-2">
+    <div className="flex flex-col xl:flex-row w-full xl:h-[68px] px-10 justify-between items-center bg-white dark:bg-app-container-dark box-border select-none pb-2">
       <div className="flex justify-center items-center">
         <div
           className="text-gray-900 dark:text-gray-100 text-11xl leading-8 font-bold cursor-pointer"
@@ -137,21 +137,6 @@ export const Header = (props) => {
         </div>
       </div>
       <div className="flex space-x-6 items-center">
-        <div
-          className="cursor-pointer flex justify-center"
-          onClick={() => {
-            setMode((prev) => !prev);
-          }}
-        >
-          {mode === true ? (
-            <BsMoonStars size={18} color={'#111111'} />
-          ) : (
-            <BsFillMoonStarsFill size={18} color={'#4f46e5'} />
-          )}
-        </div>
-        {/* <div className="text-base text-gray-900 dark:text-gray-100 font-normal cursor-pointer">
-          Support
-        </div> */}
         {user?.token ? (
           <>
             <div
@@ -189,6 +174,18 @@ export const Header = (props) => {
             <TbLogin size={20} />
           </div>
         )}
+        <div
+          className="cursor-pointer flex justify-center"
+          onClick={() => {
+            setMode((prev) => !prev);
+          }}
+        >
+          {mode === true ? (
+            <BsMoonStars size={18} color={'#111111'} />
+          ) : (
+            <BsFillMoonStarsFill size={18} color={'#4f46e5'} />
+          )}
+        </div>
       </div>
     </div>
   );

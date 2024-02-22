@@ -53,8 +53,7 @@ const ExchangeApp = (props) => {
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
-  const [ratesModalOpen, setRatesModalOpen] = useState(false);
-
+  const [ratesModalOpen, setRatesModalOpen] = useState(true);// open by default
   const [transactionLimit, setTransactionLimit] = useState();
   const [transactionError, setTransactionError] = useState();
   const [transactionDifference, setTransactionDifference] = useState();
@@ -195,7 +194,7 @@ const ExchangeApp = (props) => {
 
   return (
     <>
-      <div className="flex sm:flex-col xl:flex-row">
+      <div className="flex ss:flex-col xl:flex-row">
         <>
           <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
             <Menu
@@ -213,7 +212,7 @@ const ExchangeApp = (props) => {
             />
 
             <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                 <FToken
                   image={fToken?.image}
                   symbol={fToken?.symbol.toUpperCase()}
@@ -239,7 +238,7 @@ const ExchangeApp = (props) => {
                   )}
                 </div>
               </div>
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                 <TToken
                   image={tToken?.image}
                   symbol={tToken?.symbol.toUpperCase()}
@@ -336,7 +335,7 @@ const ExchangeApp = (props) => {
         <>
           {ratesModalOpen && (
             <>
-              <div className="sm:flex xl:hidden mt-4">
+              <div className="ss:flex xl:hidden mt-4">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}
@@ -347,7 +346,7 @@ const ExchangeApp = (props) => {
                   loadingExchangeRate={loadingExchangeRate}
                 />
               </div>
-              <div className="sm:hidden xl:flex xl:ml-8">
+              <div className="ss:hidden xl:flex xl:ml-8">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}

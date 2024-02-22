@@ -15,62 +15,62 @@ export const Timer = (props) => {
 
   // create logic for countdown timer
   const timer = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[276px] p-4">
-      <div className="flex flex-col gap-[24px]">
-        <div className="flex flex-col gap-[10px]">
-          <div className="flex flex-row gap-2 mt-2">
-            <TfiTimer size={20} color="#b4b4b4" />
-            {/* <div className="text-base leading-[24px] text-gray-300 inline-block w-[69px]">
-              <TimerFormat duration={txData?.timeLeft} />
-            </div> */}
-            {txData?.status === 'Received' || txData?.service === 'defi' ? (
-              <div className="text-base leading-[24px] text-gray-300 inline-block">
-                {`-- : -- : --`}
-              </div>
-            ) : (
-              <>
-                {txData?.timeStatus === 'Expired' ? (
-                  <div className="text-base leading-[24px] text-red-600 inline-block">
-                    Expired
-                  </div>
-                ) : (
-                  <>
-                    {txData?.status === 'Completed' ? (
-                      <div className="text-base leading-[24px] text-gray-300 inline-block">
-                        {`-- : -- : --`}
-                      </div>
-                    ) : (
-                      <div className="text-base leading-[24px] text-gray-300 inline-block">
-                        <TimerFormat duration={txData?.timeLeft} />
-                      </div>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-          </div>
-          <div className="text-xs leading-[18px] text-darkslategray-100 inline-block">
-            Time left to send {txData?.fValue}{' '}
-            {txData?.fToken?.symbol.toUpperCase()}
-          </div>
-          <div className="flex bg-lightslategray-300 w-[276px] h-px" />
-          <div className="">
+    <div className="rounded-lg bg-chizzySnow dark:bg-background-dark overflow-hidden flex flex-col items-start justify-start p-[5px] border-[1px] border-solid border-lightslategray-300">
+      <div className="flex flex-col items-start justify-start w-full gap-4">
+
+        <div className="self-stretch rounded-lg bg-white dark:bg-gray-1000 flex flex-row items-start justify-start pt-2.5 px-2.5 pb-[15px] gap-[5px]">
+          <div className="flex flex-row justify-between items-center w-full text-base">
+            <div className="text-darkslategray-100 dark:text-gray-100">
+              Time left
+            </div>
             <div className="flex flex-row gap-2 mt-2">
-              <div className="leading-[20px] text-gray-300 inline-block">
+              <TfiTimer size={20} color="#b4b4b4" />
+              {txData?.status === 'Received' || txData?.service === 'defi' ? (
+                <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
+                  {`-- : -- : --`}
+                </div>
+              ) : (
+                <>
+                  {txData?.timeStatus === 'Expired' ? (
+                    <div className="text-base leading-[24px] text-red-600 inline-block">
+                      Expired
+                    </div>
+                  ) : (
+                    <>
+                      {txData?.status === 'Completed' ? (
+                        <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
+                          {`-- : -- : --`}
+                        </div>
+                      ) : (
+                        <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
+                          <TimerFormat duration={txData?.timeLeft} />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="self-stretch rounded-lg bg-white dark:bg-gray-1000 flex flex-row items-start justify-start pt-2.5 px-2.5 pb-[15px] gap-[5px]">
+          <div className="flex flex-row justify-between items-center w-full text-base">
+            <div className="text-darkslategray-100 dark:text-gray-100">
+              Transaction ID
+            </div>
+            <div className="self-stretch rounded-lg flex flex-row items-center justify-center py-1 px-2 text-sm text-gray-500 border-[1px] border-solid border-lightslategray-300 gap-2">
+              <div className="text-gray-300 dark:text-white">
                 {txData?.orderNo}
               </div>
               <div
-                className="ccursor-pointer text-[#b4b4b4] hover:text-darkslategray-100 hover:-translate-y-0.5 transform transition"
+                className="cursor-pointer text-[#b4b4b4] hover:text-darkslategray-100 hover:-translate-y-0.5 transform transition"
                 onClick={() => {
                   navigator.clipboard.writeText(txData?.orderNo);
                 }}
               >
                 <RxCopy size={15} />
               </div>
-            </div>
-
-            <div className="text-xs leading-[18px] text-darkslategray-100 inline-block w-[87px]">
-              Transaction ID
             </div>
           </div>
         </div>

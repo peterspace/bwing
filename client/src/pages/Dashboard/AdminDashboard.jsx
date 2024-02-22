@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-
+import axios from 'axios';
 import { DashboardMenuAdmin } from '../../components/DashboardMenuAdmin';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
+
 import {
   getTransactionByTxIdService,
   updateOneBlockchainTransactionByIdService,
@@ -18,6 +20,7 @@ import {
   getAdminSellCard,
   getProfits,
   getMasterWalletsHealthCheck,
+  getAllMessages,
 } from '../../services/apiService';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import AdminRecord from '../Tanstack/AdminRecord';
@@ -25,6 +28,7 @@ import AdminProfitRecord from '../Tanstack/AdminProfitRecord';
 import AdminWallets from '../Tanstack/AdminWallets';
 import { CardUpdateInfo } from '../../components/CardUpdateInfo';
 import CircularProgress from '../../components/CircularProgress';
+import SupportMessageAdmin from '../../components/SupportMessageAdmin';
 
 const menu = [
   {
@@ -62,6 +66,8 @@ const menu = [
 
 export const AdminDashboard = (props) => {
   const { user, setTxInfo } = props;
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const location = useLocation();
 
@@ -113,6 +119,21 @@ export const AdminDashboard = (props) => {
 
   console.log({ allProfits: allProfits });
   console.log({ allExchangeTransactionsAdmin: allExchangeTransactionsAdmin });
+
+  //===================={All Messages}======================================
+
+  const { data: allMessages } = useQuery(
+    ['GET_ALL_MESSAGES'],
+    async () => {
+      const { data } = await axios.get(`${BACKEND_URL}/message`);
+      return data;
+    },
+    {
+      refetchInterval: 5000, // every 5 seconds
+      refetchIntervalInBackground: true, // when tab is not on focus
+      refetchOnMount: true,
+    }
+  );
 
   //=========={Pages}================================================================
   const pageL = localStorage.getItem('page')
@@ -268,6 +289,19 @@ export const AdminDashboard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allWallets]);
 
+  //===================={All Messages}======================================
+
+  // useEffect(() => {
+  //   fetchAllMessages();
+  // }, []);
+
+  // async function fetchAllMessages() {
+  //   const response = await getAllMessages(); // admin only
+  //   if (response) {
+  //     setAllMessages(response);
+  //   }
+  // }
+
   //==================================={TX DATA}=================================================================
 
   //==================================={setting and refetching and updating txData}=======================================================
@@ -355,7 +389,6 @@ export const AdminDashboard = (props) => {
               </div>
             ))}
 
-            
           {/* ======================{Test}==================== */}
 
           {/* {page === 'Profit' &&
@@ -374,6 +407,20 @@ export const AdminDashboard = (props) => {
                 <CircularProgress />
               </div>
             ))}
+
+          {page === 'Create' && (
+            <SupportMessageAdmin latestMessages={allMessages} page={'Create'} />
+          )}
+          {/* {page === 'Inbox' && allMessages ? (
+            <SupportMessageAdmin allMessages={allMessages} page={'Inbox'} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          )} */}
+          {page === 'Inbox' && allMessages && (
+            <SupportMessageAdmin latestMessages={allMessages} page={'Inbox'} />
+          )}
         </div>
       )}
 

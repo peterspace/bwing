@@ -50,26 +50,25 @@ export const SendFund = (props) => {
   };
 
   const sendFund = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
-      <div className="flex flex-col gap-[24px]">
-        {/* <div className="flex flex-col gap-[12px] md:gap-[24px]"> */}
-        <div className="flex flex-col gap-[8px] md:gap-[12px]">
-          <div className="flex flex-row gap-4 mt-[24px]">
-            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]">
+      <div className="flex flex-col justify-center items-center gap-[24px] w-full py-2 mt-4">
+        <div className="flex flex-col gap-[8px] md:gap-[12px] w-full justify-center items-center">
+          <div className="flex flex-row gap-4 mt-[24px] ml-2 mr-2">
+            <div className="text-[18px] font-extrabold leading-[32px] inline-block text-black dark:text-white">
               Send funds to the address below
             </div>
           </div>
-          <div className="flex bg-lightslategray-300 md:w-[452px] w-[370px] h-px" />
+          <div className="flex bg-lightslategray-300 w-full h-px" />
         </div>
 
-        <div className="flex flex-col w-[370px] md:w-[452px] gap-[8px]">
+        <div className="flex flex-col w-[300px] gap-[8px] ml-4">
           <div className="flex flex-row">
             <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
               Amount
             </div>
             <div className="flex flex-row justify-start gap-1 w-[50%]">
-              <div className="text-base leading-[24px] text-gray-300 inline-block">
-                {txData?.fValue} {txData?.fToken?.symbol}
+              <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
+                {txData?.fValue} {txData?.fToken?.symbol.toUpperCase()}
               </div>
             </div>
           </div>
@@ -78,7 +77,7 @@ export const SendFund = (props) => {
               Blendery address {`(${txData?.fToken?.symbol})`}
             </div>
             <div className="flex flex-col justify-start w-[50%]">
-              <div className="text-base leading-[24px] text-gray-300 w-[298px]">
+              <div className="text-base leading-[24px] text-gray-300 dark:text-white w-[298px]">
                 {txData?.blenderyAddress &&
                   txData?.blenderyAddress?.substring(0, 22)}
                 <br />
@@ -92,9 +91,12 @@ export const SendFund = (props) => {
                 blockchain: {txData?.fToken?.chain}
               </div>
               <div className="flex flex-row gap-2 mt-2">
-                <div className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-[70%]" onClick={() => {
-                  navigator.clipboard.writeText(txData?.blenderyAddress);
-                }}>
+                <div
+                  className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white p-1 shrink-0 rounded w-[70%]"
+                  onClick={() => {
+                    navigator.clipboard.writeText(txData?.blenderyAddress);
+                  }}
+                >
                   <div className="flex flex-row gap-2">
                     <RxCopy size={15} color="#ffffff" />
                     <div className="leading-[20px] inline-block">
@@ -106,18 +108,24 @@ export const SendFund = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row bg-orangeLight rounded p-1 md:w-[452px] w-[370px]">
-          <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
-            {' '}
-            <RiFileWarningFill color="#FFB000" size={15} />{' '}
-          </div>
-          <div className="text-xs leading-[14.4px] text-darkslategray-200 inline-block w-[424px]">
-            Please note that you can send funds to the address above only once.
+        <div className="flex flex-row justify-center items-center py-1 px-2">
+          <div className="flex flex-row gap-2 justify-center items-center bg-orangeLight rounded p-1 w-full">
+            <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
+              {' '}
+              <RiFileWarningFill color="#FFB000" size={15} />{' '}
+            </div>
+            <div className="text-xs leading-[14.4px] text-darkslategray-200">
+              Please note that you can send funds to the address above only
+              once.
+            </div>
           </div>
         </div>
-        <div className="flex bg-lightslategray-300 md:w-[452px] w-[370px] h-px" />
-        <div className="flex flex-row justify-end" onClick={updateTransaction}>
-          <div className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-[30%]">
+        <div className="flex bg-lightslategray-300 w-full h-px" />
+        <div
+          className="flex flex-row justify-center items-center w-full px-2"
+          onClick={updateTransaction}
+        >
+          <div className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full">
             Paid
           </div>
         </div>

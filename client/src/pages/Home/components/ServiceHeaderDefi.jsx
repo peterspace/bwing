@@ -34,7 +34,7 @@ const ServiceHeaderDefi = (props) => {
           </div>
         )}
       </div>
-      <div className="" onClick={openModal}>
+      <div className="rounded-xl bg-chizzySnow dark:bg-button-dark text-gray-900 dark:text-silver font-roboto w-fit border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200" onClick={openModal}>
         <TokenButtonLight
           image={image}
           symbol={symbol && symbol.toUpperCase()}

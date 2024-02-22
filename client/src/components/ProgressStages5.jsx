@@ -1,25 +1,5 @@
 import React, { useState } from 'react';
-
-// import { FaBeer } from 'react-icons/fa';
-import {
-  BsInfoCircleFill,
-  BsFillArrowRightCircleFill,
-  BsCheckAll,
-} from 'react-icons/bs';
-import { MdQrCodeScanner } from 'react-icons/md';
-import {
-  PiLockSimpleBold,
-  PiLockSimpleOpenBold,
-  PiTrendUpDuotone,
-} from 'react-icons/pi';
-
-import { AiFillCheckCircle, AiOutlineArrowRight } from 'react-icons/ai';
 import { FiCheckCircle } from 'react-icons/fi';
-import { TfiTimer } from 'react-icons/tfi';
-import { RxCopy } from 'react-icons/rx';
-import { RiFileWarningFill } from 'react-icons/ri';
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebookSquare } from 'react-icons/fa';
 
 export const ProgressStages5 = () => {
   const progressStage1 = (
@@ -30,7 +10,7 @@ export const ProgressStages5 = () => {
           <FiCheckCircle color="#4f46e5" size={24} />{' '}
         </div>
         <div className="flex flex-col">
-           <div className="text-xs leading-[17px] inline-block dark:text-white">
+          <div className="text-xs leading-[17px] inline-block dark:text-white">
             Exchange pair
           </div>
           <div className="text-xs leading-[17px] inline-block dark:text-silver">
@@ -93,7 +73,7 @@ export const ProgressStages5 = () => {
   );
 
   const processBar = (
-    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px]p-4">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] p-4">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
           <div className="flex flex-row gap-4 mt-2">

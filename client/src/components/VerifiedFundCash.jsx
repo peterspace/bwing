@@ -63,48 +63,48 @@ export const VerifiedFundCash = (props) => {
   const sendFund = (
     <>
       {txData?.status === 'Completed' ? (
-        <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
+        <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark text-slate-700 dark:text-slate-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
           <div className="flex flex-col gap-[24px]">
-            <div className="flex flex-col gap-[8px] md:gap-[12px]">
-              <div className="flex flex-row gap-4 mt-[24px]">
-                <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
-                  Sent funds to the address below
+            <div className="flex flex-col gap-[8px] xl:gap-[12px]">
+              <div className="flex flex-row gap-4 mt-[24px] justify-center items-center">
+                <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
+                  Sent funds
                 </div>
               </div>
-              <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+              <div className="flex bg-lightslategray-300 w-full h-px" />
             </div>
 
-            <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+            <div className="flex flex-col w-[300px] xl:w-[452px] gap-[8px]">
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Amount
                 </div>
                 <div className="flex flex-row justify-start gap-1 w-[50%]">
-                  <div className="text-base leading-[24px] text-gray-300 inline-block">
+                  <div className="text-base leading-[24px] inline-block">
                     {txData?.tValue} {txData?.tToken?.symbol.toUpperCase()}
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Your address {`(${txData?.tToken?.symbol.toUpperCase()})`}
                 </div>
                 <div className="flex flex-col justify-start w-[50%]">
                   <div className="text-xs leading-[16px] text-green-600 inline-block">
                     {txData?.userAddress &&
-                      txData?.userAddress?.substring(0, 22)}
+                      txData?.userAddress?.substring(0, 20)}
                     <br />
                     {txData?.userAddress &&
                       txData?.userAddress?.substring(
-                        22,
+                        20,
                         txData?.userAddress.length
                       )}
                   </div>
                 </div>
               </div>
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Status
                 </div>
                 <div className="flex flex-col justify-start w-[50%]">
@@ -132,7 +132,7 @@ export const VerifiedFundCash = (props) => {
               </div>
             </div>
 
-            <div className="flex flex-row bg-orangeLight rounded p-1 md:w-[452px] w-[300px]">
+            <div className="flex flex-row bg-orangeLight rounded p-1 xl:w-[452px] w-[300px]">
               <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
                 {' '}
                 <RiFileWarningFill color="#FFB000" size={15} />{' '}
@@ -141,7 +141,7 @@ export const VerifiedFundCash = (props) => {
                 Your funds has been sent to the address
               </div>
             </div>
-            <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+            <div className="flex bg-lightslategray-300 xl:w-[452px] w-[300px] h-px" />
             <div
               className="flex flex-row justify-center items-center"
               onClick={newFunc}
@@ -155,48 +155,48 @@ export const VerifiedFundCash = (props) => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
+        <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark text-slate-700 dark:text-slate-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
           <div className="flex flex-col gap-[24px]">
-            <div className="flex flex-col gap-[8px] md:gap-[12px]">
-              <div className="flex flex-row gap-4 mt-[24px]">
-                <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+            <div className="flex flex-col gap-[8px] xl:gap-[12px]">
+              <div className="flex flex-row gap-4 mt-[24px] justify-center items-center">
+                <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
                   Sending funds to the address below
                 </div>
               </div>
-              <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+              <div className="flex bg-lightslategray-300 w-full h-px" />
             </div>
 
-            <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+            <div className="flex flex-col w-[300px] xl:w-[452px] gap-[8px]">
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Amount
                 </div>
                 <div className="flex flex-row justify-start gap-1 w-[50%]">
-                  <div className="text-base leading-[24px] text-gray-300 inline-block">
+                  <div className="text-base leading-[24px] inline-block">
                     {txData?.tValue} {txData?.tToken?.symbol.toUpperCase()}
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Your address {`(${txData?.tToken?.symbol.toUpperCase()})`}
                 </div>
                 <div className="flex flex-col justify-start w-[50%]">
                   <div className="text-xs leading-[16px] text-green-600 inline-block">
                     {txData?.userAddress &&
-                      txData?.userAddress?.substring(0, 22)}
+                      txData?.userAddress?.substring(0, 20)}
                     <br />
                     {txData?.userAddress &&
                       txData?.userAddress?.substring(
-                        22,
+                        20,
                         txData?.userAddress.length
                       )}
                   </div>
                 </div>
               </div>
               <div className="flex flex-row">
-                <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+                <div className="text-smi leading-[22px] text-gray-500 inline-block w-[50%]">
                   Status
                 </div>
                 <div className="flex flex-col justify-start w-[50%]">
@@ -224,7 +224,7 @@ export const VerifiedFundCash = (props) => {
               </div>
             </div>
 
-            <div className="flex flex-row bg-orangeLight rounded p-1 md:w-[452px] w-[300px]">
+            <div className="flex flex-row bg-orangeLight rounded p-1 xl:w-[452px] w-[300px]">
               <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
                 {' '}
                 <RiFileWarningFill color="#FFB000" size={15} />{' '}
@@ -233,7 +233,7 @@ export const VerifiedFundCash = (props) => {
                 Please note that this process could last up to 30 minutes.
               </div>
             </div>
-            <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+            <div className="flex bg-lightslategray-300 xl:w-[452px] w-[300px] h-px" />
             <div
               className="flex flex-row justify-center items-center"
               onClick={updateTransaction}

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-
-// import { FaBeer } from 'react-icons/fa';
 import {
-  BsInfoCircleFill,
   BsFillArrowRightCircleFill,
-  BsCheckAll,
 } from 'react-icons/bs';
 
 import { FiCheckCircle } from 'react-icons/fi';

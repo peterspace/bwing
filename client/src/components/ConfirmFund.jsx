@@ -59,25 +59,24 @@ export const ConfirmFund = (props) => {
   }
 
   const sendFund = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[320px] xs:w-[340px] md:w-[500px] p-4">
-      <div className="flex flex-col gap-[24px]">
-        {/* <div className="flex flex-col gap-[12px] md:gap-[24px]"> */}
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]">
+      <div className="flex flex-col justify-center items-center gap-[24px] w-full py-2 mt-4">
         <div className="flex flex-col gap-[8px] md:gap-[12px]">
-          <div className="flex flex-row gap-4 mt-[24px]">
-            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
-              Confirming funds to the address below
+          <div className="flex flex-row gap-4 mt-[24px] ml-2 mr-2">
+            <div className="text-[18px] font-extrabold leading-[32px] inline-block text-black dark:text-white">
+              Confirming funds to the address
             </div>
           </div>
-          <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+          <div className="flex bg-lightslategray-300 w-full h-px" />
         </div>
 
-        <div className="flex flex-col w-[300px] md:w-[452px] gap-[8px]">
+        <div className="flex flex-col w-[300px] gap-[8px] ml-4">
           <div className="flex flex-row">
-            <div className="text-smi leading-[22px] text-darkgray-100 inline-block w-[50%]">
+            <div className="text-smi leading-[22px] text-darkgray-100  inline-block w-[50%]">
               Amount
             </div>
             <div className="flex flex-row justify-start gap-1 w-[50%]">
-              <div className="text-base leading-[24px] text-gray-300 inline-block">
+              <div className="text-base leading-[24px] text-gray-300 dark:text-white inline-block">
                 {txData?.fValue} {txData?.fToken?.symbol.toUpperCase()}
               </div>
             </div>
@@ -120,7 +119,7 @@ export const ConfirmFund = (props) => {
               Status
             </div>
             <div className="flex flex-col justify-start w-[50%]">
-              <div className="text-base leading-[24px] bg-bgSecondary hover:opacity-90 text-bgPrimary w-fit px-1.5 py-0.5 rounded">
+              <div className="text-base bg-bgSecondary hover:opacity-90 text-bgPrimary w-fit px-1.5 py-0.5 rounded">
                 {/* Pending */}
                 {txData?.status}
               </div>
@@ -129,7 +128,7 @@ export const ConfirmFund = (props) => {
               </div>
               <div className="flex flex-row gap-2 mt-2">
                 <div
-                  className=" cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-[70%]"
+                  className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white py-1 shrink-0 rounded w-[70%]"
                   onClick={() => setIsMontor(true)}
                 >
                   <div className="flex flex-row gap-2">
@@ -139,7 +138,7 @@ export const ConfirmFund = (props) => {
                 </div>
 
                 <div
-                  className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-[30%]"
+                  className="cursor-pointer flex flex-row justify-center items-center bg-bgSecondary hover:opacity-90 text-bgPrimary py-1 shrink-0 rounded w-[30%]"
                   onClick={newFunc}
                 >
                   New
@@ -148,19 +147,20 @@ export const ConfirmFund = (props) => {
             </div>
           </div>
         </div>
-
-        <div className="flex flex-row bg-orangeLight rounded p-1 md:w-[452px] w-[300px]">
-          <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
-            {' '}
-            <RiFileWarningFill color="#FFB000" size={15} />{' '}
-          </div>
-          <div className="text-xs leading-[14.4px] text-darkslategray-200 inline-block w-[424px]">
-            Please note that this process could last up to 30 minutes.
+        <div className="flex flex-row justify-center items-center py-1 px-2">
+          <div className="flex flex-row gap-2 justify-center items-center bg-orangeLight rounded py-1 w-full">
+            <div className="ml-1 flex justify-center items-center w-[24px] flex-shrink-0">
+              {' '}
+              <RiFileWarningFill color="#FFB000" size={15} />{' '}
+            </div>
+            <div className="text-xs leading-[14.4px] text-darkslategray-200">
+              Please note that this process could last up to 30 minutes.
+            </div>
           </div>
         </div>
-        <div className="flex bg-lightslategray-300 md:w-[452px] w-[300px] h-px" />
+        <div className="flex bg-lightslategray-300 w-full h-px" />
         <div
-          className="flex flex-row justify-center items-center"
+          className="flex flex-row justify-center items-center w-full px-2"
           onClick={updateTransaction}
         >
           <div className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full">

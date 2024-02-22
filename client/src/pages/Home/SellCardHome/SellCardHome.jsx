@@ -111,6 +111,10 @@ export const SellCardHome = (props) => {
   const [allTokensFrom, setAllTokensFrom] = useState(allTokensFromL || null);
   const [allTokensTo, setAllTokensTo] = useState(allTokensToL || null);
 
+  // console.log({ allTokensFromSell: allTokensFrom });
+  // console.log({ allTokensToSell: allTokensTo });
+
+
   //======================={RATES and PRICES}========================================================
   const [loading, setLoading] = useState(false);
   const [loadingExchangeRate, setLoadingExchangeRate] = useState(false);
@@ -302,7 +306,7 @@ export const SellCardHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[0]);
+      setFromToken(allTokensFromL[2]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);

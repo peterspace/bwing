@@ -328,7 +328,7 @@ const DefiApp = (props) => {
           openSlippageModal={openSlippageModal}
         />
         <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
-          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
             <FToken
               image={fToken?.image}
               symbol={fToken?.symbol.toUpperCase()}
@@ -371,7 +371,7 @@ const DefiApp = (props) => {
               </div>
             </div>
           </div>
-          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+          <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
             <TToken
               image={tToken?.image}
               symbol={tToken?.symbol.toUpperCase()}

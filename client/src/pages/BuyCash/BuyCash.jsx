@@ -3,7 +3,7 @@ import { useLocation, Navigate } from 'react-router-dom';
 import { Exchange3of4 } from './Exchange3of4';
 import { Exchange4of4 } from './Exchange4of4';
 import { Exchange5of5 } from './Exchange5of5';
-import FooterMini from "../../components/FooterMini";
+import FooterMini from '../../components/FooterMini';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import {
@@ -32,23 +32,23 @@ export const BuyCash = (props) => {
   const [fTitle, setFTitle] = useState('You give');
   const [tTitle, setTTitle] = useState('You get');
 
-  const isReceivedL = localStorage.getItem("isReceivedBuyCash")
-  ? JSON.parse(localStorage.getItem("isReceivedBuyCash"))
-  : true;
+  const isReceivedL = localStorage.getItem('isReceivedBuyCash')
+    ? JSON.parse(localStorage.getItem('isReceivedBuyCash'))
+    : true;
 
-const [isReceived, setIsReceived] = useState(isReceivedL);
-console.log({ isReceived: isReceived });
+  const [isReceived, setIsReceived] = useState(isReceivedL);
+  console.log({ isReceived: isReceived });
 
-const [paymentResult, setPaymentResult] = useState();
-console.log({ paymentResult: paymentResult });
+  const [paymentResult, setPaymentResult] = useState();
+  console.log({ paymentResult: paymentResult });
 
-useEffect(() => {
-  if (isReceived) {
-    localStorage.setItem("isReceivedBuyCash", JSON.stringify(isReceived));
-  }
+  useEffect(() => {
+    if (isReceived) {
+      localStorage.setItem('isReceivedBuyCash', JSON.stringify(isReceived));
+    }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [isReceived]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReceived]);
   //====================================================================================================
 
   useEffect(() => {
@@ -73,8 +73,6 @@ useEffect(() => {
     }
   };
 
-
-
   //====================={Pay user automatically}====================================
   // useEffect(() => {
   //   if (txData?.status === 'Received') {
@@ -90,24 +88,24 @@ useEffect(() => {
   //   await updateOnePaidTransactionByIdService(userData);
   // }
 
-    //====================={Pay user automatically}====================================
-    useEffect(() => {
-      if (txData?.status === "Received" && isReceived) {
-        updatePaidTransaction();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [txData, isReceived]);
-  
-    async function updatePaidTransaction() {
-      const userData = {
-        id: txData?._id,
-      };
-      const response = await updateOnePaidTransactionByIdService(userData);
-      if (response) {
-        setPaymentResult(response);
-        setIsReceived(false);
-      }
+  //====================={Pay user automatically}====================================
+  useEffect(() => {
+    if (txData?.status === 'Received' && isReceived) {
+      updatePaidTransaction();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txData, isReceived]);
+
+  async function updatePaidTransaction() {
+    const userData = {
+      id: txData?._id,
+    };
+    const response = await updateOnePaidTransactionByIdService(userData);
+    if (response) {
+      setPaymentResult(response);
+      setIsReceived(false);
+    }
+  }
 
   if (!user?.token) {
     return <Navigate to="/auth" />;

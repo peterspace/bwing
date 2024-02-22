@@ -158,20 +158,20 @@ export default {
       // => @media (min-width: 640px) { ... }
 
       md: '768px',
-      // => @media (min-width: 768px) { ... }
+      // => @media (min-width: 768px) { ... }// tablet
 
       lg: '1024px',
-      // => @media (min-width: 1024px) { ... }
+      // => @media (min-width: 1024px) { ... }//laptop
 
       xl: '1280px',
-      // => @media (min-width: 1280px) { ... }
+      // => @media (min-width: 1280px) { ... } // laptop m // laptop L 1440px
       // '2xl': '1440px',
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
 
       '4xl': '2560px',
-      // => @media (min-width: 2560px) { ... }
+      // => @media (min-width: 2560px) { ... } // 4k
     },
   },
   corePlugins: {

@@ -76,7 +76,7 @@ const BuyCardApp = (props) => {
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
   const [isSubServiceModalOpen, setIsSubServiceModalOpen] = useState(false);
-  const [ratesModalOpen, setRatesModalOpen] = useState(false);
+  const [ratesModalOpen, setRatesModalOpen] = useState(true);// open by default
 
   const [isMinValue, setIsMinValue] = useState(false);
   const [isMaxValue, setIsMaxValue] = useState(false);
@@ -184,7 +184,7 @@ const BuyCardApp = (props) => {
   }
 
   function openSubServiceModal() {
-    setIsSubServiceModalOpen(true);
+    setIsSubServiceModalOpen((prev) => !prev);
   }
 
   function openRatesModal() {
@@ -280,15 +280,15 @@ const BuyCardApp = (props) => {
       setMaxValue(10000);
     }
     if (fToken?.symbol === 'rub') {
-      // setMinValue(30000);
-      setMinValue(1000);// for testing
+      setMinValue(30000);
+      // setMinValue(1000);// for testing
       setMaxValue(300000);
     }
   }
 
   return (
     <>
-      <div className="flex sm:flex-col xl:flex-row">
+      <div className="flex ss:flex-col xl:flex-row">
         <>
           <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
             <Menu
@@ -298,14 +298,21 @@ const BuyCardApp = (props) => {
               setSubService={setSubService}
             />
             <ServiceHeaderBuy
-              symbolSubService={paymentMethod === 'card' ? 'Card' : 'Cash'}
-              symbolCountry={country}
-              openSubServiceModal={openSubServiceModal}
-              openCountryModal={openOptionsModal}
-              countries={cities}
+               symbolSubService={paymentMethod === 'card' ? 'Card' : 'Cash'}
+               symbolCountry={country}
+               openSubServiceModal={openSubServiceModal}
+               openCountryModal={openOptionsModal}
+               countries={cities}
+               isSubServiceModalOpen={isSubServiceModalOpen}
+               setIsSubServiceModalOpen={setIsSubServiceModalOpen}
+               service={service}
+               setService={setService}
+               setSubService={setSubService}
+               setPaymentMethod={setPaymentMethod}
+               paymentOptions={paymentOptions}
             />
             <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                 <FToken
                   image={fToken?.image}
                   symbol={fToken?.symbol.toUpperCase()}
@@ -342,7 +349,7 @@ const BuyCardApp = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300">
+              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                 <TToken
                   image={tToken?.image}
                   symbol={tToken?.symbol.toUpperCase()}
@@ -486,24 +493,11 @@ const BuyCardApp = (props) => {
             cityData={cityData}
             city={city}
           />
-
-          {/* Payment Modal */}
-          <PaymenOptionsModal
-            isTokenModalOpen={isSubServiceModalOpen}
-            setIsTokenModalOpen={setIsSubServiceModalOpen}
-            title={'Select Method'}
-            service={service}
-            setService={setService}
-            setSubService={setSubService}
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
-            paymentOptions={paymentOptions}
-          />
         </>
         <>
           {ratesModalOpen && (
             <>
-              <div className="sm:flex xl:hidden mt-4">
+              <div className="ss:flex xl:hidden mt-4">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}
@@ -514,7 +508,7 @@ const BuyCardApp = (props) => {
                   loadingExchangeRate={loadingExchangeRate}
                 />
               </div>
-              <div className="sm:hidden xl:flex xl:ml-8">
+              <div className="ss:hidden xl:flex xl:ml-8">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}

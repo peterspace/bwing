@@ -1044,9 +1044,7 @@ export const updateTransactionCosts = async () => {
 //=========={profits}=====================================
 export const getProfits = async () => {
   try {
-    const response = await axios.get(
-      `${BACKEND_URL}/hdWallet/getProfits`
-    );
+    const response = await axios.get(`${BACKEND_URL}/hdWallet/getProfits`);
     return response.data;
   } catch (error) {
     const message =
@@ -1088,3 +1086,106 @@ export const updateMasterWalletBalances = async () => {
   }
 };
 
+//==============={Support}=========================================================================
+export const getAllMessages = async () => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/message`);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+//only messages by the user
+export const getUserMessages = async () => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/message/getUserMessages`);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+//specific message trial by a user
+// export const getUserMessagesById = async (userData) => {
+//   try {
+//     const response = await axios.post(
+//       `${BACKEND_URL}/message/getUserMessagesById/${messageId}`
+//     );
+//     return response.data;
+//   } catch (error) {
+//     const message =
+//       (error.response && error.response.data && error.response.data.message) ||
+//       error.message ||
+//       error.toString();
+//     toast.error(message);
+//   }
+// };
+
+export const getUserMessagesById = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/message/getUserMessagesById`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+// create a support ticket
+export const createTIcket = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/message/createTIcket`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+// send or reply message
+export const sendMessage = async (userData) => {
+  try {
+    const response = await axios.patch(`${BACKEND_URL}/message`, userData);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+// update message status by support
+export const updateMessageStatus = async (userData) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/message/updateMessageStatus`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};

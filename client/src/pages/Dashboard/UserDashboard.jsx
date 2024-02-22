@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 import { DashboardMenuUser } from '../../components/DashboardMenuUser';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,10 +14,12 @@ import {
   getUserBuyCard,
   getUserSellCash,
   getUserSellCard,
+  getUserMessages,
 } from '../../services/apiService';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import UserRecord from '../Tanstack/UserRecord';
 import CircularProgress from '../../components/CircularProgress';
+import SupportMessage from '../../components/SupportMessage';
 
 const menu = [
   {
@@ -54,6 +58,8 @@ const menu = [
 export const UserDashboard = (props) => {
   const { user, setService, setSubService, setTxInfo } = props;
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -83,7 +89,25 @@ export const UserDashboard = (props) => {
   const [allBuyCardTransactions, setAllBuyCardTransactions] = useState();
   const [allSellCashTransactions, setAllSellCashTransactions] = useState();
   const [allSellCardTransactions, setAllSellCardTransactions] = useState();
+
   console.log({ allUserTransactions: allUserTransactions });
+
+  //===================={All Messages}======================================
+
+  const { data: allMessages } = useQuery(
+    ['GET_USER_MESSAGES'],
+    async () => {
+      const { data } = await axios.get(
+        `${BACKEND_URL}/message/getUserMessages`
+      );
+      return data;
+    },
+    {
+      refetchInterval: 5000, // every 5 seconds
+      refetchIntervalInBackground: true, // when tab is not on focus
+      refetchOnMount: true,
+    }
+  );
   //=========={Pages}================================================================
   const pageL = localStorage.getItem('page')
     ? JSON.parse(localStorage.getItem('page'))
@@ -91,10 +115,6 @@ export const UserDashboard = (props) => {
   const [page, setPage] = useState(pageL);
   console.log({ page: page });
   //=========={Pages}================================================================
-
-  const isView = localStorage.getItem('isView')
-    ? JSON.parse(localStorage.getItem('isView'))
-    : false;
 
   const isViewIng = localStorage.getItem('isViewIng')
     ? JSON.parse(localStorage.getItem('isViewIng'))
@@ -313,15 +333,24 @@ export const UserDashboard = (props) => {
     }, 1000); // after 1 sec
   };
 
+  // //===================={All Messages}======================================
+
+  // useEffect(() => {
+  //   fetchAllMessages();
+  // }, []);
+
+  // async function fetchAllMessages() {
+  //   const response = await getUserMessages();
+  //   if (response) {
+  //     setAllMessages(response);
+  //   }
+  // }
+
   //====================================================================================================
 
   return (
     <div className="flex gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
-      <DashboardMenuUser
-        setPage={setPage}
-        user={user}
-        page={page}
-      />
+      <DashboardMenuUser setPage={setPage} user={user} page={page} />
       <div className="container mx-auto p-1">
         {page === 'Exchange' &&
           (allExchangeTransactions ? (
@@ -371,6 +400,19 @@ export const UserDashboard = (props) => {
               <CircularProgress />
             </div>
           ))}
+        {page === 'Create' && (
+          <SupportMessage latestMessages={allMessages} page={'Create'} />
+        )}
+        {/* {page === 'Inbox' && allMessages ? (
+            <SupportMessage allMessages={allMessages} page={'Inbox'} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          )} */}
+        {page === 'Inbox' && allMessages && (
+          <SupportMessage latestMessages={allMessages} page={'Inbox'} />
+        )}
       </div>
     </div>
   );

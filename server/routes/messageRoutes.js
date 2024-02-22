@@ -1,15 +1,27 @@
-const express = require('express');
+const express = require("express");
 const {
   allMessages,
   sendMessage,
+  getUserMessages,
   getUserMessagesById,
-} = require('../controllers/messageControllers');
-const { protect } = require('../middleware/authMiddleware');
+  createTIcket,
+  updateMessageStatus,
+} = require("../controllers/messageControllers");
+const { protect, isAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.route('/:chatId').get(protect, allMessages);
-router.route('/').post(protect, sendMessage);
-router.route('/getUserMessagesById').get(protect, getUserMessagesById);
+router.get("/", protect, isAdmin, allMessages); // admin only
+
+router.patch("/", protect, sendMessage);
+router.get("/getUserMessages", protect, getUserMessages);
+
+router.post("/getUserMessagesById", protect, getUserMessagesById);
+
+router.post("/createTIcket", protect, createTIcket);
+// router.post("/createTIcket", createTIcket);
+
+
+router.patch("/updateMessageStatus", protect, isAdmin, updateMessageStatus); // admin only
 
 module.exports = router;

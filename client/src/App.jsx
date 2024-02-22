@@ -22,7 +22,11 @@ import { AppContainerChecker } from './pages/Home/AppContainerChecker';
 import { TermsOfUse } from './pages/Support/TermsOfUse';
 import { PrivacyPolicy } from './pages/Support/PrivacyPolicy';
 import { AML } from './pages/Support/AML';
+import SupportMessage from './components/SupportMessage'
+import SupportMessageAdmin from './components/SupportMessageAdmin';
+
 import AdminWallets from './pages/Tanstack/AdminWallets';
+
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -312,8 +316,13 @@ function App() {
               }
             />
             <Route path="/adminWallets" element={<AdminWallets />} />
+            <Route path="/supportMessage" element={<SupportMessage />} />
+            <Route path="/supportMessageAdmin" element={<SupportMessageAdmin />} />
 
+          
             <Route path="/support" element={<Support />} />
+
+
             <Route path="/termsOfUse" element={<TermsOfUse />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/aml" element={<AML />} />

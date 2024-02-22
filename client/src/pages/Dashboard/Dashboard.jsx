@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { AdminDashboard } from './AdminDashboard';
-import { UserDashboard } from './UserDashboard';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { AdminDashboard } from "./AdminDashboard";
+import { UserDashboard } from "./UserDashboard";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getTransactionByTxIdService } from '../../services/apiService';
-import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
+import { getTransactionByTxIdService } from "../../services/apiService";
+import { getTransactionByTxIdInternal } from "../../redux/features/transaction/transactionSlice";
 
 export const Dashboard = (props) => {
   const { mode, user, service, setService, setSubService, setTxInfo, setMode } =
     props;
   const dispatch = useDispatch();
 
-  const isUpdate = localStorage.getItem('isUpdate')
-    ? JSON.parse(localStorage.getItem('isUpdate'))
+  const isUpdate = localStorage.getItem("isUpdate")
+    ? JSON.parse(localStorage.getItem("isUpdate"))
     : false;
 
-  const txDataUpdate = localStorage.getItem('txDataUpdate')
-    ? JSON.parse(localStorage.getItem('txDataUpdate'))
+  const txDataUpdate = localStorage.getItem("txDataUpdate")
+    ? JSON.parse(localStorage.getItem("txDataUpdate"))
     : null;
 
   const [newData, setNewData] = useState();
@@ -31,7 +31,7 @@ export const Dashboard = (props) => {
     if (isUpdate) {
       updateTxData();
       setTimeout(() => {
-        localStorage.setItem('isUpdating', JSON.stringify(true));
+        localStorage.setItem("isUpdating", JSON.stringify(true));
         //
       }, 200);
     }
@@ -55,9 +55,9 @@ export const Dashboard = (props) => {
 
   return (
     // <div className="grid grid-cols-1 overflow-hidden">
-  <div className="max-h-[92vh] overflow-hidden">
+    <div className="max-h-[92vh] overflow-hidden">
       <>
-        {user?.role === 'Admin' && (
+        {user?.role === "Admin" && (
           <AdminDashboard
             user={user}
             setTxInfo={setTxInfo}
@@ -65,7 +65,7 @@ export const Dashboard = (props) => {
           />
         )}
 
-        {user?.role == 'User' && (
+        {user?.role == "User" && (
           <UserDashboard
             user={user}
             setService={setService}

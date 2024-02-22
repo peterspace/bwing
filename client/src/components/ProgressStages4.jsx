@@ -1,49 +1,9 @@
 import React, { useState } from 'react';
-
-// import { FaBeer } from 'react-icons/fa';
 import {
-  BsInfoCircleFill,
   BsFillArrowRightCircleFill,
-  BsCheckAll,
 } from 'react-icons/bs';
-import { MdQrCodeScanner } from 'react-icons/md';
-import {
-  PiLockSimpleBold,
-  PiLockSimpleOpenBold,
-  PiTrendUpDuotone,
-} from 'react-icons/pi';
-
-import { AiFillCheckCircle, AiOutlineArrowRight } from 'react-icons/ai';
 import { FiCheckCircle } from 'react-icons/fi';
-import { TfiTimer } from 'react-icons/tfi';
-import { RxCopy } from 'react-icons/rx';
-import { RiFileWarningFill } from 'react-icons/ri';
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebookSquare } from 'react-icons/fa';
-
-//
-{
-  /* <PiLockSimpleBold color="red" size={15}/> */
-}
-//  <PiLockSimpleBold color="#4f46e5" size={15}/>
 export const ProgressStages4 = () => {
-  // const {
-  //   isExchange,
-  //   setIsExchange,
-  //   isBuy,
-  //   setIsBuy,
-  //   isSell,
-  //   setIsSell,
-  //   isDefi,
-  //   setIsDefi,
-  // } = props;
-
-  const [isStageNumber, setIsStageNumber] = useState(PiTrendUpDuotone);
-  const [isCheck, setIsCheck] = useState(true);
-
-  const [isArrow, setIsArrow] = useState(true);
-
-  const [percentageProgress, setPercentageProgress] = useState(70);
 
   const progressStage1 = (
     <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
