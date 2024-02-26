@@ -7,6 +7,7 @@ const {
   getallEnquiry,
   supportTicket,
   contactAutoReply,
+  updateEnquiryStatus,
 } = require('../controllers/enquiryController');
 const { protect, isAdmin } = require('../middleware/authMiddleware');
 const router = express.Router();
@@ -17,6 +18,8 @@ router.put('/:id', protect, isAdmin, updateEnquiry);
 router.delete('/:id', protect, isAdmin, deleteEnquiry);
 router.get('/:id', getEnquiry);
 router.get('/', getallEnquiry);
+router.patch("/updateEnquiryStatus", protect, isAdmin, updateEnquiryStatus); // admin only
+
 
 module.exports = router;
 

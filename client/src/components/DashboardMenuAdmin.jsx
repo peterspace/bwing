@@ -20,6 +20,8 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { BsCashCoin } from 'react-icons/bs';
 import { FaRegCreditCard } from 'react-icons/fa6';
+import { MdAlternateEmail } from 'react-icons/md';
+import { MdSupportAgent } from 'react-icons/md';
 
 export const DashboardMenuAdmin = (props) => {
   const { setPage, page, mode, user } = props;
@@ -426,7 +428,51 @@ export const DashboardMenuAdmin = (props) => {
             </List>
           </AccordionBody>
         </Accordion>
+        <ListItem
+          ripple={false}
+          className={`cursor-pointer p-2 rounded-lg ${
+            activePage === 'Enquiries' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
+          }`}
+          onClick={() => {
+            setIsSubMenuOpen(0);
+            setPage('Enquiries');
+          }}
+        >
+          <div
+            className={`flex flex-row gap-2 items-center mr-auto font-normal text-base ${
+              activePage === 'Enquiries'
+                ? 'text-[#5046E5]'
+                : 'text-chizzyblue dark:text-gray-100'
+            }`}
+          >
+            <MdAlternateEmail size={20} />
+            <div className="">Enquiries</div>
+          </div>
+        </ListItem>
+        <ListItem
+          ripple={false}
+          className={`cursor-pointer p-2 rounded-lg ${
+            activePage === 'Support' ? 'bg-[#ECEAFF] text-[#5046E5]' : ''
+          }`}
+          onClick={() => {
+            setIsSubMenuOpen(0);
+            setPage('Support');
+          }}
+        >
+          <div
+            className={`flex flex-row gap-2 items-center mr-auto font-normal text-base ${
+              activePage === 'Support'
+                ? 'text-[#5046E5]'
+                : 'text-chizzyblue dark:text-gray-100'
+            }`}
+          >
+            <MdSupportAgent size={20} />
+            <div className="">Support</div>
+          </div>
+        </ListItem>
       </List>
     </Card>
   );
 };
+
+//Support

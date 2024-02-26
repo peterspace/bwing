@@ -92,7 +92,7 @@ export const MessageContent = (props) => {
             {isReply ? (
               <>
                 <textarea
-                  className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[300px] md:h-[400px] overflow-auto border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
+                  className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[300px] md:h-[400px] overflow-auto border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
                   value={message}
                   onChange={(ev) => setMessage(ev.target.value)}
                   placeholder="Please describe the issue"
@@ -354,6 +354,8 @@ const SupportMessageAdmin = (props) => {
     const response = await sendMessage(userData);
     if (response) {
       setIsReply(false);
+      setMessage("")
+      setAddedPhotos([])
       console.log('sent');
     }
   }

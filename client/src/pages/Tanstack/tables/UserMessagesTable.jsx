@@ -14,18 +14,12 @@ import {
   AiOutlineRight,
   AiOutlineLeft,
 } from 'react-icons/ai';
-import { MdOutlineMoreHoriz } from 'react-icons/md';
-import { RxOpenInNewWindow } from 'react-icons/rx';
 import { MdOutlineOpenInNew } from 'react-icons/md';
-import { IoCopyOutline } from 'react-icons/io5';
-import { DownloadToExcel } from '../components/lib/XlsxAdmin';
+import { DownloadMessagesToExcel } from '../components/lib/DownloadMessagesToExcel';
 import { IoSearch } from 'react-icons/io5';
-import { CiEdit } from 'react-icons/ci';
-import { BsInfoSquare } from 'react-icons/bs';
 
 import { PiExportBold } from 'react-icons/pi';
 import DebouncedInput from '../components/ui/DebouncedInput';
-import Popover from '../../../components/Popover';
 
 const statuses = {
   Active: {
@@ -113,61 +107,10 @@ const UserMessagesTable = ({
         sortType: 'basic',
         Cell: ({ value }) => (value ? <div>{value}</div> : <div>-</div>),
       },
-      // {
-      //   accessor: 'id',
-      //   Cell: ({ value }) => {
-      //     const getSelectedRowData = data?.find((item) => item._id === value);
-      //     const { _id, orderNo, ticketNumber } = getSelectedRowData;
-      //     const copyToClipboard = (value) => {
-      //       navigator.clipboard.writeText(value);
-      //     };
-
-      //     return (
-      //       <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
-      //         <Popover
-      //           content={
-      //             <div className="flex flex-col bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid rounded font-normal">
-      //               <div
-      //                 onClick={() => copyToClipboard(orderNo)}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Copy transaction ID</div>
-      //               </div>
-      //               <div
-      //                 onClick={() => copyToClipboard(ticketNumber)}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Copy ticket No</div>
-      //               </div>
-      //               <div
-      //                 onClick={() => {
-      //                   setActiveMessage(getSelectedRowData);
-      //                   setIsSelectMessage(true);
-      //                 }}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Open</div>
-      //               </div>
-      //             </div>
-      //           }
-      //         >
-      //           <MdOutlineMoreHoriz size={24} />
-      //         </Popover>
-      //       </div>
-      //     );
-      //   },
-      // },
       {
         accessor: 'id',
         Cell: ({ value }) => {
           const getSelectedRowData = data?.find((item) => item._id === value);
-          const { _id, orderNo, ticketNumber } = getSelectedRowData;
-          const copyToClipboard = (value) => {
-            navigator.clipboard.writeText(value);
-          };
 
           return (
             <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
@@ -251,7 +194,7 @@ const UserMessagesTable = ({
 
   const handleToggleDropdown = () => {
     setSearchTerm('');
-    setIsStatusDropdownOpen(!isStatusDropdownOpen);
+    setIsStatusDropdownOpen((prev) => !prev);
   };
 
   const handleSelectStatus = (status) => {
@@ -352,7 +295,7 @@ const UserMessagesTable = ({
 
             <div className="flex items-center">
               <button
-                onClick={() => DownloadToExcel(data)}
+                onClick={() => DownloadMessagesToExcel(data)}
                 className="m-0 cursor-pointer shadow-lg hover:-translate-y-0.5 transform transition flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white shrink-0 rounded px-2 py-2 w-fit"
               >
                 {' '}

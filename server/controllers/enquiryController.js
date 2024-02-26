@@ -31,11 +31,11 @@ const contactAutoReply = asyncHandler(async (req, res) => {
   // Reset Email
   const message = `
 <h2>Hello ${name}</h2>
-<p>Thank you for choosing Govercity</p>  
+<p>Thank you for choosing Blendery</p>  
 <p>Your request has been receieved and would be processed shortly.</p>
 
 <p>Regards...</p>
-<p>Govercity Team</p>
+<p>Blendery Team</p>
 `;
 
   const emailTest = 'peter.space.io@gmail.com';
@@ -83,7 +83,7 @@ const getEnquiry = asyncHandler(async (req, res) => {
 });
 const getallEnquiry = asyncHandler(async (req, res) => {
   try {
-    const getallEnquiry = await Enquiry.find();
+    const getallEnquiry = await Enquiry.find().sort({ updatedAt: -1 }); //1 for ascending and -1 for descending (decending willmean having the most recently updated at the top)
     res.json(getallEnquiry);
   } catch (error) {
     throw new Error(error);
@@ -146,7 +146,25 @@ const supportTicket = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, message: 'Email sent' });
 });
 
+const updateEnquiryStatus = asyncHandler(async (req, res) => {
+  const { messageId, status } = req.body;
+  console.log({ 'Enquiry status': status });
+  // check if message exists
+  const messageExists = await Enquiry.findById(messageId);
 
+  if (!messageExists) {
+    res.status(400);
+    throw new Error('Message not found, please login');
+  }
+
+  messageExists.status = status || messageExists.status;
+
+  const response = await messageExists.save();
+
+  if (response) {
+    res.status(200).json(response);
+  }
+});
 
 module.exports = {
   createEnquiry,
@@ -156,4 +174,5 @@ module.exports = {
   getallEnquiry,
   contactAutoReply,
   supportTicket,
+  updateEnquiryStatus,
 };

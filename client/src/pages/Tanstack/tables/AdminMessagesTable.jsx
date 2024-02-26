@@ -15,7 +15,7 @@ import {
   AiOutlineLeft,
 } from 'react-icons/ai';
 import { MdOutlineOpenInNew } from 'react-icons/md';
-import { DownloadToExcel } from '../components/lib/XlsxAdmin';
+import { DownloadMessagesToExcel } from '../components/lib/DownloadMessagesToExcel';
 import { IoSearch } from 'react-icons/io5';
 import { PiExportBold } from 'react-icons/pi';
 import DebouncedInput from '../components/ui/DebouncedInput';
@@ -41,6 +41,17 @@ const statuses = {
   statusList: ['Active', 'Pending', 'Resolved', 'Closed'],
 };
 
+const searches = [
+  { id: 'Payment pending', name: 'Payment pending', color: 'bg-[#089708]' },
+  {
+    id: 'Stuck on loading page',
+    name: 'Stuck on loading page',
+    color: 'bg-[#FFA500]',
+  },
+  { id: 'Dispatcher issue', name: 'Dispatcher issue', color: 'bg-[#800080' },
+  { id: 'Payment issue', name: 'Payment issue', color: 'bg-[#0000FF]' },
+];
+
 const AdminMessagesTable = ({
   data,
   tableData,
@@ -52,6 +63,9 @@ const AdminMessagesTable = ({
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const [service, setService] = useState(null);
+  const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
 
   const columns = useMemo(() => {
     const baseColumns = [
@@ -106,61 +120,10 @@ const AdminMessagesTable = ({
         sortType: 'basic',
         Cell: ({ value }) => (value ? <div>{value}</div> : <div>-</div>),
       },
-      // {
-      //   accessor: 'id',
-      //   Cell: ({ value }) => {
-      //     const getSelectedRowData = data?.find((item) => item._id === value);
-      //     const { _id, orderNo, ticketNumber } = getSelectedRowData;
-      //     const copyToClipboard = (value) => {
-      //       navigator.clipboard.writeText(value);
-      //     };
-
-      //     return (
-      //       <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
-      //         <Popover
-      //           content={
-      //             <div className="flex flex-col bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid rounded font-normal">
-      //               <div
-      //                 onClick={() => copyToClipboard(orderNo)}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Copy transaction ID</div>
-      //               </div>
-      //               <div
-      //                 onClick={() => copyToClipboard(ticketNumber)}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Copy ticket No</div>
-      //               </div>
-      //               <div
-      //                 onClick={() => {
-      //                   setActiveMessage(getSelectedRowData);
-      //                   setIsSelectMessage(true);
-      //                 }}
-      //                 className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-      //               >
-      //                 <IoCopyOutline size={24} />
-      //                 <div>Open</div>
-      //               </div>
-      //             </div>
-      //           }
-      //         >
-      //           <MdOutlineMoreHoriz size={24} />
-      //         </Popover>
-      //       </div>
-      //     );
-      //   },
-      // },
       {
         accessor: 'id',
         Cell: ({ value }) => {
           const getSelectedRowData = data?.find((item) => item._id === value);
-          const { _id, orderNo, ticketNumber } = getSelectedRowData;
-          const copyToClipboard = (value) => {
-            navigator.clipboard.writeText(value);
-          };
 
           return (
             <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
@@ -244,12 +207,22 @@ const AdminMessagesTable = ({
 
   const handleToggleDropdown = () => {
     setSearchTerm('');
-    setIsStatusDropdownOpen(!isStatusDropdownOpen);
+    setIsStatusDropdownOpen((prev) => !prev);
   };
 
   const handleSelectStatus = (status) => {
     setStatus(status);
     setIsStatusDropdownOpen(false);
+  };
+
+  const handleServiceToggleDropdown = () => {
+    setSearchTerm('');
+    setIsServiceDropdownOpen((prev) => !prev);
+  };
+  const handleSelectService = (service) => {
+    setService(service);
+    setSearchTerm(service?.id);
+    setIsServiceDropdownOpen(false);
   };
 
   return (
@@ -341,11 +314,76 @@ const AdminMessagesTable = ({
                   </div>
                 )}
               </div>
+
+              <div className="relative inline-block text-left ml-6">
+                <div>
+                  <button
+                    type="button"
+                    className="inline-flex w-80 h-10 mt-0 mx-0 p-4 justify-between items-center text-xs rounded-lg leading-[18px] gap-[8px] shadow-md active:bg-white dark:active:bg-app-container-dark active:shadow-none border border-solid border-[#E7E7E7] dark:border-lightslategray-300 box-border text-darkslategray-200 dark:text-gray-100 bg-white dark:bg-app-container-dark placeholder-darkgray-100"
+                    onClick={handleServiceToggleDropdown}
+                  >
+                    <div className="flex w-full justify-between items-center">
+                      {service ? (
+                        <>
+                          <div className="flex items-center">
+                            <div className="flex items-center">
+                              <span
+                                className={`w-2.5 h-2.5 mr-2 rounded-md ${service.color}`}
+                              />
+                              <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">
+                                {service.name}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex h-full items-center">
+                            {isServiceDropdownOpen ? (
+                              <FaChevronUp size={12} color="#111111" />
+                            ) : (
+                              <FaChevronDown size={12} color="#111111" />
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex w-full items-center justify-between">
+                          <span className="text-gray-500 dark:text-gray-700">
+                            {'Issues'}
+                          </span>
+                          {isServiceDropdownOpen ? (
+                            <FaChevronUp size={16} />
+                          ) : (
+                            <FaChevronDown size={16} />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                </div>
+                {isServiceDropdownOpen && (
+                  <div className="origin-top-right w-80 absolute right-0 mt-2 rounded-md bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
+                    <div className="max-h-62 overflow-y-auto">
+                      {searches.map((service, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer"
+                          onClick={() => handleSelectService(service)}
+                        >
+                          <div className="flex items-center">
+                            <span
+                              className={`w-2.5 h-2.5 mr-2 rounded-md ${service?.color}`}
+                            />
+                            <span>{service?.name}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="flex items-center">
               <button
-                onClick={() => DownloadToExcel(data)}
+                onClick={() => DownloadMessagesToExcel(data)}
                 className="m-0 cursor-pointer shadow-lg hover:-translate-y-0.5 transform transition flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white shrink-0 rounded px-2 py-2 w-fit"
               >
                 {' '}
@@ -403,10 +441,7 @@ const AdminMessagesTable = ({
                   //   </tr>
                   // </div>
 
-                  <tr
-                    {...row.getRowProps()}
-                    className="text-left"
-                  >
+                  <tr {...row.getRowProps()} className="text-left">
                     {row.cells.map((cell) => {
                       return (
                         <td

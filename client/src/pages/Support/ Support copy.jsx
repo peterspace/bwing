@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, Navigate } from 'react-router-dom';
 import { createMessage, contactAutoReply } from '../../services/apiService';
 import FooterMini from '../../components/FooterMini';
 
@@ -7,7 +7,7 @@ const subjectEnquiryList = [`General Enquiry`, `Payment issue`, `Custom`];
 
 export const Support = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+
   const [isSubject, setIsSubject] = useState(false);
   const [orderNumber, setOrderNumber] = useState();
   const [name, setName] = useState('');
@@ -15,15 +15,26 @@ export const Support = () => {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [customSubject, setCustomSubject] = useState();
+
   const [isSubmitted, setIsSubmitted] = useState('');
   const [submittedData, setsubmittedData] = useState('');
+  console.log({ submittedData: submittedData });
   const [isAutoReplySent, setIsAutoReplySent] = useState(false);
+  const [checkData, setCheckData] = useState('');
+  console.log({ checkData: checkData });
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('prevLocation', JSON.stringify(location?.pathname));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
+  // function openSubjectModal() {
+  //   setIsSubject(false);
+  //   setIsSubService(false);
+  //   setIsSubject(true);
+  // }
+
   function openSubjectModal() {
     setIsSubject((prev) => !prev);
   }
@@ -44,12 +55,25 @@ export const Support = () => {
       email,
       message,
     };
-    const data = await createMessage(userData);
-    if (data) {
-      setIsSubmitted(true);
-      setsubmittedData(data);
-    }
+
+    //TODO: api call
   }
+
+
+
+
+
+
+
+
+  console.log({ name: name });
+
+  console.log({
+    name: name,
+    email: email,
+    subject: subject,
+    message: message,
+  });
 
   useEffect(() => {
     if (isSubmitted) {
@@ -74,21 +98,25 @@ export const Support = () => {
       setMessage('');
       setIsAutoReplySent(true);
       setIsSubmitted(false);
-
-      setTimeout(() => {
-        setIsAutoReplySent(false);
-        navigate('/');
-      }, 10000);
     }
   }
 
-  async function RedirectHome() {
-    setTimeout(() => {
-      if (isAutoReplySent) {
-        setIsAutoReplySent(false);
-      }
-      navigate('/');
-    }, 5000);
+  async function SendMessage(ev) {
+    ev.preventDefault();
+    const userData = {
+      name,
+      email,
+      subject,
+      message,
+    };
+
+    console.log('userData', userData);
+    setCheckData(userData);
+    const data = await createMessage(userData);
+    if (data) {
+      setIsSubmitted(true);
+      setsubmittedData(data);
+    }
   }
 
   const enquiry = (
@@ -207,7 +235,7 @@ export const Support = () => {
             <span className="text-rose-600">*</span>
           </b>
           <textarea
-            className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[120px] md:h-[180px] border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
+            className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[120px] md:h-[180px] border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300"
             value={message}
             onChange={(ev) => setMessage(ev.target.value)}
             placeholder="How may we help you?"
@@ -217,22 +245,9 @@ export const Support = () => {
         </div>
 
         <div className="relative self-stretch  bg-lightslategray-300 h-px overflow-hidden shrink-0" />
-
-        {isSubmitted ? (
-          <div
-            className="cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transform transition self-stretch rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white"
-            onClick={RedirectHome}
-          >
-            <div className="flex-1 relative">Sent</div>
-          </div>
-        ) : (
-          <div
-            className="cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transform transition self-stretch rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white"
-            onClick={submit}
-          >
-            <div className="flex-1 relative">Submit</div>
-          </div>
-        )}
+        <div className="cursor-pointer self-stretch rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white">
+          <div className="flex-1 relative">Submit</div>
+        </div>
       </div>
     </div>
   );

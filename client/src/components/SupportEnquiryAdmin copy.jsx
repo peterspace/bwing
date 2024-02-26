@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FooterMini from './FooterMini';
-import { getUserMessages, sendMessage } from '../services/apiService';
+
+import {
+  getAllMessages,
+  sendMessage,
+  updateMessageStatus,
+} from '../services/apiService';
 import PhotosUploader from './PhotosUploader';
 import SupportTicket from './SupportTicket';
-import UserMessagesRecord from '../pages/Tanstack/UserMessagesRecord';
+import AdminMessagesRecord from '../pages/Tanstack/AdminMessagesRecord';
+import AdminEnquiriesRecord from '../pages/Tanstack/AdminEnquiriesRecord';
+
+const statusList = ['Pending', 'Active', 'Resolved', 'Closed'];
 
 export const MessageContent = (props) => {
   const {
@@ -284,10 +292,9 @@ export const MessageContent = (props) => {
   );
 };
 
-const SupportMessage = (props) => {
+const SupportEnquiryAdmin = (props) => {
   const { latestMessages, page } = props;
   const { user } = useSelector((state) => state.user);
-
   const [isSend, setIsSend] = useState(false);
   const [isContent, setIsContent] = useState(true);
   const [isReply, setIsReply] = useState(false);
@@ -295,9 +302,12 @@ const SupportMessage = (props) => {
 
   const [message, setMessage] = useState();
   const [isSent, setIsSent] = useState(false);
+  const [status, setStatus] = useState('');
+  const [isStatus, setIsStatus] = useState(false);
   const [allMessages, setAllMessages] = useState(); // all user messages
   const [activeMessage, setActiveMessage] = useState();
   const [addedPhotos, setAddedPhotos] = useState([]);
+  const [trackChanges, setTrackChanges] = useState();
 
   // sometimes even the US needs 24-hour time
   const options = {
@@ -361,6 +371,29 @@ const SupportMessage = (props) => {
     }
   });
 
+  function openStatusModal() {
+    setIsStatus(true);
+  }
+  function closeStatusModal() {
+    setIsStatus(false);
+  }
+
+  useEffect(() => {
+    if (status) {
+      updateStatus();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+
+  async function updateStatus() {
+    const userData = { messageId: activeMessage?._id, status: status };
+    const response = await updateMessageStatus(userData);
+    if (response) {
+      console.log('status updates');
+    }
+  }
+
   const content = (
     <div className="flex flex-col gap-4 rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-fit overflow-auto border-[1px] border-solid border-lightslategray-100 dark:border-lightslategray-300 hover:border-indigo-300">
       {/* {fullMessage} */}
@@ -392,12 +425,12 @@ const SupportMessage = (props) => {
   return (
     <>
       <div className="h-full flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-row gap-2 fixed ss:top-[120px] xl:top-[200px]">
+        <div className="flex flex-row gap-2 fixed sm:top-[120px] md:top-[200px]">
           {isSend && <SupportTicket />}
           {isContent && !allMessages && <div className="">No Message</div>}
           {isContent && allMessages && !isSelectMessage && (
             // <div className="">{content}</div>
-            <UserMessagesRecord
+            <AdminEnquiriesRecord
               data={allMessages}
               setActiveMessage={setActiveMessage}
               setIsSelectMessage={setIsSelectMessage}
@@ -405,21 +438,72 @@ const SupportMessage = (props) => {
           )}
           <>
             {allMessages && activeMessage && isSelectMessage && (
-              <MessageContent
-                user={user}
-                data={activeMessage}
-                isSent={isSent}
-                setIsSent={setIsSent}
-                isReply={isReply}
-                setIsReply={setIsReply}
-                message={message}
-                setMessage={setMessage}
-                submit={submit}
-                setAddedPhotos={setAddedPhotos}
-                addedPhotos={addedPhotos}
-                setIsContent={setIsContent}
-                setIsSelectMessage={setIsSelectMessage}
-              />
+              <div className="flex flex-col gap-4">
+                <MessageContent
+                  user={user}
+                  data={activeMessage}
+                  isSent={isSent}
+                  setIsSent={setIsSent}
+                  isReply={isReply}
+                  setIsReply={setIsReply}
+                  message={message}
+                  setMessage={setMessage}
+                  submit={submit}
+                  setAddedPhotos={setAddedPhotos}
+                  addedPhotos={addedPhotos}
+                  setIsContent={setIsContent}
+                  setIsSelectMessage={setIsSelectMessage}
+                />
+                <>
+                  <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
+                    <div className="flex flex-row gap-2">
+                      <b className="relative text-sm md:text-lg inline-block w-[167px]">
+                        <span>{`update status `}</span>
+                        <span className="text-rose-600">*</span>
+                      </b>
+                      <div className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver">
+                        <span>{`${
+                          activeMessage?.status && activeMessage?.status
+                        } `}</span>
+                      </div>
+                    </div>
+
+                    <div
+                      className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver"
+                      onClick={openStatusModal}
+                    >
+                      <div className="relative text-sm md:text-lg">
+                        {status ? status : `select`}
+                      </div>
+                      <img
+                        className="relative w-4 h-4 overflow-hidden shrink-0"
+                        alt=""
+                        src="/chevrondown.svg"
+                      />
+                    </div>
+                  </div>
+
+                  {/* service list */}
+                  {isStatus && (
+                    <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] border-[1px] border-solid border-lightslategray-300">
+                      <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm md:text-lg text-gray-500">
+                        {statusList?.map((s, i) => (
+                          <div
+                            key={i}
+                            className="cursor-pointer self-stretch flex flex-row hover:text-gray-900 dark:hover:text-white"
+                            onClick={() => {
+                              setStatus(s);
+                              closeStatusModal();
+                            }}
+                          >
+                            <div className="relative font-medium">{s}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              </div>
             )}
           </>
         </div>
@@ -428,4 +512,4 @@ const SupportMessage = (props) => {
   );
 };
 
-export default SupportMessage;
+export default SupportEnquiryAdmin;

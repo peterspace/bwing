@@ -217,7 +217,7 @@ const AdminTransactionsTable = ({ data, tableData }) => {
 
   const handleToggleDropdown = () => {
     setSearchTerm('');
-    setIsStatusDropdownOpen(!isStatusDropdownOpen);
+    setIsStatusDropdownOpen((prev) => !prev);
   };
 
   const handleSelectStatus = (status) => {

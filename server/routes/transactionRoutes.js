@@ -140,7 +140,6 @@ router.get('/updateBlockChainTransaction/:id', updateBlockChainTransaction);
 router.get('/getTokenPriceData/:id', getTokenPriceData);
 //============{Admin: transactions by services and subservices}============
 router.route('/getAllTransactions').get(protect, isAdmin, getAllTransactions);
-// router.route('/getAllTransactions').get(getAllTransactions);
 router.route('/getAdminExchange').get(protect, isAdmin, getAdminExchange);
 router.route('/getAdminDefi').get(protect, isAdmin, getAdminDefi);
 router.route('/getAdminBuyCash').get(protect, isAdmin, getAdminBuyCash);

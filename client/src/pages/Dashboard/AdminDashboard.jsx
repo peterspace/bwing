@@ -24,11 +24,13 @@ import {
 } from '../../services/apiService';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import AdminRecord from '../Tanstack/AdminRecord';
+import AdminSupportRecord from '../Tanstack/AdminSupportRecord';
 import AdminProfitRecord from '../Tanstack/AdminProfitRecord';
 import AdminWallets from '../Tanstack/AdminWallets';
 import { CardUpdateInfo } from '../../components/CardUpdateInfo';
 import CircularProgress from '../../components/CircularProgress';
 import SupportMessageAdmin from '../../components/SupportMessageAdmin';
+import SupportEnquiryAdmin from '../../components/SupportEnquiryAdmin';
 
 const menu = [
   {
@@ -126,6 +128,19 @@ export const AdminDashboard = (props) => {
     ['GET_ALL_MESSAGES'],
     async () => {
       const { data } = await axios.get(`${BACKEND_URL}/message`);
+      return data;
+    },
+    {
+      refetchInterval: 5000, // every 5 seconds
+      refetchIntervalInBackground: true, // when tab is not on focus
+      refetchOnMount: true,
+    }
+  );
+
+  const { data: allEnquiries } = useQuery(
+    ['GET_ALL_ENGQUIRY'],
+    async () => {
+      const { data } = await axios.get(`${BACKEND_URL}/enquiry`);
       return data;
     },
     {
@@ -421,6 +436,18 @@ export const AdminDashboard = (props) => {
           {page === 'Inbox' && allMessages && (
             <SupportMessageAdmin latestMessages={allMessages} page={'Inbox'} />
           )}
+          {page === 'Enquiries' && allEnquiries && (
+            <SupportEnquiryAdmin latestMessages={allEnquiries} />
+          )}
+
+          {page === 'Support' &&
+            (allTransactions ? (
+              <AdminSupportRecord data={allTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
         </div>
       )}
 

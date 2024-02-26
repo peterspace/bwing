@@ -1189,3 +1189,60 @@ export const updateMessageStatus = async (userData) => {
     toast.error(message);
   }
 };
+
+//========================Contact us/ Enquiry}==================================
+export const createMessage = async (userData) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/enquiry`, userData);
+    if (response.data) {
+      toast.success('message sent');
+      return response.data;
+    }
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+export const contactAutoReply = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/enquiry/autoreply`,
+      userData
+    );
+    // if (response.statusText === 'OK') {
+    //   toast.success('registration confirmation');
+    // }
+
+    if (response.data) {
+      toast.success('reply sent');
+    }
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+// update enquiry status by support
+export const updateEnquiryStatus = async (userData) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/enquiry/updateEnquiryStatus`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};

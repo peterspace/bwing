@@ -1992,13 +1992,21 @@ const getAllManagersTransactionByAdmin = asyncHandler(async (req, res) => {
 //   }
 // });
 
-const getAllTransactions = asyncHandler(async (req, res) => {
+const getAllTransactions1 = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
   const response = await Transaction.find().populate('message');
   if (response) {
     res.status(200).json(response);
   }
 });
+
+const getAllTransactions = asyncHandler(async (req, res) => {
+  const response = await Transaction.find().populate('message').sort({ updatedAt: -1 }); //1 for ascending and -1 for descending (decending willmean having the most recently updated at the top);
+  if (response) {
+    res.status(200).json(response);
+  }
+});
+
 
 // const getAllTransactions = asyncHandler(async (req, res) => {
 //   console.log({ status: 'active' });

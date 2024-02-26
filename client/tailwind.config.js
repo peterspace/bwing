@@ -116,6 +116,7 @@ export default {
         chizzyblue: '#111827',
         'text-light': '#BBBBBB',
         chizzySnow: '#F9F8FE',
+        chizzyRender:'#FBFCFE' // from onrender faint blue
       },
       spacing: {},
       fontFamily: {

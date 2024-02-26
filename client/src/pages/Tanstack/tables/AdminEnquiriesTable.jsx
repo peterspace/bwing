@@ -14,67 +14,58 @@ import {
   AiOutlineRight,
   AiOutlineLeft,
 } from 'react-icons/ai';
-import { MdOutlineMoreHoriz } from 'react-icons/md';
-import { IoCopyOutline } from 'react-icons/io5';
-import { DownloadToExcel } from '../components/lib/XlsxAdmin';
+import { MdOutlineOpenInNew } from 'react-icons/md';
+import { DownloadEnquiriesToExcel } from '../components/lib/DownloadEnquiriesToExcel';
 import { IoSearch } from 'react-icons/io5';
-import { CiEdit } from 'react-icons/ci';
-import { BsInfoSquare } from 'react-icons/bs';
-
 import { PiExportBold } from 'react-icons/pi';
 import DebouncedInput from '../components/ui/DebouncedInput';
-import { statuses } from '../../../constants/statuses';
-import Popover from '../../../components/Popover';
 
-const AdminProfitsTable = ({ data, tableData }) => {
+const searches = [
+  { id: 'General Enquiry', name: 'General Enquiry', color: 'bg-[#089708]' },
+  { id: 'Payment issue', name: 'Payment issue', color: 'bg-[#0000FF]' },
+];
+
+const AdminEnquiriesTable = ({
+  data,
+  tableData,
+  setActiveMessage,
+  setIsSelectMessage,
+}) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isGoToPageDisabled, setIsGoToPageDisabled] = useState(false);
-  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const [service, setService] = useState(null);
+  const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
 
   const columns = useMemo(() => {
     const baseColumns = [
       {
-        Header: 'Order №',
-        accessor: 'orderNo',
+        Header: 'Name',
+        accessor: 'name',
+        sortType: 'basic',
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
         sortType: 'basic',
       },
       {
         Header: 'Status',
         accessor: 'status',
         sortType: 'basic',
-        Cell: ({ row }) => {
-          const { status } = row.values;
-          return (
-            <div className="flex items-center">
-              <span
-                className={`w-2.5 h-2.5 mr-2 rounded-md ${statuses[status].color}`}
-              />
-              <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">{status}</span>
-            </div>
-          );
-        },
       },
       {
-        Header: 'From',
-        accessor: 'from',
+        Header: 'Subject',
+        accessor: 'subject',
         sortType: 'basic',
+        Cell: ({ value }) =>
+          value ? <div className="font-bold">{value}</div> : <div>-</div>,
       },
       {
-        Header: 'To',
-        accessor: 'to',
-        sortType: 'basic',
-      },
-      {
-        Header: 'Profit',
-        accessor: 'profitDirect',
-        sortType: 'basic',
-        Cell: ({ value }) => (value ? <div>{value}</div> : <div>-</div>),
-      },
-      {
-        Header: 'profit (USD)',
-        accessor: 'profitUSD',
+        Header: 'Time',
+        accessor: 'updatedAt',
         sortType: 'basic',
         Cell: ({ value }) => (value ? <div>{value}</div> : <div>-</div>),
       },
@@ -82,28 +73,18 @@ const AdminProfitsTable = ({ data, tableData }) => {
         accessor: 'id',
         Cell: ({ value }) => {
           const getSelectedRowData = data?.find((item) => item._id === value);
-          const { _id, orderNo } = getSelectedRowData;
-          const copyToClipboard = (value) => {
-            navigator.clipboard.writeText(value);
-          };
 
           return (
             <div className="flex justify-center select-none text-gray-900 dark:text-gray-100 rounded-lg">
-              <Popover
-                content={
-                  <div className="flex flex-col bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid rounded font-normal">
-                    <div
-                      onClick={() => copyToClipboard(orderNo)}
-                      className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
-                    >
-                      <IoCopyOutline size={24} />
-                      <div>Copy transaction ID</div>
-                    </div>
-                  </div>
-                }
+              <div
+                onClick={() => {
+                  setActiveMessage(getSelectedRowData);
+                  setIsSelectMessage(true);
+                }}
+                className="flex items-center p-2 gap-2 text-rose-600 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all rounded-lg border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
               >
-                <MdOutlineMoreHoriz size={24} />
-              </Popover>
+                <MdOutlineOpenInNew size={24} />
+              </div>
             </div>
           );
         },
@@ -173,16 +154,16 @@ const AdminProfitsTable = ({ data, tableData }) => {
     }
   };
 
-  const handleToggleDropdown = () => {
+
+  const handleServiceToggleDropdown = () => {
     setSearchTerm('');
-    setIsStatusDropdownOpen((prev) => !prev);
+    setIsServiceDropdownOpen((prev) => !prev);
   };
-
-  const handleSelectStatus = (status) => {
-    setStatus(status);
-    setIsStatusDropdownOpen(false);
+  const handleSelectService = (service) => {
+    setService(service);
+    setSearchTerm(service?.id);
+    setIsServiceDropdownOpen(false);
   };
-
 
   return (
     <div>
@@ -214,23 +195,23 @@ const AdminProfitsTable = ({ data, tableData }) => {
                   <button
                     type="button"
                     className="inline-flex w-80 h-10 mt-0 mx-0 p-4 justify-between items-center text-xs rounded-lg leading-[18px] gap-[8px] shadow-md active:bg-white dark:active:bg-app-container-dark active:shadow-none border border-solid border-[#E7E7E7] dark:border-lightslategray-300 box-border text-darkslategray-200 dark:text-gray-100 bg-white dark:bg-app-container-dark placeholder-darkgray-100"
-                    onClick={handleToggleDropdown}
+                    onClick={handleServiceToggleDropdown}
                   >
                     <div className="flex w-full justify-between items-center">
-                      {status ? (
+                      {service ? (
                         <>
                           <div className="flex items-center">
                             <div className="flex items-center">
                               <span
-                                className={`w-2.5 h-2.5 mr-2 rounded-md ${status.color}`}
+                                className={`w-2.5 h-2.5 mr-2 rounded-md ${service.color}`}
                               />
                               <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">
-                                {status.name}
+                                {service.name}
                               </span>
                             </div>
                           </div>
                           <div className="flex h-full items-center">
-                            {isStatusDropdownOpen ? (
+                            {isServiceDropdownOpen ? (
                               <FaChevronUp size={12} color="#111111" />
                             ) : (
                               <FaChevronDown size={12} color="#111111" />
@@ -240,9 +221,9 @@ const AdminProfitsTable = ({ data, tableData }) => {
                       ) : (
                         <div className="flex w-full items-center justify-between">
                           <span className="text-gray-500 dark:text-gray-700">
-                            {'Status'}
+                            {'Issues'}
                           </span>
-                          {isStatusDropdownOpen ? (
+                          {isServiceDropdownOpen ? (
                             <FaChevronUp size={16} />
                           ) : (
                             <FaChevronDown size={16} />
@@ -252,20 +233,20 @@ const AdminProfitsTable = ({ data, tableData }) => {
                     </div>
                   </button>
                 </div>
-                {isStatusDropdownOpen && (
+                {isServiceDropdownOpen && (
                   <div className="origin-top-right w-80 absolute right-0 mt-2 rounded-md bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 shadow-2xl z-50 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
                     <div className="max-h-62 overflow-y-auto">
-                      {statuses.statusList.map((status, i) => (
+                      {searches.map((service, i) => (
                         <div
                           key={i}
                           className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer"
-                          onClick={() => handleSelectStatus(statuses[status])}
+                          onClick={() => handleSelectService(service)}
                         >
                           <div className="flex items-center">
                             <span
-                              className={`w-2.5 h-2.5 mr-2 rounded-md ${statuses[status].color}`}
+                              className={`w-2.5 h-2.5 mr-2 rounded-md ${service?.color}`}
                             />
-                            <span>{statuses[status].name}</span>
+                            <span>{service?.name}</span>
                           </div>
                         </div>
                       ))}
@@ -277,7 +258,7 @@ const AdminProfitsTable = ({ data, tableData }) => {
 
             <div className="flex items-center">
               <button
-                onClick={() => DownloadToExcel(data)}
+                onClick={() => DownloadEnquiriesToExcel(data)}
                 className="m-0 cursor-pointer shadow-lg hover:-translate-y-0.5 transform transition flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white shrink-0 rounded px-2 py-2 w-fit"
               >
                 {' '}
@@ -426,6 +407,6 @@ const AdminProfitsTable = ({ data, tableData }) => {
   );
 };
 
-const MemoizedAdminProfitsTable = memo(AdminProfitsTable);
+const MemoizedAdminEnquiriesTable = memo(AdminEnquiriesTable);
 
-export default MemoizedAdminProfitsTable;
+export default MemoizedAdminEnquiriesTable;
