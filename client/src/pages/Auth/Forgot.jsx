@@ -68,12 +68,12 @@ export const Forgot = (props) => {
   /**********************************************{FORGOT}******************************** */
   /************************************************************************************** */
   const login = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
+    <div className="mt-[24px] xl:mt-[64px] flex justify-center rounded-lg bg-white dark:bg-background-dark text-black dark:text-gray-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col gap-[8px] md:gap-[12px]">
+          <div className="flex flex-col gap-[8px] xl:gap-[12px]">
             <div className="flex flex-row justify-between mt-[24px]">
-              <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+              <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
                 Forgot Password
               </div>
 
@@ -94,15 +94,15 @@ export const Forgot = (props) => {
               </div>
             </div>
 
-            <div className="flex bg-lightslategray-300 md:w-[452px] w-[370px] h-px" />
+            <div className="flex bg-lightslategray-300 w-full h-px" />
           </div>
           <div className="flex flex-col gap-[8px]">
-            <div className="flex flex-col mb-4 h-[48px] bg-white rounded outline outline-lightslategray-300 outline-[1px]">
+            <div className="flex flex-col mb-4 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
               <input
                 id="email"
                 name="email"
                 type="email"
-                className="ml-2 text-[16px] md:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white"
+                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white dark:bg-background-dark"
                 placeholder="your@email.com"
                 value={values.email}
                 onChange={handleChange}
@@ -124,7 +124,7 @@ export const Forgot = (props) => {
           </div>
 
           <div className="flex flex-row gap-2 justify-end">
-            <div className="text-smi leading-[22px] text-gray-300 inline-block">
+            <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
               {'Remember your email and password?'}
             </div>
             <div
@@ -146,7 +146,7 @@ export const Forgot = (props) => {
   );
   return (
     <>
-      <div className="flex flex-row justify-center items-center h-screen">
+      <div className="flex flex-row items-start h-screen">
         {login}
       </div>
     </>

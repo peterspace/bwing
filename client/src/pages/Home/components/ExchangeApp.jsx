@@ -8,6 +8,7 @@ import FToken from './FToken';
 import TToken from './TToken';
 import { getMasterWalletsService } from '../../../services/apiService';
 import RatesLocalModel from '../../../components/RatesLocalModel';
+import styles from '../AppContainer.module.css';
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -53,7 +54,7 @@ const ExchangeApp = (props) => {
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
-  const [ratesModalOpen, setRatesModalOpen] = useState(true);// open by default
+  const [ratesModalOpen, setRatesModalOpen] = useState(true); // open by default
   const [transactionLimit, setTransactionLimit] = useState();
   const [transactionError, setTransactionError] = useState();
   const [transactionDifference, setTransactionDifference] = useState();

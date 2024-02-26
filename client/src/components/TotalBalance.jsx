@@ -1,22 +1,10 @@
 import React, { useState } from 'react';
-import { RiFileWarningFill } from 'react-icons/ri';
-import { FiUser } from 'react-icons/fi'; // profile
-import { BiWalletAlt } from 'react-icons/bi'; // Wallet
-import { FiBell } from 'react-icons/fi'; // Notification
-import { RiExchangeFundsLine } from 'react-icons/ri'; // Exchange
-import { RiTokenSwapLine } from 'react-icons/ri'; // Swap
-import { LiaSellsy } from 'react-icons/lia'; // Dashboard
-import ProfileCard from './ProfileCard';
-import { BsCurrencyBitcoin } from 'react-icons/bs'; // Sell
-import { FaHandHoldingUsd } from 'react-icons/fa'; // Buy
 
 //====={Crypto currencies}=============================
 import { FaBitcoin } from 'react-icons/fa'; // Bitcoin
 import { SiTether } from 'react-icons/si'; // Tether
 import { FaEthereum } from 'react-icons/fa'; //Ethereum
 import { SiLitecoin } from 'react-icons/si'; //Litecoin
-
-import styles from './ProfileCard.module.css';
 
 const menu = [
   {

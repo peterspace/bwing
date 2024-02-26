@@ -243,11 +243,11 @@ export const Register = (props) => {
   );
 
   const signup = (
-    <div className="flex justify-center rounded-lg bg-white shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[375px] md:w-[500px] p-4">
+    <div className="mt-[24px] xl:mt-[64px] flex justify-center rounded-lg bg-white dark:bg-background-dark  text-black dark:text-gray-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
       <div className="flex flex-col gap-[24px]">
-        <div className="flex flex-col gap-[8px] md:gap-[12px]">
+        <div className="flex flex-col gap-[8px] xl:gap-[12px]">
           <div className="flex flex-row justify-between mt-[24px]">
-            <div className="text-[18px] md:text-[24px] font-extrabold leading-[32px] inline-block">
+            <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
               Signup for Blendery
             </div>
             <div className="transition-transform duration-300 hover:scale-125 cursor-pointer flex flex-row justify-center items-center p-2">
@@ -266,20 +266,16 @@ export const Register = (props) => {
               </svg>
             </div>
           </div>
-          {/* <div className="text-gray-200">
-            Blendery is totally free to use. Sign up using your email address
-            below to get started.
-          </div> */}
 
-          <div className="flex bg-lightslategray-300 md:w-[452px] w-[370px] h-px" />
+          <div className="flex bg-lightslategray-300 w-full h-px" />
         </div>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-[8px]">
-            <div className="flex flex-col mb-4 h-[48px] bg-white rounded outline outline-lightslategray-300 outline-[1px]">
+            <div className="flex flex-col mb-4 h-[48px] bg-white dark:bg-background-dark  rounded outline outline-lightslategray-300 outline-[1px]">
               <input
                 id="name"
                 name="name"
-                className="ml-2 text-[16px] md:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white"
+                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-slate-800 dark:text-gray-600 bg-white dark:bg-background-dark placeholder-darkgray-100 inline-block outline-none"
                 type="text"
                 placeholder="Full name"
                 value={values.name}
@@ -291,11 +287,11 @@ export const Register = (props) => {
                 ) : null}
               </div>
             </div>
-            <div className="flex flex-col mb-4 h-[48px] bg-white rounded outline outline-lightslategray-300 outline-[1px]">
+            <div className="flex flex-col mb-4 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
               <input
                 id="email"
                 name="email"
-                className="ml-2 text-[16px] md:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white"
+                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-slate-800 dark:text-gray-600 bg-white dark:bg-background-dark placeholder-darkgray-100 inline-block outline-none"
                 type="email"
                 placeholder="Email"
                 value={values.email}
@@ -307,11 +303,11 @@ export const Register = (props) => {
                 ) : null}
               </div>
             </div>
-            <div className="flex flex-col mb-4 h-[48px] bg-white rounded outline outline-lightslategray-300 outline-[1px]">
+            <div className="flex flex-col mb-4 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
               <input
                 id="password"
                 name="password"
-                className="ml-2 text-[16px] md:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white"
+                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-slate-800 dark:text-gray-600 bg-white dark:bg-background-dark placeholder-darkgray-100 inline-block outline-none"
                 type="password"
                 placeholder="Password"
                 value={values.password}
@@ -335,8 +331,8 @@ export const Register = (props) => {
                     className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
                   />
 
-                  <div className="flex flex-row gap-1 text-xs md:text-smi">
-                    <div className="leading-[20px] text-darkslategray-200 inline-block">
+                  <div className="flex flex-row gap-1 text-xs xl:text-smi">
+                    <div className="leading-[20px] text-darkslategray-200 dark:text-gray-500 inline-block">
                       I agree with Terms of Use, Privacy Policy and AML/KYC
                     </div>
                   </div>
@@ -359,8 +355,8 @@ export const Register = (props) => {
                   className="outline-none bg-whitesmoke-100 accent-bgPrimary focus:accent-bgPrimary/30"
                 />
 
-                <div className="flex flex-row gap-1 text-xs md:text-smi">
-                  <div className="leading-[20px] text-darkslategray-200 inline-block">
+                <div className="flex flex-row gap-1 text-xs xl:text-smi">
+                  <div className="leading-[20px] text-darkslategray-200 dark:text-gray-500 inline-block">
                     Send me promos, market news and product updates
                   </div>
                 </div>
@@ -379,14 +375,14 @@ export const Register = (props) => {
 
         <div className="flex flex-row gap-2 items-center justify-center">
           <div className="flex bg-lightslategray-300 w-[150px] h-px" />
-          <div className="text-smi leading-[22px] text-gray-300 inline-block">
+          <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
             or
           </div>
           <div className="flex bg-lightslategray-300 w-[150px] h-px" />
         </div>
         <div className="flex flex-col justify-center items-center gap-[16px]">
           <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
             onClick={() => {
               setIsFacebook(false);
               setIsGoogle(true);
@@ -396,7 +392,7 @@ export const Register = (props) => {
             <span className="ml-2"> Continue with Google</span>
           </div>
           <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
             onClick={() => {
               setIsFacebook(false);
               setIsGoogle(true);
@@ -408,7 +404,7 @@ export const Register = (props) => {
         </div>
 
         <div className="flex flex-row gap-2 justify-center">
-          <div className="text-smi leading-[22px] text-gray-300 inline-block">
+          <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
             Already have an account?
           </div>
           <div
@@ -445,7 +441,7 @@ export const Register = (props) => {
       {isSignup && (
         <>
           {' '}
-          <div className="flex flex-row justify-center items-center h-screen">
+          <div className="flex flex-row items-start h-screen">
             {signup}
           </div>
         </>
