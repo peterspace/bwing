@@ -791,7 +791,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     });
     // console.log()
 
@@ -825,7 +825,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     });
 
     if (savedTransaction) {
@@ -865,7 +865,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     });
 
     if (savedTransaction) {
@@ -911,7 +911,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       bankName,
       cardNumber,
       phone,
-      directValue
+      directValue,
     });
 
     if (savedTransaction) {
@@ -952,7 +952,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     });
 
     if (savedTransaction) {
@@ -999,7 +999,7 @@ const createTransaction = asyncHandler(async (req, res) => {
       bankName,
       cardNumber,
       phone,
-      directValue
+      directValue,
     });
 
     if (savedTransaction) {
@@ -1249,9 +1249,9 @@ const updateTransactionByIdAdmin = asyncHandler(async (req, res) => {
 const getUserTransactions = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
-  const response = await Transaction.find({ user: req.user.id }).populate(
-    'message'
-  );
+  const response = await Transaction.find({ user: req.user.id })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   // console.log({ response: response });
 
   if (response) {
@@ -1284,7 +1284,9 @@ const getOneUserTransaction = asyncHandler(async (req, res) => {
 const getUserExchange = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1300,7 +1302,9 @@ const getUserExchange = asyncHandler(async (req, res) => {
 const getUserDefi = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1317,7 +1321,9 @@ const getUserDefi = asyncHandler(async (req, res) => {
 const getUserBuyCash = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1334,7 +1340,9 @@ const getUserBuyCash = asyncHandler(async (req, res) => {
 const getUserBuyCard = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1351,7 +1359,9 @@ const getUserBuyCard = asyncHandler(async (req, res) => {
 const getUserSellCash = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1368,7 +1378,9 @@ const getUserSellCash = asyncHandler(async (req, res) => {
 const getUserSellCard = asyncHandler(async (req, res) => {
   const userTransactions = await Transaction.find({
     user: req.user.id,
-  }).populate('message');
+  })
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1386,7 +1398,9 @@ const getUserSellCard = asyncHandler(async (req, res) => {
 
 const getAdminExchange1 = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1432,7 +1446,9 @@ const updateTimeLeftAutomatically = asyncHandler(async (id) => {
 });
 const getAdminExchange = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1448,7 +1464,9 @@ const getAdminExchange = asyncHandler(async (req, res) => {
 });
 const getAdminDefi = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1464,7 +1482,9 @@ const getAdminDefi = asyncHandler(async (req, res) => {
 
 const getAdminBuyCash = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1481,7 +1501,9 @@ const getAdminBuyCash = asyncHandler(async (req, res) => {
 
 const getAdminBuyCard = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1499,7 +1521,9 @@ const getAdminBuyCard = asyncHandler(async (req, res) => {
 
 const getAdminSellCash = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1516,7 +1540,9 @@ const getAdminSellCash = asyncHandler(async (req, res) => {
 
 const getAdminSellCard = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const userTransactions = await Transaction.find().populate('message');
+  const userTransactions = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   let response = [];
 
   userTransactions?.map(async (transaction) => {
@@ -1567,7 +1593,11 @@ const getAllTransactionsByUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get managers userId from "protect middleware"
   const { userId } = req.params;
   if (user.role === 'User') {
-    res.json(await Transaction.find({ userId: userId }).populate('user'));
+    res.json(
+      await Transaction.find({ userId: userId })
+        .sort({ updatedAt: -1 })
+        .populate('user')
+    );
   }
 });
 
@@ -1845,6 +1875,7 @@ const getMyUserTransactionById = asyncHandler(async (req, res) => {
   if (manager.role === 'Admin') {
     res.json(
       await Transaction.find({ manager: managerId, user: userId })
+        .sort({ updatedAt: -1 })
         .populate('user')
         .populate('manager')
         .populate('messages')
@@ -1865,9 +1896,9 @@ const getMyTransactions = asyncHandler(async (req, res) => {
   const manager = await User.findById(req.user._id); // get managers userId from "protect middleware"
   const managerId = manager?._id; // manager's id
 
-  let response = await Transaction.find({ manager: managerId }).populate(
-    'user'
-  );
+  let response = await Transaction.find({ manager: managerId })
+    .sort({ updatedAt: -1 })
+    .populate('user');
   console.log({ response: response });
   res.json(response);
 
@@ -1901,6 +1932,7 @@ const getMyManagersTransactionById = asyncHandler(async (req, res) => {
     //
     res.json(
       await Transaction.find({ manager: managerId })
+        .sort({ updatedAt: -1 })
         .populate('user')
         .populate('manager')
         .populate('messages')
@@ -1994,19 +2026,22 @@ const getAllManagersTransactionByAdmin = asyncHandler(async (req, res) => {
 
 const getAllTransactions1 = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
-  const response = await Transaction.find().populate('message');
+  const response = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message');
   if (response) {
     res.status(200).json(response);
   }
 });
 
 const getAllTransactions = asyncHandler(async (req, res) => {
-  const response = await Transaction.find().populate('message').sort({ updatedAt: -1 }); //1 for ascending and -1 for descending (decending willmean having the most recently updated at the top);
+  const response = await Transaction.find()
+    .sort({ updatedAt: -1 })
+    .populate('message'); //1 for ascending and -1 for descending (decending willmean having the most recently updated at the top);
   if (response) {
     res.status(200).json(response);
   }
 });
-
 
 // const getAllTransactions = asyncHandler(async (req, res) => {
 //   console.log({ status: 'active' });
@@ -2204,8 +2239,8 @@ const getUserInactiveTransactions = asyncHandler(async (req, res) => {
     user: user._id,
     status: 'InActive',
   })
-    .populate('user')
-    .exec();
+    .sort({ updatedAt: -1 })
+    .populate('user');
   console.log({ responseTx: response });
   res.status(200).json(response);
 });
@@ -2221,8 +2256,8 @@ const getUserActiveTransactions = asyncHandler(async (req, res) => {
   const response = await Transaction.find({
     user: user._id,
   })
-    .populate('user')
-    .exec();
+    .sort({ updatedAt: -1 })
+    .populate('user');
 
   response.map(async (t) => {
     if (t.status !== 'Pending') {
@@ -2242,9 +2277,7 @@ const getManagerActiveTransactions = asyncHandler(async (req, res) => {
 
   const response = await Transaction.find({
     manager: user._id,
-  })
-    .populate('user')
-    .exec();
+  }).populate('user');
   response.map(async (t) => {
     if (t.status !== 'Pending') {
       transactions.push(t);
@@ -2766,8 +2799,7 @@ async function getNetworkFee(token) {
     // });
     // networkFee = txCost; //BTC
     // networkFee = 0.001; //BTC
-    networkFee = 0.000555//BTC
-   
+    networkFee = 0.000555; //BTC
   }
   if (token?.chain === 'Tron' && token?.symbol === 'trx') {
     //TRX case
@@ -2809,9 +2841,8 @@ async function getNetworkFee(token) {
     //   symbol: 'usdt',
     // });
 
-   
     // networkFee = txCost; //USDT20
-     networkFee = 10.5; //USDT20
+    networkFee = 10.5; //USDT20
   }
 
   return networkFee;

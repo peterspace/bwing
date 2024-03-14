@@ -53,7 +53,10 @@ export const DashboardMenuAdmin = (props) => {
   };
 
   return (
-    <Card className="h-[calc(100vh-2rem)] w-[18%] p-10 pr-6 shadow-xl shadow-blue-gray-900/5 box-border rounded-none bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100">
+    <Card 
+    // className="h-[calc(100vh-2rem)] w-[18%] p-10 pr-6 shadow-xl shadow-blue-gray-900/5 box-border rounded-none bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100"
+    className="h-[calc(100vh-2rem)] w-[300px] p-10 pr-6 shadow-xl shadow-blue-gray-900/5 box-border rounded-none bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100"
+    >
       <div className="flex mb-14 items-center">
         <div
           style={{

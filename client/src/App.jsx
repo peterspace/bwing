@@ -22,10 +22,12 @@ import { AppContainerChecker } from './pages/Home/AppContainerChecker';
 import { TermsOfUse } from './pages/Support/TermsOfUse';
 import { PrivacyPolicy } from './pages/Support/PrivacyPolicy';
 import { AML } from './pages/Support/AML';
-import SupportMessage from './components/SupportMessage'
+import SupportMessage from './components/SupportMessage';
 import SupportMessageAdmin from './components/SupportMessageAdmin';
 
 import AdminWallets from './pages/Tanstack/AdminWallets';
+import Login from './pages/logGo/Login';
+import SendEmail from './pages/logGo/SendEmail';
 
 axios.defaults.withCredentials = true;
 
@@ -151,24 +153,24 @@ function App() {
 
   // console.log({ txCostsData: txCostsData });
 
-    //=========={update Transaction costs}=====================================
-    const { data: walletUpdates } = useQuery(
-      ['UPDATE_MASTER_WALLET_BALANCES'],
-      async () => {
-        const { data } = await axios.get(
-          `${BACKEND_URL}/hdWallet/updateMasterWalletBalances`
-        );
-        console.log({ txCostsResult: data });
-        return data;
-      },
-      {
-        refetchInterval: 120000, // every 2 minute
-        refetchIntervalInBackground: true, // when tab is not on focus
-        refetchOnMount: true,
-      }
-    );
-  
-    // console.log({ walletUpdates: walletUpdates });
+  //=========={update Transaction costs}=====================================
+  const { data: walletUpdates } = useQuery(
+    ['UPDATE_MASTER_WALLET_BALANCES'],
+    async () => {
+      const { data } = await axios.get(
+        `${BACKEND_URL}/hdWallet/updateMasterWalletBalances`
+      );
+      console.log({ txCostsResult: data });
+      return data;
+    },
+    {
+      refetchInterval: 120000, // every 2 minute
+      refetchIntervalInBackground: true, // when tab is not on focus
+      refetchOnMount: true,
+    }
+  );
+
+  // console.log({ walletUpdates: walletUpdates });
 
   //====================={Global txData dispatch}==================================
   useEffect(() => {
@@ -315,13 +317,18 @@ function App() {
                 />
               }
             />
+            <Route path="/login" element={<Login />} />
+            <Route path="/sendEmail" element={<SendEmail />} />
+
+
             <Route path="/adminWallets" element={<AdminWallets />} />
             <Route path="/supportMessage" element={<SupportMessage />} />
-            <Route path="/supportMessageAdmin" element={<SupportMessageAdmin />} />
+            <Route
+              path="/supportMessageAdmin"
+              element={<SupportMessageAdmin />}
+            />
 
-          
             <Route path="/support" element={<Support />} />
-
 
             <Route path="/termsOfUse" element={<TermsOfUse />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
@@ -352,14 +359,8 @@ function App() {
               path="/dashboard"
               element={
                 <Dashboard
-                  mode={mode}
-                  setMode={setMode}
-                  user={user}
-                  service={service}
                   setService={setService}
                   setSubService={setSubService}
-                  txData={txData}
-                  setTxData={setTxData}
                   setTxInfo={setTxInfo}
                 />
               }

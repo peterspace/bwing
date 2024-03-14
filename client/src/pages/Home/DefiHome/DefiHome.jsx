@@ -261,8 +261,7 @@ export const DefiHome = (props) => {
 
   //==================={ON: On delay Timer}===========================
   const [activeInterval, setActiveInterval] = useState(0);
-  const [initailInterval, setinitailInterval] = useState(15000); // fixed// every 15 seconds
-  // const [initailInterval, setinitailInterval] = useState(30000); // fixed
+  const [initailInterval, setinitailInterval] = useState(10000); // fixed// every 10 seconds
   const [delay, setDelay] = useState(60000); // fixed 1 minute 0r 60 secs
   const [nextInterval, setNextInterval] = useState(initailInterval);
 

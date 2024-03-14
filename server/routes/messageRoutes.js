@@ -4,6 +4,7 @@ const {
   sendMessage,
   getUserMessages,
   getUserMessagesById,
+  getMessagesById,
   createTIcket,
   updateMessageStatus,
 } = require("../controllers/messageControllers");
@@ -20,7 +21,9 @@ router.post("/getUserMessagesById", protect, getUserMessagesById);
 
 router.post("/createTIcket", protect, createTIcket);
 // router.post("/createTIcket", createTIcket);
+router.post("/getMessagesById", protect, getMessagesById);
 
+//
 
 router.patch("/updateMessageStatus", protect, isAdmin, updateMessageStatus); // admin only
 

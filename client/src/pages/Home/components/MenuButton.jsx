@@ -16,7 +16,7 @@ const MenuButton = ({
 
   return (
     <div
-      className="cursor-pointer rounded-lg bg-white dark:bg-button-dark overflow-hidden flex flex-row items-start justify-start p-1 text-left text-5xl text-silver font-roboto"
+      className="cursor-pointer rounded-lg overflow-hidden flex flex-row items-start justify-start p-1 text-left input-icon text-gray-900 dark:text-gray-100 font-roboto"
       style={menuButtonStyle}
       onClick={handleClick}
     >

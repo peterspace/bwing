@@ -15,6 +15,17 @@ const multer = require('multer');
 //==========={using clodinary}============================
 const { uploadImage } = require('./utils/uploadImage.js');
 
+/* Model */
+const User = require('./models/User.js');
+/* Socket users */
+
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+} = require('./utils/socketUsers.js');
+
 /* ROUTES */
 const hdWalletsRoutes = require('./routes/hdWalletsRoutes');
 const walletsRoutes = require('./routes/walletsRoutes');
@@ -81,7 +92,6 @@ app.use(
 // -momery unleaked---------
 app.set('trust proxy', 1);
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
-
 
 // app.use(
 //   session({
@@ -332,54 +342,83 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-// mongoose
-//   .connect(process.env.MONGO_URL)
-//   .then(() => {
-//     app.listen(PORT, () => {
-//       console.log(`Server Running on port ${PORT}`);
-//     });
-//   })
-//   .catch((err) => console.log(err));
-
 //============{Socket io}=====================================
 const io = require('socket.io')(server, {
   pingTimeout: 60000,
   cors: {
     origin: frontendURL,
-    // origin: 'http://localhost:3000',
-    // origin:'http://127.0.0.1:5173',
     // credentials: true,
   },
 });
 
+//================={Case 2}========================================
+// Run when client connects
+
 io.on('connection', (socket) => {
-  console.log('Connected to socket.io');
-  socket.on('setup', (userData) => {
-    socket.join(userData._id); // created room for this particular user
-    socket.emit('connected');
-  });
+  // console.log('Connected to socket.io');
+  //======{for realtime message update}======================
+  socket.on('joinRoom', ({ userId, username, room }) => {
+    const user = userJoin(socket.id, userId, username, room);
+    console.log({ newRoomCreated: { userId, username, room } });
 
-  socket.on('join chat', (room) => {
-    socket.join(room);
-    console.log('User Joined Room: ' + room);
-  });
-  socket.on('typing', (room) => socket.in(room).emit('typing'));
-  socket.on('stop typing', (room) => socket.in(room).emit('stop typing'));
+    socket.join(user.room);
 
-  socket.on('new message', (newMessageRecieved) => {
-    var chat = newMessageRecieved.chat;
-
-    if (!chat.users) return console.log('chat.users not defined');
-
-    chat.users.forEach((user) => {
-      if (user._id == newMessageRecieved.sender._id) return;
-
-      socket.in(user._id).emit('message recieved', newMessageRecieved);
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room),
     });
   });
 
-  socket.off('setup', () => {
-    console.log('USER DISCONNECTED');
-    socket.leave(userData._id);
+  // Listen for Messages
+  socket.on('new message', (newMessageRecieved) => {
+    const user = getCurrentUser(socket.id);
+
+    console.log({ ioUser: user });
+    io.to(user.room).emit('message recieved', newMessageRecieved);
+  });
+
+  socket.on('typing', (room) => socket.in(room).emit('typing'));
+  socket.on('stop typing', (room) => socket.in(room).emit('stop typing'));
+
+  //======{for realtime transaction update}======================
+  socket.on('joinTransaction', ({ userId, username, room }) => {
+    const user = userJoin(socket.id, userId, username, room);
+    console.log({ newTransactionCreated: { userId, username, room } });
+
+    socket.join(user.room);
+
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room),
+    });
+  });
+
+  // Listen for transactions
+  socket.on('update transaction', (newTransaction) => {
+    const user = getCurrentUser(socket.id);
+    console.log({ newTransaction });
+
+    console.log({ ioUser: user });
+    io.to(user.room).emit('updated transaction', newTransaction);
+  });
+
+  // Runs when client disconnects
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'new message',
+        `${user.username} has left the chat`
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room),
+      });
+    }
   });
 });

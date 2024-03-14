@@ -9,7 +9,6 @@ import {
 } from '../../services/apiService';
 import RatesDataModel from '../../components/RatesDataModel';
 
-
 export const Exchange3of4 = (props) => {
   const { percentageProgress, fTitle, tTitle, txData, setRefetchTxData } =
     props;
@@ -233,7 +232,7 @@ export const Exchange3of4 = (props) => {
       <>
         {txData ? (
           <div className="flex flex-col justify-center items-center xl:flex-row xl:items-start gap-[32px] mt-[8px]">
-            <div className="ss:hidden xl:flex">
+            <div className="hidden xl:flex">
               <div className="flex-col xl:flex-row h-[500px]">
                 <Progress
                   percentageProgress={
@@ -251,7 +250,7 @@ export const Exchange3of4 = (props) => {
                 transactionRates={transactionRates}
               />
             </div>
-            <div className="ss:flex xl:hidden">
+            <div className="flex xl:hidden">
               <div className="flex-col xl:flex-row h-[500px]">
                 <Progress
                   percentageProgress={

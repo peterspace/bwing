@@ -17,6 +17,33 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
+const checkEmail = async (req, res) => {
+  try {
+      const email = req.body.email;
+      if (!email) {
+          res.status(400).json({
+              errorMessage: 'email not provided',
+          });
+          return;
+      }
+      const user = await User.findOne({ email:email });
+      if (user) {
+          res.status(302).json({
+              errorMessage: 'email already taken',
+          });
+          return;
+      }
+      res.status(202).json({
+          successMessage: 'email is accepted',
+      });
+  } catch (err) {
+      res.status(500).json({
+          errorMessage: 'Server error',
+      });
+  }
+};
+
+
 const allUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
     ? {
@@ -5436,6 +5463,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
 
 //===============================================================================
 module.exports = {
+  checkEmail,
   allUsers,
   registerUser,
   registerAdmin,

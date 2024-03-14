@@ -120,6 +120,94 @@ body {
   .padding {
     @apply sm:px-16 px-6 sm:py-12 py-4;
   }
+
+  /* //==============={nft marketplace styles}============= */
+  /* //==============={nft marketplace styles}============= */
+  .input {
+    @apply py-2 px-2 w-full text-gray-700 appearance-none rounded-lg disabled:bg-gray-300 dark:bg-transparent dark:disabled:bg-gray-600 dark:disabled:text-gray-300 dark:text-white dark:border-[1px] dark:border-gray-300 focus:outline-none focus:ring-0
+        /* @apply py-2 px-2 w-full text-gray-700 appearance-none rounded-lg shadow-inner-dark disabled:bg-gray-300 dark:bg-transparent dark:disabled:bg-gray-600 dark:disabled:text-gray-300 dark:text-white dark:border-[1px] dark:border-gray-300 dark:focus:border-none focus:outline-none focus:ring-0 focus:shadow-inner-blue */;
+  }
+
+  .input-group-custom {
+    @apply px-2 py-1 flex flex-col gap-2 bg-gray-100 rounded-md border border-gray-300 focus-within:border-rose-600 dark:bg-transparent dark:border-gray-600 dark:focus-within:border-gray-300;
+  }
+
+  .input-label {
+    @apply text-sm text-gray-600 dark:text-gray-100 focus-within:text-rose-600;
+  }
+
+  /* .input-custom {
+    @apply bg-transparent font-sans focus:outline-none selection:bg-gray-900 dark:selection:bg-gray-900 selection:text-gray-200 dark:selection:text-gray-200 text-gray-100 dark:text-gray-100 dark:placeholder:text-neutral-500 dark:focus-within:text-gray-600
+} */
+
+  .input-custom {
+    @apply bg-transparent font-sans focus:outline-none selection:bg-gray-900 dark:selection:bg-gray-900 selection:text-gray-200 dark:selection:text-gray-200 text-gray-900 dark:text-gray-100 dark:placeholder:text-neutral-500 text-[16px] xl:text-[14px];
+  }
+
+  .input-group-slim {
+    @apply px-2 py-1 h-fit flex flex-row gap-2 items-center bg-gray-100 rounded-md border border-gray-300 focus-within:border-rose-600 dark:bg-transparent dark:border-gray-600 dark:focus-within:border-gray-300;
+  }
+
+  .input-group-variant {
+    @apply px-2 py-2 h-fit flex flex-row gap-2 items-center border-b border-gray-300 focus-within:border-gray-400 dark:bg-transparent dark:border-gray-600 dark:focus-within:border-gray-300;
+  }
+
+  /* //==============={peters custom styles}============= */
+  .card-gradient {
+    @apply bg-gradient-to-r from-blue-200 to-purple-200  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-app-container {
+    @apply bg-gradient-to-r from-violet-300 to-indigo-300  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-app-price {
+    @apply bg-gradient-to-r from-violet-300 to-indigo-300  dark:from-blue-600 dark:to-purple-600 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-reverse {
+    @apply bg-gradient-to-r to-blue-200 from-purple-200  dark:to-blue-500 dark:from-purple-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-gold {
+    @apply bg-gradient-to-r from-amber-500 to-pink-400  dark:from-amber-200 dark:to-yellow-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-violet {
+    @apply bg-gradient-to-r from-violet-600 to-indigo-600  dark:from-violet-600 dark:to-indigo-600 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+  }
+  .card-gradient-box {
+    @apply flex flex-col bg-white dark:bg-app-container-dark items-center justify-center rounded-lg w-[320px] xs:w-[340px] md:w-[500px] outline outline-lightslategray-300 outline-[1px];
+  }
+  .button-gradient {
+    @apply cursor-pointer flex flex-row justify-center items-center w-full bg-gradient-to-r from-blue-500 to-purple-500 font-semibold hover:opacity-90 text-white py-4 shrink-0 rounded;
+  }
+  .title-gradient {
+    @apply cursor-pointer leading-[24px] inline-block text-[24px] text-darkslategray-200 dark:text-blue-300;
+  }
+  .close-gradient {
+    @apply transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-blue-400;
+  }
+  .chat-box-gradient-admin {
+    @apply bg-gradient-to-r from-violet-300 to-indigo-500  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[2px] dark:p-[1px] w-fit shadow-md;
+  }
+  .chat-box-gradient-user {
+    @apply bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%  dark:from-amber-200 dark:to-yellow-500 items-center justify-center rounded-lg p-[2px] dark:p-[1px] w-fit shadow-md;
+  }
+  /* //==============={peters text custom styles}============= */
+  .input-header {
+    @apply text-[18px] xl:text-[32px];
+  }
+  .input-sub-header {
+    @apply font-medium text-[18px] xl:text-[32px];
+  }
+  .input-paragraph {
+    @apply transition-transform duration-300 hover:scale-125 cursor-pointer text-gray-900 dark:text-blue-400;
+  }
+  .input-token-container {
+    @apply text-[16px] xl:text-[20px];
+  }
+  .input-icon {
+    @apply text-[18px] xl:text-[24px];
+  }
+  .input-title {
+    @apply text-[12px] xl:text-[16px];
+  }
 }
 
 body {

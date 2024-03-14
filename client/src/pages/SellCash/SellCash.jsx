@@ -3,17 +3,31 @@ import { useParams, useLocation, Navigate } from 'react-router-dom';
 import { Exchange3of4 } from './Exchange3of4';
 import { Exchange4of4 } from './Exchange4of4';
 import { Exchange5of5 } from './Exchange5of5';
-import FooterMini from "../../components/FooterMini";
+import FooterMini from '../../components/FooterMini';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
 import { getTransactionByTxIdService } from '../../services/apiService';
+
+import io from 'socket.io-client';
+// const ENDPOINT = 'http://localhost:4000'; // "https://chat-app.render.com"; -> After deployment
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+var socket;
 
 export const SellCash = (props) => {
   const { mode, user, service, subService, txInfo, setTxInfo } = props;
   const location = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
+  /************************************************************************************** */
+  /******************************{SOCKET IO}********************************* */
+  /************************************************************************************** */
+
+  //============{Socket io params}==========================================
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [activeTransaction, setActiveTransaction] = useState();
+  console.log({ activeTransaction });
+
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   /*********************************************     REDUX STATES    **************************************************** */
@@ -66,6 +80,46 @@ export const SellCash = (props) => {
     const response = await getTransactionByTxIdService(id);
     dispatch(getTransactionByTxIdInternal(response)); // dispatch txData globally
   }
+
+  //=================={Socket io}============================
+  useEffect(() => {
+    socket = io(BACKEND_URL);
+    // socket.emit('setup', user);
+    socket.on('connected', () => setSocketConnected(true));
+
+    // eslint-disable-next-line
+  }, []);
+
+  // // set activeTransaction as txData if activeTransaction does not exist
+  useEffect(() => {
+    if (!activeTransaction && txData) {
+      setActiveTransaction(txData);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txData]);
+  
+  useEffect(() => {
+    joinTransaction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTransaction]);
+
+  async function joinTransaction() {
+    if (activeTransaction) {
+      socket.emit('joinTransaction', {
+        userId: user?._id ? user?._id : user?.userId,
+        username: user?.name,
+        // room: activeTransaction?._id || txData?._id,
+        room: activeTransaction?._id,
+      }); // socket io
+    }
+  }
+
+  useEffect(() => {
+    socket.on('updated transaction', (newTransaction) => {
+      setActiveTransaction(newTransaction);
+    });
+  });
 
   if (!user?.token) {
     return <Navigate to="/auth" />;

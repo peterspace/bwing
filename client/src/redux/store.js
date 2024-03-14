@@ -5,7 +5,8 @@ import placeReducer from './features/place/placeSlice';
 import enquiryReducer from './features/enquiry/enquirySlice';
 import hdWalletReducer from './features/hdWallet/hdWalletSlice';
 import walletReducer from './features/wallet/walletSlice';
-import messagesReducer from './features/messages/messagesSlice';
+// import messagesReducer from './features/messages/messagesSlice';
+import messageReducer from './features/messages/messageSlice';
 import tokenReducer from './features/token/tokenSlice';
 import swapReducer from './features/swap/swapSlice';
 import transactionReducer from './features/transaction/transactionSlice';
@@ -26,7 +27,7 @@ const reducer = combineReducers({
   chat: chatReducer,
   enquiry: enquiryReducer,
   hdWallet: hdWalletReducer,
-  messages: messagesReducer,
+  message: messageReducer,
   place: placeReducer,
   swap: swapReducer,
   wallet: walletReducer,

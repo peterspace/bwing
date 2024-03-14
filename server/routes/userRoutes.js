@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+  checkEmail,
   registerUser,
   registerAdmin,
   login,
@@ -35,6 +36,8 @@ router.post('/login', loginUser);
 router.route('/adminUsers').get(usersAdmin);
 
 //============{main focus}===========================
+router.post('/checkEmail', checkEmail);
+
 router.route('/').get(protect, allUsers);
 router.route('/getUser').get(protect, getUser);
 router.route('/updateUser').patch(protect, updateUser);

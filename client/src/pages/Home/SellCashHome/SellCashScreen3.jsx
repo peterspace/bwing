@@ -65,7 +65,6 @@ export const SellCashScreen3 = (props) => {
   const amount = transactionRates ? transactionRates?.amount : 0;
   const directValue = transactionRates ? transactionRates?.directValue : 0;
 
-
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   /*********************************************     REACT STATES    **************************************************** */
@@ -129,7 +128,7 @@ export const SellCashScreen3 = (props) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     };
 
     const response = await createTransactionService(userData);
@@ -158,7 +157,7 @@ export const SellCashScreen3 = (props) => {
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
       <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
-        <div className="ss:hidden xl:flex">
+        <div className="hidden xl:flex">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>
@@ -215,7 +214,7 @@ export const SellCashScreen3 = (props) => {
             submitTransaction={setIsSend}
           />
         </div>
-        <div className="ss:flex xl:hidden">
+        <div className="flex xl:hidden">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>

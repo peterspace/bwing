@@ -19,12 +19,14 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { DownloadToExcel } from '../components/lib/XlsxAdmin';
 import { IoSearch } from 'react-icons/io5';
 import { CiEdit } from 'react-icons/ci';
-import { BsInfoSquare } from 'react-icons/bs';
 
 import { PiExportBold } from 'react-icons/pi';
 import DebouncedInput from '../components/ui/DebouncedInput';
 import { statuses } from '../../../constants/statuses';
 import Popover from '../../../components/Popover';
+import { getTransactionByTxIdService } from '../../../services/apiService';
+import { getTransactionByTxIdInternal } from '../../../redux/features/transaction/transactionSlice';
+import { useDispatch } from 'react-redux';
 
 
 const searches = [
@@ -36,7 +38,8 @@ const searches = [
   { id: 'defi', name: 'Defi', color: 'bg-[#0000FF]' },
 ];
 
-const AdminSupportTable = ({ data, tableData }) => {
+const AdminSupportTable = ({ data, tableData, setPage }) => {
+  const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [isGoToPageDisabled, setIsGoToPageDisabled] = useState(false);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
@@ -112,7 +115,6 @@ const AdminSupportTable = ({ data, tableData }) => {
           const getSelectedRowData = data?.find((item) => item._id === value);
           const { userAddress, blenderyAddress, _id, orderNo } =
             getSelectedRowData;
-          const transactionInfo = getSelectedRowData;
           const copyToClipboard = (value) => {
             navigator.clipboard.writeText(value);
           };
@@ -146,11 +148,7 @@ const AdminSupportTable = ({ data, tableData }) => {
                     <div
                       className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                       onClick={() => {
-                        localStorage.setItem(
-                          'txDataUpdate',
-                          JSON.stringify(transactionInfo)
-                        );
-                        localStorage.setItem('isUpdate', JSON.stringify(true));
+                        updateTxData(getSelectedRowData);
                       }}
                     >
                       <CiEdit size={24} />
@@ -275,6 +273,15 @@ const AdminSupportTable = ({ data, tableData }) => {
 
     return timeLeftFormatted;
   };
+
+  async function updateTxData(txDataUpdate) {
+    const response = await getTransactionByTxIdService(txDataUpdate?._id);
+    if (response) {
+      // setNewData(response);
+      dispatch(getTransactionByTxIdInternal(response)); // dispatch txData globally
+      setPage('Update');
+    }
+  }
 
   return (
     <div>

@@ -9,9 +9,21 @@ import styles from '../Home/AppContainer.module.css';
 import { Login } from './Login';
 import { Register } from './Register';
 import { Forgot } from './Forgot';
+import { AnimatePresence, motion } from 'framer-motion';
+
 //w-[370px] ===w-[300px]z
 //w-[375px] === w-[320px] xs:w-[340px]
 import { registerSocial, loginSocial } from '../../services/apiService';
+import {
+  BNB,
+  MATIC,
+  ETH1,
+  AAVE,
+  BAY,
+  AVAX,
+  BCN,
+  BCH,
+} from '../../assets/mints';
 
 export const Auth = (props) => {
   const { setUser, setIsLoggedIn } = props;
@@ -173,55 +185,75 @@ export const Auth = (props) => {
   //====={use source data to reset values here e.g booking app approach like in placeForm }==============
   return (
     <>
-      <div className="h-screen mt-[64px] mb-[64px] overflow-auto">
-        {message && (
+      {/* <div className="h-screen mt-[64px] mb-[64px] overflow-auto"> */}
+      <div className="relative h-screen flex flex-col">
+       
+        <div className="z-20 mt-[24px] md:mt-[30px] xl:md:[42px]">
           <>
-            <div className="">Error message: {errorMessage}</div>
-          </>
-        )}
-        {isRegister && (
-          <div
-            className={`${styles.hero} flex flex-col justify-center items-center`}
-          >
-            <Register
-              setIsLogin={setIsLogin}
-              setIsRegister={setIsRegister}
-              setIsForgot={setIsForgot}
-              redirectS={redirectRegister}
-              setRedirectHome={setRedirectHome}
-            />
-          </div>
-        )}
-        {isLogin && (
-          <div
-            className={`${styles.hero} flex flex-col justify-center items-center`}
-          >
-            <Login
-              setIsLogin={setIsLogin}
-              setIsRegister={setIsRegister}
-              setIsForgot={setIsForgot}
-              redirectS={redirectLogin}
-              setUser={setUser}
-              setIsLoggedIn={setIsLoggedIn}
-              setRedirectHome={setRedirectHome}
-            />
-          </div>
-        )}
-        {isForgot && (
-          <div
-            className={`${styles.hero} flex flex-col justify-center items-center`}
-          >
-            <>
-              <div className="flex flex-row items-start h-screen">
-                <Forgot
-                  setIsLogin={setIsLogin}
-                  setIsRegister={setIsRegister}
-                  setIsForgot={setIsForgot}
-                />
+            {message && (
+              <>
+                <div className="">Error message: {errorMessage}</div>
+              </>
+            )}
+            {isRegister && (
+              <div className={`flex flex-col justify-center items-center`}>
+                <motion.section
+                  initial={{ width: 0 }}
+                  animate={{ width: 'auto' }}
+                  exit={{ width: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+                >
+                  <Register
+                    setIsLogin={setIsLogin}
+                    setIsRegister={setIsRegister}
+                    setIsForgot={setIsForgot}
+                    redirectS={redirectRegister}
+                    setRedirectHome={setRedirectHome}
+                  />
+                </motion.section>
               </div>
-            </>
-          </div>
-        )}
+            )}
+            {isLogin && (
+              <div className={`flex flex-col justify-center items-center`}>
+                <motion.section
+                  initial={{ width: 0 }}
+                  animate={{ width: 'auto' }}
+                  exit={{ width: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+                >
+                  <Login
+                    setIsLogin={setIsLogin}
+                    setIsRegister={setIsRegister}
+                    setIsForgot={setIsForgot}
+                    redirectS={redirectLogin}
+                    setUser={setUser}
+                    setIsLoggedIn={setIsLoggedIn}
+                    setRedirectHome={setRedirectHome}
+                  />
+                </motion.section>
+              </div>
+            )}
+            {isForgot && (
+              <div className={`flex flex-col justify-center items-center`}>
+                <motion.section
+                  initial={{ width: 0 }}
+                  animate={{ width: 'auto' }}
+                  exit={{ width: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+                >
+                  <Forgot
+                    setIsLogin={setIsLogin}
+                    setIsRegister={setIsRegister}
+                    setIsForgot={setIsForgot}
+                  />
+                </motion.section>
+              </div>
+            )}
+          </>
+        </div>
       </div>
     </>
   );

@@ -56,7 +56,8 @@ const menu = [
 ];
 
 export const UserDashboard = (props) => {
-  const { user, setService, setSubService, setTxInfo } = props;
+  const { setService, setSubService, setTxInfo } = props;
+  const { user } = useSelector((state) => state.user);
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -64,7 +65,6 @@ export const UserDashboard = (props) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const [idx, setIdx] = useState(menu[0]?.id);
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
@@ -91,23 +91,24 @@ export const UserDashboard = (props) => {
   const [allSellCardTransactions, setAllSellCardTransactions] = useState();
 
   console.log({ allUserTransactions: allUserTransactions });
+  const [allMessages, setAllMessages] = useState(); // all user messages
 
   //===================={All Messages}======================================
 
-  const { data: allMessages } = useQuery(
-    ['GET_USER_MESSAGES'],
-    async () => {
-      const { data } = await axios.get(
-        `${BACKEND_URL}/message/getUserMessages`
-      );
-      return data;
-    },
-    {
-      refetchInterval: 5000, // every 5 seconds
-      refetchIntervalInBackground: true, // when tab is not on focus
-      refetchOnMount: true,
-    }
-  );
+  // const { data: allMessages } = useQuery(
+  //   ['GET_USER_MESSAGES'],
+  //   async () => {
+  //     const { data } = await axios.get(
+  //       `${BACKEND_URL}/message/getUserMessages`
+  //     );
+  //     return data;
+  //   },
+  //   {
+  //     refetchInterval: 5000, // every 5 seconds
+  //     refetchIntervalInBackground: true, // when tab is not on focus
+  //     refetchOnMount: true,
+  //   }
+  // );
   //=========={Pages}================================================================
   const pageL = localStorage.getItem('page')
     ? JSON.parse(localStorage.getItem('page'))
@@ -335,16 +336,16 @@ export const UserDashboard = (props) => {
 
   // //===================={All Messages}======================================
 
-  // useEffect(() => {
-  //   fetchAllMessages();
-  // }, []);
+  useEffect(() => {
+    fetchAllMessages();
+  }, []);
 
-  // async function fetchAllMessages() {
-  //   const response = await getUserMessages();
-  //   if (response) {
-  //     setAllMessages(response);
-  //   }
-  // }
+  async function fetchAllMessages() {
+    const response = await getUserMessages();
+    if (response) {
+      setAllMessages(response);
+    }
+  }
 
   //====================================================================================================
 
@@ -401,7 +402,11 @@ export const UserDashboard = (props) => {
             </div>
           ))}
         {page === 'Create' && (
-          <SupportMessage latestMessages={allMessages} page={'Create'} />
+          <SupportMessage
+            allMessages={allMessages}
+            fetchAllMessages={fetchAllMessages}
+            page={'Create'}
+          />
         )}
         {/* {page === 'Inbox' && allMessages ? (
             <SupportMessage allMessages={allMessages} page={'Inbox'} />
@@ -411,7 +416,11 @@ export const UserDashboard = (props) => {
             </div>
           )} */}
         {page === 'Inbox' && allMessages && (
-          <SupportMessage latestMessages={allMessages} page={'Inbox'} />
+          <SupportMessage
+            allMessages={allMessages}
+            fetchAllMessages={fetchAllMessages}
+            page={'Inbox'}
+          />
         )}
       </div>
     </div>

@@ -567,7 +567,9 @@ const sendTestBitcoinWallet = asyncHandler(async () => {
   // let hdWallet = userWallets.bitcoin.hdMasterAccounts;
   // const receiver = 'mjd6NPVrNugHXZioezadR5tiEsFsE2H3BN';
   const receiver = 'mmganfY9LWop4VevRiigyUhxcFNUm9No9b';
+  // const receiver = "tb1ql0rmdhnnyz4q6d7apnhf2ygkyh95rgg040d7av";
   //
+  // const amount = '0.00001';
   const amount = '0.00001';
   const amountToSend = Number(amount);
   // const amount = '0.00015';
@@ -689,6 +691,11 @@ const sendTestBitcoinWallet = asyncHandler(async () => {
   // res.status(200).json(response);
 });
 
+// sendTestBitcoinWallet()
+/**
+ * 'Fee is too small: expected more than 158 but got 0 - For more information please see: https://bitcore.io/api/lib/transaction#serialization-checks'
+ */
+
 const sendTestBitcoinWalletTx = asyncHandler(async () => {
   console.log('BTC sending in progress');
   const receiver = 'moxAHV2xedF4LJEuTmahBQYiJMaX3xBPp2'; // admin master wallet
@@ -714,7 +721,7 @@ const sendTestBitcoinWalletTx = asyncHandler(async () => {
 
   let privateKey;
   let address;
-  let isWallet = true;
+  let isWallet = false;
   if (isWallet) {
     privateKey = decryptedPrivateKey;
     console.log({ privateKey: privateKey });
@@ -7236,13 +7243,11 @@ async function getHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsBitcoinMaster;
     if (wallet?._id == hdWalletId) {
-      // console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsBitcoin?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7259,7 +7264,6 @@ async function updateHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsBitcoinMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
       const result = await getBalanceBitcoin(wallet);
       if (result) {
         // console.log({ result: result });
@@ -7276,7 +7280,6 @@ async function updateHDWalletByIdBitcoin(hdWalletId, isMasterWallet) {
   } else {
     walletsBitcoin?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
         const result = await getBalanceBitcoin(wallet);
         if (result) {
           // console.log({ result: result });
@@ -7318,13 +7321,11 @@ async function getHDWalletByIdEvm(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsEVMMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsEVM?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7341,7 +7342,6 @@ async function updateHDWalletByIdEvm(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsEVMMaster;
     if (wallet) {
-      console.log({ walletX: wallet });
       const result = await getBalanceEthereum(wallet);
 
       // console.log({ result: result });
@@ -7375,7 +7375,6 @@ async function updateHDWalletByIdEvm(hdWalletId, isMasterWallet) {
   } else {
     walletsEVM?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        console.log({ walletX: wallet });
         const result = await getBalanceEthereum(wallet);
 
         // console.log({ result: result });
@@ -7424,13 +7423,11 @@ async function getHDWalletByIdTron(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsTronMaster;
     if (wallet) {
-      // console.log({ walletX: wallet });
       targetWallet = wallet;
     }
   } else {
     walletsTron?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        // console.log({ walletX: wallet });
         targetWallet = wallet;
       }
     });
@@ -7447,10 +7444,7 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
   if (isMasterWallet) {
     const wallet = walletsTronMaster; // single wallet and not an array
     if (wallet) {
-      // console.log({ walletX: wallet });
       const result = await getBalanceTron(wallet);
-
-      // console.log({ result: result });
 
       let balanceTron;
       let balanceUsdt;
@@ -7483,7 +7477,6 @@ async function updateHDWalletByIdTron(hdWalletId, isMasterWallet) {
   } else {
     walletsTron?.map(async (wallet) => {
       if (wallet?._id == hdWalletId) {
-        console.log({ walletX: wallet });
         const result = await getBalanceTron(wallet);
 
         // console.log({ result: result });

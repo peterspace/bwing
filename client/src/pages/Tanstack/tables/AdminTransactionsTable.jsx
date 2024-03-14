@@ -19,19 +19,24 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { DownloadToExcel } from '../components/lib/XlsxAdmin';
 import { IoSearch } from 'react-icons/io5';
 import { CiEdit } from 'react-icons/ci';
-import { BsInfoSquare } from 'react-icons/bs';
 
 import { PiExportBold } from 'react-icons/pi';
 import DebouncedInput from '../components/ui/DebouncedInput';
 import { statuses } from '../../../constants/statuses';
 import Popover from '../../../components/Popover';
+import { getTransactionByTxIdService } from '../../../services/apiService';
+import { getTransactionByTxIdInternal } from '../../../redux/features/transaction/transactionSlice';
+import { useDispatch } from 'react-redux';
 
-const AdminTransactionsTable = ({ data, tableData }) => {
+const AdminTransactionsTable = ({ data, tableData, setPage }) => {
+  const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [isGoToPageDisabled, setIsGoToPageDisabled] = useState(false);
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [newData, setNewData] = useState();
+  console.log(newData);
 
   const columns = useMemo(() => {
     const baseColumns = [
@@ -51,7 +56,9 @@ const AdminTransactionsTable = ({ data, tableData }) => {
               <span
                 className={`w-2.5 h-2.5 mr-2 rounded-md ${statuses[status].color}`}
               />
-              <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">{status}</span>
+              <span className="text-gray-900 dark:text-gray-100 font-normal text-sm">
+                {status}
+              </span>
             </div>
           );
         },
@@ -60,11 +67,23 @@ const AdminTransactionsTable = ({ data, tableData }) => {
         Header: 'From',
         accessor: 'from',
         sortType: 'basic',
+        Cell: ({ value }) =>
+          value ? (
+            <div className="text-green-700 dark:text-green-600">{value}</div>
+          ) : (
+            <div>-</div>
+          ),
       },
       {
         Header: 'To',
         accessor: 'to',
         sortType: 'basic',
+        Cell: ({ value }) =>
+          value ? (
+            <div className="text-red-600 dark:text-red-600">{value}</div>
+          ) : (
+            <div>-</div>
+          ),
       },
       {
         Header: 'Pin',
@@ -85,7 +104,7 @@ const AdminTransactionsTable = ({ data, tableData }) => {
         Cell: ({ value }) => {
           const timeToLeft = renderTimeToLeft(value);
           return (
-            <div className="flex justify-start">
+            <div className="flex justify-start text-red-600 dark:text-red-600">
               <div>{timeToLeft}</div>
             </div>
           );
@@ -97,7 +116,6 @@ const AdminTransactionsTable = ({ data, tableData }) => {
           const getSelectedRowData = data?.find((item) => item._id === value);
           const { userAddress, blenderyAddress, _id, orderNo } =
             getSelectedRowData;
-          const transactionInfo = getSelectedRowData;
           const copyToClipboard = (value) => {
             navigator.clipboard.writeText(value);
           };
@@ -131,11 +149,7 @@ const AdminTransactionsTable = ({ data, tableData }) => {
                     <div
                       className="flex items-center p-2 gap-2 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer transition-all"
                       onClick={() => {
-                        localStorage.setItem(
-                          'txDataUpdate',
-                          JSON.stringify(transactionInfo)
-                        );
-                        localStorage.setItem('isUpdate', JSON.stringify(true));
+                        updateTxData(getSelectedRowData);
                       }}
                     >
                       <CiEdit size={24} />
@@ -250,6 +264,15 @@ const AdminTransactionsTable = ({ data, tableData }) => {
     return timeLeftFormatted;
   };
 
+  async function updateTxData(txDataUpdate) {
+    const response = await getTransactionByTxIdService(txDataUpdate?._id);
+    if (response) {
+      // setNewData(response);
+      dispatch(getTransactionByTxIdInternal(response)); // dispatch txData globally
+      setPage('Update');
+    }
+  }
+
   return (
     <div>
       <div className="flex my-6">
@@ -305,7 +328,9 @@ const AdminTransactionsTable = ({ data, tableData }) => {
                         </>
                       ) : (
                         <div className="flex w-full items-center justify-between">
-                          <span className="text-gray-500 dark:text-gray-700">{'Status'}</span>
+                          <span className="text-gray-500 dark:text-gray-700">
+                            {'Status'}
+                          </span>
                           {isStatusDropdownOpen ? (
                             <FaChevronUp size={16} />
                           ) : (

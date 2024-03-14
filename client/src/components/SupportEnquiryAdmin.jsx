@@ -147,7 +147,7 @@ const SupportEnquiryAdmin = (props) => {
   return (
     <>
       <div className="h-full flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-row gap-2 fixed sm:top-[120px] md:top-[200px]">
+        <div className="flex flex-row gap-2 fixed top-[120px] md:top-[200px]">
           {!allMessages && <div className="">No Message</div>}
           {allMessages && !isSelectMessage && (
             <AdminEnquiriesRecord

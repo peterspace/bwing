@@ -67,7 +67,6 @@ export const SellCardScreen3 = (props) => {
   const amount = transactionRates ? transactionRates?.amount : 0;
   const directValue = transactionRates ? transactionRates?.directValue : 0;
 
-
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   /*********************************************     REACT STATES    **************************************************** */
@@ -134,7 +133,7 @@ export const SellCardScreen3 = (props) => {
       bankName,
       cardNumber,
       phone,
-      directValue
+      directValue,
     };
     const response = await createTransactionService(userData);
     if (response?._id) {
@@ -163,7 +162,7 @@ export const SellCardScreen3 = (props) => {
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
       <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
-        <div className="ss:hidden xl:flex">
+        <div className="hidden xl:flex">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>
@@ -188,7 +187,6 @@ export const SellCardScreen3 = (props) => {
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
                 submitTransaction={setIsSend}
-
               />
               <Signup
                 setIsCheckout={setIsCheckout}
@@ -217,7 +215,6 @@ export const SellCardScreen3 = (props) => {
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
                 submitTransaction={setIsSend}
-
               />
             </div>
           </>
@@ -234,7 +231,7 @@ export const SellCardScreen3 = (props) => {
             submitTransaction={setIsSend}
           />
         </div>
-        <div className="ss:flex xl:hidden">
+        <div className="flex xl:hidden">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>

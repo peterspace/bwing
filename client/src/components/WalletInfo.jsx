@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { validateAddressService } from '../services/apiService';
 
 import { MdQrCodeScanner } from 'react-icons/md';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export const WalletInfo = (props) => {
   const {
@@ -121,8 +122,14 @@ export const WalletInfo = (props) => {
   });
 
   const walletInfo = (
-    <form onSubmit={handleSubmit}>
-      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-[1px]">
+    <>
+    <motion.section
+        initial={{ width: '80%' }}
+        animate={{ width: 'auto' }}
+        exit={{ width: 0 }}
+        transition={{ delay: 1 }}
+        className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1"
+      > <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[10px] m-4">
             <div className="flex flex-row justify-between mt-[24px]">
@@ -217,8 +224,9 @@ export const WalletInfo = (props) => {
             {`Exchange`} {fValue} {fToken?.symbol.toUpperCase()}
           </div>
         </div>
-      </div>
-    </form>
+    </form></motion.section>
+    </>
+   
   );
   return <>{walletInfo}</>;
 };

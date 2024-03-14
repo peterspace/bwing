@@ -15,7 +15,6 @@ import Footer from '../../components/Footer';
 import FooterMini from '../../components/FooterMini';
 import Sectioning from '../../components/Sectioning';
 
-
 import {
   stepsExchange,
   stepsBuy,
@@ -149,8 +148,9 @@ export const AppContainer = (props) => {
           <>
             <div
               className={`${styles.hero} flex flex-col justify-center items-center`}
+              // className={`flex flex-col justify-center items-center`}
             >
-              <div className={`mt-[64px] mb-[64px] flex justify-center`}>
+              <div className={`mt-[24px] mb-[24px] xl:mt-[64px] xl:mb-[64px] flex justify-center`}>
                 <>
                   {service === 'exchange' && subService === 'exchange' && (
                     <ExchangeHome

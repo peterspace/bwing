@@ -4,11 +4,12 @@ import { validateEmail, forgotPassword } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { Email, Password } from '../../assets/mints';
 
 export const Forgot = (props) => {
   const { setIsLogin, setIsRegister, setIsForgot } = props;
   const [message, setMessage] = useState('');
-
+  const [redirectHome, setRedirectHome] = useState(false);
   const { values, handleChange, handleSubmit, touched, errors, resetForm } =
     useFormik({
       initialValues: {
@@ -27,10 +28,6 @@ export const Forgot = (props) => {
         forgot(email);
       },
     });
-
-  const [redirectHome, setRedirectHome] = useState(false);
-
-  const dispatch = useDispatch();
 
   async function forgot(email) {
     if (!validateEmail(email)) {
@@ -68,7 +65,7 @@ export const Forgot = (props) => {
   /**********************************************{FORGOT}******************************** */
   /************************************************************************************** */
   const login = (
-    <div className="mt-[24px] xl:mt-[64px] flex justify-center rounded-lg bg-white dark:bg-background-dark text-black dark:text-gray-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
+    <div className="rounded-lg flex justify-center bg-white dark:bg-background-dark text-black dark:text-gray-100 overflow-hidden flex-col items-center p-4 border-[1px] border-solid border-lightslategray-300 shadow-m">
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-[24px]">
           <div className="flex flex-col gap-[8px] xl:gap-[12px]">
@@ -97,25 +94,35 @@ export const Forgot = (props) => {
             <div className="flex bg-lightslategray-300 w-full h-px" />
           </div>
           <div className="flex flex-col gap-[8px]">
-            <div className="flex flex-col mb-4 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-darkslategray-200 placeholder-darkgray-100 inline-block outline-none bg-white dark:bg-background-dark"
-                placeholder="your@email.com"
-                value={values.email}
-                onChange={handleChange}
-              />
-              <div>
-                {touched.email && errors.email ? (
-                  <div className="mt-6 text-[#ef4444]">{errors.email}</div>
-                ) : null}
+            <div>
+              <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
+                <label
+                  htmlFor="email"
+                  className="input-label flex flex-row gap-2 items-center justify-between"
+                >
+                  <Email className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input-custom w-full"
+                  value={values.email}
+                  onChange={handleChange}
+                />
               </div>
+            </div>
+            <div>
+              {touched.email && errors.email && (
+                <span className="text-[#ef4444] px-2 py-1 rounded-md error">
+                  {errors.email}
+                </span>
+              )}
             </div>
             <div className="flex flex-row justify-center items-center">
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
+                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white py-2 shrink-0 rounded w-full"
                 onClick={handleSubmit}
               >
                 {message ? <>{message}</> : <>{'Get Reset Email'}</>}
@@ -146,10 +153,7 @@ export const Forgot = (props) => {
   );
   return (
     <>
-      <div className="flex flex-row items-start h-screen">
-        {login}
-      </div>
+      <div className="flex flex-row items-start h-screen">{login}</div>
     </>
   );
 };
-

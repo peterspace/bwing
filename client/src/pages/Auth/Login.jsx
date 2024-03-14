@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { LoginUser } from '../../redux/features/user/userSlice';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { Email, Password } from '../../assets/mints';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export const Login = (props) => {
   const {
@@ -144,7 +146,7 @@ export const Login = (props) => {
     <>
       <div
         id="toast-default"
-        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-background-dark dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
+        className="transition ease-in-out delay-150 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-bgDarkMode rounded-lg shadow dark:text-gray-100"
         role="alert"
       >
         <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
@@ -198,7 +200,7 @@ export const Login = (props) => {
     <>
       <div
         id="toast-default"
-        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-background-dark rounded-lg shadow dark:text-gray-100"
+        className="transition ease-in-out delay-150 mt-[64px] flex items-center w-full max-w-xs p-4 text-gray-500 bg-white dark:bg-background-dark rounded-lg shadow dark:text-gray-100"
         role="alert"
       >
         <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-bgPrimary bg-chizzySnow rounded-lg dark:bg-bgPrimary dark:text-blue-200">
@@ -249,7 +251,7 @@ export const Login = (props) => {
   );
 
   const login = (
-    <div className="mt-[24px] xl:mt-[64px] flex justify-center rounded-lg bg-white dark:bg-background-dark text-black dark:text-gray-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
+    <div className="rounded-lg flex justify-center bg-white dark:bg-background-dark text-black dark:text-gray-100 overflow-hidden flex-col items-center p-4 border-[1px] border-solid border-lightslategray-300 shadow-md">
       <div className="flex flex-col gap-[24px]">
         <div className="flex flex-col gap-[8px] xl:gap-[12px]">
           <div className="flex flex-row justify-between mt-[24px]">
@@ -284,50 +286,60 @@ export const Login = (props) => {
               setIsGoogle(false);
             }}
           >
-            <div className="flex flex-col mb-6 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-slate-800 dark:text-gray-600 bg-white dark:bg-background-dark placeholder-darkgray-100 inline-block outline-none"
-                placeholder="Email"
-                value={values.email}
-                onChange={handleChange}
-              />
-              <div>
-                {touched.email && errors.email ? (
-                  <div className="mt-6 text-[#ef4444]">{errors.email}</div>
-                ) : null}
+            <div>
+              <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
+                <label
+                  htmlFor="email"
+                  className="input-label flex flex-row gap-2 items-center justify-between"
+                >
+                  <Email className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input-custom w-full"
+                  value={values.email}
+                  onChange={handleChange}
+                />
               </div>
             </div>
-            <div className="flex flex-col mb-6 h-[48px] bg-white dark:bg-background-dark rounded outline outline-lightslategray-300 outline-[1px]">
+            <div>
+              {touched.email && errors.email && (
+                <span className="text-[#ef4444] px-2 py-1 rounded-md error">
+                  {errors.email}
+                </span>
+              )}
+            </div>
+
+            <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
+              <label
+                htmlFor="password"
+                className="input-label flex flex-row gap-2 items-center justify-between"
+              >
+                <Password className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
+              </label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                className="ml-2 text-[16px] xl:text-[14px] leading-[24px] text-slate-800 dark:text-gray-600 bg-white dark:bg-background-dark placeholder-darkgray-100 inline-block outline-none"
                 placeholder="Password"
+                className="input-custom w-full"
                 value={values.password}
                 onChange={handleChange}
               />
-              <div>
-                {touched.password && errors.password ? (
-                  <div className="mt-6 text-[#ef4444]">{errors.password}</div>
-                ) : null}
-              </div>
             </div>
-
-            {/* <div className="flex flex-row justify-center items-center">
-              <button
-                type="submit"
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
-              >
-                Login
-              </button>
-            </div> */}
+            <div>
+              {touched.password && errors.password && (
+                <span className="text-[#ef4444] px-2 py-1 rounded-md error">
+                  {errors.password}
+                </span>
+              )}
+            </div>
             <div className="flex flex-row justify-center items-center">
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white h-[49px] shrink-0 rounded w-full"
+                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white py-2 shrink-0 rounded w-full"
                 onClick={handleSubmit}
               >
                 Login
@@ -345,7 +357,7 @@ export const Login = (props) => {
         </div>
         <div className="flex flex-col justify-center items-center gap-[16px]">
           <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
             onClick={() => {
               setIsLocal(false);
               setIsFacebook(false);
@@ -356,7 +368,7 @@ export const Login = (props) => {
             <span className="ml-2"> Continue with Google</span>
           </div>
           <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary h-[49px] shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
             onClick={() => {
               setIsLocal(false);
               setIsFacebook(false);
@@ -381,20 +393,15 @@ export const Login = (props) => {
               Forgot your password?
             </div>
           </div>
-          <div className="flex flex-row gap-2 justify-center">
-            <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
-              {"Don't have an account?"}
-            </div>
-            <div
-              className="cursor-pointer text-smi leading-[22px] text-bgPrimary hover:text-opacity-80 inline-block"
-              onClick={() => {
-                setIsLogin(false);
-                setIsRegister(true);
-                setIsForgot(false);
-              }}
-            >
-              Signup now!
-            </div>
+          <div
+            className="cursor-pointer text-smi leading-[22px] text-bgPrimary hover:text-opacity-80 inline-block"
+            onClick={() => {
+              setIsLogin(false);
+              setIsRegister(true);
+              setIsForgot(false);
+            }}
+          >
+            Signup now!
           </div>
         </div>
 
@@ -406,22 +413,46 @@ export const Login = (props) => {
     <>
       {isError && (
         <>
-          <div className="flex flex-row items-start h-screen">{toastError}</div>
+          <motion.section
+            initial={{ width: '85%' }}
+            animate={{ width: 'auto' }}
+            exit={{ width: 0 }}
+            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+          >
+            <div className="flex flex-row items-start h-screen">
+              {toastError}
+            </div>
+          </motion.section>
         </>
       )}
       {isSucess && (
         <>
-          <div className="flex flex-row items-start h-screen">
-            {toastSuccess}
-          </div>
+          <motion.section
+            initial={{ width: '85%' }}
+            animate={{ width: 'auto' }}
+            exit={{ width: 0 }}
+            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+          >
+            <div className="flex flex-row items-start h-screen">
+              {toastSuccess}
+            </div>
+          </motion.section>
         </>
       )}
 
       {isSignIn && (
         <>
-         <div className="flex flex-row items-start h-screen">
-         {login}
-         </div>
+          <motion.section
+            initial={{ width: '85%' }}
+            animate={{ width: 'auto' }}
+            exit={{ width: 0 }}
+            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
+          >
+            <div className="flex flex-row items-start h-screen">{login}</div>
+          </motion.section>
         </>
       )}
     </>

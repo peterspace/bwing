@@ -13,7 +13,6 @@ import {
 
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 
-
 //w-[370px] ===w-[300px]
 //w-[375px] === w-[320px] xs:w-[340px]
 export const ExchangeHome = (props) => {
@@ -105,8 +104,7 @@ export const ExchangeHome = (props) => {
 
   //==================={ON: On delay Timer}===========================
   const [activeInterval, setActiveInterval] = useState(0);
-  const [initailInterval, setinitailInterval] = useState(15000); // fixed// every 15 seconds
-  // const [initailInterval, setinitailInterval] = useState(30000); // fixed
+  const [initailInterval, setinitailInterval] = useState(10000); // fixed// every 10 seconds
   const [delay, setDelay] = useState(60000); // fixed 1 minute 0r 60 secs
   const [nextInterval, setNextInterval] = useState(initailInterval);
 
@@ -455,8 +453,6 @@ export const ExchangeHome = (props) => {
           loadingExchangeRate={loadingExchangeRate}
         />
       )}
-
-      
     </>
   );
 };

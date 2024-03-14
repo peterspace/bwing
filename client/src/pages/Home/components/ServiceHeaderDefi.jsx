@@ -12,7 +12,7 @@ const ServiceHeaderDefi = (props) => {
   const { disconnect } = useDisconnect();
 
   return (
-    <div className="h-[42px] flex flex-row items-center justify-start py-0 px-4 box-border gap-[32px] text-left text-5xl text-gray-900 dark:text-white font-roboto self-stretch">
+    <div className="h-[42px] flex flex-row items-center justify-start py-0 px-4 box-border gap-[32px] text-left input-icon text-gray-900 dark:text-white font-roboto self-stretch">
       <div className="flex-1 relative text-gray-500  leading-[28px]">
         {subService}
       </div>

@@ -12,6 +12,22 @@ export const validateEmail = (email) => {
 //=====================================================================================================================================
 //======================================================={Local}==============================================================================
 
+export const checkEmail = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/users/checkEmail`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log({ errormessageRegistration: message });
+  }
+};
+
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
@@ -1246,3 +1262,21 @@ export const updateEnquiryStatus = async (userData) => {
     toast.error(message);
   }
 };
+
+export const getMessagesById = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/message/getMessagesById`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+//

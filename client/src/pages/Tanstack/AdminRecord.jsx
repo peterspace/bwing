@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import MemoizedAdminTransactionsTable from './tables/AdminTransactionsTable';
+import MemoizedAdminTransactionsTableMobile from './tables/AdminTransactionsTableMobile';
 import NoTransactionFound from '../../components/NoTransactionFound';
 
 const AdminRecord = (props) => {
-  const { data } = props;
+  const { data, setPage } = props;
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -33,7 +34,22 @@ const AdminRecord = (props) => {
   return (
     <div className="container mx-auto bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
       {tableData.length ? (
-        <MemoizedAdminTransactionsTable data={data} tableData={tableData} />
+        <>
+          <div className="hidden xl:flex">
+            <MemoizedAdminTransactionsTable
+              data={data}
+              tableData={tableData}
+              setPage={setPage}
+            />
+          </div>
+          <div className="flex xl:hidden">
+            <MemoizedAdminTransactionsTableMobile
+              data={data}
+              tableData={tableData}
+              setPage={setPage}
+            />
+          </div>
+        </>
       ) : (
         <NoTransactionFound />
       )}

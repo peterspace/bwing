@@ -16,7 +16,6 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 import RatesLocalModel from '../../../components/RatesLocalModel';
 
-
 export const BuyCardScreen3 = (props) => {
   const {
     percentageProgress,
@@ -71,9 +70,8 @@ export const BuyCardScreen3 = (props) => {
   console.log({ transactionRatesLoading: transactionRatesLoading });
   //===={To be added}========
   const amount = transactionRates ? transactionRates?.amount : 0;
-  console.log({bankName:bankName})
+  console.log({ bankName: bankName });
   const directValue = transactionRates ? transactionRates?.directValue : 0;
-
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
@@ -142,7 +140,7 @@ export const BuyCardScreen3 = (props) => {
       bankName,
       cardNumber,
       phone,
-      directValue
+      directValue,
     };
 
     const response = await createTransactionService(userData);
@@ -172,14 +170,14 @@ export const BuyCardScreen3 = (props) => {
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
       <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
-      <div className="ss:hidden xl:flex">
+        <div className="hidden xl:flex">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>
         </div>
         {isCheckout && (
           <>
-             <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
+            <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
               <CheckoutCard
                 setPercentageProgress={setPercentageProgress}
                 fTitle={fTitle}
@@ -207,7 +205,7 @@ export const BuyCardScreen3 = (props) => {
         )}
         {isConfirm && (
           <>
-             <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
+            <div className="flex flex-col justify-center items-center mt-6 xl:mt-0 gap-4">
               <CheckoutCard
                 setPercentageProgress={setPercentageProgress}
                 fTitle={fTitle}
@@ -229,7 +227,7 @@ export const BuyCardScreen3 = (props) => {
             </div>
           </>
         )}
-         <div className="flex-col xl:flex-row h-[374px]">
+        <div className="flex-col xl:flex-row h-[374px]">
           <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
@@ -241,7 +239,7 @@ export const BuyCardScreen3 = (props) => {
             submitTransaction={setIsSend}
           />
         </div>
-        <div className="ss:flex xl:hidden">
+        <div className="flex xl:hidden">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>

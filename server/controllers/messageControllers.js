@@ -97,6 +97,29 @@ const getUserMessagesById = asyncHandler(async (req, res) => {
   }
 });
 
+const getMessagesById = asyncHandler(async (req, res) => {
+  const { messageId } = req.body;
+  try {
+    const messages = await Message.findById({
+      _id: messageId,
+    })
+      .populate('user', '-password')
+      .populate({
+        path: 'content',
+        populate: {
+          path: 'sender',
+          model: 'User', // the model from which the path is to be populated. In this cas "sender" is an id in the "User" model
+          select: 'name photo email role', // to send everything except the user's password
+        },
+      });
+
+    res.json(messages);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
 //given the array
 
 /**
@@ -159,7 +182,8 @@ const generateOrderId = async () => {
 
   return newOTP;
 };
-const createTIcket = asyncHandler(async (req, res) => {
+
+const createTIcket1 = asyncHandler(async (req, res) => {
   const { txId, subject, message, service, subService, addedPhotos } = req.body;
 
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
@@ -211,58 +235,60 @@ const createTIcket = asyncHandler(async (req, res) => {
   }
 });
 
-const sendMessage2 = asyncHandler(async (req, res) => {
-  const { messageId, message } = req.body;
+const createTIcket = asyncHandler(async (req, res) => {
+  const { txId, subject, message, service, subService, addedPhotos } = req.body;
 
-  console.log({ content: req.body });
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
+
   if (!user) {
     res.status(400);
     throw new Error('User not found, please login');
   }
 
-  // check if message exists
-  const messageExists = await Message.findById(messageId);
+  const userId = user?._id;
+  const name = user?.name;
+  const email = user?.email;
+  const newTicketNo = await generateOrderId();
 
-  if (!messageExists) {
+  const timeNow = Date.now();
+
+  try {
+    const newTicket = await Message.create({
+      user: userId,
+      name,
+      email,
+      orderNo: txId,
+      txId,
+      ticketNumber: newTicketNo,
+      subject,
+      service,
+      subService,
+      content: [
+        {
+          message: message,
+          sender: userId,
+          latestMessage: message,
+          role: user?.role,
+          created: new Date(timeNow),
+          readBy: [user?._id],
+          photos: addedPhotos,
+        },
+      ],
+      readBy: userId, // the user who sent must have read the message before sending
+      updated: new Date(timeNow),
+      users: [req.user._id], // add creator to users
+    });
+
+    console.log({ newTicket: newTicket });
+
+    res.status(200).json(newTicket);
+  } catch (error) {
     res.status(400);
-    throw new Error('Message not found, please login');
-  }
-
-  //Check if user is authorized: only admin and the right user is authorized
-  const authorizedUser = messageExists?.user;
-
-  if (user?._id != authorizedUser || user?.role != 'Admin') {
-    res.status(400);
-    throw new Error('Not Authorised');
-  }
-
-  const newContent = {
-    message: message,
-    sender: user?._id,
-    latestMessage: message,
-    role: user?.role,
-  };
-
-  const added = await Message.findByIdAndUpdate(
-    messageId,
-    {
-      $push: { content: newContent },
-    },
-    {
-      new: true,
-    }
-  ).populate('user', '-password');
-
-  if (!added) {
-    res.status(404);
-    throw new Error('Chat Not Found');
-  } else {
-    res.json(added);
+    throw new Error(error.message);
   }
 });
 
-const sendMessage = asyncHandler(async (req, res) => {
+const sendMessage1 = asyncHandler(async (req, res) => {
   const { messageId, message, addedPhotos } = req.body;
   const user = await User.findById(req.user._id); // get userId from "protect middleware"
   if (!user) {
@@ -307,8 +333,99 @@ const sendMessage = asyncHandler(async (req, res) => {
 
     const updatedMessage = await messageExists.save();
     if (updatedMessage) {
-      console.log({ updatedMessage: updatedMessage });
-      res.status(200).json(updatedMessage);
+      // So we can populate the received data
+      const messages = await Message.findById({
+        _id: messageId,
+      })
+        .populate('user', '-password')
+        .populate({
+          path: 'content',
+          populate: {
+            path: 'sender',
+            model: 'User', // the model from which the path is to be populated. In this cas "sender" is an id in the "User" model
+            select: 'name photo email role', // to send everything except the user's password
+          },
+        });
+
+      res.status(200).json(messages);
+    }
+  } else {
+    res.status(400);
+    throw new Error('Not Authorised');
+  }
+});
+
+const sendMessage = asyncHandler(async (req, res) => {
+  const { messageId, message, addedPhotos } = req.body;
+  const user = await User.findById(req.user._id); // get userId from "protect middleware"
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found, please login');
+  }
+
+  // check if message exists
+  const messageExists = await Message.findById(messageId);
+  let users = [];
+
+  if (!messageExists) {
+    res.status(400);
+    throw new Error('Message not found, please login');
+  }
+  const authorizedUser = messageExists?.user;
+  // }
+
+  if (
+    user?._id.toString() === authorizedUser.toString() ||
+    user?.role === 'Admin'
+  ) {
+    const timeNow = Date.now();
+
+    console.log({ timeNow });
+
+    const newContent = {
+      message: message,
+      sender: user?._id,
+      latestMessage: message,
+      role: user?.role,
+      created: new Date(timeNow),
+      readBy: [user?._id],
+      photos: addedPhotos,
+    };
+
+    const latesUpdate = new Date(timeNow);
+
+    messageExists?.content.push(newContent);
+    messageExists.updated = latesUpdate || messageExists?.updated;
+
+    users = messageExists?.users;
+
+    if (users.length > 0) {
+      users.map((messageUser) => {
+        if (messageUser.toString() == req.user._id.toString()) {
+          return;
+        }
+      });
+    } else {
+      messageExists?.users.push(req.user._id);
+    }
+
+    const updatedMessage = await messageExists.save();
+    if (updatedMessage) {
+      // So we can populate the received data
+      const messages = await Message.findById({
+        _id: messageId,
+      })
+        .populate('user', '-password')
+        .populate({
+          path: 'content',
+          populate: {
+            path: 'sender',
+            model: 'User', // the model from which the path is to be populated. In this cas "sender" is an id in the "User" model
+            select: 'name photo email role', // to send everything except the user's password
+          },
+        });
+
+      res.status(200).json(messages);
     }
   } else {
     res.status(400);
@@ -376,11 +493,34 @@ const updateReadBy = asyncHandler(async (req, res) => {
   }
 });
 
+async function fetchAdminUsers() {
+  // const adminUsers = await User.find().select('-password');
+
+  // let usersList = [];
+  // adminUsers?.map((p) => {
+  //   if (p?.role == 'Admin') {
+  //     usersList.push(p);
+  //   }
+  // });
+
+  const adminUsers = await User.find({ role: 'Admin' }).select('-password');
+
+  let usersList = [];
+  adminUsers?.map((p) => {
+    usersList.push(p);
+  });
+
+  console.log({ usersList });
+}
+
+// fetchAdminUsers()
+
 module.exports = {
   allMessages,
   sendMessage,
   getUserMessages,
   getUserMessagesById,
+  getMessagesById,
   createTIcket,
   updateMessageStatus,
 };

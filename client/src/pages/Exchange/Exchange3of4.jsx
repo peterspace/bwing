@@ -235,16 +235,16 @@ export const Exchange3of4 = (props) => {
       <>
         {txData ? (
           <div className="flex flex-col justify-center items-center xl:flex-row xl:items-start gap-[32px] mt-[8px]">
-            <div className="ss:hidden xl:flex">
-            <div className="flex-col xl:flex-row h-[500px]">
-              <Progress
-                percentageProgress={
-                  txData?.percentageProgress
-                    ? txData?.percentageProgress
-                    : percentageProgress
-                }
-              />
-            </div>
+            <div className="hidden xl:flex">
+              <div className="flex-col xl:flex-row h-[500px]">
+                <Progress
+                  percentageProgress={
+                    txData?.percentageProgress
+                      ? txData?.percentageProgress
+                      : percentageProgress
+                  }
+                />
+              </div>
             </div>
             <div className="flex flex-col justify-start items-start xl:justify-center xl:items-center mt-6 xl:mt-0 gap-4">
               <SendFund
@@ -253,17 +253,17 @@ export const Exchange3of4 = (props) => {
                 transactionRates={transactionRates}
               />
             </div>
-            <div className="ss:flex xl:hidden">
-            <div className="flex-col xl:flex-row h-[500px]">
-              <Progress
-                percentageProgress={
-                  txData?.percentageProgress
-                    ? txData?.percentageProgress
-                    : percentageProgress
-                }
-              />
+            <div className="flex xl:hidden">
+              <div className="flex-col xl:flex-row h-[500px]">
+                <Progress
+                  percentageProgress={
+                    txData?.percentageProgress
+                      ? txData?.percentageProgress
+                      : percentageProgress
+                  }
+                />
+              </div>
             </div>
-          </div>
             <div className="flex-col xl:flex-row h-[374px]">
               <div className="mb-[16px]">
                 <Timer txData={txData} />

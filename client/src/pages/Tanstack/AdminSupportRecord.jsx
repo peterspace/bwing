@@ -3,7 +3,7 @@ import MemoizedAdminSupportTable from './tables/AdminSupportTable';
 import NoTransactionFound from '../../components/NoTransactionFound';
 
 const AdminSupportRecord = (props) => {
-  const { data } = props;
+  const { data, setPage } = props;
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const AdminSupportRecord = (props) => {
   return (
     <div className="container mx-auto bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
       {tableData.length ? (
-        <MemoizedAdminSupportTable data={data} tableData={tableData} />
+        <MemoizedAdminSupportTable data={data} tableData={tableData} setPage={setPage} />
       ) : (
         <NoTransactionFound />
       )}

@@ -40,9 +40,7 @@ const Menu = (props) => {
   }
 //border-[1px] border-solid border-lightslategray-300
   return (
-    // <div className="rounded-[18px] bg-white dark:bg-bgDarkMode overflow-hidden flex flex-row items-start justify-between py-2.5 px-5 box-border self-stretch border-[1px] border-solid border-lightslategray-300 dark:border-none">
-    // <div className="rounded-[18px] bg-white dark:bg-bgDarkMode overflow-hidden flex flex-row items-start justify-between py-2.5 px-5 box-border self-stretch">
-    <div className="rounded-[18px] bg-white dark:bg-bgDarkMode overflow-hidden flex flex-row items-start justify-between py-2.5 px-5 box-border self-stretch shadow-sm">
+    <div className="rounded-[18px] bg-white dark:bg-bgDarkMode overflow-hidden flex flex-row items-start justify-between py-2.5 px-5 box-border self-stretch shadow-sm border-[1px] border-solid border-lightslategray-300 dark:border-none">
    
       {service === 'exchange' ? (
         <>

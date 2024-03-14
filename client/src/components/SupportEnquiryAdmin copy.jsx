@@ -355,8 +355,8 @@ const SupportEnquiryAdmin = (props) => {
     const response = await sendMessage(userData);
     if (response) {
       setIsReply(false);
-      setMessage("")
-      setAddedPhotos([])
+      setMessage('');
+      setAddedPhotos([]);
       console.log('sent');
     }
   }
@@ -425,7 +425,7 @@ const SupportEnquiryAdmin = (props) => {
   return (
     <>
       <div className="h-full flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-row gap-2 fixed sm:top-[120px] md:top-[200px]">
+        <div className="flex flex-row gap-2 fixed top-[120px] md:top-[200px]">
           {isSend && <SupportTicket />}
           {isContent && !allMessages && <div className="">No Message</div>}
           {isContent && allMessages && !isSelectMessage && (

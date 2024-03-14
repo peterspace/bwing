@@ -54,7 +54,7 @@ const ExchangeApp = (props) => {
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
-  const [ratesModalOpen, setRatesModalOpen] = useState(true); // open by default
+  const [ratesModalOpen, setRatesModalOpen] = useState(false); // close by default
   const [transactionLimit, setTransactionLimit] = useState();
   const [transactionError, setTransactionError] = useState();
   const [transactionDifference, setTransactionDifference] = useState();
@@ -195,117 +195,134 @@ const ExchangeApp = (props) => {
 
   return (
     <>
-      <div className="flex ss:flex-col xl:flex-row">
+      <div className="flex flex-col xl:flex-row">
         <>
-          <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
-            <Menu
-              service={service}
-              setService={setService}
-              subService={subService}
-              setSubService={setSubService}
-            />
-            <ServiceHeaderExchange
-              subService="Exchange"
-              image={fToken?.image}
-              symbol={fToken?.symbol.toUpperCase()}
-              name={fToken?.chain ? fToken?.chain : fToken?.name}
-              openModal={openFromTokenModal}
-            />
+          {' '}
+          <div className="card-gradient-app-container rounded-3xl">
+            <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[8px] xl:gap-[12px] text-left input-header text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300 dark:border-lightslategray-300">
+              <Menu
+                service={service}
+                setService={setService}
+                subService={subService}
+                setSubService={setSubService}
+              />
+              <ServiceHeaderExchange
+                subService="Exchange"
+                image={fToken?.image}
+                symbol={fToken?.symbol.toUpperCase()}
+                name={fToken?.chain ? fToken?.chain : fToken?.name}
+                openModal={openFromTokenModal}
+              />
 
-            <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
-                <FToken
-                  image={fToken?.image}
-                  symbol={fToken?.symbol.toUpperCase()}
-                  name={fToken?.chain ? fToken?.chain : fToken?.name}
-                  openModal={openFromTokenModal}
-                />
-                <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
-                  <input
-                    type="text"
-                    className="self-stretch relative font-medium text-[32px] outline-none dark:outline-none dark:bg-chizzy dark:text-white placeholder-darkgray-100"
-                    placeholder="0.1"
-                    value={fValue}
-                    onChange={onFromValueChanged}
-                  />
-                  {loading ? (
-                    <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
-                  ) : (
-                    <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                      <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                        ~${fromPrice}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
-                <TToken
-                  image={tToken?.image}
-                  symbol={tToken?.symbol.toUpperCase()}
-                  name={tToken?.chain ? tToken?.chain : tToken?.name}
-                  openModal={openToTokenModal}
-                />
-                <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
-                  {loading ? (
-                    <>
-                      <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
-                      <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                        <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mb-2"></div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="self-stretch relative font-medium">
-                        {tValue}
-                      </div>
-                      <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                        <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                          ~${toPrice}
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center text-xl text-darkblue dark:text-indigo-500  font-roboto">
-                <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
-                  {loadingExchangeRate ? (
-                    <div className="relative animate-pulse h-4 bg-indigo-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mt-1 mb-1"></div>
-                  ) : (
-                    <>
-                      <div className="flex-1 relative">
-                        1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
-                        {tToken?.symbol.toUpperCase()}
-                      </div>
-                      <img
-                        className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
-                        alt=""
-                        src="/chevronup@2x.png"
-                        onClick={openRatesModal}
+              <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
+                <div className="self-stretch card-gradient-app-price rounded-3xl w-full">
+                  <div className="self-stretch rounded-3xl bg-chizzySnow dark:bg-background-dark overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[8px] xl:gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+                    <div className="self-stretch flex flex-col gap-2">
+                      <div className="input-title">{fTitle}</div>
+                      <FToken
+                        image={fToken?.image}
+                        symbol={fToken?.symbol.toUpperCase()}
+                        name={fToken?.chain ? fToken?.chain : fToken?.name}
+                        openModal={openFromTokenModal}
                       />
-                    </>
-                  )}
+                    </div>
+
+                    <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
+                      <input
+                        type="text"
+                        className="input-sub-header self-stretch relative outline-none dark:outline-none bg-chizzySnow dark:bg-background-dark dark:text-white placeholder-darkgray-100"
+                        placeholder="0.1"
+                        value={fValue}
+                        onChange={onFromValueChanged}
+                      />
+                      {loading ? (
+                        <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
+                      ) : (
+                        <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                          <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                            ~${fromPrice}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="self-stretch card-gradient-app-price rounded-3xl w-full">
+                  <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start p-4 gap-[8px] xl:gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+                    <div className="self-stretch flex flex-col gap-2">
+                      <div className="input-title">{tTitle}</div>
+                      <TToken
+                        image={tToken?.image}
+                        symbol={tToken?.symbol.toUpperCase()}
+                        name={tToken?.chain ? tToken?.chain : tToken?.name}
+                        openModal={openToTokenModal}
+                      />
+                    </div>
+
+                    <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
+                      {loading ? (
+                        <>
+                          <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
+                          <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                            <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mb-2"></div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="input-sub-header self-stretch relative">
+                            {tValue}
+                          </div>
+                          <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                            <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                              ~${toPrice}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 text-center input-token-container text-darkblue dark:text-indigo-500  font-roboto">
+                  <div className="self-stretch rounded-xl bg-lightsteelblue dark:bg-exchange-rate-dark dark:text-indigo-500  dark:bg-opacity-20 flex flex-row items-center justify-center py-2 px-4 gap-[8px]">
+                    {loadingExchangeRate ? (
+                      <div className="relative animate-pulse h-3 xl:h-4 bg-indigo-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mt-1 mb-1"></div>
+                    ) : (
+                      <>
+                        <div className="flex-1 relative">
+                          1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                          {tToken?.symbol.toUpperCase()}
+                        </div>
+                        <img
+                          className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
+                          alt=""
+                          src="/chevronup@2x.png"
+                          onClick={openRatesModal}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div
+                  className="cursor-pointer transition-transform duration-300 hover:scale-110 my-0 mx-[!important] absolute top-[calc(50%_-_60.5px)] left-[calc(50%_-_30px)] rounded-3xl bg-indigo-600 box-border h-[61px] flex flex-row items-start justify-start p-2 border-[12px] border-solid border-indigo-100 dark:border-exchange-rate-dark"
+                  onClick={swapTokensPosition}
+                >
+                  <img
+                    className="relative w-5 h-5 overflow-hidden shrink-0 object-cover"
+                    alt=""
+                    src="/switch.png"
+                  />
                 </div>
               </div>
               <div
-                className="cursor-pointer transition-transform duration-300 hover:scale-110 my-0 mx-[!important] absolute top-[calc(50%_-_60.5px)] left-[calc(50%_-_30px)] rounded-3xl bg-indigo-600 box-border h-[61px] flex flex-row items-start justify-start p-2 border-[12px] border-solid border-gray-100 dark:border-exchange-rate-dark"
-                onClick={swapTokensPosition}
+                className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                onClick={nextFunc}
               >
-                <img
-                  className="relative w-5 h-5 overflow-hidden shrink-0 object-cover"
-                  alt=""
-                  src="/switch.png"
-                />
-              </div>
-            </div>
-            <div
-              className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white font-roboto"
-              onClick={nextFunc}
-            >
-              <div className="flex-1 relative">
-                {' '}
-                {`Exchange ${fToken?.symbol.toUpperCase()} now`}
+                <div className="flex-1 relative">
+                  {' '}
+                  {`Exchange ${fToken?.symbol.toUpperCase()} now`}
+                </div>
               </div>
             </div>
           </div>
@@ -320,7 +337,6 @@ const ExchangeApp = (props) => {
             isNotCrypto={false}
             title={'Select Token'}
           />
-
           {/* To Token Modal */}
           <TokenModal
             isTokenModalOpen={isToTokenModalOpen}
@@ -336,7 +352,7 @@ const ExchangeApp = (props) => {
         <>
           {ratesModalOpen && (
             <>
-              <div className="ss:flex xl:hidden mt-4">
+              <div className="flex xl:hidden mt-4">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}
@@ -347,7 +363,7 @@ const ExchangeApp = (props) => {
                   loadingExchangeRate={loadingExchangeRate}
                 />
               </div>
-              <div className="ss:hidden xl:flex xl:ml-8">
+              <div className="hidden xl:flex xl:ml-8">
                 <RatesLocalModel
                   fToken={fToken}
                   tToken={tToken}

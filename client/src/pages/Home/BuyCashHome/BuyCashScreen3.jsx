@@ -17,7 +17,6 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
 import RatesLocalModel from '../../../components/RatesLocalModel';
 
-
 export const BuyCashScreen3 = (props) => {
   const {
     percentageProgress,
@@ -67,7 +66,6 @@ export const BuyCashScreen3 = (props) => {
   const amount = transactionRates ? transactionRates?.amount : 0;
   const directValue = transactionRates ? transactionRates?.directValue : 0;
 
-
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
   /*********************************************     REACT STATES    **************************************************** */
@@ -109,7 +107,7 @@ export const BuyCashScreen3 = (props) => {
       exchangeRate,
       tValue,
       amount,
-      directValue
+      directValue,
     };
     const response = await createTransactionService(userData);
     if (response?._id) {
@@ -158,8 +156,8 @@ export const BuyCashScreen3 = (props) => {
   }
   return (
     <div className="flex flex-col justify-center items-center xl:flex-row">
-    <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
-    <div className="ss:hidden xl:flex">
+      <div className="flex flex-col xl:flex-row gap-[32px] mt-[8px]">
+        <div className="hidden xl:flex">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>
@@ -178,7 +176,6 @@ export const BuyCashScreen3 = (props) => {
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
                 submitTransaction={setIsSend}
-
               />
               <Signup
                 setIsCheckout={setIsCheckout}
@@ -201,12 +198,11 @@ export const BuyCashScreen3 = (props) => {
                 transactionRates={transactionRates}
                 loadingExchangeRate={loadingExchangeRate}
                 submitTransaction={setIsSend}
-
               />
             </div>
           </>
         )}
-          <div className="flex-col xl:flex-row h-[374px]">
+        <div className="flex-col xl:flex-row h-[374px]">
           <RatesLocalModel
             fToken={fToken}
             tToken={tToken}
@@ -218,7 +214,7 @@ export const BuyCashScreen3 = (props) => {
             submitTransaction={setIsSend}
           />
         </div>
-        <div className="ss:flex xl:hidden">
+        <div className="flex xl:hidden">
           <div className="flex-col xl:flex-row h-[500px]">
             <Progress percentageProgress={percentageProgress} />
           </div>

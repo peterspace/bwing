@@ -423,7 +423,7 @@ const getTransactionCost = async () => {
   // const provider = new ethers.getDefaultProvider("homestead"); // default is ethereum homestead provider
   const provider = new ethers.providers.JsonRpcProvider(networkRPC);
   const feeData = await provider.getFeeData();
-  console.log({ feeData: feeData });
+  // console.log({ feeData: feeData });
 
   const gasPrice = ethers.utils.formatUnits(feeData.gasPrice, 'gwei');
   const maxFeePerGas = ethers.utils.formatUnits(feeData.maxFeePerGas, 'gwei');
@@ -462,7 +462,7 @@ const getTransactionCost = async () => {
     maxFeePerGas,
     maxPriorityFeePerGas,
   };
-  console.log({ priceData: priceData });
+  // console.log({ priceData: priceData });
 
   const response = {
     eth: {
@@ -479,7 +479,7 @@ const getTransactionCost = async () => {
     },
   };
 
-  console.log({ response: response });
+  // console.log({ response: response });
   return response;
 };
 

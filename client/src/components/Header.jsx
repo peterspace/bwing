@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Logout } from '../redux/features/user/userSlice';
 import { BsFillMoonStarsFill, BsMoonStars } from 'react-icons/bs'; // Bitcoin
 import { useDispatch } from 'react-redux';
-const tabs = ['Home', 'Exchange', 'Buy', 'Sell', 'Defi'];
 import { TbLogout, TbLogin } from 'react-icons/tb';
+
+const tabs = ['Home', 'Exchange', 'Buy', 'Sell', 'Defi'];
 
 export const Header = (props) => {
   const { mode, setMode, user } = props;

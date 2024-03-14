@@ -50,6 +50,7 @@ const messageSchema = mongoose.Schema(
     updated: Date,
 
     readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

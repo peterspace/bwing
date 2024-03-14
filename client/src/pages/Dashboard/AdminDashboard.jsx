@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { DashboardMenuAdmin } from '../../components/DashboardMenuAdmin';
+import { DashboardMenuAdminMobile } from '../../components/DashboardMenuAdminMobile';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
@@ -66,23 +67,13 @@ const menu = [
   },
 ];
 
-export const AdminDashboard = (props) => {
-  const { user, setTxInfo } = props;
-
+export const AdminDashboard = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
   const location = useLocation();
-
-  const dispatch = useDispatch();
-  const [idx, setIdx] = useState(menu[0]?.id);
-
+  const { user } = useSelector((state) => state.user);
   const txData = useSelector(
     (state) => state.transaction?.transactionByTxIdInternal
   );
-
-  const isUpdating = localStorage.getItem('isUpdating')
-    ? JSON.parse(localStorage.getItem('isUpdating'))
-    : false;
 
   /********************************************************************************************************************** */
   /********************************************************************************************************************** */
@@ -92,12 +83,6 @@ export const AdminDashboard = (props) => {
   // const txData = useSelector(
   //   (state) => state.transaction?.transactionByTxIdInternal
   // );
-  const [refetchTxData, setRefetchTxData] = useState(false);
-  const [refetchAdminData, setRefetchAdminData] = useState(false);
-
-  const transactions = localStorage.getItem('transactions')
-    ? JSON.parse(localStorage.getItem('transactions'))
-    : null;
 
   //=========================={Admin}=======================================================
   const [allTransactions, setAllTransactions] = useState();
@@ -122,20 +107,24 @@ export const AdminDashboard = (props) => {
   console.log({ allProfits: allProfits });
   console.log({ allExchangeTransactionsAdmin: allExchangeTransactionsAdmin });
 
+  const [allMessages, setAllMessages] = useState(); // all user messages
+  const [dataFetched, setDataFetched] = useState(false);
+  console.log({ dataFetched });
+
   //===================={All Messages}======================================
 
-  const { data: allMessages } = useQuery(
-    ['GET_ALL_MESSAGES'],
-    async () => {
-      const { data } = await axios.get(`${BACKEND_URL}/message`);
-      return data;
-    },
-    {
-      refetchInterval: 5000, // every 5 seconds
-      refetchIntervalInBackground: true, // when tab is not on focus
-      refetchOnMount: true,
-    }
-  );
+  // const { data: allMessages } = useQuery(
+  //   ['GET_ALL_MESSAGES'],
+  //   async () => {
+  //     const { data } = await axios.get(`${BACKEND_URL}/message`);
+  //     return data;
+  //   },
+  //   {
+  //     refetchInterval: 5000, // every 5 seconds
+  //     refetchIntervalInBackground: true, // when tab is not on focus
+  //     refetchOnMount: true,
+  //   }
+  // );
 
   const { data: allEnquiries } = useQuery(
     ['GET_ALL_ENGQUIRY'],
@@ -155,6 +144,7 @@ export const AdminDashboard = (props) => {
     ? JSON.parse(localStorage.getItem('page'))
     : 'Exchange';
   const [page, setPage] = useState(pageL);
+  console.log({ 'current page': page });
   //=========={Pages}================================================================
 
   //========================================={LOCATION}===================================================
@@ -190,6 +180,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminExchange();
     if (response) {
       setAllExchangeTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -199,6 +190,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminDefi();
     if (response) {
       setAllDefiTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -208,6 +200,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminBuyCash();
     if (response) {
       setAllBuyCashTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -217,6 +210,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminBuyCard();
     if (response) {
       setAllBuyCardTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -226,6 +220,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminSellCash();
     if (response) {
       setAllSellCashTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -233,6 +228,7 @@ export const AdminDashboard = (props) => {
     const response = await getAdminSellCard();
     if (response) {
       setAllSellCardTransactionsAdmin(response);
+      setDataFetched(true);
     }
   }
 
@@ -263,32 +259,32 @@ export const AdminDashboard = (props) => {
     fetchAllTransactionAdminExchange();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allExchangeTransactionsAdmin]);
+  }, []);
   useEffect(() => {
     fetchAllTransactionAdminDefi();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allDefiTransactionsAdmin]);
+  }, []);
   useEffect(() => {
     fetchAllTransactionAdminBuyCash();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allBuyCashTransactionsAdmin]);
+  }, []);
   useEffect(() => {
     fetchAllTransactionAdminBuyCard();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allBuyCardTransactionsAdmin]);
+  }, []);
   useEffect(() => {
     fetchAllTransactionAdmiSellCash();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allSellCashTransactionsAdmin]);
+  }, []);
   useEffect(() => {
     fetchAllTransactionAdmiSellCard();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allSellCardTransactionsAdmin]);
+  }, []);
 
   //===================={Profits}======================================
   useEffect(() => {
@@ -306,156 +302,176 @@ export const AdminDashboard = (props) => {
 
   //===================={All Messages}======================================
 
-  // useEffect(() => {
-  //   fetchAllMessages();
-  // }, []);
+  useEffect(() => {
+    fetchAllMessages();
+  }, []);
 
-  // async function fetchAllMessages() {
-  //   const response = await getAllMessages(); // admin only
-  //   if (response) {
-  //     setAllMessages(response);
-  //   }
-  // }
+  async function fetchAllMessages() {
+    const response = await getAllMessages(); // admin only
+    if (response) {
+      setAllMessages(response);
+    }
+  }
 
   //==================================={TX DATA}=================================================================
-
-  //==================================={setting and refetching and updating txData}=======================================================
-
-  useEffect(() => {
-    if (refetchTxData) {
-      fetchTxData();
-      setRefetchTxData(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetchTxData]);
-
-  const fetchTxData = async () => {
-    if (user && txData) {
-      const response = await getTransactionByTxIdService(txData?._id);
-      dispatch(getTransactionByTxIdInternal(response)); // dispatch txData globally
-      // setTxInfo(response);
-      // window.location.reload();
-    }
-  };
 
   //====================================================================================================
 
   return (
-    <div className="flex gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
-      <DashboardMenuAdmin setPage={setPage} user={user} page={page} />
-      {!isUpdating && (
-        <div className="w-[78%]">
-          {page === 'Exchange' &&
-            (allExchangeTransactionsAdmin ? (
-              <AdminRecord data={allExchangeTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {page === 'Defi' &&
-            (allDefiTransactionsAdmin ? (
-              <AdminRecord data={allDefiTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {page === 'Buy (Cash)' &&
-            (allBuyCashTransactionsAdmin ? (
-              <AdminRecord data={allBuyCashTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {page === 'Buy (Card)' &&
-            (allBuyCardTransactionsAdmin ? (
-              <AdminRecord data={allBuyCardTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {page === 'Sell (Cash)' &&
-            (allSellCashTransactionsAdmin ? (
-              <AdminRecord data={allSellCashTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {page === 'Sell (Card)' &&
-            (allSellCardTransactionsAdmin ? (
-              <AdminRecord data={allSellCardTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-          {/* ======================{Main}==================== */}
+    <div className="flex flex-row gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
+      <>
+        <div className="hidden xl:flex">
+          <DashboardMenuAdmin setPage={setPage} user={user} page={page} />
+        </div>
 
-          {page === 'Profit' &&
-            (allProfits ? (
-              <AdminProfitRecord data={allProfits} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
+        {page === 'Update' && txData ? null : (
+          <div className="flex xl:hidden z-20">
+            <DashboardMenuAdminMobile
+              setPage={setPage}
+              user={user}
+              page={page}
+            />
+          </div>
+        )}
+      </>
 
-          {/* ======================{Test}==================== */}
-
-          {/* {page === 'Profit' &&
-            (allExchangeTransactionsAdmin ? (
-              <AdminProfitRecord data={allExchangeTransactionsAdmin} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))} */}
-          {page === 'Wallet' &&
-            (allWallets ? (
-              <AdminWallets data={allWallets} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-
-          {page === 'Create' && (
-            <SupportMessageAdmin latestMessages={allMessages} page={'Create'} />
-          )}
-          {/* {page === 'Inbox' && allMessages ? (
-            <SupportMessageAdmin allMessages={allMessages} page={'Inbox'} />
+      <div className="w-full mr-5">
+        {page === 'Exchange' &&
+          (allExchangeTransactionsAdmin ? (
+            <AdminRecord
+              data={allExchangeTransactionsAdmin}
+              setPage={setPage}
+            />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
             </div>
-          )} */}
-          {page === 'Inbox' && allMessages && (
-            <SupportMessageAdmin latestMessages={allMessages} page={'Inbox'} />
-          )}
-          {page === 'Enquiries' && allEnquiries && (
-            <SupportEnquiryAdmin latestMessages={allEnquiries} />
-          )}
+          ))}
+        {page === 'Defi' &&
+          (allDefiTransactionsAdmin ? (
+            <AdminRecord data={allDefiTransactionsAdmin} setPage={setPage} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+        {page === 'Buy (Cash)' &&
+          (allBuyCashTransactionsAdmin ? (
+            <AdminRecord data={allBuyCashTransactionsAdmin} setPage={setPage} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+        {page === 'Buy (Card)' &&
+          (allBuyCardTransactionsAdmin ? (
+            <AdminRecord data={allBuyCardTransactionsAdmin} setPage={setPage} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+        {page === 'Sell (Cash)' &&
+          (allSellCashTransactionsAdmin ? (
+            <AdminRecord
+              data={allSellCashTransactionsAdmin}
+              setPage={setPage}
+            />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+        {page === 'Sell (Card)' &&
+          (allSellCardTransactionsAdmin ? (
+            <AdminRecord
+              data={allSellCardTransactionsAdmin}
+              setPage={setPage}
+            />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
 
-          {page === 'Support' &&
-            (allTransactions ? (
-              <AdminSupportRecord data={allTransactions} />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center">
-                <CircularProgress />
-              </div>
-            ))}
-        </div>
-      )}
+        {page === 'Profit' &&
+          (allProfits ? (
+            <AdminProfitRecord data={allProfits} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+        {page === 'Wallet' &&
+          (allWallets ? (
+            <AdminWallets data={allWallets} />
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
 
-      {isUpdating && txData && (
-        <section className={`container p-2`}>
-          <CardUpdateInfo setRefetchTxData={setRefetchTxData} />
-        </section>
-      )}
+        {page === 'Create' && (
+          <SupportMessageAdmin
+            allMessages={allMessages}
+            fetchAllMessages={fetchAllMessages}
+            page={'Create'}
+          />
+        )}
+        {page === 'Inbox' && allMessages && (
+          <SupportMessageAdmin
+            allMessages={allMessages}
+            fetchAllMessages={fetchAllMessages}
+            page={'Inbox'}
+          />
+        )}
+        {page === 'Enquiries' && allEnquiries && (
+          <SupportEnquiryAdmin latestMessages={allEnquiries} />
+        )}
+
+        {page === 'Support' &&
+          (allTransactions ? (
+            <AdminSupportRecord data={allTransactions} setPage={setPage}/>
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <CircularProgress />
+            </div>
+          ))}
+
+        {page === 'Update' && txData && (
+          <CardUpdateInfo
+            setPage={setPage}
+            txData={txData}
+            dataFetched={dataFetched}
+            setDataFetched={setDataFetched}
+            fetchAllTransactionAdminExchange={fetchAllTransactionAdminExchange}
+            fetchAllTransactionAdminDefi={fetchAllTransactionAdminDefi}
+            fetchAllTransactionAdminBuyCash={fetchAllTransactionAdminBuyCash}
+            fetchAllTransactionAdminBuyCard={fetchAllTransactionAdminBuyCard}
+            fetchAllTransactionAdmiSellCash={fetchAllTransactionAdmiSellCash}
+            fetchAllTransactionAdmiSellCard={fetchAllTransactionAdmiSellCard}
+          />
+        )}
+
+        {/* {page === 'Update' && txData && (
+          <div className="w-full h-full overflow-auto">
+            <CardUpdateInfo
+              setPage={setPage}
+              txData={txData}
+              dataFetched={dataFetched}
+              setDataFetched={setDataFetched}
+              fetchAllTransactionAdminExchange={
+                fetchAllTransactionAdminExchange
+              }
+              fetchAllTransactionAdminDefi={fetchAllTransactionAdminDefi}
+              fetchAllTransactionAdminBuyCash={fetchAllTransactionAdminBuyCash}
+              fetchAllTransactionAdminBuyCard={fetchAllTransactionAdminBuyCard}
+              fetchAllTransactionAdmiSellCash={fetchAllTransactionAdmiSellCash}
+              fetchAllTransactionAdmiSellCard={fetchAllTransactionAdmiSellCard}
+            />
+          </div>
+        )} */}
+      </div>
     </div>
   );
 };

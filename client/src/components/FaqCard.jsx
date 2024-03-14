@@ -7,29 +7,29 @@ export const HowToComponent = (props) => {
   const [show, setShow] = useState(false);
 
   const newCard = (
-    <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] xl:w-[500px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300  dark:border dark:border-solid">
-      <div className="flex flex-row gap-2 w-full">
-        <div className="flex flex-col">
-          {/* <div className="text-base leading-[24px] inline-block">
-            {l?.title}
-          </div> */}
-          <div
-            className="cursor-pointer flex flex-row justify-between items-center w-[280px] sm:w-[375px] xl:w-[500px]"
-            onClick={() => setShow((prev) => !prev)}
-          >
-            <div className="text-base font-sans font-medium leading-[24px] inline-block">
-              {l?.title}
+    <div className="card-gradient">
+      <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] xl:w-[500px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300  dark:border dark:border-solid">
+        <div className="flex flex-row gap-2 w-full">
+          <div className="flex flex-col">
+            <div
+              className="cursor-pointer flex flex-row justify-between items-center w-[280px] sm:w-[375px] xl:w-[500px]"
+              onClick={() => setShow((prev) => !prev)}
+            >
+              <div className="text-base font-sans font-medium leading-[24px] inline-block">
+                {l?.title}
+              </div>
+              <img
+                className="cursor-pointer mr-2 top-[280px] w-[18px] h-[64px] overflow-hidden"
+                alt=""
+                src="/frame19.svg"
+              />
             </div>
-            <img
-              className="cursor-pointer mr-2 top-[280px] w-[18px] h-[64px] overflow-hidden"
-              alt=""
-              src="/frame19.svg"
-              // onClick={() => setShow(true)}
-            />
+            {show && (
+              <div className="leading-[20px] inline-block">
+                {l?.description}
+              </div>
+            )}
           </div>
-          {show && (
-            <div className="leading-[20px] inline-block">{l?.description}</div>
-          )}
         </div>
       </div>
     </div>
@@ -45,12 +45,6 @@ export const FaqCard = (props) => {
         {title}
       </div>
       <div className="flex flex-col gap-[16px]">
-        {/* {data?.map((f) => (
-          <div className="" key={f.id}>
-            <HowToComponent l={f} />
-          </div>
-        ))} */}
-
         {data &&
           data?.map((f, idx) => (
             <div className="" key={idx}>
