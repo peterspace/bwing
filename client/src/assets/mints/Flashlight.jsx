@@ -1,0 +1,65 @@
+const Flashlight = ({ className }) => {
+  return (
+    <svg
+      width="1436"
+      height="1378"
+      viewBox="0 0 1436 1378"
+      fill="none"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g opacity="0.6" filter="url(#filter0_f_862_2565)">
+        <ellipse cx="789" cy="823.5" rx="287" ry="194.5" fill="#190D2C" />
+      </g>
+      <g opacity="0.6" filter="url(#filter1_f_862_2565)">
+        <ellipse cx="636.5" cy="554.5" rx="276.5" ry="194.5" fill="#4B2C7E" />
+      </g>
+      <defs>
+        <filter
+          id="filter0_f_862_2565"
+          x="142"
+          y="269"
+          width="1294"
+          height="1109"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="180"
+            result="effect1_foregroundBlur_862_2565"
+          />
+        </filter>
+        <filter
+          id="filter1_f_862_2565"
+          x="0"
+          y="0"
+          width="1273"
+          height="1109"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="180"
+            result="effect1_foregroundBlur_862_2565"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
+
+export default Flashlight;

@@ -25,3 +25,27 @@
   background-repeat: no-repeat;
   background-position: top;
 }
+
+.hero2 {
+  /* background-image: url(/public/tablet@3x.png); */
+  background-image: url(/flashlight-3.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.hero4 {
+  /* background-image: url(/public/tablet@3x.png); */
+  background-image: url(/flashlight-4.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.hero5 {
+  /* background-image: url(/public/tablet@3x.png); */
+  background-image: url(/flashlight-5.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}

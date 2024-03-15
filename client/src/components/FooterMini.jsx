@@ -5,7 +5,7 @@ const FooterMini = () => {
 
   const footer = (
     <div className="self-stretch xl:h-[70px] mb-4 px-6 xl:py-5 flex-col justify-start items-end gap-2.5 flex text-gray-900 dark:text-gray-200">
-      <div className="relative bg-lightslategray-300 w-full h-px overflow-hidden shrink-0 mb-2" />
+      {/* <div className="relative bg-lightslategray-300 w-full h-px overflow-hidden shrink-0 mb-2" /> */}
       <div className="self-stretch flex flex-col xl:flex-row gap-2 xl:justify-between items-end xl:inline-flex w-full">
         <div className="grow shrink basis-0 h-5 justify-start items-end gap-5 flex">
           <div
@@ -46,7 +46,7 @@ const FooterMini = () => {
     </div>
   );
 
-  return <div className="mt-[64px] overflow-hidden w-full">{footer}</div>;
+  return <div className="mt-[24px] overflow-hidden w-full">{footer}</div>;
 };
 
 export default FooterMini;

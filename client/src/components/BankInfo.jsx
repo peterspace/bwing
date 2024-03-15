@@ -199,13 +199,8 @@ export const BankInfo = (props) => {
 
   const bankInfo = (
     <>
-      <motion.section
-        initial={{ width: '80%' }}
-        animate={{ width: 'auto' }}
-        exit={{ width: 0 }}
-        transition={{ delay: 1 }}
-        className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]"
-      >
+    <div className="card-gradient-app-container rounded-lg">
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1 w-[375px]">
         {' '}
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-[24px]">
@@ -270,12 +265,12 @@ export const BankInfo = (props) => {
                       </div>
                       <div className="rounded-lg bg-chizzySnow dark:bg-gray-1000 flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] h-[200px] overflow-auto">
                         <div className="flex flex-col justify-between items-center">
-                          <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm text-gray-500">
+                          <div className="self-stretch flex flex-col items-start justify-start py-[10px] px-0 text-sm text-gray-500">
                             {banks &&
                               banks.map((bank, index) => (
                                 <div
                                   key={index}
-                                  className="cursor-pointer self-stretch flex flex-row hover:text-gray-900 dark:hover:text-white"
+                                  className="cursor-pointer self-stretch py-[5px] flex flex-row hover:text-gray-900 dark:hover:text-white"
                                   onClick={() => handleSelectBank(bank)}
                                 >
                                   <div className="relative font-medium">
@@ -533,7 +528,9 @@ export const BankInfo = (props) => {
             </div>
           </div>
         </form>
-      </motion.section>
+      </div>
+    </div>
+      
     </>
   );
   return <>{bankInfo}</>;

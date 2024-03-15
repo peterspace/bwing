@@ -94,12 +94,12 @@ export const MessageContent = (props) => {
   return (
     <>
      <div className="card-gradient-app-container rounded-lg">
-     <div className="w-[375px] md:w-[600px] h-full rounded-lg bg-white shadow-lg dark:bg-background-dark overflow-hidden flex flex-col items-center justify-center p-[5px] border-[1px] border-solid border-lightslategray-300 text-left text-xs text-gray-500 font-roboto gap-[20px]">
+     <div className="w-[375px] md:w-[450px] 2xl:w-[600px] h-full rounded-lg bg-white shadow-lg dark:bg-background-dark overflow-hidden flex flex-col items-center justify-center p-[5px] border-[1px] border-solid border-lightslategray-300 text-left text-xs text-gray-500 font-roboto gap-[8px]">
         {/* <div className="rounded-lg bg-white dark:bg-background-dark w-[375px] md:w-[600px] overflow-auto flex flex-col items-center justify-start p-2.5 box-border gap-[20px]"> */}
-        <div className="rounded-lg bg-white dark:bg-background-dark w-full overflow-auto flex flex-col items-center justify-start p-2.5 box-border gap-[20px]">
+        <div className="rounded-lg bg-white dark:bg-background-dark w-full overflow-auto flex flex-col items-center justify-start p-2.5 box-border gap-[8px]">
           <div className="flex flex-row justify-between w-full items-center">
             <div
-              className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm md:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
+              className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm 2xl:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
               onClick={() => {
                 setIsSelectMessage(false);
                 fetchAllMessages();
@@ -124,12 +124,12 @@ export const MessageContent = (props) => {
           </div>
 
           <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-            <b className="relative text-sm md:text-lg inline-block">
+            <b className="relative text-sm 2xl:text-lg inline-block">
               <span>{`Messages`}</span>
             </b>
             <>
-              {/* <div className="flex flex-col h-[450px] w-full gap-4 rounded-lg  box-border focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none overflow-auto border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"> */}
-              <div className="flex flex-col h-[300px] md:h-[400px] w-full gap-4 rounded-lg  box-border focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none overflow-auto border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+              {/* <div className="flex flex-col h-[450px] w-full gap-4 rounded-lg  box-border focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none overflow-auto border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"> */}
+              <div className="flex flex-col h-[300px] 2xl:h-[400px] w-full gap-4 rounded-lg  box-border focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none overflow-auto border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                 {/* {fullMessage} */}
                 {data?.content?.map((c, i) => {
                   const prevMessage = data?.content[i - 1];
@@ -158,7 +158,7 @@ export const MessageContent = (props) => {
                       key={i}
                     >
                       <div
-                        className={`self-stretch rounded-lg shadow-md focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-fit gap-[12px] ${
+                        className={`self-stretch rounded-lg shadow-md focus:outline-none text-chizzyblue dark:text-gray-100 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none h-fit gap-[12px] ${
                           c?.sender?.role === 'Admin'
                             ? 'bg-slate-50 dark:bg-background-dark border-[1px] border-solid box-border border-lightslategray-100 dark:border-lightslategray-100'
                             : 'bg-slate-50 dark:bg-background-dark border-[1px] border-solid box-border border-lightslategray-100 dark:border-lightslategray-100'
@@ -225,7 +225,7 @@ export const MessageContent = (props) => {
                                     </div>
                                   ))}
                               </div>
-                              <div className="mb-4 self-stretch text-chizzyblue dark:text-gray-100  text-sm md:text-lg py-2 px-2.5 resize-none h-fit overflow-auto">
+                              <div className="mb-4 self-stretch text-chizzyblue dark:text-gray-100  text-sm 2xl:text-lg py-2 px-2.5 resize-none h-fit overflow-auto">
                                 {c?.message}
                               </div>
                             </>
@@ -250,7 +250,7 @@ export const MessageContent = (props) => {
                                     </div>
                                   ))}
                               </div>
-                              <div className="mb-4 self-stretch text-chizzyblue dark:text-gray-100  text-sm md:text-lg py-2 px-2.5 resize-none h-fit overflow-auto">
+                              <div className="mb-4 self-stretch text-chizzyblue dark:text-gray-100  text-sm 2xl:text-lg py-2 px-2.5 resize-none h-fit overflow-auto">
                                 {c?.message}
                               </div>
                             </>
@@ -266,7 +266,7 @@ export const MessageContent = (props) => {
             </>
           </div>
         </div>
-        <div className="rounded-lg bg-white dark:bg-background-dark w-full overflow-auto flex flex-col items-center justify-start p-2.5 box-border gap-[20px]">
+        <div className="rounded-lg bg-white dark:bg-background-dark w-full overflow-auto flex flex-col items-center justify-start p-2.5 box-border gap-[8px]">
           <>
             {/* {istyping ? (
               <div>
@@ -281,7 +281,7 @@ export const MessageContent = (props) => {
               <></>
             )} */}
             <textarea
-              className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[100px] md:h-[150px] overflow-auto border-[2px] dark:border-[1px] border-solid border-lightslategray-300 dark:border-indigo-600"
+              className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none h-[80px] 2xl:h-[150px] overflow-auto border-[2px] dark:border-[1px] border-solid border-lightslategray-300 dark:border-indigo-600"
               value={message}
               // onChange={(ev) => setMessage(ev.target.value)}
               onChange={typingHandler}
@@ -291,7 +291,7 @@ export const MessageContent = (props) => {
             ></textarea>
             <div className="flex flex-row justify-between w-full">
               <div
-                className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm md:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
+                className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm 2xl:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
                 onClick={openPhotoModel}
               >
                 <img
@@ -321,12 +321,12 @@ export const MessageContent = (props) => {
 
           <>
             {data?.status === 'Closed' ? (
-              <div className="cursor-not-allowed  self-stretch rounded-lg bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white">
+              <div className="mt-2 cursor-not-allowed  self-stretch rounded-lg bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white">
                 <div className="flex-1 relative">Closed</div>
               </div>
             ) : (
               <div
-                className="cursor-pointer self-stretch rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white"
+                className="mt-2 cursor-pointer self-stretch rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center text-xl text-white"
                 onClick={submit}
               >
                 <div className="flex-1 relative">Reply</div>
@@ -547,7 +547,7 @@ const SupportMessageAdmin = (props) => {
   return (
     <>
       <div className="h-full flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-row gap-2 fixed top-[120px] md:top-[200px]">
+        <div className="flex flex-row gap-2 fixed top-[60px] md:top-[120px]">
           {isSend && <SupportTicket />}
           {isContent && !allMessages && <div className="">No Message</div>}
 
@@ -580,7 +580,7 @@ const SupportMessageAdmin = (props) => {
                 <>
                   <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px] rounded border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200 p-2 mt-2 bg-white dark:bg-bgDarkMode">
                     <div className="flex flex-row gap-2 mt-2">
-                      <b className="relative text-sm md:text-lg inline-block w-[167px]">
+                      <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
                         <span>{`update status `}</span>
                         <span className="text-rose-600">*</span>
                       </b>
@@ -595,7 +595,7 @@ const SupportMessageAdmin = (props) => {
                       className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver mb-2"
                       onClick={openStatusModal}
                     >
-                      <div className="relative text-sm md:text-lg">
+                      <div className="relative text-sm 2xl:text-lg">
                         {status ? status : `select`}
                       </div>
                       <img
@@ -609,7 +609,7 @@ const SupportMessageAdmin = (props) => {
                   {/* service list */}
                   {isStatus && (
                     <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] border-[1px] border-solid border-lightslategray-300">
-                      <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm md:text-lg text-gray-500">
+                      <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm 2xl:text-lg text-gray-500">
                         {statusList?.map((s, i) => (
                           <div
                             key={i}

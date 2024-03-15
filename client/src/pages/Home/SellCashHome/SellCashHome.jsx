@@ -239,7 +239,7 @@ export const SellCashHome = (props) => {
 
   useEffect(() => {
     if (allTokensToL && !tToken) {
-      setToToken(allTokensToL[2]);
+      setToToken(allTokensToL[3]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensToL]);

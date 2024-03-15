@@ -131,25 +131,25 @@ const SupportTicket = () => {
   });
 
   const support = (
-    <div className="w-[375px] md:w-[600px] h-full rounded-lg bg-white shadow-lg dark:bg-background-dark overflow-hidden flex flex-col items-center justify-center p-[5px] border-[1px] border-solid border-lightslategray-200 text-left text-xs text-gray-500 font-roboto">
-      <div className="rounded-lg bg-white dark:bg-background-dark w-[375px] md:w-[600px] overflow-hidden flex flex-col items-center justify-start p-2.5 box-border gap-[20px]">
+    <div className="w-[375px] 2xl:w-[600px] h-full rounded-lg bg-white shadow-lg dark:bg-background-dark overflow-hidden flex flex-col items-center justify-center p-[5px] border-[1px] border-solid border-lightslategray-200 text-left text-xs text-gray-500 font-roboto">
+      <div className="rounded-lg bg-white dark:bg-background-dark w-[375px] 2xl:w-[600px] overflow-hidden flex flex-col items-center justify-start p-2.5 box-border gap-[8px]">
         <div className="self-stretch overflow-hidden flex flex-row items-start justify-between py-0 px-2.5 text-right text-5xl text-text-light-main">
           <div className="flex-1 h-[45px] flex flex-col items-start justify-start">
-            <b className="self-stretch relative text-sm md:text-lg dark:text-white">
+            <b className="self-stretch relative text-sm 2xl:text-lg dark:text-white">
               {user?.name}
             </b>
-            <div className="self-stretch relative text-sm md:text-lg font-montserrat text-gray-500">
+            <div className="self-stretch relative text-sm 2xl:text-lg font-montserrat text-gray-500">
               {user?.email}
             </div>
           </div>
         </div>
-        <div className="self-stretch flex flex-col items-start justify-start pt-2.5 px-2.5 pb-[15px] text-right text-xl md:text-[28px] text-gray-500 dark:text-white">
+        <div className="self-stretch flex flex-col items-start justify-start pt-2.5 px-2.5 pb-[15px] text-right text-xl 2xl:text-[28px] text-gray-500 dark:text-white">
           <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-center py-[11px] px-3 shadow-sm border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200">
             <div className="relative">Submit a ticket</div>
           </div>
         </div>
-        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-          <b className="relative text-sm md:text-lg inline-block w-[167px]">
+        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+          <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
             <span>{`Service `}</span>
             <span className="text-rose-600">*</span>
           </b>
@@ -157,7 +157,7 @@ const SupportTicket = () => {
             className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver"
             onClick={openServiceModal}
           >
-            <div className="relative text-sm md:text-lg">
+            <div className="relative text-sm 2xl:text-lg">
               {service ? service : `select`}
             </div>
             <img
@@ -170,8 +170,8 @@ const SupportTicket = () => {
         {/* service list */}
 
         {isService && !isSubService && !isSubject && (
-          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] border-[1px] border-solid border-lightslategray-200">
-            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm md:text-lg text-gray-500">
+          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[8px] border-[1px] border-solid border-lightslategray-200">
+            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[8px] text-sm 2xl:text-lg text-gray-500">
               {servicesList?.map((s, i) => (
                 <div
                   key={i}
@@ -189,14 +189,14 @@ const SupportTicket = () => {
         )}
 
         {/* service list */}
-        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-          <b className="relative text-sm md:text-lg inline-block w-[167px]">
+        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+          <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
             <span>{`Sub-Service `}</span>
             <span className="text-rose-600">*</span>
           </b>
           {service === 'Exchange' || service === 'Defi' ? (
             <div className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver">
-              <div className="relative text-sm md:text-lg">
+              <div className="relative text-sm 2xl:text-lg">
                 {subService ? subService : `select`}
               </div>
               <img
@@ -210,7 +210,7 @@ const SupportTicket = () => {
               className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver"
               onClick={openSubServiceModal}
             >
-              <div className="relative text-sm md:text-lg">
+              <div className="relative text-sm 2xl:text-lg">
                 {subService ? subService : `select`}
               </div>
               <img
@@ -223,8 +223,8 @@ const SupportTicket = () => {
         </div>
         {/* service list */}
         {!isService && isSubService && !isSubject && (
-          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] border-[1px] border-solid border-lightslategray-200">
-            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm md:text-lg text-gray-500">
+          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[8px] border-[1px] border-solid border-lightslategray-200">
+            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[8px] text-sm 2xl:text-lg text-gray-500">
               {subServicesList?.map((s, i) => (
                 <div
                   key={i}
@@ -242,8 +242,8 @@ const SupportTicket = () => {
         )}
 
         {/* service list */}
-        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-          <b className="relative text-sm md:text-lg inline-block w-[167px]">
+        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+          <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
             <span>{`Subject `}</span>
             <span className="text-rose-600">*</span>
           </b>
@@ -251,7 +251,7 @@ const SupportTicket = () => {
             className="cursor-pointer rounded-xl bg-chizzySnow dark:bg-exchange-rate-dark overflow-hidden flex flex-row items-center justify-start h-[30px] px-3 gap-[8px] text-gray-200 dark:text-silver"
             onClick={openSubjectModal}
           >
-            <div className="relative text-sm md:text-lg">
+            <div className="relative text-sm 2xl:text-lg">
               {' '}
               {subject ? subject : `select`}
             </div>
@@ -264,8 +264,8 @@ const SupportTicket = () => {
         </div>
         {/* subject list */}
         {!isService && !isSubService && isSubject && (
-          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[10px] border-[1px] border-solid border-lightslategray-200">
-            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[10px] text-sm md:text-lg text-gray-500">
+          <div className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border flex flex-col items-start justify-start py-0 px-2.5 gap-[8px] border-[1px] border-solid border-lightslategray-200">
+            <div className="self-stretch flex flex-col items-start justify-start py-[5px] px-0 gap-[8px] text-sm 2xl:text-lg text-gray-500">
               {subjectList?.map((s, i) => (
                 <div
                   key={i}
@@ -283,42 +283,42 @@ const SupportTicket = () => {
         )}
 
         {subject === 'Custom' && (
-          <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-            <b className="relative text-sm md:text-lg inline-block w-[167px]">
+          <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+            <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
               <span>{`Custom Subject `}</span>
               <span className="text-rose-600">*</span>
             </b>
             <input
               type="text"
               placeholder="Enter subject"
-              className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
+              className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border border-gray-400 focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
               value={customSubject}
               onChange={(ev) => setCustomSubject(ev.target.value)}
             />
           </div>
         )}
 
-        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-          <b className="relative text-sm md:text-lg inline-block w-[167px]">
+        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+          <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
             <span>{`Order No `}</span>
             <span className="text-rose-600">*</span>
           </b>
           <input
             type="text"
             placeholder="K32405"
-            className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
+            className="self-stretch rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
             value={orderNumber}
             onChange={(ev) => setOrderNumber(ev.target.value)}
           />
         </div>
 
-        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[10px]">
-          <b className="relative text-sm md:text-lg inline-block w-[167px]">
+        <div className="self-stretch flex flex-col items-start justify-start py-0 px-2.5 box-border gap-[8px]">
+          <b className="relative text-sm 2xl:text-lg inline-block w-[167px]">
             <span>{`Message `}</span>
             <span className="text-rose-600">*</span>
           </b>
           <textarea
-            className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm md:text-lg py-2 px-2.5 resize-none h-[120px] md:h-[180px] border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
+            className="self-stretch font-montserrat rounded-lg bg-chizzySnow dark:bg-gray-1000 box-border focus:outline-none text-chizzyblue dark:text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm 2xl:text-lg py-2 px-2.5 resize-none h-[120px] 2xl:h-[180px] border-[1px] border-solid border-lightslategray-200 dark:border-lightslategray-200"
             value={message}
             onChange={(ev) => setMessage(ev.target.value)}
             placeholder="Please describe the issue"
@@ -328,7 +328,7 @@ const SupportTicket = () => {
         </div>
 
         <div
-          className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm md:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
+          className="self-stretch cursor-pointer rounded-lg box-border flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] text-sm 2xl:text-lg text-gray-500 border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
           onClick={openPhotoModel}
         >
           <img

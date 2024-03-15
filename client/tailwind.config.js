@@ -120,6 +120,8 @@ export default {
         chizzyIcon: '#EB003C', //
         chizzyDetail: '#22C55E', //
         chizzyDarkLayer: '#212139', //
+        buttonGradient:
+          'radial-gradient(59.21% 78.44% at 50% 50%, #5A38A3 0%, #683FAB 31.77%, #9D52FF 68.23%, #EDBCFC 96.35%)',
       },
       spacing: {},
       fontFamily: {

@@ -313,7 +313,7 @@ export const SellCardHome = (props) => {
   useEffect(() => {
     if (allTokensToL && !tToken) {
       // setToToken(allTokensToL[0]);
-      setToToken(allTokensToL[4]);
+      setToToken(allTokensToL[3]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensToL]);

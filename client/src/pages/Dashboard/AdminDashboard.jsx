@@ -320,12 +320,12 @@ export const AdminDashboard = () => {
   return (
     <div className="flex flex-row gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
       <>
-        <div className="hidden xl:flex">
+        <div className="hidden 2xl:flex">
           <DashboardMenuAdmin setPage={setPage} user={user} page={page} />
         </div>
 
         {page === 'Update' && txData ? null : (
-          <div className="flex xl:hidden z-20">
+          <div className="flex 2xl:hidden z-20">
             <DashboardMenuAdminMobile
               setPage={setPage}
               user={user}

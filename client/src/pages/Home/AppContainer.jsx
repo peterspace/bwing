@@ -57,6 +57,8 @@ import {
 } from '../../redux/features/transaction/transactionSlice';
 
 import { networksOptions } from '../../constants';
+import { Elipse } from '../../assets/mints';
+import FlashlightBg from './FlashlightBg';
 
 export const AppContainer = (props) => {
   const {
@@ -143,15 +145,109 @@ export const AppContainer = (props) => {
 
   return (
     <>
-      <div className="flex flex-col">
-        {percentageProgress === 1 ? (
-          <>
-            <div
-              className={`${styles.hero} flex flex-col justify-center items-center`}
-              // className={`flex flex-col justify-center items-center`}
-            >
-              <div className={`mt-[24px] mb-[24px] xl:mt-[64px] xl:mb-[64px] flex justify-center`}>
-                <>
+      <div className="relative h-screen flex flex-col">
+        <div className="fixed z-10 w-screen">
+          <FlashlightBg />
+        </div>
+        <div className="z-20">
+          <div className="flex flex-col">
+            {percentageProgress === 1 ? (
+              <>
+                <div
+                  className={`flex flex-col justify-center items-center`}
+                >
+                  <div
+                    className={`mt-[24px] mb-[24px] xl:mt-[64px] xl:mb-[64px] flex justify-center`}
+                  >
+                    <>
+                      {service === 'exchange' && subService === 'exchange' && (
+                        <ExchangeHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+                      {service === 'buy' && subService === 'buyCash' && (
+                        <BuyCashHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+                      {service === 'buy' && subService === 'buyCard' && (
+                        <BuyCardHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+
+                      {service === 'sell' && subService === 'sellCash' && (
+                        <SellCashHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+
+                      {service === 'sell' && subService === 'sellCard' && (
+                        <SellCardHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+
+                      {service === 'defi' && subService === 'defi' && (
+                        <DefiHome
+                          mode={mode}
+                          service={service}
+                          setService={setService}
+                          subService={subService}
+                          setSubService={setSubService}
+                          setTxInfo={setTxInfo}
+                          txInfo={txInfo}
+                          user={user}
+                          setPercentageProgressHome={setPercentageProgress}
+                        />
+                      )}
+                    </>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="h-screen mt-[64px] mb-[64px] overflow-auto">
                   {service === 'exchange' && subService === 'exchange' && (
                     <ExchangeHome
                       mode={mode}
@@ -231,216 +327,145 @@ export const AppContainer = (props) => {
                       txInfo={txInfo}
                       user={user}
                       setPercentageProgressHome={setPercentageProgress}
+                      isToLoading={isToLoading}
+                      setIsToLoading={setIsToLoading}
+                      isFromLoading={isFromLoading}
+                      setIsFromLoading={setIsFromLoading}
                     />
                   )}
-                </>
-              </div>
+                </div>
+              </>
+            )}
+
+            {/* =============={others}=======================*/}
+            {service === 'exchange' && subService === 'exchange' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsExchange}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpExchange} title={'Helpful guides'} />
+                    <FaqCard data={faqExchange} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {service === 'buy' && subService === 'buyCash' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsBuy}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpBuy} title={'Helpful guides'} />
+                    <FaqCard data={faqBuy} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {service === 'buy' && subService === 'buyCard' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsBuy}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpBuy} title={'Helpful guides'} />
+                    <FaqCard data={faqBuy} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {service === 'sell' && subService === 'sellCash' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsSell}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpSell} title={'Helpful guides'} />
+                    <FaqCard data={faqSell} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {service === 'sell' && subService === 'sellCard' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsSell}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpSell} title={'Helpful guides'} />
+                    <FaqCard data={faqSell} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {service === 'defi' && subService === 'defi' && (
+              <>
+                <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
+                  <div className="mt-[64px]">
+                    <FeedBackContainer data={feedback} title={'Testimonials'} />
+                  </div>
+
+                  <HowToCard
+                    data={stepsDefi}
+                    title={`How to ${service} Crypto`}
+                  />
+
+                  <div className="flex flex-col xl:flex-row gap-[16px]">
+                    <HelpGuide data={helpDefi} title={'Helpful guides'} />
+                    <FaqCard data={faqDefi} title={`FaQ ${service}`} />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          <Sectioning />
+          {/* New Components */}
+        
+          <div className="relative bg-white dark:bg-background-dark text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
+            <div className="flex flex-col justify-center items-center">
+              <FooterMini />
             </div>
-          </>
-        ) : (
-          <>
-            <div className="h-screen mt-[64px] mb-[64px] overflow-auto">
-              {service === 'exchange' && subService === 'exchange' && (
-                <ExchangeHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                />
-              )}
-              {service === 'buy' && subService === 'buyCash' && (
-                <BuyCashHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                />
-              )}
-              {service === 'buy' && subService === 'buyCard' && (
-                <BuyCardHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                />
-              )}
-
-              {service === 'sell' && subService === 'sellCash' && (
-                <SellCashHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                />
-              )}
-
-              {service === 'sell' && subService === 'sellCard' && (
-                <SellCardHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                />
-              )}
-
-              {service === 'defi' && subService === 'defi' && (
-                <DefiHome
-                  mode={mode}
-                  service={service}
-                  setService={setService}
-                  subService={subService}
-                  setSubService={setSubService}
-                  setTxInfo={setTxInfo}
-                  txInfo={txInfo}
-                  user={user}
-                  setPercentageProgressHome={setPercentageProgress}
-                  isToLoading={isToLoading}
-                  setIsToLoading={setIsToLoading}
-                  isFromLoading={isFromLoading}
-                  setIsFromLoading={setIsFromLoading}
-                />
-              )}
-            </div>
-          </>
-        )}
-
-        {/* =============={others}=======================*/}
-        {service === 'exchange' && subService === 'exchange' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard
-                data={stepsExchange}
-                title={`How to ${service} Crypto`}
-              />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpExchange} title={'Helpful guides'} />
-                <FaqCard data={faqExchange} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-
-        {service === 'buy' && subService === 'buyCash' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpBuy} title={'Helpful guides'} />
-                <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-
-        {service === 'buy' && subService === 'buyCard' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard data={stepsBuy} title={`How to ${service} Crypto`} />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpBuy} title={'Helpful guides'} />
-                <FaqCard data={faqBuy} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-
-        {service === 'sell' && subService === 'sellCash' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpSell} title={'Helpful guides'} />
-                <FaqCard data={faqSell} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-
-        {service === 'sell' && subService === 'sellCard' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard data={stepsSell} title={`How to ${service} Crypto`} />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpSell} title={'Helpful guides'} />
-                <FaqCard data={faqSell} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-
-        {service === 'defi' && subService === 'defi' && (
-          <>
-            <div className="mt-[64px] flex flex-col justify-center items-center gap-[64px] mb-[64px]">
-              <div className="mt-[64px]">
-                <FeedBackContainer data={feedback} title={'Testimonials'} />
-              </div>
-
-              <HowToCard data={stepsDefi} title={`How to ${service} Crypto`} />
-
-              <div className="flex flex-col xl:flex-row gap-[16px]">
-                <HelpGuide data={helpDefi} title={'Helpful guides'} />
-                <FaqCard data={faqDefi} title={`FaQ ${service}`} />
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-      {/* <div className="flex bg-lightslategray-300 w-full h-px mb-[24px]" /> */}
-      <Sectioning />
-
-      <div className="relative text-gray-900 dark:text-gray-100 w-full overflow-auto text-left text-sm font-montserrat">
-        <div className="flex flex-col justify-center items-center">
-          <FooterMini />
+          </div>
         </div>
       </div>
     </>

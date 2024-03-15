@@ -14,6 +14,10 @@ import {
   AVAX,
   BCN,
   BCH,
+  Flashlight,
+  Flashlight1,
+  Elipse,
+  ElipseScreen,
 } from '../../assets/mints';
 import { AnimatePresence, motion } from 'framer-motion';
 import Register from './Register';
@@ -28,9 +32,39 @@ const Login = () => {
   const successMsg = useSelector(successMessage);
   return (
     <div className="relative h-screen flex flex-col">
+       {/* <span className="flex flex-row justify-center rotate-12 z-10">
+        <Elipse className="fill-[#4B2C7E] dark:fill-[#4B2C7E] w-[1294px] h-[1109px]" />
+      </span> */}
       <span className="absolute bottom-[45%] left-[20%] w-[48px] h-[48px] rotate-12 animate-pulse">
         <BNB className="fill-gray-300" />
       </span>
+      <>
+       {/* <span className="absolute top-[10%] left-[20%] w-[48px] h-[48px] rotate-12 animate-pulse">
+        <Flashlight1 className="fill-gray-300" />
+      </span>
+      <span className="absolute top-[20%] left-[40%] w-[48px] h-[48px] rotate-12 animate-pulse">
+        <Flashlight className="fill-gray-300" />
+      </span> */}
+      </>
+     
+      <>
+      {/* <span className="absolute top-[0%] left-[50%] w-[48px] h-[48px] rotate-12 animate-pulse">
+        <Elipse className="fill-[#4B2C7E] dark:fill-red-600 w-[1294px] h-[1109px]" />
+      </span>
+      <span className="absolute top-[0%] left-[50%] w-[48px] h-[48px] rotate-12 animate-pulse">
+        <Elipse className="fill-[#4B2C7E] dark:fill-red-600 w-[1294px] h-[1109px]" />
+      </span> */}
+      </>
+      
+      {/* <span className="absolute top-[0%] left-[50%] w-[48px] h-[48px] rotate-12">
+        <Elipse className="fill-[#4B2C7E] dark:fill-[#4B2C7E] w-[1294px] h-[1109px]" />
+      </span> */}
+      {/* <span className="absolute top-[5%] right-[40%] w-[48px] h-[48px] rotate-12">
+        <ElipseScreen className="fill-[#4B2C7E] dark:fill-red-600 w-[1294px] h-[1109px]" />
+      </span> */}
+      {/* <span className="absolute top-[5%] right-[40%] w-[48px] h-[48px] rotate-12 animate-pulse">
+        <Elipse className="fill-gray-300" />
+      </span> */}
       <span className="absolute bottom-[40%] left-[10%] w-[32px] h-[32px]">
         <MATIC className="fill-gray-300" />
       </span>
@@ -63,6 +97,7 @@ const Login = () => {
           <BAY className="fill-rose-600" />
         </span>
 
+      
         <div className="relative flex flex-row rounded-lg shadow-md z-20">
           <img
             src={'./loginframe.jpg'}

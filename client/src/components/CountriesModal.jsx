@@ -1,87 +1,7 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import { FiSearch } from 'react-icons/fi';
 
-import CloseIcon from '../assets/icons/close.svg';
-import { IoIosClose } from 'react-icons/io';
-
-// const customStyles = {
-//   overlay: {
-//     position: 'fixed',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(0, 0, 0, 0.40)',
-//   },
-//   content: {
-//     width: '412px',
-//     height: '538px',
-//     borderRadius: '1.25rem',
-//     border: 'none',
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//     overflow: 'hidden',
-//   },
-// };
-
-const customStyles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.40)',
-  },
-  content: {
-    width: '320px',
-    height: '538px',
-    borderRadius: '1.25rem',
-    border: 'none',
-    top: '30%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    overflow: 'hidden',
-    backgroundColor: '#ffffff',
-  },
-};
-
-const customStyleDark = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.40)',
-  },
-  content: {
-    width: '320px',
-    height: '538px',
-    borderRadius: '1.25rem',
-    border: 'none',
-    top: '30%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    overflow: 'hidden',
-    backgroundColor: '#161621',
-  },
-};
-
-Modal.setAppElement('#root');
-
-function CountriesModal(props) {
+export default function CountriesModal(props) {
   const {
     filteredTokens,
     isTokenModalOpen,
@@ -95,7 +15,6 @@ function CountriesModal(props) {
     cityData,
     city,
   } = props;
-
   const [searchTerm, setSearchTerm] = useState('');
   const [tokensList, setTokensList] = useState([]);
   const modeL = localStorage.getItem('mode')
@@ -125,110 +44,97 @@ function CountriesModal(props) {
     );
     setTokensList(searchResult);
   };
-
   return (
-    <Modal
-      isOpen={isTokenModalOpen}
-      onRequestClose={closeModal}
-      // style={customStyles}
-      style={modeL ? customStyles : customStyleDark}
-      contentLabel="Token Modal"
-    >
-      <div className="flex flex-col px-4 pt-4 bg-white dark:bg-app-container-dark rounded-3xl">
-        <div className="flex h-8 justify-between mb-6">
-        <div className="text-5xl leading-8 text-black dark:text-white font-medium">
-            {title}
+    <>
+      {isTokenModalOpen && (
+        <div
+          className={`self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full w-[375px] xl:w-[470px] 2xl:w-[600] mt-[-576px] xl:mt-[-640px]`}
+        >
+          <div className="flex-1 rounded-3xl bg-gray-100 dark:bg-chizzy text-chizzyblue dark:text-white font-montserrat box-border flex flex-col items-start justify-start px-[15px] gap-[24px] max-w-full z-[1] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200 pt-4 pb-8 h-[554px]">
+            <div className="self-stretch flex flex-row items-start justify-between">
+              <div className="h-[42px] w-[185px] flex flex-row items-center justify-start">
+                <h3 className="m-0 relative text-inherit font-bold font-roboto text-[24px]">
+                  {title}
+                </h3>
+              </div>
+              <div className="h-9 w-[200px] flex flex-row items-start justify-end py-0 px-2.5 box-border">
+                <div
+                  className="transition-transform duration-300 hover:scale-110 cursor-pointer w-9 rounded-lg box-border flex flex-row items-center justify-center py-2 px-[7px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200"
+                  onClick={closeModal}
+                >
+                  <img
+                    className="h-5 w-5 relative"
+                    loading="lazy"
+                    alt=""
+                    src="/return1.svg"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="self-stretch flex flex-col items-start justify-start">
+              <div className="self-stretch rounded-lg flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+                <div className="h-10 flex flex-row items-center justify-center">
+                  <img
+                    className="h-5 w-5 relative overflow-hidden shrink-0"
+                    alt=""
+                    src="/search.svg"
+                  />
+                </div>
+                <div className="h-10 w-px relative">
+                  <div className="absolute top-[calc(50%_-_10px)] left-[calc(50%_-_0.5px)] bg-gray-500 w-px h-5 overflow-hidden" />
+                </div>
+                <input
+                  className="w-full [border:none] [outline:none] bg-[transparent] h-10 flex flex-row items-center justify-center py-3 px-0 box-border font-roboto text-sm text-gray-500"
+                  placeholder="Search"
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="self-stretch h-[316px] overflow-auto shrink-0 flex flex-col items-center justify-start max-w-full text-base">
+              {cities &&
+                cities.map((token, i) => (
+                  <div
+                    key={i}
+                    className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]"
+                    onClick={() => {
+                      setCountry(token?.country);
+                      setCity(token?.cities[0]);
+                      setIsTokenModalOpen(false);
+                    }}
+                  >
+                    <div className="self-stretch flex flex-row items-start justify-start gap-[8px] max-w-full">
+                      <div className="flex flex-row items-center justify-center">
+                        <img
+                          className="h-[42px] w-[42px] relative rounded-737xl overflow-hidden shrink-0 object-cover"
+                          src={token?.flag}
+                          alt={token?.country}
+                        />
+                      </div>
+                      <div className="flex-1 flex flex-col items-start justify-start min-w-[246px] max-w-full">
+                        <div className="self-stretch flex flex-row items-start justify-between">
+                          <div className="w-[189.5px] flex flex-row items-start justify-start">
+                            <b className="relative">{token?.country}</b>
+                          </div>
+                          {/* <div
+                          className={`w-[189.5px] flex flex-row items-start justify-end text-gray-500`}
+                        >
+                          <div className="relative"> {token?.cities[0]}</div>
+                        </div> */}
+                        </div>
+                        <div className="self-stretch flex flex-row items-start justify-start">
+                          <div className="relative">{token?.cities[0]}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="self-stretch h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
+                  </div>
+                ))}
+            </div>
           </div>
-          <span
-            className="transition-transform duration-300 hover:scale-110 cursor-pointer text-slate-600 hover:text-slate-700 dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-chizzy ms-auto -mx-1.5 -my-1.5 h-[36px] w-[36px] border border-solid border-lightslategray-300 dark:border-lightslategray-100"
-            onClick={closeModal}
-          >
-            {' '}
-            <IoIosClose size={36} />
-          </span>
         </div>
-        {paymentMethod === 'cash' ? (
-          <div className="flex flex-col  mt-[32px] gap-[8px]">
-            <div className="flex flex-row bg-chizzySnow dark:bg-background-dark rounded h-[62px] justify-between">
-              <div className="w-full">
-                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-600">
-                  Country of residence
-                </div>
-                <div className="ml-2 flex flex-row gap-[8px] items-center w-full mt-[13px]">
-                  <div className="mr-4 w-full">
-                    <select
-                      name="country"
-                      className={`cursor-pointer [border:none] outline-none w-full text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block bg-[transparent]`}
-                      value={country}
-                      onChange={(ev) => setCountry(ev.target.value)}
-                    >
-                      {cities &&
-                        cities.map((country, index) => (
-                          <option key={index} value={country?.country}>
-                            {country?.country}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row bg-chizzySnow dark:bg-background-dark rounded h-[62px] justify-between">
-              <div className="w-full">
-                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-600">
-                  City
-                </div>
-                <div className="ml-2 flex flex-row gap-[8px] items-center w-full mt-[13px]">
-                  <div className="mr-4 w-full">
-                    <select
-                      name="city"
-                      className={`cursor-pointer [border:none] outline-none w-full text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block bg-[transparent]`}
-                      value={city}
-                      onChange={(ev) => setCity(ev.target.value)}
-                    >
-                      {cityData &&
-                        cityData.map((city, index) => (
-                          <option key={index} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col mt-[32px] gap-[8px]">
-            <div className="flex flex-row bg-chizzySnow dark:bg-background-dark rounded h-[62px] justify-between">
-              <div className="w-full">
-                <div className="ml-2 mt-2 text-xs leading-[18px] text-darkslategray-200 dark:text-gray-600">
-                  Country of residence
-                </div>
-                <div className="ml-2 flex flex-row gap-[8px] items-center mt-[13px]">
-                  <div className="mr-4 w-full">
-                    <select
-                      name="country"
-                      className={`cursor-pointer [border:none] outline-none w-full text-[12px] md:text-[16px] leading-[24px] text-darkslategray-200 dark:text-gray-100 inline-block bg-[transparent]`}
-                      value={country}
-                      onChange={(ev) => setCountry(ev.target.value)}
-                    >
-                      {cities &&
-                        cities.map((country, index) => (
-                          <option key={index} value={country?.country}>
-                            {country?.country}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </Modal>
+      )}
+    </>
   );
 }
-
-export default CountriesModal;

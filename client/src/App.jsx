@@ -28,6 +28,8 @@ import SupportMessageAdmin from './components/SupportMessageAdmin';
 import AdminWallets from './pages/Tanstack/AdminWallets';
 import Login from './pages/logGo/Login';
 import SendEmail from './pages/logGo/SendEmail';
+import FlashlightBg from './pages/Home/FlashlightBg';
+import TokenList from './components/TokenList';
 
 axios.defaults.withCredentials = true;
 
@@ -300,7 +302,7 @@ function App() {
     >
       {' '}
       <BrowserRouter>
-        <div className="h-[50px]">
+        <div className="h-[50px] z-50">
           <Header mode={mode} setMode={setMode} user={user} />
         </div>
         {/* <div className="flex bg-lightslategray-300 h-px mt-11" /> */}
@@ -319,6 +321,9 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/sendEmail" element={<SendEmail />} />
+            <Route path="/tokenList" element={<TokenList />} />
+
+            <Route path="/flashlightBg" element={<FlashlightBg />} />
 
 
             <Route path="/adminWallets" element={<AdminWallets />} />

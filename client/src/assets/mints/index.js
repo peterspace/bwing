@@ -28,6 +28,11 @@ import Email from "./Email";
 import Password from "./Password";
 import Info from "./Info";
 import RefreshOutline from "./RefreshOutline";
+import Flashlight1 from "./Flashlight1";
+import Flashlight from "./Flashlight";
+import Elipse from "./Elipse";
+import Elipse1 from "./Elipse1";
+import ElipseScreen from "./ElipseScreen";
 
 
 export {
@@ -58,5 +63,10 @@ export {
     Email,
     Password,
     Info,
-    RefreshOutline
+    RefreshOutline,
+    Flashlight1,
+    Flashlight,
+    Elipse,
+    Elipse1,
+    ElipseScreen
 }

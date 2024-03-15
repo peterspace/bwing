@@ -893,7 +893,7 @@ export const CardUpdateInfo = (props) => {
     <div
       className={`flex flex-col justify-center items-center gap-[24px] w-full`}
     >
-      <div className="flex flex-colgap-2 fixed top-[60px] md:top-[200px]">
+      <div className="flex flex-colgap-2 fixed top-[60px] md:top-[120px]">
         <CashUpdate
           item={txData}
           setPage={setPage}
