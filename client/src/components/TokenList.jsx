@@ -63,11 +63,7 @@ export default function TokenList(props) {
   return (
     <>
       {isTokenModalOpen && (
-        <div
-          // className="self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full mt-[-476px] w-[375px] xl:w-[470px] 2xl:w-[600]"
-          //   className="self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full mt-[-596px] w-[375px] xl:w-[470px] 2xl:w-[600]"
-          className="self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full mt-[-536px] w-[375px] xl:w-[470px] 2xl:w-[600]"
-        >
+        <div className="self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full mt-[-536px] w-[375px] xl:w-[470px] 2xl:w-[600]">
           <div className="flex-1 rounded-3xl bg-white dark:bg-chizzy text-chizzyblue dark:text-white font-montserrat box-border flex flex-col items-start justify-start px-[15px] gap-[24px] max-w-full z-[1] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200 pt-4 pb-8 h-[554px]">
             <div className="self-stretch flex flex-row items-start justify-between">
               <div className="h-[42px] w-[185px] flex flex-row items-center justify-start">
@@ -123,7 +119,7 @@ export default function TokenList(props) {
                   <div className="self-stretch flex flex-row items-start justify-start gap-[8px] max-w-full">
                     <div className="flex flex-row items-center justify-center">
                       <img
-                        className="h-[42px] w-[42px] relative rounded-737xl overflow-hidden shrink-0 object-cover"
+                        className="h-[42px] w-[42px] relative rounded-full overflow-hidden shrink-0 object-cover"
                         src={token?.image}
                         alt={token?.symbol}
                       />
@@ -136,7 +132,9 @@ export default function TokenList(props) {
                           </b>
                         </div>
                         <div
-                          className={`w-[189.5px] flex flex-row items-start justify-end text-gray-500 ${setTokenChainBg(token?.chain)}`}
+                          className={`w-[189.5px] flex flex-row items-start justify-end text-gray-500 ${setTokenChainBg(
+                            token?.chain
+                          )}`}
                         >
                           <div className="relative"> {token?.chain}</div>
                         </div>

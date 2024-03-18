@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { BsFillArrowRightCircleFill } from 'react-icons/bs';
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
-import { FiCheckCircle } from 'react-icons/fi';
+import { FiCheckCircle } from "react-icons/fi";
 
 export const ProgressStages2 = () => {
   const progressStage1 = (
     <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
-          {' '}
-          <FiCheckCircle color="#4f46e5" size={24} />{' '}
+          {" "}
+          <FiCheckCircle color="#4f46e5" size={24} />{" "}
         </div>
         <div className="flex flex-col">
           <div className="text-xs leading-[17px] inline-block dark:text-white">
@@ -27,7 +27,7 @@ export const ProgressStages2 = () => {
     <div className="flex justify-center rounded-lg p-4 bg-chizzySnow dark:bg-gray-1000">
       <div className="flex flex-row gap-2 w-full">
         <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0">
-          {' '}
+          {" "}
           <BsFillArrowRightCircleFill color="#4f46e5" size={24} />
         </div>
 
@@ -84,35 +84,33 @@ export const ProgressStages2 = () => {
   );
 
   const processBar = (
-    <div className="card-gradient-app-container rounded-lg">
-      <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] p-4">
-        <div className="flex flex-col gap-[24px]">
-          <div className="flex flex-col gap-[10px]">
-            <div className="flex flex-row gap-4 mt-2">
-              {/* ========================{step 2 of 4}===================================== */}
-              <div className="leading-[20px] text-black dark:text-silver inline-block w-[223px]">
-                Provide address information to create a transaction
-              </div>
+    <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] p-4">
+      <div className="flex flex-col gap-[24px]">
+        <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-row gap-4 mt-2">
+            {/* ========================{step 2 of 4}===================================== */}
+            <div className="leading-[20px] text-black dark:text-silver inline-block w-[223px]">
+              Provide address information to create a transaction
             </div>
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row w-full h-[12px] bg-chizzySnow rounded-lg">
-                <div className="flex bg-bgPrimary rounded-lg w-[35%] h-[12px]" />
-              </div>
-              <div className="ml-4 flex flex-row justify-center items-center text-gray-200 bg-chizzySnow dark:bg-exchange-rate-dark rounded w-[49px] h-[20px] text-[10px]">
-                2 of 4
-              </div>
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row w-full h-[12px] bg-chizzySnow rounded-lg">
+              <div className="flex bg-bgPrimary rounded-lg w-[35%] h-[12px]" />
             </div>
-            <div className="flex bg-lightslategray-300 w-[276px] h-px" />
+            <div className="ml-4 flex flex-row justify-center items-center text-gray-200 bg-chizzySnow dark:bg-exchange-rate-dark rounded w-[49px] h-[20px] text-[10px]">
+              2 of 4
+            </div>
           </div>
-
-          <div className="flex flex-col gap-[8px]">
-            {progressStage1}
-            {progressStage2}
-            {progressStage3}
-            {progressStage4}
-          </div>
-          <div className="flex flex-row w-full" />
+          <div className="flex bg-lightslategray-300 w-[276px] h-px" />
         </div>
+
+        <div className="flex flex-col gap-[8px]">
+          {progressStage1}
+          {progressStage2}
+          {progressStage3}
+          {progressStage4}
+        </div>
+        <div className="flex flex-row w-full" />
       </div>
     </div>
   );

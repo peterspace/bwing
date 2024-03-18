@@ -3,7 +3,8 @@ const RatesDataModel = (props) => {
     props;
 
   return (
-    <div className="flex flex-col items-start justify-start text-left text-xs text-gray-500 font-roboto">
+    <div className="card-gradient-app-container">
+ <div className="flex flex-col items-start justify-start text-left text-xs text-gray-500 font-roboto">
       <div className="rounded-lg bg-chizzySnow dark:bg-background-dark overflow-hidden flex flex-col items-start justify-start p-[5px] border-[1px] border-solid border-lightslategray-300">
         <div className="flex flex-col items-start justify-start">
           {/* You’ll send */}
@@ -147,6 +148,8 @@ const RatesDataModel = (props) => {
         </div>
       </div>
     </div>
+    </div>
+   
   );
 };
 

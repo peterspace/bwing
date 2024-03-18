@@ -183,7 +183,7 @@ const SupportModel = () => {
         <FooterMini />
       </div> */}
       <div className="h-full flex flex-col gap-2 justify-center items-center">
-        <div className="flex flex-row gap-2 fixed ss:top-[120px] xl:top-[200px]">
+        <div className="flex flex-row gap-2 fixed ss:top-[120px] lg:top-[200px]">
           {enquiry}
         </div>
         <FooterMini />

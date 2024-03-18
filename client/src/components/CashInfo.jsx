@@ -113,12 +113,14 @@ export const CashInfo = (props) => {
                 Payment Details
               </div>
               <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded px-6 py-1"
+                className="cursor-pointer transition-all ease-in duration-75 flex flex-row justify-center items-center hover:opacity-90 text-black dark:text-white shrink-0 rounded-lg hover:bg-opacity-0"
                 onClick={() => {
                   setPercentageProgress(1);
                 }}
               >
-                Back
+                <span className="px-3 py-2 bg-bgPrimary text-white rounded">
+                  Back
+                </span>
               </div>
             </div>
             <div className="flex bg-lightslategray-300 h-px" />

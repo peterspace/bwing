@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useFormik } from 'formik';
-import { validateAddressService } from '../services/apiService';
+import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import { validateAddressService } from "../services/apiService";
 
-import { MdQrCodeScanner } from 'react-icons/md';
-import { AnimatePresence, motion } from 'framer-motion';
+import { MdQrCodeScanner } from "react-icons/md";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const WalletInfo = (props) => {
   const {
@@ -49,8 +49,8 @@ export const WalletInfo = (props) => {
 
   const { values, handleChange, handleSubmit, touched, errors } = useFormik({
     initialValues: {
-      senderAddress: '',
-      recipientAddress: '',
+      senderAddress: "",
+      recipientAddress: "",
       isTermsChecked: false,
     },
     validate: async (values) => {
@@ -60,7 +60,7 @@ export const WalletInfo = (props) => {
         errors.senderAddress = `Sending address is required!`;
       }
       if (!values.recipientAddress) {
-        errors.recipientAddress = 'Recieiving address is required!';
+        errors.recipientAddress = "Recieiving address is required!";
       }
 
       const validitySenderAddress = await checkAddress(values.senderAddress);
@@ -80,7 +80,7 @@ export const WalletInfo = (props) => {
 
       if (values.senderAddress) {
         if (validitySenderAddress?.valid == false) {
-          errors.senderAddress = 'Invalid sending address!';
+          errors.senderAddress = "Invalid sending address!";
         }
 
         if (
@@ -95,7 +95,7 @@ export const WalletInfo = (props) => {
 
       if (values.recipientAddress) {
         if (validityRecipientAddress?.valid == false) {
-          errors.recipientAddress = 'Invalid recieiving address!';
+          errors.recipientAddress = "Invalid recieiving address!";
         }
 
         if (
@@ -110,7 +110,7 @@ export const WalletInfo = (props) => {
 
       if (!values.isTermsChecked) {
         errors.isTermsChecked =
-          'Please indicate that you have read and agree to the Terms and Conditions and Privacy Policy';
+          "Please indicate that you have read and agree to the Terms and Conditions and Privacy Policy";
       }
 
       return errors;
@@ -123,9 +123,9 @@ export const WalletInfo = (props) => {
 
   const walletInfo = (
     <>
-      <div className="card-gradient-app-container rounded-lg">
+      <div className="card-gradient-app-container">
         <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] p-1">
-          {' '}
+          {" "}
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-[24px]">
               <div className="flex flex-col gap-[10px] m-4">
@@ -136,12 +136,14 @@ export const WalletInfo = (props) => {
                     Wallet address
                   </div>
                   <div
-                    className="cursor-pointer flex flex-row justify-center items-center bg-chizzySnow dark:bg-exchange-rate-dark hover:opacity-90 text-gray-200 shrink-0 rounded py-1 px-3 md:px-6 md:py-3"
+                    className="cursor-pointer transition-all ease-in duration-75 flex flex-row justify-center items-center hover:opacity-90 text-black dark:text-white shrink-0 rounded-lg hover:bg-opacity-0"
                     onClick={() => {
                       setPercentageProgress(1);
                     }}
                   >
-                    Back
+                    <span className="px-3 py-2 bg-bgPrimary text-white rounded">
+                      Back
+                    </span>
                   </div>
                 </div>
                 <div className="flex bg-lightslategray-300  h-px" />

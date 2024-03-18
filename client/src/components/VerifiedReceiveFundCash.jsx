@@ -65,7 +65,8 @@ export const VerifiedReceiveFundCash = (props) => {
 
   const sendFund = (
     <>
-      {txData?.status === 'Completed' ? (
+    <div className="card-gradient-app-container">
+    {txData?.status === 'Completed' ? (
         <div className="flex justify-center rounded-lg bg-white dark:bg-background-dark text-slate-700 dark:text-slate-100 shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[350px] xl:w-[500px] p-4">
           <div className="flex flex-col gap-[24px]">
             <div className="flex flex-col gap-[8px] xl:gap-[12px]">
@@ -250,6 +251,8 @@ export const VerifiedReceiveFundCash = (props) => {
           </div>
         </div>
       )}
+    </div>
+      
     </>
   );
   return <>{sendFund}</>;

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Progress } from '../../../components/Progress';
-import { EstimatorBuyCard } from '../../../components/EstimatorBuyCard';
-import { DetailsCardLocal } from '../../../components/DetailsCardLocal';
-import { Providers } from '../../../components/Providers';
-import { BankInfo } from '../../../components/BankInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
-import RatesLocalModel from '../../../components/RatesLocalModel';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Progress } from "../../../components/Progress";
+import { EstimatorBuyCard } from "../../../components/EstimatorBuyCard";
+import { DetailsCardLocal } from "../../../components/DetailsCardLocal";
+import { Providers } from "../../../components/Providers";
+import { BankInfo } from "../../../components/BankInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { getTokenListExchange } from "../../../redux/features/token/tokenSlice";
+import RatesLocalModel from "../../../components/RatesLocalModel";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const BuyCardScreen2 = (props) => {
   const {
@@ -38,7 +38,7 @@ export const BuyCardScreen2 = (props) => {
     loadingExchangeRate,
   } = props;
   const dispatch = useDispatch();
-  const [selectedProvider, setSelectedProvider] = useState('Phone');
+  const [selectedProvider, setSelectedProvider] = useState("Phone");
 
   useEffect(() => {
     dispatch(getTokenListExchange());
@@ -73,21 +73,14 @@ export const BuyCardScreen2 = (props) => {
                 setCardNumber={setCardNumber}
                 phone={phone}
                 setPhone={setPhone}
-                provider={provider}
-              />
-            </>
-          )}
-          {providers?.map((provider, i) => (
-            <>
-              <Providers
-                key={i}
                 setProvider={setProvider}
                 provider={provider}
+                providers={providers}
                 selectedProvider={selectedProvider}
                 setSelectedProvider={setSelectedProvider}
               />
             </>
-          ))}
+          )}
         </div>
         <div className="flex-col xl:flex-row h-[374px]">
           <RatesLocalModel

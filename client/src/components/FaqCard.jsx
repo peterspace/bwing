@@ -8,11 +8,11 @@ export const HowToComponent = (props) => {
 
   const newCard = (
     <div className="card-gradient">
-      <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] xl:w-[500px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300  dark:border dark:border-solid">
+      <div className="flex justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-[280px] sm:w-[375px] lg:w-[500px] p-4 bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300  dark:border dark:border-solid">
         <div className="flex flex-row gap-2 w-full">
           <div className="flex flex-col">
             <div
-              className="cursor-pointer flex flex-row justify-between items-center w-[280px] sm:w-[375px] xl:w-[500px]"
+              className="cursor-pointer flex flex-row justify-between items-center w-[280px] sm:w-[375px] lg:w-[500px]"
               onClick={() => setShow((prev) => !prev)}
             >
               <div className="text-base font-sans font-medium leading-[24px] inline-block">

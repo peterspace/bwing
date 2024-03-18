@@ -7,11 +7,11 @@ const Sectioning = () => {
         <div className="self-stretch h-full p-20 bg-gray-100 dark:bg-[#0B0B12] flex-col justify-start items-center gap-2.5 flex">
           <div className="card-gradient">
             <div className="flex flex-col self-stretch justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-fit h-fit bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
-              <div className="flex flex-col rounded-lg justify-center items-center xl:flex-row xl:justify-start xl:items-centers gap-20 bg-gray-100 dark:bg-[#0B0B12] p-4">
-                <div className="w-[204px] justify-center items-center xl:justify-start xl:items-start gap-2.5 flex">
+              <div className="flex flex-col rounded-lg justify-center items-center lg:flex-row lg:justify-start lg:items-centers gap-20 bg-gray-100 dark:bg-[#0B0B12] p-4">
+                <div className="w-[204px] justify-center items-center lg:justify-start lg:items-start gap-2.5 flex">
                   <img className="w-[204px] h-[204px]" src="/sandglass.png" />
                 </div>
-                <div className="flex-col px-8 xl:px-0 justify-center items-center xl:justify-start xl:items-start gap-4 inline-flex max-w-[300px]">
+                <div className="flex-col px-8 lg:px-0 justify-center items-center lg:justify-start lg:items-start gap-4 inline-flex max-w-[300px]">
                   <div className="justify-center items-center gap-2.5 inline-flex">
                     <div className="text-gray-500 dark:text-white text-2xl font-extrabold font-['Inter']">
                       Limitless exchange
@@ -35,8 +35,8 @@ const Sectioning = () => {
 
           <div className="card-gradient">
             <div className="flex flex-col self-stretch justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-fit h-fit bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
-              <div className="flex flex-col justify-center items-center xl:flex-row xl:justify-start xl:items-start gap-20 p-4">
-                <div className="flex-col px-8 xl:px-0 justify-center items-center xl:justify-start xl:items-start gap-2.5 inline-flex max-w-[300px]">
+              <div className="flex flex-col justify-center items-center lg:flex-row lg:justify-start lg:items-start gap-20 p-4">
+                <div className="flex-col px-8 lg:px-0 justify-center items-center lg:justify-start lg:items-start gap-2.5 inline-flex max-w-[300px]">
                   <div className="justify-center items-center gap-2.5 inline-flex">
                     <div className="text-gray-500 dark:text-white text-2xl font-extrabold font-['Inter']">
                       Cross Chain Exchange
@@ -93,7 +93,7 @@ const Sectioning = () => {
                     More details
                   </div>
                 </div>
-                <div className="w-[204px] justify-center items-center xl:justify-start xl:items-start gap-2.5 flex">
+                <div className="w-[204px] justify-center items-center lg:justify-start lg:items-start gap-2.5 flex">
                   <img className="w-[204px] h-[204px]" src="/sandglass.png" />
                 </div>
               </div>
@@ -103,11 +103,11 @@ const Sectioning = () => {
 
           <div className="card-gradient">
             <div className="flex flex-col self-stretch justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-fit h-fit bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
-              <div className="flex flex-col rounded-lg justify-center items-center xl:flex-row xl:justify-start xl:items-centers gap-20 bg-gray-100 dark:bg-[#0B0B12] p-4">
-                <div className="w-[204px] justify-center items-center xl:justify-start xl:items-start gap-2.5 flex">
+              <div className="flex flex-col rounded-lg justify-center items-center lg:flex-row lg:justify-start lg:items-centers gap-20 bg-gray-100 dark:bg-[#0B0B12] p-4">
+                <div className="w-[204px] justify-center items-center lg:justify-start lg:items-start gap-2.5 flex">
                   <img className="w-[204px] h-[204px]" src="/goals.png" />
                 </div>
-                <div className="flex-col px-8 xl:px-0 justify-center items-center xl:justify-start xl:items-start gap-4 inline-flex max-w-[300px]">
+                <div className="flex-col px-8 lg:px-0 justify-center items-center lg:justify-start lg:items-start gap-4 inline-flex max-w-[300px]">
                   <div className="justify-center items-center gap-2.5 inline-flex">
                     <div className="text-gray-500 dark:text-white text-2xl font-extrabold font-['Inter']">
                       Multiple Fiat Currencies
@@ -132,8 +132,8 @@ const Sectioning = () => {
 
           <div className="card-gradient">
             <div className="flex flex-col self-stretch justify-center rounded-lg shadow-[0px_2px_4px_rgba(26,_47,_79,_0.2)] w-fit h-fit bg-white dark:bg-app-container-dark text-gray-900 dark:text-gray-100 dark:border-lightslategray-300 dark:box-border dark:border dark:border-solid">
-              <div className="flex flex-col justify-center items-center xl:flex-row xl:justify-start xl:items-start gap-20 p-4">
-                <div className="flex-col px-8 xl:px-0 justify-center items-center xl:justify-start xl:items-start gap-2.5 inline-flex max-w-[300px]">
+              <div className="flex flex-col justify-center items-center lg:flex-row lg:justify-start lg:items-start gap-20 p-4">
+                <div className="flex-col px-8 lg:px-0 justify-center items-center lg:justify-start lg:items-start gap-2.5 inline-flex max-w-[300px]">
                   <div className="justify-center items-center gap-2.5 inline-flex">
                     <div className="text-gray-500 dark:text-white text-2xl font-extrabold font-['Inter']">
                       DeFi-based
@@ -190,7 +190,7 @@ const Sectioning = () => {
                     More details
                   </div>
                 </div>
-                <div className="w-[204px] justify-center items-center xl:justify-start xl:items-start gap-2.5 flex">
+                <div className="w-[204px] justify-center items-center lg:justify-start lg:items-start gap-2.5 flex">
                   <img className="w-[204px] h-[204px]" src="/minning.png" />
                 </div>
               </div>
@@ -215,7 +215,7 @@ const Sectioning = () => {
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-20">
-            <div className="justify-start items-start gap-20 flex flex-col xl:flex-row">
+            <div className="justify-start items-start gap-20 flex flex-col lg:flex-row">
               <div className="p-[25px] h-[280px] bg-white dark:bg-[#161621] rounded-[18px] justify-center items-center flex">
                 <div className="w-[280px] flex-col justify-start items-start gap-5 flex">
                   <div className="w-[60px] h-[60px] p-3.5 bg-sky-500 rounded-xl justify-center items-center inline-flex">
@@ -263,7 +263,7 @@ const Sectioning = () => {
                 </div>
               </div>
             </div>
-            <div className="justify-start items-start gap-20 flex flex-col xl:flex-row">
+            <div className="justify-start items-start gap-20 flex flex-col lg:flex-row">
               <div className="p-[25px] h-[280px] bg-white dark:bg-[#161621] rounded-[18px] justify-center items-center flex">
                 <div className="w-[280px] flex-col justify-start items-start gap-5 flex">
                   <div className="w-[60px] h-[60px] p-3.5 bg-yellow-400 rounded-xl justify-center items-center inline-flex">
@@ -316,7 +316,7 @@ const Sectioning = () => {
         <div className="relative bg-lightslategray-300 w-full h-px overflow-hidden shrink-0" />
         {/* <div className="self-stretch py-[65px] bg-gray-100 dark:bg-[#161621] justify-center items-center inline-flex"> */}
         <div className="self-stretch pt-[65px] bg-white dark:bg-[#161621] justify-center items-center inline-flex">
-          <div className="self-stretch flex flex-col xl:flex-row justify-start items-start gap-20">
+          <div className="self-stretch flex flex-col lg:flex-row justify-start items-start gap-20">
             <div className="flex flex-col items-start justify-start gap-[10px]">
               <div className="relative font-medium inline-block h-[35px] shrink-0 text-gray-900 dark:text-gray-100">
                 BUY PAIRS

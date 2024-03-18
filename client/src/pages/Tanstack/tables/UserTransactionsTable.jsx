@@ -60,11 +60,23 @@ const UserTransactionsTable = ({ data, tableData }) => {
         Header: 'From',
         accessor: 'from',
         sortType: 'basic',
+        Cell: ({ value }) =>
+          value ? (
+            <div className="text-green-700 dark:text-green-600">{value}</div>
+          ) : (
+            <div>-</div>
+          ),
       },
       {
         Header: 'To',
         accessor: 'to',
         sortType: 'basic',
+        Cell: ({ value }) =>
+          value ? (
+            <div className="text-red-600 dark:text-red-600">{value}</div>
+          ) : (
+            <div>-</div>
+          ),
       },
       {
         Header: 'Pin',
@@ -85,7 +97,7 @@ const UserTransactionsTable = ({ data, tableData }) => {
         Cell: ({ value }) => {
           const timeToLeft = renderTimeToLeft(value);
           return (
-            <div className="flex justify-start">
+            <div className="flex justify-start text-red-600 dark:text-red-600">
               <div>{timeToLeft}</div>
             </div>
           );

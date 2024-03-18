@@ -124,7 +124,7 @@ export default function TokenList(props) {
                   <div className="self-stretch flex flex-row items-start justify-start gap-[8px] max-w-full">
                     <div className="flex flex-row items-center justify-center">
                       <img
-                        className="h-[42px] w-[42px] relative rounded-737xl overflow-hidden shrink-0 object-cover"
+                        className="h-[42px] w-[42px] relative rounded-full overflow-hidden shrink-0 object-cover"
                         src={token?.image}
                         alt={token?.symbol}
                       />

@@ -4,7 +4,7 @@ export const HowToComponent = (props) => {
   const { l} = props;
   const newCard = (
     
-    <div className="flex justify-center  w-[280px] sm:w-[375px] xl:w-[500px] p-4">
+    <div className="flex justify-center  w-[280px] sm:w-[375px] lg:w-[500px] p-4">
      <div className="flex flex-row gap-2 w-full">
           <div className="flex justify-center items-center w-[24px] h-[24px] flex-shrink-0 bg-gray-100 dark:bg-bgDarkMode text-gray-900 dark:text-gray-100 p-1.5 rounded">
             <div className="text-11xl leading-[28px] text-bgPrimary inline-block">

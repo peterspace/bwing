@@ -16,7 +16,7 @@ const Footer = () => {
             EXCHANGE PAIRS
           </div>
           {/* EXCHANGE STARTS */}
-          <div className="flex flex-col xl:flex-row items-start justify-start gap-[40px] text-sm font-roboto">
+          <div className="flex flex-col lg:flex-row items-start justify-start gap-[40px] text-sm font-roboto">
             <div className="overflow-hidden flex flex-col items-start justify-start gap-[4px]">
               <div
                 className="flex flex-row items-start justify-start gap-[5px]"
@@ -312,7 +312,7 @@ const Footer = () => {
             BUY PAIRS
           </div>
           {/* BUY STARTS */}
-          <div className="flex flex-col xl:flex-row items-start justify-start gap-[40px] text-sm font-roboto">
+          <div className="flex flex-col lg:flex-row items-start justify-start gap-[40px] text-sm font-roboto">
             <div className="overflow-hidden flex flex-col items-start justify-start gap-[4px]">
               <div
                 className="flex flex-row items-start justify-start gap-[5px]"
@@ -1035,7 +1035,7 @@ const Footer = () => {
           </div>
           {/* SELL STARTS */}
 
-          <div className="flex flex-col xl:flex-row items-start justify-start gap-[20px] text-sm font-roboto">
+          <div className="flex flex-col lg:flex-row items-start justify-start gap-[20px] text-sm font-roboto">
             <div className="overflow-hidden flex flex-col items-start justify-start gap-[4px]">
               <div
                 className="flex flex-row items-start justify-start gap-[5px]"

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebookSquare } from 'react-icons/fa';
-import { loginUser, validateEmail } from '../../services/apiService';
-import { toast } from 'react-toastify';
-import { IoIosClose } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
-import { LoginUser } from '../../redux/features/user/userSlice';
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { Email, Password } from '../../assets/mints';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebookSquare } from "react-icons/fa";
+import { loginUser, validateEmail } from "../../services/apiService";
+import { toast } from "react-toastify";
+import { IoIosClose } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { LoginUser } from "../../redux/features/user/userSlice";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { Email, Password } from "../../assets/mints";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const Login = (props) => {
   const {
@@ -39,18 +39,18 @@ export const Login = (props) => {
   const { values, handleChange, handleSubmit, touched, errors, resetForm } =
     useFormik({
       initialValues: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       },
       validate: (values) => {
         const errors = {};
 
         if (!values.email) {
-          errors.email = 'Email address is required!';
+          errors.email = "Email address is required!";
         }
 
         if (!values.password) {
-          errors.password = 'Password is required!';
+          errors.password = "Password is required!";
         }
 
         return errors;
@@ -65,7 +65,7 @@ export const Login = (props) => {
 
     if (isLocal) {
       if (!validateEmail(email)) {
-        return toast.error('Please enter a valid email');
+        return toast.error("Please enter a valid email");
       }
 
       userData = {
@@ -79,7 +79,7 @@ export const Login = (props) => {
       console.log({ userData: data });
       if (data) {
         dispatch(LoginUser(data));
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data));
         //=================={new}============================
         setIsSucess(true);
         setIsError(false);
@@ -135,7 +135,7 @@ export const Login = (props) => {
   }, [redirectS]);
 
   const handleSuccessLogin = () => {
-    console.log('loggedIn sucessfull');
+    console.log("loggedIn sucessfull");
   };
 
   /************************************************************************************** */
@@ -168,13 +168,13 @@ export const Login = (props) => {
           <span className="sr-only">Fire icon</span>
         </div>
         <div className="ms-3 text-sm font-normal">
-          Welcome back {newUser ? newUser?.name : ''}!
+          Welcome back {newUser ? newUser?.name : ""}!
         </div>
         <div
           className="ml-4 cursor-pointer text-sm font-medium text-bgPrimary p-1.5 rounded-lg dark:text-bgPrimary hover:underline hover:underline-offset-4"
           onClick={() => {
             setTimeout(() => {
-              navigate('/dashboard');
+              navigate("/dashboard");
             }, 200);
           }}
         >
@@ -185,11 +185,11 @@ export const Login = (props) => {
           className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
           onClick={() => {
             setTimeout(() => {
-              navigate('/');
+              navigate("/");
             }, 200);
           }}
         >
-          {' '}
+          {" "}
           <IoIosClose size={32} />
         </span>
       </div>
@@ -222,7 +222,7 @@ export const Login = (props) => {
           <span className="sr-only">Fire icon</span>
         </div>
         <span className="ml-2 inline-flex items-center">
-          {' '}
+          {" "}
           Invalid credentials!
         </span>
         <div
@@ -239,11 +239,11 @@ export const Login = (props) => {
           className="transition-transform duration-300 hover:scale-110 cursor-pointer text-bgPrimary dark:text-gray-100 rounded-lg bg-chizzySnow dark:bg-bgPrimary ms-auto -mx-1.5 -my-1.5 h-8 w-8"
           onClick={() => {
             setTimeout(() => {
-              navigate('/');
+              navigate("/");
             }, 200);
           }}
         >
-          {' '}
+          {" "}
           <IoIosClose size={32} />
         </span>
       </div>
@@ -251,161 +251,163 @@ export const Login = (props) => {
   );
 
   const login = (
-    <div className="rounded-lg flex justify-center bg-white dark:bg-background-dark text-black dark:text-gray-100 overflow-hidden flex-col items-center p-4 border-[1px] border-solid border-lightslategray-300 shadow-md">
-      <div className="flex flex-col gap-[24px]">
-        <div className="flex flex-col gap-[8px] xl:gap-[12px]">
-          <div className="flex flex-row justify-between mt-[24px]">
-            <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
-              Login to Blendery
+    <div className="card-gradient-app-container">
+      <div className="rounded-lg flex justify-center bg-white dark:bg-background-dark text-black dark:text-gray-100 overflow-hidden flex-col items-center p-4 border-[1px] border-solid border-lightslategray-300 shadow-md">
+        <div className="flex flex-col gap-[24px]">
+          <div className="flex flex-col gap-[8px] xl:gap-[12px]">
+            <div className="flex flex-row justify-between mt-[24px]">
+              <div className="text-[18px] xl:text-[24px] font-extrabold leading-[32px] inline-block">
+                Login to Blendery
+              </div>
+              <div className="transition-transform duration-300 hover:scale-125 cursor-pointer flex flex-row justify-center items-center p-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="#130D1A"
+                  className="w-5 h-5"
+                  onClick={() => setRedirectHome(true)}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
             </div>
-            <div className="transition-transform duration-300 hover:scale-125 cursor-pointer flex flex-row justify-center items-center p-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="#130D1A"
-                className="w-5 h-5"
-                onClick={() => setRedirectHome(true)}
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
 
-          <div className="flex bg-lightslategray-300 w-full h-px" />
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div
-            className="flex flex-col gap-[8px]"
-            onClick={() => {
-              setIsLocal(true);
-              setIsFacebook(false);
-              setIsGoogle(false);
-            }}
-          >
-            <div>
+            <div className="flex bg-lightslategray-300 w-full h-px" />
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div
+              className="flex flex-col gap-[8px]"
+              onClick={() => {
+                setIsLocal(true);
+                setIsFacebook(false);
+                setIsGoogle(false);
+              }}
+            >
+              <div>
+                <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
+                  <label
+                    htmlFor="email"
+                    className="input-label flex flex-row gap-2 items-center justify-between"
+                  >
+                    <Email className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    className="input-custom w-full"
+                    value={values.email}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div>
+                {touched.email && errors.email && (
+                  <span className="text-[#ef4444] px-2 py-1 rounded-md error">
+                    {errors.email}
+                  </span>
+                )}
+              </div>
+
               <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
                 <label
-                  htmlFor="email"
+                  htmlFor="password"
                   className="input-label flex flex-row gap-2 items-center justify-between"
                 >
-                  <Email className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
+                  <Password className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
                 </label>
                 <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
                   className="input-custom w-full"
-                  value={values.email}
+                  value={values.password}
                   onChange={handleChange}
                 />
               </div>
-            </div>
-            <div>
-              {touched.email && errors.email && (
-                <span className="text-[#ef4444] px-2 py-1 rounded-md error">
-                  {errors.email}
-                </span>
-              )}
-            </div>
-
-            <div className="input-group-variant focus-within:border-indigo-700 hover:border-indigo-600 group rounded outline outline-lightslategray-300 outline-[1px]">
-              <label
-                htmlFor="password"
-                className="input-label flex flex-row gap-2 items-center justify-between"
-              >
-                <Password className="w-[16px] h-[16px] fill-rose-600 group-focus-within:fill-indigo-700 group-hover:fill-indigo-600" />
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Password"
-                className="input-custom w-full"
-                value={values.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              {touched.password && errors.password && (
-                <span className="text-[#ef4444] px-2 py-1 rounded-md error">
-                  {errors.password}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-row justify-center items-center">
-              <div
-                className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white py-2 shrink-0 rounded w-full"
-                onClick={handleSubmit}
-              >
-                Login
+              <div>
+                {touched.password && errors.password && (
+                  <span className="text-[#ef4444] px-2 py-1 rounded-md error">
+                    {errors.password}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-row justify-center items-center">
+                <div
+                  className="cursor-pointer flex flex-row justify-center items-center bg-bgPrimary hover:opacity-90 text-white py-2 shrink-0 rounded w-full"
+                  onClick={handleSubmit}
+                >
+                  Login
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-        <div className="flex flex-row gap-2 items-center justify-center">
-          <div className="flex bg-lightslategray-300 w-[150px] h-px" />
-          <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
-            or
+          <div className="flex flex-row gap-2 items-center justify-center">
+            <div className="flex bg-lightslategray-300 w-[150px] h-px" />
+            <div className="text-smi leading-[22px] text-gray-300 dark:text-gray-500 inline-block">
+              or
+            </div>
+            <div className="flex bg-lightslategray-300 w-[150px] h-px" />
           </div>
-          <div className="flex bg-lightslategray-300 w-[150px] h-px" />
-        </div>
-        <div className="flex flex-col justify-center items-center gap-[16px]">
-          <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
-            onClick={() => {
-              setIsLocal(false);
-              setIsFacebook(false);
-              setIsGoogle(true);
-            }}
-          >
-            <FcGoogle size={20} />
-            <span className="ml-2"> Continue with Google</span>
+          <div className="flex flex-col justify-center items-center gap-[16px]">
+            <div
+              className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+              onClick={() => {
+                setIsLocal(false);
+                setIsFacebook(false);
+                setIsGoogle(true);
+              }}
+            >
+              <FcGoogle size={20} />
+              <span className="ml-2"> Continue with Google</span>
+            </div>
+            <div
+              className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
+              onClick={() => {
+                setIsLocal(false);
+                setIsFacebook(false);
+                setIsGoogle(true);
+              }}
+            >
+              <FaFacebookSquare size={20} />
+              <span className="ml-2"> Continue with Facebook</span>
+            </div>
           </div>
-          <div
-            className="cursor-pointer flex flex-row justify-center items-center bg-white dark:bg-background-dark hover:opacity-90 text-bgPrimary py-2 shrink-0 rounded w-full outline outline-bgPrimary outline-[1.5px]"
-            onClick={() => {
-              setIsLocal(false);
-              setIsFacebook(false);
-              setIsGoogle(true);
-            }}
-          >
-            <FaFacebookSquare size={20} />
-            <span className="ml-2"> Continue with Facebook</span>
-          </div>
-        </div>
 
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row">
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-row">
+              <div
+                className="cursor-pointer text-smi leading-[22px] text-bgPrimary hover:text-opacity-80 inline-block"
+                onClick={() => {
+                  setIsLogin(false);
+                  setIsRegister(false);
+                  setIsForgot(true);
+                }}
+              >
+                Forgot your password?
+              </div>
+            </div>
             <div
               className="cursor-pointer text-smi leading-[22px] text-bgPrimary hover:text-opacity-80 inline-block"
               onClick={() => {
                 setIsLogin(false);
-                setIsRegister(false);
-                setIsForgot(true);
+                setIsRegister(true);
+                setIsForgot(false);
               }}
             >
-              Forgot your password?
+              Signup now!
             </div>
           </div>
-          <div
-            className="cursor-pointer text-smi leading-[22px] text-bgPrimary hover:text-opacity-80 inline-block"
-            onClick={() => {
-              setIsLogin(false);
-              setIsRegister(true);
-              setIsForgot(false);
-            }}
-          >
-            Signup now!
-          </div>
-        </div>
 
-        <div className="flex flex-row w-full" />
+          <div className="flex flex-row w-full" />
+        </div>
       </div>
     </div>
   );
@@ -414,10 +416,10 @@ export const Login = (props) => {
       {isError && (
         <>
           <motion.section
-            initial={{ width: '85%' }}
-            animate={{ width: 'auto' }}
+            initial={{ width: "85%" }}
+            animate={{ width: "auto" }}
             exit={{ width: 0 }}
-            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            transition={{ type: "spring", bounce: 0.2, duration: 0.8 }}
             className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
           >
             <div className="flex flex-row items-start h-screen">
@@ -429,10 +431,10 @@ export const Login = (props) => {
       {isSucess && (
         <>
           <motion.section
-            initial={{ width: '85%' }}
-            animate={{ width: 'auto' }}
+            initial={{ width: "85%" }}
+            animate={{ width: "auto" }}
             exit={{ width: 0 }}
-            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            transition={{ type: "spring", bounce: 0.2, duration: 0.8 }}
             className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
           >
             <div className="flex flex-row items-start h-screen">
@@ -445,10 +447,10 @@ export const Login = (props) => {
       {isSignIn && (
         <>
           <motion.section
-            initial={{ width: '85%' }}
-            animate={{ width: 'auto' }}
+            initial={{ width: "85%" }}
+            animate={{ width: "auto" }}
             exit={{ width: 0 }}
-            transition={{ type: 'spring', bounce: 0.2, duration: 0.8 }}
+            transition={{ type: "spring", bounce: 0.2, duration: 0.8 }}
             className={`flex flex-col gap-0 justify-center items-center overflow-clip`}
           >
             <div className="flex flex-row items-start h-screen">{login}</div>

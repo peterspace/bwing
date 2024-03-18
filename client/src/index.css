@@ -157,7 +157,7 @@ body {
     @apply bg-gradient-to-r from-blue-200 to-purple-200  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
   }
   .card-gradient-app-container {
-    @apply bg-gradient-to-r from-violet-300 to-indigo-300  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;
+    @apply bg-gradient-to-r from-violet-300 to-indigo-300  dark:from-blue-500 dark:to-purple-500 items-center justify-center rounded-lg p-[1px] h-fit w-fit shadow-md;
   }
   .card-gradient-app-price {
     @apply bg-gradient-to-r from-violet-300 to-indigo-300  dark:from-blue-600 dark:to-purple-600 items-center justify-center rounded-lg p-[1px] w-fit shadow-md;

@@ -6,8 +6,6 @@ const UserRecord = (props) => {
   const { data } = props;
   const [tableData, setTableData] = useState([]);
 
-
-
   useEffect(() => {
     formatTableData(data);
   }, []);

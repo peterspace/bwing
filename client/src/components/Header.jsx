@@ -125,7 +125,7 @@ export const Header = (props) => {
   };
 
   return (
-    <div className="flex flex-col xl:flex-row w-full xl:h-[68px] px-10 justify-between items-center bg-white dark:bg-app-container-dark box-border select-none pb-2">
+    <div className="flex flex-col lg:flex-row w-full lg:h-[68px] px-10 justify-between items-center bg-white dark:bg-app-container-dark box-border select-none pb-2">
       <div className="flex justify-center items-center">
         <div
           className="text-gray-900 dark:text-gray-100 text-11xl leading-8 font-bold cursor-pointer"

@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { DashboardMenuUser } from '../../components/DashboardMenuUser';
-import { useDispatch, useSelector } from 'react-redux';
+import { DashboardMenuUser } from "../../components/DashboardMenuUser";
+import { DashboardMenuMobile } from "../../components/DashboardMenuMobile";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getTransactionByTxIdService,
   getUserTransactions,
@@ -15,41 +14,41 @@ import {
   getUserSellCash,
   getUserSellCard,
   getUserMessages,
-} from '../../services/apiService';
-import { getTransactionByTxIdInternal } from '../../redux/features/transaction/transactionSlice';
-import UserRecord from '../Tanstack/UserRecord';
-import CircularProgress from '../../components/CircularProgress';
-import SupportMessage from '../../components/SupportMessage';
+} from "../../services/apiService";
+import { getTransactionByTxIdInternal } from "../../redux/features/transaction/transactionSlice";
+import UserRecord from "../Tanstack/UserRecord";
+import CircularProgress from "../../components/CircularProgress";
+import SupportMessage from "../../components/SupportMessage";
 
 const menu = [
   {
-    name: 'Bitcoin',
-    id: 'bitcoin', //coingeko id
+    name: "Bitcoin",
+    id: "bitcoin", //coingeko id
     logoUrl:
-      'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-    symbol: 'BTC',
-    amount: '1.21',
+      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+    symbol: "BTC",
+    amount: "1.21",
     date: `$31, 688`,
     status: true,
   },
   {
-    name: 'Ethereum',
+    name: "Ethereum",
     logoUrl:
-      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-    id: 'ethereum', //coingeko id
-    symbol: 'ETH',
-    amount: '3.25',
+      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+    id: "ethereum", //coingeko id
+    symbol: "ETH",
+    amount: "3.25",
     date: `$5,150.37`,
     status: true,
   },
 
   {
-    name: 'Tron',
+    name: "Tron",
     logoUrl:
-      'https://assets.coingecko.com/coins/images/1094/large/tron-logo.png?1547035066',
-    id: 'tron', //coingeko id
-    symbol: 'TRX',
-    amount: '1500',
+      "https://assets.coingecko.com/coins/images/1094/large/tron-logo.png?1547035066",
+    id: "tron", //coingeko id
+    symbol: "TRX",
+    amount: "1500",
     date: `$1,499.67`,
     status: false,
   },
@@ -76,8 +75,8 @@ export const UserDashboard = (props) => {
   );
   const [refetchTxData, setRefetchTxData] = useState();
 
-  const transactions = localStorage.getItem('transactions')
-    ? JSON.parse(localStorage.getItem('transactions'))
+  const transactions = localStorage.getItem("transactions")
+    ? JSON.parse(localStorage.getItem("transactions"))
     : null;
 
   console.log({ transactions: transactions });
@@ -110,19 +109,19 @@ export const UserDashboard = (props) => {
   //   }
   // );
   //=========={Pages}================================================================
-  const pageL = localStorage.getItem('page')
-    ? JSON.parse(localStorage.getItem('page'))
-    : 'Exchange';
+  const pageL = localStorage.getItem("page")
+    ? JSON.parse(localStorage.getItem("page"))
+    : "Exchange";
   const [page, setPage] = useState(pageL);
   console.log({ page: page });
   //=========={Pages}================================================================
 
-  const isViewIng = localStorage.getItem('isViewIng')
-    ? JSON.parse(localStorage.getItem('isViewIng'))
+  const isViewIng = localStorage.getItem("isViewIng")
+    ? JSON.parse(localStorage.getItem("isViewIng"))
     : false;
 
-  const txDataUpdate = localStorage.getItem('txDataUpdate')
-    ? JSON.parse(localStorage.getItem('txDataUpdate'))
+  const txDataUpdate = localStorage.getItem("txDataUpdate")
+    ? JSON.parse(localStorage.getItem("txDataUpdate"))
     : null;
 
   const [newData, setNewData] = useState();
@@ -132,13 +131,13 @@ export const UserDashboard = (props) => {
 
   //======================================================================================================
   useEffect(() => {
-    localStorage.setItem('prevLocation', JSON.stringify(location?.pathname));
+    localStorage.setItem("prevLocation", JSON.stringify(location?.pathname));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   //======================================================================================================
   useEffect(() => {
     if (page) {
-      localStorage.setItem('page', JSON.stringify(page));
+      localStorage.setItem("page", JSON.stringify(page));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -299,36 +298,36 @@ export const UserDashboard = (props) => {
 
       let service = item?.service;
       let subService = item?.subService;
-      localStorage.removeItem('isViewIng'); // remove from local storage to allow new data
-      if (service === 'exchange' && subService === 'exchange') {
-        setService('exchange');
-        setSubService('exchange');
+      localStorage.removeItem("isViewIng"); // remove from local storage to allow new data
+      if (service === "exchange" && subService === "exchange") {
+        setService("exchange");
+        setSubService("exchange");
         navigate(`/exchange`);
       }
-      if (service === 'defi' && subService === 'defi') {
-        setService('defi');
-        setSubService('defi');
+      if (service === "defi" && subService === "defi") {
+        setService("defi");
+        setSubService("defi");
         navigate(`/defi`);
       }
-      if (service === 'buy' && subService === 'buyCash') {
-        setService('buy');
-        setSubService('buyCash');
+      if (service === "buy" && subService === "buyCash") {
+        setService("buy");
+        setSubService("buyCash");
         navigate(`/buyCash`);
       }
 
-      if (service === 'buy' && subService === 'buyCard') {
-        setService('buy');
-        setSubService('buyCard');
+      if (service === "buy" && subService === "buyCard") {
+        setService("buy");
+        setSubService("buyCard");
         navigate(`/buyCard`);
       }
-      if (service === 'sell' && subService === 'sellCash') {
-        setService('sell');
-        setSubService('sellCash');
+      if (service === "sell" && subService === "sellCash") {
+        setService("sell");
+        setSubService("sellCash");
         navigate(`/sellCash`);
       }
-      if (service === 'sell' && subService === 'sellCard') {
-        setService('sell');
-        setSubService('sellCard');
+      if (service === "sell" && subService === "sellCard") {
+        setService("sell");
+        setSubService("sellCard");
         navigate(`/sellCard`);
       }
     }, 1000); // after 1 sec
@@ -351,78 +350,88 @@ export const UserDashboard = (props) => {
 
   return (
     <div className="flex gap-5 bg-[#F3F3F3] dark:bg-bgDarkMode text-gray-900 dark:text-gray-100">
-      <DashboardMenuUser setPage={setPage} user={user} page={page} />
-      <div className="container mx-auto p-1">
-        {page === 'Exchange' &&
-          (allExchangeTransactions ? (
-            <UserRecord data={allExchangeTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Defi' &&
-          (allDefiTransactions ? (
-            <UserRecord data={allDefiTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Buy (Cash)' &&
-          (allBuyCashTransactions ? (
-            <UserRecord data={allBuyCashTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Buy (Card)' &&
-          (allBuyCardTransactions ? (
-            <UserRecord data={allBuyCardTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Sell (Cash)' &&
-          (allSellCashTransactions ? (
-            <UserRecord data={allSellCashTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Sell (Card)' &&
-          (allSellCardTransactions ? (
-            <UserRecord data={allSellCardTransactions} />
-          ) : (
-            <div className="w-full h-full flex justify-center items-center">
-              <CircularProgress />
-            </div>
-          ))}
-        {page === 'Create' && (
-          <SupportMessage
-            allMessages={allMessages}
-            fetchAllMessages={fetchAllMessages}
-            page={'Create'}
-          />
-        )}
-        {/* {page === 'Inbox' && allMessages ? (
+      <>
+        <>
+          <div className="hidden 2xl:flex">
+            <DashboardMenuUser setPage={setPage} user={user} page={page} />
+          </div>
+          <div className="flex 2xl:hidden z-20">
+            <DashboardMenuMobile setPage={setPage} user={user} page={page} />
+          </div>
+        </>
+
+        <div className="container mx-auto p-1">
+          {page === "Exchange" &&
+            (allExchangeTransactions ? (
+              <UserRecord data={allExchangeTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Defi" &&
+            (allDefiTransactions ? (
+              <UserRecord data={allDefiTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Buy (Cash)" &&
+            (allBuyCashTransactions ? (
+              <UserRecord data={allBuyCashTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Buy (Card)" &&
+            (allBuyCardTransactions ? (
+              <UserRecord data={allBuyCardTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Sell (Cash)" &&
+            (allSellCashTransactions ? (
+              <UserRecord data={allSellCashTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Sell (Card)" &&
+            (allSellCardTransactions ? (
+              <UserRecord data={allSellCardTransactions} />
+            ) : (
+              <div className="w-full h-full flex justify-center items-center">
+                <CircularProgress />
+              </div>
+            ))}
+          {page === "Create" && (
+            <SupportMessage
+              allMessages={allMessages}
+              fetchAllMessages={fetchAllMessages}
+              page={"Create"}
+            />
+          )}
+          {/* {page === 'Inbox' && allMessages ? (
             <SupportMessage allMessages={allMessages} page={'Inbox'} />
           ) : (
             <div className="w-full h-full flex justify-center items-center">
               <CircularProgress />
             </div>
           )} */}
-        {page === 'Inbox' && allMessages && (
-          <SupportMessage
-            allMessages={allMessages}
-            fetchAllMessages={fetchAllMessages}
-            page={'Inbox'}
-          />
-        )}
-      </div>
+          {page === "Inbox" && allMessages && (
+            <SupportMessage
+              allMessages={allMessages}
+              fetchAllMessages={fetchAllMessages}
+              page={"Inbox"}
+            />
+          )}
+        </div>
+      </>
     </div>
   );
 };
