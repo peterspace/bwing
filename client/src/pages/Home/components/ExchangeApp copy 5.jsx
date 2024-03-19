@@ -1,23 +1,17 @@
-import { useState, useEffect } from 'react';
-import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
-import { useDispatch } from 'react-redux';
-import TokenModal from '../../../components/TokenModal';
-import OptionsModalBuy from '../../../components/OptionsModalBuy';
-import OptionsModalSell from '../../../components/OptionsModalSell';
-import CountriesModal from '../../../components/CountriesModal';
-import PaymenOptionsModal from '../../../components/PaymenOptionsModal';
-import ServiceHeaderBuy from './ServiceHeaderBuy';
-import RatesLocalModel from '../../../components/RatesLocalModel';
-
-import Menu from './Menu';
-import ServiceHeader from './ServiceHeader';
-import FToken from './FToken';
-import TToken from './TToken';
-
+import { useState, useEffect } from "react";
+import { getTokenListExchange } from "../../../redux/features/token/tokenSlice";
+import { useDispatch } from "react-redux";
+import TokenModal from "../../../components/TokenModal";
+import Menu from "./Menu";
+import ServiceHeaderExchange from "./ServiceHeaderExchange";
+import FToken from "./FToken";
+import TToken from "./TToken";
+import { getMasterWalletsService } from "../../../services/apiService";
+import RatesLocalModel from "../../../components/RatesLocalModel";
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
-//SellCashDark
-const SellCashApp = (props) => {
+//ExchangeDark
+const ExchangeApp = (props) => {
   const {
     percentageProgress,
     setPercentageProgress,
@@ -37,52 +31,48 @@ const SellCashApp = (props) => {
     setTxInfo,
     allTokensFrom,
     allTokensTo,
-    paymentMethod,
-    setPaymentMethod,
-    paymentOptions,
-    cities,
-    setCountry,
-    setCityData,
-    setCity,
-    country,
-    cityData,
-    city,
     transactionRates,
     loadingExchangeRate,
+    prevTValue,
+    setPrevTValue,
+    swapTokensPosition
   } = props;
   const dispatch = useDispatch();
 
   // const loading = true;
   // const loadingExchangeRate = true;
 
-  /********************************************************************************************************************** */
-  /********************************************************************************************************************** */
-  /*********************************************     LOCAL STATES    **************************************************** */
-  /********************************************************************************************************************** */
-  /********************************************************************************************************************** */
-  const [isNotCountrySupported, setIsNotCountrySupported] = useState(false);
   //======================={RATES and PRICES}========================================================
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
   const fromPrice = transactionRates ? transactionRates?.fromPrice : 0;
   const toPrice = transactionRates ? transactionRates?.toPrice : 0;
+  const directValue = transactionRates ? transactionRates?.directValue : 0; // directValue = Number(fValue) * exchangeRate;
+  console.log({ directValue: directValue });
+
   const [filteredfTokens, setFilteredfTokens] = useState();
   const [filteredtTokens, setFilteredtTokens] = useState();
   const [isFromTokenModalOpen, setIsFromTokenModalOpen] = useState(false);
+  console.log({ isFromTokenModalOpen });
   const [isToTokenModalOpen, setToTokenModalOpen] = useState(false);
-  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
-  const [isSubServiceModalOpen, setIsSubServiceModalOpen] = useState(false);
   const [ratesModalOpen, setRatesModalOpen] = useState(false); // close by default
-  const [isMinValue, setIsMinValue] = useState(false);
-  const [isMaxValue, setIsMaxValue] = useState(false);
-  const [minValue, setMinValue] = useState();
-  const [maxValue, setMaxValue] = useState();
+  const [transactionLimit, setTransactionLimit] = useState();
+  const [transactionError, setTransactionError] = useState();
+  const [transactionDifference, setTransactionDifference] = useState();
+  // const [prevTValue, setPrevTValue] = useState();
+
+  console.log({ transactionLimit: transactionLimit });
+  console.log({ transactionLimitbalance: transactionLimit?.balance });
+  console.log({ tTokenChain: tToken?.chain, tTokenSymbol: tToken?.symbol });
+  console.log({ transactionError: transactionError });
+  console.log({ transactionDifference: transactionDifference });
 
   //============================================{Token selection}==============================
   useEffect(() => {
     dispatch(getTokenListExchange());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     if (allTokensFrom) {
       filterFTokens();
@@ -128,32 +118,42 @@ const SellCashApp = (props) => {
   function onFromValueChanged(ev) {
     // setToValue(0);
     setFromValue(ev.target.value);
-  }
-
-  //================================================================================
-
-  useEffect(() => {
-    getCities();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [country]);
-
-  async function getCities() {
-    // let allCities;
-    cities?.map(async (l) => {
-      if (l.country === country) {
-        setCityData(l.cities);
-        setCity(l.cities[0]);
-      }
-    });
+    // verifyTransactionLimit()
   }
 
   //====================================================================================
 
   async function nextFunc() {
-    setService('sell');
-    setSubService('sellCash');
+    setService("exchange");
+    setSubService("exchange");
     setPercentageProgress(2);
   }
+
+  // function swapTokensPosition() {
+  //   let tmpToken = fToken;
+  //   setFromToken(tToken);
+  //   setToToken(tmpToken);
+  // }
+
+  // useEffect(() => {
+  //   if (prevTValue) {
+  //     setTimeout(() => {
+  //       setFromValue(prevTValue);
+  //       setPrevTValue(null);
+  //     }, [200]);
+  //   }
+  // }, [prevTValue]);
+
+  // function swapTokensPosition() {
+  //   setPrevTValue(tValue);
+  //   let tmpToken = fToken;
+  //   let tmValue = tValue;
+  //   setFromToken(tToken);
+  //   setToToken(tmpToken);
+  //   setTimeout(() => {
+  //     setFromValue(tmValue);
+  //   }, 200);
+  // }
 
   function openFromTokenModal() {
     setIsFromTokenModalOpen(true);
@@ -163,94 +163,85 @@ const SellCashApp = (props) => {
     setToTokenModalOpen(true);
   }
 
-  function openOptionsModal() {
-    setIsOptionsModalOpen(true);
-  }
-  function openSubServiceModal() {
-    setIsSubServiceModalOpen((prev) => !prev);
-  }
-
   function openRatesModal() {
     setRatesModalOpen((prev) => !prev);
   }
 
-  //==================================={RANGE}=================================================
   useEffect(() => {
-    if (!tValue || Number(tValue) <= minValue) {
-      setIsMinValue(true);
-    } else {
-      setIsMinValue(false);
-    }
-
-    if (Number(tValue) > maxValue) {
-      setIsMaxValue(true);
-    } else {
-      setIsMaxValue(false);
-    }
-
+    verifyTransactionLimit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tValue]);
+  }, [tValue, tToken]);
 
-  useEffect(() => {
-    updateTransactionsRange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tToken, tValue]);
+  async function verifyTransactionLimit() {
+    const response = await getMasterWalletsService();
+    // setTransactionLimit(response);
 
-  async function updateTransactionsRange() {
-    if (tToken?.symbol === 'gbp') {
-      setMinValue(2000);
-      setMaxValue(100000);
+    if (tToken?.chain === "Bitcoin") {
+      setTransactionLimit(response?.walletsBitcoinMaster?.btc);
     }
-    if (tToken?.symbol === 'eur') {
-      setMinValue(2000);
-      setMaxValue(100000);
+    // if (tToken?.chain === 'Ethereum') {
+    //   setTransactionLimit(response?.walletsEVMMaster);
+    // }
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "eth") {
+      setTransactionLimit(response?.walletsEVMMaster?.eth);
     }
-    if (tToken?.symbol === 'usd') {
-      setMinValue(2000);
-      setMaxValue(100000);
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "usdt") {
+      setTransactionLimit(response?.walletsEVMMaster?.usdt);
     }
-    if (tToken?.symbol === 'aed') {
-      setMinValue(10000);
-      setMaxValue(400000);
+    if (tToken?.chain === "Tron" && tToken?.symbol === "trx") {
+      setTransactionLimit(response?.walletsTronMaster?.trx);
     }
-    if (tToken?.symbol === 'rub') {
-      setMinValue(200000);
-      setMaxValue(10000000);
+    if (tToken?.chain === "Tron" && tToken?.symbol === "usdt") {
+      setTransactionLimit(response?.walletsTronMaster?.usdt);
     }
   }
+
+  useEffect(() => {
+    compareTransactionLimit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fValue, tValue, tToken, transactionLimit]);
+
+  async function compareTransactionLimit() {
+    if (Number(directValue) > Number(transactionLimit?.balance)) {
+      const difference =
+        Number(directValue) - Number(transactionLimit?.balance);
+      setTransactionDifference(difference);
+      setTransactionError(
+        `Transaction limit exceeded by: ${difference} ${tToken?.symbol.toUpperCase()}`
+      );
+    } else {
+      setTransactionDifference(null);
+      setTransactionError("");
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col xl:flex-row">
         <>
+          {" "}
           <section className="self-stretch flex flex-row items-start justify-center pt-0 px-5 pb-5 box-border max-w-full text-left text-5xl text-silver font-roboto">
             <div className="w-full flex flex-col items-start justify-start max-w-full">
+              {/* app container */}
               <div className="card-gradient-app-container rounded-3xl">
-                <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[12px] text-left text-13xl text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300">
+                <div className="rounded-3xl bg-chizzySnow dark:bg-app-container-dark box-border w-[375px] xl:w-[470px] 2xl:w-[600] flex flex-col items-center justify-start p-3 gap-[8px] text-left input-header text-chizzyblue dark:text-white font-montserrat border-[2px] border-solid border-lightslategray-300 dark:border-lightslategray-300">
                   <Menu
                     service={service}
                     setService={setService}
                     subService={subService}
                     setSubService={setSubService}
                   />
-                  <ServiceHeaderBuy
-                    symbolSubService={
-                      paymentMethod === 'card' ? 'Card' : 'Cash'
-                    }
-                    symbolCountry={country}
-                    openSubServiceModal={openSubServiceModal}
-                    openCountryModal={openOptionsModal}
-                    countries={cities}
-                    isSubServiceModalOpen={isSubServiceModalOpen}
-                    setIsSubServiceModalOpen={setIsSubServiceModalOpen}
-                    service={service}
-                    setService={setService}
-                    setSubService={setSubService}
-                    setPaymentMethod={setPaymentMethod}
-                    paymentOptions={paymentOptions}
+                  <ServiceHeaderExchange
+                    subService="Exchange"
+                    image={fToken?.image}
+                    symbol={fToken?.symbol.toUpperCase()}
+                    name={fToken?.chain ? fToken?.chain : fToken?.name}
+                    openModal={openFromTokenModal}
                   />
+
                   <div className="self-stretch flex flex-col items-center justify-start relative gap-[12px]">
                     <div className="self-stretch card-gradient-app-price rounded-3xl w-full">
-                      <div className="self-stretch rounded-3xl bg-chizzySnow dark:bg-background-dark overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[24px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+                      <div className="self-stretch rounded-3xl bg-chizzySnow dark:bg-background-dark overflow-hidden flex flex-col items-start justify-start pt-4 px-4 pb-8 gap-[8px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                         <div className="self-stretch flex flex-col gap-2">
                           <div className="input-title">{fTitle}</div>
                           <FToken
@@ -270,7 +261,7 @@ const SellCashApp = (props) => {
                             onChange={onFromValueChanged}
                           />
                           {loading ? (
-                            <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
+                            <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
                           ) : (
                             <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
                               <div className="relative inline-block w-[109px] h-[17px] shrink-0">
@@ -282,7 +273,7 @@ const SellCashApp = (props) => {
                       </div>
                     </div>
                     <div className="self-stretch card-gradient-app-price rounded-3xl w-full">
-                      <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy  overflow-hidden flex flex-col items-start justify-start p-4 gap-[8px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
+                      <div className="self-stretch rounded-3xl bg-white dark:bg-chizzy overflow-hidden flex flex-col items-start justify-start p-4 gap-[8px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
                         <div className="self-stretch flex flex-col gap-2">
                           <div className="input-title">{tTitle}</div>
                           <TToken
@@ -292,15 +283,13 @@ const SellCashApp = (props) => {
                             openModal={openToTokenModal}
                           />
                         </div>
+
                         <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
-                          <div className="self-stretch relative font-medium">
-                            {' '}
-                          </div>
                           {loading ? (
                             <>
-                              <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
+                              <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[30%] mb-2"></div>
                               <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                                <div className="relative animate-pulse h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mb-2"></div>
+                                <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mb-2"></div>
                               </div>
                             </>
                           ) : (
@@ -312,17 +301,6 @@ const SellCashApp = (props) => {
                                 <div className="relative inline-block w-[109px] h-[17px] shrink-0">
                                   ~${toPrice}
                                 </div>
-                                {isMinValue && (
-                                  <div className="flex-1 relative text-gray-500 text-right">
-                                    {`Min: ${minValue}`}
-                                  </div>
-                                )}
-
-                                {isMaxValue && (
-                                  <div className="flex-1 relative text-gray-500 text-right">
-                                    {` Max: ${maxValue}`}
-                                  </div>
-                                )}
                               </div>
                             </>
                           )}
@@ -337,11 +315,11 @@ const SellCashApp = (props) => {
                         ) : (
                           <>
                             <div className="flex-1 relative">
-                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{" "}
                               {tToken?.symbol.toUpperCase()}
                             </div>
                             <img
-                              className="cursor-pointer relative w-4 h-3 xl:h-4 overflow-hidden shrink-0 object-cover"
+                              className="cursor-pointer relative w-4 h-4 overflow-hidden shrink-0 object-cover"
                               alt=""
                               src="/chevronup@2x.png"
                               onClick={openRatesModal}
@@ -350,68 +328,29 @@ const SellCashApp = (props) => {
                         )}
                       </div>
                     </div>
-                    <div className="my-0 mx-[!important] absolute top-[calc(50%_-_60.5px)] left-[calc(50%_-_30px)] rounded-3xl bg-indigo-600 box-border h-[61px] flex flex-row items-start justify-start p-2 border-[12px] border-solid border-gray-100 dark:border-exchange-rate-dark">
+
+                    <div
+                      className="cursor-pointer transition-transform duration-300 hover:scale-110 my-0 mx-[!important] absolute top-[calc(50%_-_60.5px)] left-[calc(50%_-_30px)] rounded-3xl bg-indigo-600 box-border h-[61px] flex flex-row items-start justify-start p-2 border-[12px] border-solid border-indigo-100 dark:border-exchange-rate-dark"
+                      onClick={swapTokensPosition}
+                    >
                       <img
                         className="relative w-5 h-5 overflow-hidden shrink-0 object-cover"
                         alt=""
-                        src="/arrowdown@2x.png"
+                        src="/switch.png"
                       />
                     </div>
                   </div>
-
-                  <>
-                    {tValue < minValue && (
-                      <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto">
-                        <div className="flex-1 relative">
-                          {' '}
-                          {`Sell ${fToken?.symbol.toUpperCase()} now`}
-                        </div>
-                      </div>
-                    )}
-
-                    {tValue > maxValue && (
-                      <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto">
-                        <div className="flex-1 relative">
-                          {' '}
-                          {`Sell ${fToken?.symbol.toUpperCase()} now`}
-                        </div>
-                      </div>
-                    )}
-
-                    {tValue >= minValue && tValue <= maxValue && (
-                      <>
-                      {fToken?.symbol == "btc" ? (
-                        <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
-                          <div className="flex-1 relative">
-                            insufficient liquidity
-                          </div>
-                        </div>
-                      ) : (
-                        <div
-                        className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
-                        onClick={nextFunc}
-                      >
-                        <div className="flex-1 relative">
-                          {' '}
-                          {`Sell ${fToken?.symbol.toUpperCase()} now`}
-                        </div>
-                      </div>
-                      )}
-                    </>
-                      // <div
-                      //   className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
-                      //   onClick={nextFunc}
-                      // >
-                      //   <div className="flex-1 relative">
-                      //     {' '}
-                      //     {`Sell ${fToken?.symbol.toUpperCase()} now`}
-                      //   </div>
-                      // </div>
-                    )}
-                  </>
+                  <div
+                    className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                    onClick={nextFunc}
+                  >
+                    <div className="flex-1 relative">
+                      {" "}
+                      {`Exchange ${fToken?.symbol.toUpperCase()} now`}
+                    </div>
+                  </div>
                 </div>
               </div>
-
               {/* From Token Modal */}
               <TokenModal
                 isTokenModalOpen={isFromTokenModalOpen}
@@ -421,9 +360,8 @@ const SellCashApp = (props) => {
                 allTokens={allTokensFrom}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
-
               {/* To Token Modal */}
               <TokenModal
                 isTokenModalOpen={isToTokenModalOpen}
@@ -433,25 +371,11 @@ const SellCashApp = (props) => {
                 allTokens={allTokensTo}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
-              />
-              {/* Countries Modal */}
-              <CountriesModal
-                isTokenModalOpen={isOptionsModalOpen}
-                setIsTokenModalOpen={setIsOptionsModalOpen}
-                title={'Select Country'}
-                paymentMethod={paymentMethod}
-                cities={cities}
-                setCountry={setCountry}
-                setCity={setCity}
-                country={country}
-                cityData={cityData}
-                city={city}
+                title={"Select Token"}
               />
             </div>
           </section>
         </>
-
         <>
           {ratesModalOpen && (
             <>
@@ -484,4 +408,5 @@ const SellCashApp = (props) => {
     </>
   );
 };
-export default SellCashApp;
+
+export default ExchangeApp;

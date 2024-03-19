@@ -62,8 +62,6 @@ import FlashlightBg from './FlashlightBg';
 
 export const AppContainer = (props) => {
   const {
-    mode,
-    setMode,
     user,
     service,
     setService,
@@ -108,7 +106,6 @@ export const AppContainer = (props) => {
   //==============={update lists at intervals}===============================
 
   useEffect(() => {
-    setMode(true); // automatically set ,ode to "light" mode
     dispatch(getTokenListDefi());
     dispatch(getTokenListFiat());
     dispatch(getTokenListBuy());
@@ -162,7 +159,7 @@ export const AppContainer = (props) => {
                     <>
                       {service === 'exchange' && subService === 'exchange' && (
                         <ExchangeHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -175,7 +172,7 @@ export const AppContainer = (props) => {
                       )}
                       {service === 'buy' && subService === 'buyCash' && (
                         <BuyCashHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -188,7 +185,7 @@ export const AppContainer = (props) => {
                       )}
                       {service === 'buy' && subService === 'buyCard' && (
                         <BuyCardHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -202,7 +199,7 @@ export const AppContainer = (props) => {
 
                       {service === 'sell' && subService === 'sellCash' && (
                         <SellCashHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -216,7 +213,7 @@ export const AppContainer = (props) => {
 
                       {service === 'sell' && subService === 'sellCard' && (
                         <SellCardHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -230,7 +227,7 @@ export const AppContainer = (props) => {
 
                       {service === 'defi' && subService === 'defi' && (
                         <DefiHome
-                          mode={mode}
+                          
                           service={service}
                           setService={setService}
                           subService={subService}
@@ -250,7 +247,7 @@ export const AppContainer = (props) => {
                 <div className="h-screen mt-[64px] mb-[64px] overflow-auto">
                   {service === 'exchange' && subService === 'exchange' && (
                     <ExchangeHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}
@@ -263,7 +260,7 @@ export const AppContainer = (props) => {
                   )}
                   {service === 'buy' && subService === 'buyCash' && (
                     <BuyCashHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}
@@ -276,7 +273,7 @@ export const AppContainer = (props) => {
                   )}
                   {service === 'buy' && subService === 'buyCard' && (
                     <BuyCardHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}
@@ -290,7 +287,7 @@ export const AppContainer = (props) => {
 
                   {service === 'sell' && subService === 'sellCash' && (
                     <SellCashHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}
@@ -304,7 +301,7 @@ export const AppContainer = (props) => {
 
                   {service === 'sell' && subService === 'sellCard' && (
                     <SellCardHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}
@@ -318,7 +315,7 @@ export const AppContainer = (props) => {
 
                   {service === 'defi' && subService === 'defi' && (
                     <DefiHome
-                      mode={mode}
+                      
                       service={service}
                       setService={setService}
                       subService={subService}

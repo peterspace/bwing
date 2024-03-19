@@ -8,7 +8,7 @@ import { TbLogout, TbLogin } from 'react-icons/tb';
 const tabs = ['Home', 'Exchange', 'Buy', 'Sell', 'Defi'];
 
 export const Header = (props) => {
-  const { mode, setMode, user } = props;
+  const { theme, setTheme, user } = props;
 
   const navigate = useNavigate();
 
@@ -178,10 +178,10 @@ export const Header = (props) => {
         <div
           className="cursor-pointer flex justify-center"
           onClick={() => {
-            setMode((prev) => !prev);
+            setTheme((prev) => !prev);
           }}
         >
-          {mode === true ? (
+          {theme === true ? (
             <BsMoonStars size={18} color={'#111111'} />
           ) : (
             <BsFillMoonStarsFill size={18} color={'#4f46e5'} />

@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 // import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { AppContainer } from './pages/Home/AppContainer';
-import { Header } from './components/Header';
-import { ExchangePair } from './components/ExchangePair';
-import { BuyCard, BuyCash, SellCard, SellCash, DeFi, Exchange } from './pages';
-import CryptoHome from './pages/CoinsPage/CryptoHome';
-import CryptoDetail from './pages/CoinsPage/CryptoDetail';
-import LogoMarkets from './components/coins/LogoMarkets';
-import { Dashboard } from './pages/Dashboard/Dashboard';
-import { Auth } from './pages/Auth/Auth';
-import { Reset } from './pages/Auth/Reset';
-import { Support } from './pages/Support/ Support';
+import "react-toastify/dist/ReactToastify.css";
+import { AppContainer } from "./pages/Home/AppContainer";
+import { Header } from "./components/Header";
+import { ExchangePair } from "./components/ExchangePair";
+import { BuyCard, BuyCash, SellCard, SellCash, DeFi, Exchange } from "./pages";
+import CryptoHome from "./pages/CoinsPage/CryptoHome";
+import CryptoDetail from "./pages/CoinsPage/CryptoDetail";
+import LogoMarkets from "./components/coins/LogoMarkets";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { Auth } from "./pages/Auth/Auth";
+import { Reset } from "./pages/Auth/Reset";
+import { Support } from "./pages/Support/ Support";
 // import { Otp } from './pages/auth/Otp';
-import { getTransactionByTxIdInternal } from './redux/features/transaction/transactionSlice';
-import { AppContainerChecker } from './pages/Home/AppContainerChecker';
-import { TermsOfUse } from './pages/Support/TermsOfUse';
-import { PrivacyPolicy } from './pages/Support/PrivacyPolicy';
-import { AML } from './pages/Support/AML';
-import SupportMessage from './components/SupportMessage';
-import SupportMessageAdmin from './components/SupportMessageAdmin';
+import { getTransactionByTxIdInternal } from "./redux/features/transaction/transactionSlice";
+import { AppContainerChecker } from "./pages/Home/AppContainerChecker";
+import { TermsOfUse } from "./pages/Support/TermsOfUse";
+import { PrivacyPolicy } from "./pages/Support/PrivacyPolicy";
+import { AML } from "./pages/Support/AML";
+import SupportMessage from "./components/SupportMessage";
+import SupportMessageAdmin from "./components/SupportMessageAdmin";
 
-import AdminWallets from './pages/Tanstack/AdminWallets';
-import Login from './pages/logGo/Login';
-import SendEmail from './pages/logGo/SendEmail';
-import FlashlightBg from './pages/Home/FlashlightBg';
-import TokenList from './components/TokenList';
+import AdminWallets from "./pages/Tanstack/AdminWallets";
+import Login from "./pages/logGo/Login";
+import SendEmail from "./pages/logGo/SendEmail";
+import FlashlightBg from "./pages/Home/FlashlightBg";
+import TokenList from "./components/TokenList";
 
 axios.defaults.withCredentials = true;
 
@@ -40,25 +40,25 @@ function App() {
 
   const { user } = useSelector((state) => state.user);
 
-  const [userL, setUser] = useState('');
+  const [userL, setUser] = useState("");
 
   const txInfoL =
-    (localStorage.getItem('txInfo') &&
-      JSON.parse(localStorage.getItem('txInfo'))) ||
+    (localStorage.getItem("txInfo") &&
+      JSON.parse(localStorage.getItem("txInfo"))) ||
     null;
 
   const [txInfo, setTxInfo] = useState(txInfoL);
 
-  const isLoggedInL = localStorage.getItem('isLoggedIn')
-    ? JSON.parse(localStorage.getItem('isLoggedIn'))
+  const isLoggedInL = localStorage.getItem("isLoggedIn")
+    ? JSON.parse(localStorage.getItem("isLoggedIn"))
     : false;
   //======={mode and theme}=================================
   // const modeL = localStorage.getItem('mode')
   //   ? JSON.parse(localStorage.getItem('mode'))
   //   : true;
 
-  const modeL = localStorage.getItem('mode')
-    ? JSON.parse(localStorage.getItem('mode'))
+  const modeL = localStorage.getItem("mode")
+    ? JSON.parse(localStorage.getItem("mode"))
     : false;
 
   const [mode, setMode] = useState(modeL);
@@ -67,28 +67,28 @@ function App() {
   //   ? JSON.parse(localStorage.getItem('theme'))
   //   : false;
 
-  const themeL = localStorage.getItem('theme')
-    ? JSON.parse(localStorage.getItem('theme'))
+  const themeL = localStorage.getItem("theme")
+    ? JSON.parse(localStorage.getItem("theme"))
     : true;
   const [theme, setTheme] = useState(themeL); // default light mode
   //======={mode and theme}=================================
 
-  const serviceL = localStorage.getItem('service')
-    ? JSON.parse(localStorage.getItem('service'))
-    : 'exchange';
+  const serviceL = localStorage.getItem("service")
+    ? JSON.parse(localStorage.getItem("service"))
+    : "exchange";
   const [service, setService] = useState(serviceL);
 
-  const subServiceL = localStorage.getItem('subService')
-    ? JSON.parse(localStorage.getItem('subService'))
-    : 'exchange';
+  const subServiceL = localStorage.getItem("subService")
+    ? JSON.parse(localStorage.getItem("subService"))
+    : "exchange";
   const [subService, setSubService] = useState(subServiceL);
 
   const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInL);
   const txDataRedux = useSelector(
     (state) => state.transaction?.transactionByTxIdInternal
   );
-  const txDataLocal = localStorage.getItem('txData')
-    ? JSON.parse(localStorage.getItem('txData'))
+  const txDataLocal = localStorage.getItem("txData")
+    ? JSON.parse(localStorage.getItem("txData"))
     : null;
   const [txData, setTxData] = useState(txDataLocal);
 
@@ -96,7 +96,7 @@ function App() {
   const [blockChainTx, setBlockChainTx] = useState();
   //=========={Refetch current transaction}=====================================
   const { data } = useQuery(
-    ['GET_ONE_USER_TRANSACTION'],
+    ["GET_ONE_USER_TRANSACTION"],
     async () => {
       if (txData?._id) {
         const { data } = await axios.get(
@@ -113,7 +113,7 @@ function App() {
   );
   //=========={verify blockchain payments}=====================================
   const { data: blockChainData } = useQuery(
-    ['UPDATE_ONE_BLOCKCHAIN_TRANSACTION'],
+    ["UPDATE_ONE_BLOCKCHAIN_TRANSACTION"],
     async () => {
       if (!blockChainTx) {
         return;
@@ -138,7 +138,7 @@ function App() {
 
   //=========={update Transaction costs}=====================================
   const { data: txCostsData } = useQuery(
-    ['UPDATE_TRANSACTION_COSTS'],
+    ["UPDATE_TRANSACTION_COSTS"],
     async () => {
       const { data } = await axios.get(
         `${BACKEND_URL}/hdWallet/updateTransactionCosts`
@@ -157,7 +157,7 @@ function App() {
 
   //=========={update Transaction costs}=====================================
   const { data: walletUpdates } = useQuery(
-    ['UPDATE_MASTER_WALLET_BALANCES'],
+    ["UPDATE_MASTER_WALLET_BALANCES"],
     async () => {
       const { data } = await axios.get(
         `${BACKEND_URL}/hdWallet/updateMasterWalletBalances`
@@ -185,25 +185,25 @@ function App() {
   //====================={To Monitor the blockchain}==================================
   useEffect(() => {
     if (
-      txData?.status === 'Paid' &&
-      txData?.service === 'sell' &&
-      txData?.subService === 'sellCash'
+      txData?.status === "Paid" &&
+      txData?.service === "sell" &&
+      txData?.subService === "sellCash"
     ) {
       setBlockChainTx(txData);
     }
 
     if (
-      txData?.status === 'Paid' &&
-      txData?.service === 'sell' &&
-      txData?.subService === 'sellCard'
+      txData?.status === "Paid" &&
+      txData?.service === "sell" &&
+      txData?.subService === "sellCard"
     ) {
       setBlockChainTx(txData);
     }
 
     if (
-      txData?.status === 'Paid' &&
-      txData?.service === 'exchange' &&
-      txData?.subService === 'exchange'
+      txData?.status === "Paid" &&
+      txData?.service === "exchange" &&
+      txData?.subService === "exchange"
     ) {
       setBlockChainTx(txData);
     }
@@ -224,7 +224,7 @@ function App() {
   //if there is no data in txDataRedux first remove txData from local storage to avoid empty value error and set txData as null
   useEffect(() => {
     if (txDataRedux === null) {
-      localStorage.removeItem('txData');
+      localStorage.removeItem("txData");
       setTxData(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -232,7 +232,7 @@ function App() {
   //if there is no data in txData (e.g if txdata is null, undefined or {}) then do not save value to local storage, else you can save the data
   useEffect(() => {
     if (txData) {
-      localStorage.setItem('txData', JSON.stringify(txData));
+      localStorage.setItem("txData", JSON.stringify(txData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txData]);
@@ -240,32 +240,32 @@ function App() {
   //================================={TXDATA BLOCK}========================================
 
   useEffect(() => {
-    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   // making the default light mode
   useEffect(() => {
-    localStorage.setItem('mode', JSON.stringify(mode));
+    localStorage.setItem("mode", JSON.stringify(mode));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   useEffect(() => {
-    localStorage.setItem('service', JSON.stringify(service));
+    localStorage.setItem("service", JSON.stringify(service));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
   useEffect(() => {
-    localStorage.setItem('subService', JSON.stringify(subService));
+    localStorage.setItem("subService", JSON.stringify(subService));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subService]);
 
   useEffect(() => {
-    localStorage.setItem('txInfo', JSON.stringify(txInfo));
+    localStorage.setItem("txInfo", JSON.stringify(txInfo));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txInfo]);
@@ -274,36 +274,28 @@ function App() {
 
   useEffect(() => {
     if (theme) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', JSON.stringify(theme));
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", JSON.stringify(theme));
       setMode(false);
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', JSON.stringify(theme));
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", JSON.stringify(theme));
       setMode(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
-  useEffect(() => {
-    if (mode === false) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', JSON.stringify(mode));
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', JSON.stringify(theme));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode]);
-
   return (
     <div
       className={`flex flex-col justify-between w-full h-screen text-left text-sm text-gray-400 font-montserrat bg-white dark:bg-app-container-dark`}
     >
-      {' '}
+      {" "}
       <BrowserRouter>
-        <div className="h-[50px] z-50">
+        {/* <div className="h-[50px] z-50">
           <Header mode={mode} setMode={setMode} user={user} />
+        </div> */}
+        <div className="h-[50px] z-50">
+          <Header theme={theme} setTheme={setTheme} user={user} />
         </div>
         {/* <div className="flex bg-lightslategray-300 h-px mt-11" /> */}
         <div
@@ -324,7 +316,6 @@ function App() {
             <Route path="/tokenList" element={<TokenList />} />
 
             <Route path="/flashlightBg" element={<FlashlightBg />} />
-
 
             <Route path="/adminWallets" element={<AdminWallets />} />
             <Route path="/supportMessage" element={<SupportMessage />} />
@@ -379,8 +370,6 @@ function App() {
               path="/"
               element={
                 <AppContainer
-                  mode={mode}
-                  setMode={setMode}
                   user={user}
                   service={service}
                   setService={setService}

@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
-import { useDispatch } from 'react-redux';
-import TokenModal from '../../../components/TokenModal';
-import CountriesModal from '../../../components/CountriesModal';
-import PaymenOptionsModal from '../../../components/PaymenOptionsModal';
-import ServiceHeaderBuy from './ServiceHeaderBuy';
-import RatesLocalModel from '../../../components/RatesLocalModel';
+import { useState, useEffect } from "react";
+import { getTokenListExchange } from "../../../redux/features/token/tokenSlice";
+import { useDispatch } from "react-redux";
+import TokenModal from "../../../components/TokenModal";
+import CountriesModal from "../../../components/CountriesModal";
+import PaymenOptionsModal from "../../../components/PaymenOptionsModal";
+import ServiceHeaderBuy from "./ServiceHeaderBuy";
+import RatesLocalModel from "../../../components/RatesLocalModel";
 
-import Menu from './Menu';
-import FToken from './FToken';
-import TToken from './TToken';
-import { getMasterWalletsService } from '../../../services/apiService';
+import Menu from "./Menu";
+import FToken from "./FToken";
+import TToken from "./TToken";
+import { getMasterWalletsService } from "../../../services/apiService";
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -28,7 +28,6 @@ const BuyCardApp = (props) => {
     fValue,
     setFromValue,
     loading,
-    mode,
     service,
     setService,
     subService,
@@ -166,8 +165,8 @@ const BuyCardApp = (props) => {
   //====================================================================================
 
   async function nextFunc() {
-    setService('buy');
-    setSubService('buyCard');
+    setService("buy");
+    setSubService("buyCard");
     setPercentageProgress(2);
   }
 
@@ -200,22 +199,22 @@ const BuyCardApp = (props) => {
     const response = await getMasterWalletsService();
     // setTransactionLimit(response);
 
-    if (tToken?.chain === 'Bitcoin') {
+    if (tToken?.chain === "Bitcoin") {
       setTransactionLimit(response?.walletsBitcoinMaster?.btc);
     }
     // if (tToken?.chain === 'Ethereum') {
     //   setTransactionLimit(response?.walletsEVMMaster);
     // }
-    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'eth') {
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "eth") {
       setTransactionLimit(response?.walletsEVMMaster?.eth);
     }
-    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'usdt') {
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "usdt") {
       setTransactionLimit(response?.walletsEVMMaster?.usdt);
     }
-    if (tToken?.chain === 'Tron' && tToken?.symbol === 'trx') {
+    if (tToken?.chain === "Tron" && tToken?.symbol === "trx") {
       setTransactionLimit(response?.walletsTronMaster?.trx);
     }
-    if (tToken?.chain === 'Tron' && tToken?.symbol === 'usdt') {
+    if (tToken?.chain === "Tron" && tToken?.symbol === "usdt") {
       setTransactionLimit(response?.walletsTronMaster?.usdt);
     }
   }
@@ -235,7 +234,7 @@ const BuyCardApp = (props) => {
       );
     } else {
       setTransactionDifference(null);
-      setTransactionError('');
+      setTransactionError("");
     }
   }
 
@@ -263,23 +262,23 @@ const BuyCardApp = (props) => {
   }, [fToken, fValue]);
 
   async function updateTransactionsRange() {
-    if (fToken?.symbol === 'gbp') {
+    if (fToken?.symbol === "gbp") {
       setMinValue(150);
       setMaxValue(2000);
     }
-    if (fToken?.symbol === 'eur') {
+    if (fToken?.symbol === "eur") {
       setMinValue(150);
       setMaxValue(20000);
     }
-    if (fToken?.symbol === 'usd') {
+    if (fToken?.symbol === "usd") {
       setMinValue(150);
       setMaxValue(2000);
     }
-    if (fToken?.symbol === 'aed') {
+    if (fToken?.symbol === "aed") {
       setMinValue(1000);
       setMaxValue(10000);
     }
-    if (fToken?.symbol === 'rub') {
+    if (fToken?.symbol === "rub") {
       setMinValue(30000);
       // setMinValue(1000);// for testing
       setMaxValue(300000);
@@ -302,7 +301,7 @@ const BuyCardApp = (props) => {
                   />
                   <ServiceHeaderBuy
                     symbolSubService={
-                      paymentMethod === 'card' ? 'Card' : 'Cash'
+                      paymentMethod === "card" ? "Card" : "Cash"
                     }
                     symbolCountry={country}
                     openSubServiceModal={openSubServiceModal}
@@ -403,7 +402,7 @@ const BuyCardApp = (props) => {
                         ) : (
                           <>
                             <div className="flex-1 relative">
-                              1 {tToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                              1 {tToken?.symbol.toUpperCase()} ~ {exchangeRate}{" "}
                               {fToken?.symbol.toUpperCase()}
                             </div>
                             <img
@@ -425,7 +424,7 @@ const BuyCardApp = (props) => {
                     </div>
                   </div>
 
-                  {country === 'Russia' ? (
+                  {country === "Russia" ? (
                     <>
                       {fValue < minValue && (
                         <div
@@ -433,7 +432,7 @@ const BuyCardApp = (props) => {
                           // onClick={nextFunc}
                         >
                           <div className="flex-1 relative">
-                            {' '}
+                            {" "}
                             {`Buy ${tToken?.symbol.toUpperCase()} now`}
                           </div>
                         </div>
@@ -445,27 +444,46 @@ const BuyCardApp = (props) => {
                           // onClick={nextFunc}
                         >
                           <div className="flex-1 relative">
-                            {' '}
+                            {" "}
                             {`Buy ${tToken?.symbol.toUpperCase()} now`}
                           </div>
                         </div>
                       )}
 
                       {fValue >= minValue && fValue <= maxValue && (
-                        <div
-                          className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
-                          onClick={nextFunc}
-                        >
-                          <div className="flex-1 relative">
-                            {' '}
-                            {`Buy ${tToken?.symbol.toUpperCase()} now`}
-                          </div>
-                        </div>
+                        <>
+                          {tToken?.symbol == "btc" ? (
+                            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
+                              <div className="flex-1 relative">
+                                insufficient liquidity
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                              onClick={nextFunc}
+                            >
+                              <div className="flex-1 relative">
+                                {" "}
+                                {`Buy ${tToken?.symbol.toUpperCase()} now`}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                        // <div
+                        //   className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                        //   onClick={nextFunc}
+                        // >
+                        //   <div className="flex-1 relative">
+                        //     {" "}
+                        //     {`Buy ${tToken?.symbol.toUpperCase()} now`}
+                        //   </div>
+                        // </div>
                       )}
                     </>
                   ) : (
                     <>
-                      {' '}
+                      {" "}
                       <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
                         <div className="flex-1 relative">
                           Not available in your country
@@ -485,7 +503,7 @@ const BuyCardApp = (props) => {
                 allTokens={allTokensFrom}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
 
               {/* To Token Modal */}
@@ -497,13 +515,13 @@ const BuyCardApp = (props) => {
                 allTokens={allTokensTo}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
               {/* Countries Modal */}
               <CountriesModal
                 isTokenModalOpen={isOptionsModalOpen}
                 setIsTokenModalOpen={setIsOptionsModalOpen}
-                title={'Select Country'}
+                title={"Select Country"}
                 paymentMethod={paymentMethod}
                 cities={cities}
                 setCountry={setCountry}

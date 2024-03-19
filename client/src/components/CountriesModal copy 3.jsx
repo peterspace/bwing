@@ -1,8 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaArrowRight } from "react-icons/fa";
 
 export default function CountriesModal(props) {
   const {
@@ -19,52 +17,32 @@ export default function CountriesModal(props) {
     city,
   } = props;
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchCityTerm, setSearchCityTerm] = useState("");
-
-  const [countryList, setCountryList] = useState([]);
-  const [cityList, setCityList] = useState([]);
-
+  const [tokensList, setTokensList] = useState([]);
   const [newCountry, setNewCountry] = useState({});
   const [isCity, setIsCity] = useState(false);
 
   useEffect(() => {
-    if (cities) {
-      setCountryList(cities);
+    if (filteredTokens) {
+      setTokensList(filteredTokens);
     }
-  }, [cities]);
-
-  useEffect(() => {
-    if (cityData) {
-      setCityList(cityData);
-    }
-  }, [cityData]);
-
-  const closeModal = () => {
-    setIsTokenModalOpen(false);
-  };
+  }, [filteredTokens]);
 
   useEffect(() => {
     handleSearchToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
-  const handleSearchToken = () => {
-    const searchResult = cities?.filter((token) =>
-      token.country.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setCountryList(searchResult);
+  const closeModal = () => {
+    setIsTokenModalOpen(false);
   };
 
-  useEffect(() => {
-    handleSearchCity();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchCityTerm]);
-
-  const handleSearchCity = () => {
-    const searchResult = cityData?.filter((token) =>
-      token.toLowerCase().includes(searchCityTerm.toLowerCase())
+  const handleSearchToken = () => {
+    const searchResult = filteredTokens?.filter(
+      (token) =>
+        token.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        token.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setCityList(searchResult);
+    setTokensList(searchResult);
   };
 
   const cardTx = (
@@ -100,31 +78,11 @@ export default function CountriesModal(props) {
                 </div>
               </div>
             </div>
-            <div className="self-stretch m-4 h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
-            <div className="self-stretch mb-4 flex flex-col items-start justify-start  px-[15px]">
-              <div className="self-stretch rounded-lg flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
-                <div className="h-10 flex flex-row items-center justify-center">
-                  <img
-                    className="h-5 w-5 relative overflow-hidden shrink-0"
-                    alt=""
-                    src="/search.svg"
-                  />
-                </div>
-                <div className="h-10 w-px relative">
-                  <div className="absolute top-[calc(50%_-_10px)] left-[calc(50%_-_0.5px)] bg-gray-500 w-px h-5 overflow-hidden" />
-                </div>
-                <input
-                  className="w-full [border:none] [outline:none] bg-[transparent] h-10 flex flex-row items-center justify-center py-3 px-0 box-border font-roboto text-sm text-gray-500"
-                  placeholder="Search"
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            </div>
+            <div className="self-stretch mt-4 h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
+
             <div className="max-h-[400px] overflow-y-auto w-full">
-              {countryList &&
-                countryList.map((token, i) => (
+              {cities &&
+                cities.map((token, i) => (
                   <div
                     key={i}
                     className="flex items-center justify-between px-0 py-0 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer text-[14px]"
@@ -132,7 +90,6 @@ export default function CountriesModal(props) {
                       setCountry(token?.country);
                       setNewCountry(token);
                       setIsCity(false);
-                      setSearchCityTerm("");
                       setIsTokenModalOpen(false);
                     }}
                   >
@@ -194,7 +151,6 @@ export default function CountriesModal(props) {
                     className="text-white transition-transform duration-300 hover:scale-110 cursor-pointer w-9 rounded-lg box-border flex flex-row items-center justify-center py-2 px-[7px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200 bg-bgPrimary"
                     onClick={() => {
                       setIsCity(false);
-                      setSearchCityTerm("");
                     }}
                   >
                     <IoArrowBackOutline size={20} />
@@ -222,57 +178,12 @@ export default function CountriesModal(props) {
                 </div>
               )}
             </div>
-            <div className="self-stretch m-4 h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
-            {isCity ? (
-              <div className="self-stretch mb-4 flex flex-col items-start justify-start  px-[15px]">
-                <div className="self-stretch rounded-lg flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
-                  <div className="h-10 flex flex-row items-center justify-center">
-                    <img
-                      className="h-5 w-5 relative overflow-hidden shrink-0"
-                      alt=""
-                      src="/search.svg"
-                    />
-                  </div>
-                  <div className="h-10 w-px relative">
-                    <div className="absolute top-[calc(50%_-_10px)] left-[calc(50%_-_0.5px)] bg-gray-500 w-px h-5 overflow-hidden" />
-                  </div>
-                  <input
-                    className="w-full [border:none] [outline:none] bg-[transparent] h-10 flex flex-row items-center justify-center py-3 px-0 box-border font-roboto text-sm text-gray-500"
-                    placeholder="Search"
-                    type="text"
-                    value={searchCityTerm}
-                    onChange={(e) => setSearchCityTerm(e.target.value)}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="self-stretch mb-4 flex flex-col items-start justify-start  px-[15px]">
-                <div className="self-stretch rounded-lg flex flex-row items-start justify-start py-0 px-2.5 gap-[5px] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200">
-                  <div className="h-10 flex flex-row items-center justify-center">
-                    <img
-                      className="h-5 w-5 relative overflow-hidden shrink-0"
-                      alt=""
-                      src="/search.svg"
-                    />
-                  </div>
-                  <div className="h-10 w-px relative">
-                    <div className="absolute top-[calc(50%_-_10px)] left-[calc(50%_-_0.5px)] bg-gray-500 w-px h-5 overflow-hidden" />
-                  </div>
-                  <input
-                    className="w-full [border:none] [outline:none] bg-[transparent] h-10 flex flex-row items-center justify-center py-3 px-0 box-border font-roboto text-sm text-gray-500"
-                    placeholder="Search"
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-              </div>
-            )}
+            <div className="self-stretch mt-4 h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
 
             {!isCity && (
               <div className="max-h-[400px] overflow-y-auto w-full">
-                {countryList &&
-                  countryList.map((token, i) => (
+                {cities &&
+                  cities.map((token, i) => (
                     <div
                       key={i}
                       className="flex items-center justify-between px-0 py-0 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer text-[14px]"
@@ -280,10 +191,34 @@ export default function CountriesModal(props) {
                         setCountry(token?.country);
                         setNewCountry(token);
                         setIsCity(true);
-                        setSearchTerm("");
+                        // setIsTokenModalOpen(false);
                       }}
                     >
                       {/* <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
+                        <div className="self-stretch px-2 flex flex-row items-start justify-start gap-[8px] max-w-full">
+                          <div className="flex flex-row items-center justify-center">
+                            <img
+                              className="h-[42px] w-[42px] relative rounded-full overflow-hidden shrink-0 object-cover"
+                              src={token?.flag}
+                              alt={token?.country}
+                            />
+                          </div>
+                          <div className="flex-1 flex flex-col items-start justify-start min-w-[246px] max-w-full">
+                            <div className="self-stretch flex flex-row items-start justify-between">
+                              <div className="w-[189.5px] flex flex-row items-start justify-start">
+                                <b className="relative">{token?.country}</b>
+                              </div>
+                            </div>
+                            <div className="self-stretch flex flex-row items-start justify-start">
+                              <div className="relative">{token?.cities[0]}</div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div className="self-stretch h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
+                      </div> */}
+                      <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
                         <div className="self-stretch px-2 flex flex-row items-start justify-start gap-[8px] max-w-full">
                           <div className="flex flex-row items-center justify-center gap-4">
                             <img
@@ -297,34 +232,6 @@ export default function CountriesModal(props) {
                           </div>
                         </div>
                         <div className="self-stretch h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
-                      </div> */}
-
-                      <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
-                        <div className="self-stretch px-2 flex flex-row items-center justify-start gap-[8px] max-w-full">
-                          <div className="px-1 flex-1 flex flex-col items-start justify-start min-w-[246px] max-w-full">
-                            <div className="self-stretch flex flex-row items-start justify-between">
-                              <div className="flex flex-row items-center justify-center gap-4">
-                                <img
-                                  className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                  src={token?.flag}
-                                  alt={token?.country}
-                                />
-                                <div className="w-full flex flex-row items-start text-[16px] justify-start">
-                                  <b className="relative">{token?.country}</b>
-                                </div>
-                              </div>
-                              <div
-                                className={`w-[189.5px] flex flex-row items-start justify-end text-gray-500`}
-                              >
-                                <div className="relative text-white">
-                                  {" "}
-                                  <IoIosArrowForward size={20} />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="self-stretch h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
                       </div>
                     </div>
                   ))}
@@ -332,8 +239,8 @@ export default function CountriesModal(props) {
             )}
             {isCity && (
               <div className="max-h-[400px] overflow-y-auto w-full">
-                {cityList &&
-                  cityList.map((city, i) => (
+                {cityData &&
+                  cityData.map((city, i) => (
                     <div
                       key={i}
                       className="flex items-center justify-between px-0 py-0 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer text-[14px]"
@@ -341,7 +248,6 @@ export default function CountriesModal(props) {
                         setCity(city);
                         setIsCity(false);
                         setIsTokenModalOpen(false);
-                        setSearchCityTerm("");
                       }}
                     >
                       <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[20px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">

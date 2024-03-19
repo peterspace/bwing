@@ -1,12 +1,7 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useConnect } from "wagmi";
-import { FiSearch } from "react-icons/fi";
-import { IoArrowBackOutline } from "react-icons/io5";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaArrowRight } from "react-icons/fa";
+import React from 'react';
+import { useEffect, useState } from 'react';
 
-export default function WalletModal(props) {
+export default function TokenModal(props) {
   const {
     filteredTokens,
     setToken,
@@ -18,9 +13,8 @@ export default function WalletModal(props) {
     title,
   } = props;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [tokensList, setTokensList] = useState([]);
-  const { connect, connectors } = useConnect();
 
   useEffect(() => {
     if (filteredTokens) {
@@ -37,9 +31,31 @@ export default function WalletModal(props) {
     setIsTokenModalOpen(false);
   };
 
+  const setTokenChainBg = (tokenChain) => {
+    switch (tokenChain) {
+      case 'Bitcoin':
+        return 'text-[#FFBC6C]';
+      case 'Tron':
+        return 'text-[#3EDFAD]';
+      case 'Ethereum':
+        return 'text-[#B3C2FF]';
+      case 'Binance':
+        return 'text-[#FBD953]';
+      case 'Polygon':
+        return 'text-[#D9B9FF]';
+      case 'Arbitrum':
+        return 'text-[#C1DAFF]';
+      case 'Optimism':
+        return 'text-[#FF9993]';
+      default:
+        return;
+    }
+  };
   const handleSearchToken = () => {
-    const searchResult = filteredTokens?.filter((token) =>
-      token.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchResult = filteredTokens?.filter(
+      (token) =>
+        token.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        token.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setTokensList(searchResult);
   };
@@ -49,9 +65,9 @@ export default function WalletModal(props) {
       {isTokenModalOpen && (
         <div
           className={`self-stretch flex flex-row items-start justify-start py-0 px-1 box-border max-w-full w-[375px] xl:w-[470px] 2xl:w-[600] ${
-            service === "exchange"
-              ? "mt-[-446px] lg:mt-[-624px]"
-              : "mt-[-576px] lg:mt-[-640px]"
+            service === 'exchange'
+              ? 'mt-[-446px] lg:mt-[-624px]'
+              : 'mt-[-576px] lg:mt-[-640px]'
           }`}
         >
           <div className="flex-1 rounded-3xl bg-white dark:bg-app-container-dark text-chizzyblue dark:text-white font-montserrat box-border flex flex-col items-start justify-start gap-[24px] max-w-full z-[1] border-[1px] border-solid border-lightslategray-300 dark:border-lightslategray-200 pt-4 pb-8 h-[554px]">
@@ -109,12 +125,11 @@ export default function WalletModal(props) {
                     key={i}
                     className="flex items-center justify-between px-0 py-0 hover:bg-gray-100 dark:hover:bg-bgDarkMode cursor-pointer text-[14px]"
                     onClick={() => {
-                      connect({ connector: token });
                       setToken(token);
                       setIsTokenModalOpen(false);
                     }}
                   >
-                    {/* <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
+                    <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
                       <div className="self-stretch px-2 flex flex-row items-start justify-start gap-[8px] max-w-full">
                         <div className="flex flex-row items-center justify-center">
                           <img
@@ -127,7 +142,7 @@ export default function WalletModal(props) {
                           <div className="self-stretch flex flex-row items-start justify-between">
                             <div className="w-[189.5px] flex flex-row items-start justify-start">
                               <b className="relative">
-                                {token?.name}
+                                {token?.symbol.toUpperCase()}
                               </b>
                             </div>
                             <div
@@ -138,74 +153,6 @@ export default function WalletModal(props) {
                           </div>
                           <div className="self-stretch flex flex-row items-start justify-start">
                             <div className="relative">{token?.name}</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="self-stretch h-px bg-lightslategray-300 dark:bg-gray-500 overflow-hidden shrink-0" />
-                    </div> */}
-                    <div className="cursor-pointer w-full flex flex-col items-center justify-start gap-[10px] hover:text-rose-700 dark:hover:text-indigo-300 mt-[12px]">
-                      <div className="self-stretch px-2 flex flex-row items-center justify-start gap-[8px] max-w-full">
-                        <div className="px-1 flex-1 flex flex-col items-start justify-start min-w-[246px] max-w-full">
-                          <div className="self-stretch flex flex-row items-start justify-between">
-                            <div className="flex flex-row items-center justify-center gap-4">
-                              {token === tokensList[0] && (
-                                <>
-                                  <img
-                                    className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                    src="/wallet-icon8.svg"
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              {token === tokensList[1] && (
-                                <>
-                                  <img
-                                    className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                    src="/walletlink.svg"
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              {token === tokensList[2] && (
-                                <>
-                                  <img
-                                    className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                    src="/walletconnect.svg"
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              {token === tokensList[3] && (
-                                <>
-                                  <img
-                                    className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                    src="/twitter-21.svg"
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              {token === tokensList[4] && (
-                                <>
-                                  <img
-                                    className="h-[28px] w-[28px] relative rounded-full overflow-hidden shrink-0 object-cover"
-                                    src="/walet-ledger.svg"
-                                    alt=""
-                                  />
-                                </>
-                              )}
-                              <div className="w-full flex flex-row items-start text-[16px] justify-start">
-                                <b className="relative">{token?.name}</b>
-                                {/* <b className="relative">{token?.chain}</b> */}
-                              </div>
-                            </div>
-                            <div
-                              className={`w-[189.5px] flex flex-row items-start justify-end text-gray-500`}
-                            >
-                              <div className="relative text-white">
-                                {" "}
-                                <IoIosArrowForward size={20} />
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>

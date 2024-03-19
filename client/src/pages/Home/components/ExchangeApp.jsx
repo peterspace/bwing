@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
-import { useDispatch } from 'react-redux';
-import TokenModal from '../../../components/TokenModal';
-import Menu from './Menu';
-import ServiceHeaderExchange from './ServiceHeaderExchange';
-import FToken from './FToken';
-import TToken from './TToken';
-import { getMasterWalletsService } from '../../../services/apiService';
-import RatesLocalModel from '../../../components/RatesLocalModel';
+import { useState, useEffect } from "react";
+import { getTokenListExchange } from "../../../redux/features/token/tokenSlice";
+import { useDispatch } from "react-redux";
+import TokenModal from "../../../components/TokenModal";
+import Menu from "./Menu";
+import ServiceHeaderExchange from "./ServiceHeaderExchange";
+import FToken from "./FToken";
+import TToken from "./TToken";
+import { getMasterWalletsService } from "../../../services/apiService";
+import RatesLocalModel from "../../../components/RatesLocalModel";
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
 //ExchangeDark
@@ -24,7 +24,6 @@ const ExchangeApp = (props) => {
     fValue,
     setFromValue,
     loading,
-    mode,
     service,
     setService,
     subService,
@@ -34,6 +33,7 @@ const ExchangeApp = (props) => {
     allTokensTo,
     transactionRates,
     loadingExchangeRate,
+    swapTokensPosition,
   } = props;
   const dispatch = useDispatch();
 
@@ -57,6 +57,7 @@ const ExchangeApp = (props) => {
   const [transactionLimit, setTransactionLimit] = useState();
   const [transactionError, setTransactionError] = useState();
   const [transactionDifference, setTransactionDifference] = useState();
+  // const [prevTValue, setPrevTValue] = useState();
 
   console.log({ transactionLimit: transactionLimit });
   console.log({ transactionLimitbalance: transactionLimit?.balance });
@@ -121,16 +122,36 @@ const ExchangeApp = (props) => {
   //====================================================================================
 
   async function nextFunc() {
-    setService('exchange');
-    setSubService('exchange');
+    setService("exchange");
+    setSubService("exchange");
     setPercentageProgress(2);
   }
 
-  function swapTokensPosition() {
-    let tmpToken = fToken;
-    setFromToken(tToken);
-    setToToken(tmpToken);
-  }
+  // function swapTokensPosition() {
+  //   let tmpToken = fToken;
+  //   setFromToken(tToken);
+  //   setToToken(tmpToken);
+  // }
+
+  // useEffect(() => {
+  //   if (prevTValue) {
+  //     setTimeout(() => {
+  //       setFromValue(prevTValue);
+  //       setPrevTValue(null);
+  //     }, [200]);
+  //   }
+  // }, [prevTValue]);
+
+  // function swapTokensPosition() {
+  //   setPrevTValue(tValue);
+  //   let tmpToken = fToken;
+  //   let tmValue = tValue;
+  //   setFromToken(tToken);
+  //   setToToken(tmpToken);
+  //   setTimeout(() => {
+  //     setFromValue(tmValue);
+  //   }, 200);
+  // }
 
   function openFromTokenModal() {
     setIsFromTokenModalOpen(true);
@@ -153,22 +174,22 @@ const ExchangeApp = (props) => {
     const response = await getMasterWalletsService();
     // setTransactionLimit(response);
 
-    if (tToken?.chain === 'Bitcoin') {
+    if (tToken?.chain === "Bitcoin") {
       setTransactionLimit(response?.walletsBitcoinMaster?.btc);
     }
     // if (tToken?.chain === 'Ethereum') {
     //   setTransactionLimit(response?.walletsEVMMaster);
     // }
-    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'eth') {
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "eth") {
       setTransactionLimit(response?.walletsEVMMaster?.eth);
     }
-    if (tToken?.chain === 'Ethereum' && tToken?.symbol === 'usdt') {
+    if (tToken?.chain === "Ethereum" && tToken?.symbol === "usdt") {
       setTransactionLimit(response?.walletsEVMMaster?.usdt);
     }
-    if (tToken?.chain === 'Tron' && tToken?.symbol === 'trx') {
+    if (tToken?.chain === "Tron" && tToken?.symbol === "trx") {
       setTransactionLimit(response?.walletsTronMaster?.trx);
     }
-    if (tToken?.chain === 'Tron' && tToken?.symbol === 'usdt') {
+    if (tToken?.chain === "Tron" && tToken?.symbol === "usdt") {
       setTransactionLimit(response?.walletsTronMaster?.usdt);
     }
   }
@@ -188,7 +209,7 @@ const ExchangeApp = (props) => {
       );
     } else {
       setTransactionDifference(null);
-      setTransactionError('');
+      setTransactionError("");
     }
   }
 
@@ -196,7 +217,7 @@ const ExchangeApp = (props) => {
     <>
       <div className="flex flex-col xl:flex-row">
         <>
-          {' '}
+          {" "}
           <section className="self-stretch flex flex-row items-start justify-center pt-0 px-5 pb-5 box-border max-w-full text-left text-5xl text-silver font-roboto">
             <div className="w-full flex flex-col items-start justify-start max-w-full">
               {/* app container */}
@@ -292,7 +313,7 @@ const ExchangeApp = (props) => {
                         ) : (
                           <>
                             <div className="flex-1 relative">
-                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{" "}
                               {tToken?.symbol.toUpperCase()}
                             </div>
                             <img
@@ -317,15 +338,23 @@ const ExchangeApp = (props) => {
                       />
                     </div>
                   </div>
-                  <div
-                    className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
-                    onClick={nextFunc}
-                  >
-                    <div className="flex-1 relative">
-                      {' '}
-                      {`Exchange ${fToken?.symbol.toUpperCase()} now`}
+                  {tToken?.symbol == "btc" || fToken?.symbol == "btc" ? (
+                    <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
+                      <div className="flex-1 relative">
+                        insufficient liquidity
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div
+                      className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                      onClick={nextFunc}
+                    >
+                      <div className="flex-1 relative">
+                        {" "}
+                        {`Exchange ${fToken?.symbol.toUpperCase()} now`}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {/* From Token Modal */}
@@ -337,7 +366,7 @@ const ExchangeApp = (props) => {
                 allTokens={allTokensFrom}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
               {/* To Token Modal */}
               <TokenModal
@@ -348,7 +377,7 @@ const ExchangeApp = (props) => {
                 allTokens={allTokensTo}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
             </div>
           </section>

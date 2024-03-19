@@ -2926,7 +2926,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
 
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
       tUSDPrice: tUSDPrice.toFixed(4), // usd price
       fUSDPrice: fUSDPrice.toFixed(4),
     };
@@ -2983,7 +2983,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     const fUSDPrice = tUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
       tUSDPrice: tUSDPrice.toFixed(4),
       fUSDPrice: fUSDPrice.toFixed(4),
     };
@@ -3039,7 +3039,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     const tUSDPrice = fUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
       fUSDPrice: fUSDPrice.toFixed(4),
       tUSDPrice: tUSDPrice.toFixed(4),
     };
@@ -3094,7 +3094,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
     const tUSDPrice = fUSDPrice / exchangeRate;
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
       fUSDPrice: fUSDPrice.toFixed(4),
       tUSDPrice: tUSDPrice.toFixed(4),
     };
@@ -3119,7 +3119,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
 
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
       fUSDPrice: fUSDPrice.toFixed(4),
       tUSDPrice: tUSDPrice.toFixed(4),
     };
@@ -3179,7 +3179,7 @@ const getTokenExchangeRate = asyncHandler(async (req, res) => {
 
     const response = {
       exchangeRateRaw: exchangeRate,
-      exchangeRate: exchangeRate.toFixed(8),
+      exchangeRate: exchangeRate,
     };
     console.log({ exchangeRateInCheck: response });
     res.status(200).json(response);
@@ -3890,8 +3890,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     //   tValue.toString()
     // );
 
-    let tValueFormatted = Number(tValue).toFixed(8);
-    // let tValueFormatted = tValue;
+    // let tValueFormatted = Number(tValue).toFixed(4);
+    let tValueFormatted = tValue;
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -3916,7 +3916,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       amount,
       estimatedGas,
       // directValue: directValue.toFixed(3),
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -3940,8 +3940,8 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     let amount = 0;
     estimatedGas = 0;
 
-    // let tValueFormatted = tValue;
-    let tValueFormatted = Number(tValue).toFixed(8);
+
+    let tValueFormatted = tValue
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -3965,7 +3965,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -3986,8 +3986,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     let amount = 0;
     estimatedGas = 0;
 
-    // let tValueFormatted = tValue;
-    let tValueFormatted = Number(tValue).toFixed(8);
+    let tValueFormatted = tValue;
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -4013,7 +4012,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -4037,8 +4036,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     let amount = 0;
     estimatedGas = 0;
 
-    // let tValueFormatted = tValue;
-    let tValueFormatted = Number(tValue).toFixed(8);
+    let tValueFormatted = tValue;
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -4062,7 +4060,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -4083,8 +4081,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     let amount = 0;
     estimatedGas = 0;
 
-    // let tValueFormatted = tValue;
-    let tValueFormatted = Number(tValue).toFixed(8);
+    let tValueFormatted = tValue;
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -4110,7 +4107,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -4131,8 +4128,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
     let amount = 0;
     estimatedGas = 0;
 
-    // let tValueFormatted = tValue;
-    let tValueFormatted = Number(tValue).toFixed(8);
+    let tValueFormatted = tValue
     if (isNaN(tValue)) {
       tValue = 0;
     }
@@ -4156,7 +4152,7 @@ const getTransactionRate = asyncHandler(async (req, res) => {
       tValueFormatted,
       amount,
       estimatedGas,
-      directValue: directValue.toFixed(8),
+      directValue: directValue,
       directValueRaw: directValue,
     };
 
@@ -5097,7 +5093,7 @@ const getChainPrice = asyncHandler(async (req, res) => {
   res.status(200).json(response);
 });
 
-const getTransactionRateSwap1 = asyncHandler(async (req, res) => {
+const getTransactionRateSwap = asyncHandler(async (req, res) => {
   const { exchangeRate, fValue } = req.body;
   let tValue = Number(fValue) * Number(exchangeRate);
 
@@ -5118,33 +5114,7 @@ const getTransactionRateSwap1 = asyncHandler(async (req, res) => {
   res.status(200).json(response);
 });
 
-const getTransactionRateSwap = asyncHandler(async (req, res) => {
-  const { exchangeRate, fValue } = req.body;
-  let tValue = Number(fValue) * Number(exchangeRate);
-
-  // let tValueFormatted = Number(tValue).toFixed(4);
-  // let tValueFormatted = tValue;
-  let tValueFormatted = Number(tValue).toFixed(8);
-
-  if (isNaN(tValue)) {
-    tValue = 0;
-  }
-
-  if (isNaN(tValueFormatted)) {
-    tValueFormatted = 0;
-  }
-
-  const response = {
-    tValue,
-    tValueFormatted,
-  };
-  console.log({ SwapTransactionRate: response });
-  res.status(200).json(response);
-});
-
-//4063.07741750
-
-const getPriceOneInch1 = async (
+const getPriceOneInch = async (
   chainId,
   fAddress,
   fDecimals,
@@ -5207,10 +5177,7 @@ const getPriceOneInch1 = async (
       const result = {
         validatedValue,
         tValue: toTokenAmount,
-        // tValueFormatted: toTokenAmountFixed,
-        // tValueFormatted: toTokenAmountFormatted,
-        tValueFormatted: Number(toTokenAmountFormatted).toFixed(8),
-
+        tValueFormatted: toTokenAmountFixed,
         // estimatedGas: estimatedGas,
         // allProtocols: protocols,
       };
@@ -5224,362 +5191,6 @@ const getPriceOneInch1 = async (
     return { status: err.success, message: err.message };
   }
 };
-const getPriceOneInch = async (
-  chainId,
-  fAddress,
-  fDecimals,
-  tAddress,
-  tDecimals,
-  fValue
-) => {
-  let validatedValue;
-  if (fAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-    validatedValue = parseUnits(
-      Number(fValue).toFixed(),
-      fDecimals.toString()
-    ).toString();
-  } else {
-    validatedValue = parseEther(fValue.toString()).toString();
-  }
-  console.log({ fValue: fValue });
-  console.log({ validatedValue: validatedValue });
-
-  const url = `https://api.1inch.dev/swap/${version}/${Number(chainId)}/quote`;
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      src: fAddress, // string
-      dst: tAddress, // string
-      amount: validatedValue, // string
-      fee: Number(fee), // number
-    },
-  };
-
-  try {
-    const response = await axios.get(url, config);
-    if (response?.data) {
-      console.log({ response: response?.data });
-      const { toAmount } = response?.data;
-
-      const toTokenAmount = toAmount;
-      console.log({ toTokenAmount: toTokenAmount });
-
-      let toTokenAmountFormatted = "";
-      let toTokenAmountFixed;
-
-      if (tAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-        toTokenAmountFormatted = formatUnits(
-          toTokenAmount.toString(),
-          tDecimals.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-      } else {
-        toTokenAmountFormatted = formatEther(
-          toTokenAmount.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-
-        // console.log({ toTokenAmountFixed: toTokenAmountFixed });
-      }
-      const result = {
-        validatedValue,
-        tValue: toTokenAmount,
-        // tValueFormatted: toTokenAmountFixed,
-        // tValueFormatted: toTokenAmountFormatted,
-        tValueFormatted: Number(toTokenAmountFormatted).toFixed(8),
-
-        // estimatedGas: estimatedGas,
-        // allProtocols: protocols,
-      };
-      // console.log({ toTokenAmountFormatted: toTokenAmountFormatted });
-      console.log({ OneInchRate: result });
-      return result;
-    }
-  } catch (error) {
-    const err = error.response.data;
-    console.log(err);
-    return { status: err.success, message: err.message };
-  }
-};
-
-const txTokensEth = [
-  {
-    _id: "652c68058a1e328256fef036",
-    id: "tether",
-    symbol: "usdt",
-    name: "Tether",
-    image:
-      "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-    current_price: 0.999972,
-    market_cap: "84205562923",
-    market_cap_rank: "3",
-    fully_diluted_valuation: "84205562923",
-    total_volume: "193111663063",
-    high_24h: "1.003",
-    low_24h: "0.994532",
-    price_change_24h: "-0.002799963643488779",
-    price_change_percentage_24h: "-0.27922",
-    market_cap_change_24h: "-39911298.171188354",
-    market_cap_change_percentage_24h: "-0.04738",
-    circulating_supply: "84391561211.9936",
-    total_supply: "84391561211.9936",
-    max_supply: null,
-    ath: "1.32",
-    ath_change_percentage: "-24.7247",
-    ath_date: "2018-07-24T00:00:00.000Z",
-    atl: "0.572521",
-    atl_change_percentage: "73.96113",
-    atl_date: "2015-03-02T00:00:00.000Z",
-    roi: null,
-    last_updated: "2023-10-26T15:30:01.021Z",
-    chainId: "1",
-    type: "ERC20",
-    updatedAt: "2023-11-07T00:31:22.777Z",
-    chain: "Ethereum",
-    address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    decimals: 6,
-  },
-  {
-    _id: "652c68058a1e328256fef033",
-    id: "ethereum",
-    symbol: "eth",
-    name: "Ethereum",
-    image:
-      "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
-    current_price: 1771.42,
-    market_cap: "215529918225",
-    market_cap_rank: "2",
-    fully_diluted_valuation: "215529918225",
-    total_volume: "16575028597",
-    high_24h: "1861.11",
-    low_24h: "1770.23",
-    price_change_24h: "-40.0072878208216",
-    price_change_percentage_24h: "-2.20861",
-    market_cap_change_24h: "704227495",
-    market_cap_change_percentage_24h: "0.32781",
-    circulating_supply: "120260008.347644",
-    total_supply: "120260008.347644",
-    max_supply: null,
-    ath: "4878.26",
-    ath_change_percentage: "-63.53572",
-    ath_date: "2021-11-10T14:24:19.604Z",
-    atl: "0.432979",
-    atl_change_percentage: "410733.52956",
-    atl_date: "2015-10-20T00:00:00.000Z",
-    roi: {
-      times: 68.89123028749954,
-      currency: "btc",
-      percentage: 6889.123028749955,
-    },
-    last_updated: "2023-10-26T15:32:23.061Z",
-    chainId: "1",
-    updatedAt: "2023-11-08T12:44:37.157Z",
-    chain: "Ethereum",
-    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    decimals: 18,
-  },
-];
-
-//1 eth
-//3192.13592600//usdt
-//0.97842158 //eth
-
-//3181944944
-const getPriceOneInchTest = async () => {
-  const chainId = txTokensEth[0]?.chainId;
-  const fAddress = txTokensEth[0]?.address; // usdt
-  const fDecimals = txTokensEth[0]?.decimals;
-  const tAddress = txTokensEth[1]?.address; // ethereum
-  const tDecimals = txTokensEth[1]?.decimals;
-  // const fValue = 4063.07741750
-  const fValue = 3181944944;
-
-  // const fValue = 1;
-
-  const fValueFixed = Number(fValue).toFixed(2);
-  const typeOfFValueFixed = typeof fValueFixed;
-
-  const roundedAmount = Math.round(Number(fValue));
-
-  const convertedAmount = (
-    Number(`1e${fDecimals}`) * Number(roundedAmount)
-  ).toString();
-
-  console.log({
-    fValue,
-    fValueFixed,
-    typeOfFValueFixed,
-    roundedAmount,
-    convertedAmount,
-  });
-
-  let validatedValue;
-  if (fAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-    validatedValue = parseUnits(
-      // fValue.toString(),
-      Number(fValue).toFixed(),
-      fDecimals.toString()
-    ).toString();
-  } else {
-    validatedValue = parseEther(fValue.toString()).toString();
-  }
-
-  // validatedValue = parseEther(fValue.toString()).toString();
-  console.log({ fValue });
-
-  console.log({ validatedValue: validatedValue });
-
-  const url = `https://api.1inch.dev/swap/${version}/${Number(chainId)}/quote`;
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      src: fAddress, // string
-      dst: tAddress, // string
-      amount: validatedValue, // string
-      fee: Number(fee), // number
-    },
-  };
-
-  try {
-    const response = await axios.get(url, config);
-    if (response?.data) {
-      console.log({ response: response?.data });
-      const { toAmount } = response?.data;
-
-      const toTokenAmount = toAmount;
-      console.log({ toTokenAmount: toTokenAmount });
-
-      let toTokenAmountFormatted = "";
-      let toTokenAmountFixed;
-
-      if (tAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-        toTokenAmountFormatted = formatUnits(
-          toTokenAmount.toString(),
-          tDecimals.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-      } else {
-        toTokenAmountFormatted = formatEther(
-          toTokenAmount.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-
-        // console.log({ toTokenAmountFixed: toTokenAmountFixed });
-      }
-      const result = {
-        validatedValue,
-        tValue: toTokenAmount,
-        // tValueFormatted: toTokenAmountFixed,
-        // tValueFormatted: toTokenAmountFormatted,
-        tValueFormatted: Number(toTokenAmountFormatted).toFixed(8),
-
-        // estimatedGas: estimatedGas,
-        // allProtocols: protocols,
-      };
-      // console.log({ toTokenAmountFormatted: toTokenAmountFormatted });
-      console.log({ OneInchRate: result });
-      return result;
-    }
-  } catch (error) {
-    const err = error.response.data;
-    console.log(err);
-    return { status: err.success, message: err.message };
-  }
-};
-// getPriceOneInchTest()
-
-const getPriceOneInchTest2 = async () => {
-  const chainId = txTokensEth[1]?.chainId;
-  const fAddress = txTokensEth[1]?.address; // usdt
-  const fDecimals = txTokensEth[1]?.decimals;
-  const tAddress = txTokensEth[0]?.address; // ethereum
-  const tDecimals = txTokensEth[0]?.decimals;
-  const fValue = 1;
-  // const fValue = 0.01
-  // const fValue = 4063.0774175;
-
-  let validatedValue;
-  if (fAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-    validatedValue = parseUnits(
-      // fValue.toString(),
-      Number(fValue).toFixed(),
-      fDecimals.toString()
-    ).toString();
-  } else {
-    validatedValue = parseEther(fValue.toString()).toString();
-  }
-  console.log({ fValue });
-
-  console.log({ validatedValue: validatedValue });
-
-  const url = `https://api.1inch.dev/swap/${version}/${Number(chainId)}/quote`;
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      src: fAddress, // string
-      dst: tAddress, // string
-      amount: validatedValue, // string
-      fee: Number(fee), // number
-    },
-  };
-
-  try {
-    const response = await axios.get(url, config);
-    if (response?.data) {
-      console.log({ response: response?.data });
-      const { toAmount } = response?.data;
-
-      const toTokenAmount = toAmount;
-      console.log({ toTokenAmount: toTokenAmount });
-
-      let toTokenAmountFormatted = "";
-      let toTokenAmountFixed;
-
-      if (tAddress != "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-        toTokenAmountFormatted = formatUnits(
-          toTokenAmount.toString(),
-          tDecimals.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-      } else {
-        toTokenAmountFormatted = formatEther(
-          toTokenAmount.toString()
-        ).toString();
-        toTokenAmountFixed = Number(toTokenAmountFormatted).toFixed(3);
-
-        // console.log({ toTokenAmountFixed: toTokenAmountFixed });
-      }
-      const result = {
-        toAmount,
-        validatedValue,
-        tValue: toTokenAmount,
-        // tValueFormatted: toTokenAmountFixed,
-        // tValueFormatted: toTokenAmountFormatted,
-        tValueFormatted: Number(toTokenAmountFormatted).toFixed(8),
-
-        // estimatedGas: estimatedGas,
-        // allProtocols: protocols,
-      };
-      // console.log({ toTokenAmountFormatted: toTokenAmountFormatted });
-      console.log({ OneInchRate: result });
-      return result;
-    }
-  } catch (error) {
-    const err = error.response.data;
-    console.log(err);
-    return { status: err.success, message: err.message };
-  }
-};
-// getPriceOneInchTest2()
 
 const getTokenExchangeRateSwap = asyncHandler(async (req, res) => {
   const { fToken, tToken, chainId } = req.body;
@@ -5619,13 +5230,10 @@ const getTokenExchangeRateSwap = asyncHandler(async (req, res) => {
     fUSDPrice,
     tUSDPrice,
     exchangeRateRaw: exchangeRate,
-    exchangeRate: exchangeRate.toFixed(8),
-
+    exchangeRate: exchangeRate.toFixed(3),
     // validatedValue,
     // tValue, // unit value
   };
-  console.log({ exchangeRateResult: response });
-
   // console.log({ exchangeRateResult: response });
 
   res.status(200).json(response);

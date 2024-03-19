@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { networksOptions } from '../../../constants';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { networksOptions } from "../../../constants";
 import {
   updateIsChangeChainId,
   updateConnectedNetwork,
   updateChain,
-} from '../../../redux/features/swap/swapSlice';
-import { useAccount, useSwitchNetwork, useDisconnect, useConnect } from 'wagmi';
-import TokenModal from '../../../components/TokenModal';
-import { IoMdSettings } from 'react-icons/io';
-import { TbLogout2 } from 'react-icons/tb';
-import WalletModal from '../../../components/WalletModal';
-import SlippageModal from '../../../components/SlippageModal';
-import ServiceHeaderDefi from './ServiceHeaderDefi';
-import ServiceHeader from './ServiceHeader';
-import TokenButtonLight from './TokenButtonLight';
-import FToken from './FToken';
-import TToken from './TToken';
-import Menu from './Menu';
+} from "../../../redux/features/swap/swapSlice";
+import { useAccount, useSwitchNetwork, useDisconnect, useConnect } from "wagmi";
+import TokenModal from "../../../components/TokenModal";
+import { IoMdSettings } from "react-icons/io";
+import { TbLogout2 } from "react-icons/tb";
+import WalletModal from "../../../components/WalletModal";
+import SlippageModal from "../../../components/SlippageModal";
+import ServiceHeaderDefi from "./ServiceHeaderDefi";
+import ServiceHeader from "./ServiceHeader";
+import TokenButtonLight from "./TokenButtonLight";
+import FToken from "./FToken";
+import TToken from "./TToken";
+import Menu from "./Menu";
 import {
   getSwapApprovalService,
   swapService,
-} from '../../../services/apiService';
+} from "../../../services/apiService";
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -39,7 +39,6 @@ const DefiApp = (props) => {
     fValue,
     setFromValue,
     loading,
-    mode,
     service,
     setService,
     subService,
@@ -69,6 +68,7 @@ const DefiApp = (props) => {
     getApprovalData,
     swap,
     getSwapApprovalAndSwap,
+    swapTokensPosition,
   } = props;
 
   // const loading = true;
@@ -83,6 +83,7 @@ const DefiApp = (props) => {
     connectors && connectors[0]
   );
   console.log({ activeConnection: activeConnection });
+  console.log({ connectors: connectors });
 
   //======================={RATES and PRICES}========================================================
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
@@ -177,18 +178,12 @@ const DefiApp = (props) => {
   // }
 
   async function nextFunc() {
-    setService('defi');
-    setSubService('defi');
+    setService("defi");
+    setSubService("defi");
     getSwapInfo();
   }
 
   //====================================={Token Switchh}===============================================
-
-  function swapTokensPosition() {
-    let tmpToken = fToken;
-    setFromToken(tToken);
-    setToToken(tmpToken);
-  }
 
   useEffect(() => {
     if (checkChain && isConnected) {
@@ -197,14 +192,14 @@ const DefiApp = (props) => {
       switchNetwork(checkChain?.id);
       dispatch(updateIsChangeChainId(true));
       dispatch(updateConnectedNetwork(false));
-      localStorage.setItem('chainSwitch', JSON.stringify(true));
+      localStorage.setItem("chainSwitch", JSON.stringify(true));
     }
     if (checkChain && !isConnected) {
       // updateConnectedChain();
       dispatch(updateChain(checkChain));
       dispatch(updateIsChangeChainId(true));
       dispatch(updateConnectedNetwork(false));
-      localStorage.setItem('chainSwitch', JSON.stringify(true));
+      localStorage.setItem("chainSwitch", JSON.stringify(true));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkChain]);
@@ -351,7 +346,7 @@ const DefiApp = (props) => {
                         onChange={onFromValueChanged}
                       />
                       <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
-                        {isFromLoading || loading ? (
+                        {/* {isFromLoading || loading ? (
                           <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
                         ) : (
                           <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
@@ -361,8 +356,17 @@ const DefiApp = (props) => {
                                   ? new Intl.NumberFormat().format(
                                       Number(fValue) * Number(fromPrice)
                                     )
-                                  : ''
+                                  : ""
                               }`}
+                            </div>
+                          </div>
+                        )} */}
+                        {isFromLoading || loading ? (
+                          <div className="relative animate-pulse h-3 xl:h-4 bg-slate-200 rounded-full dark:bg-exchange-rate-dark w-[15%] mt-1 mb-1"></div>
+                        ) : (
+                          <div className="self-stretch overflow-hidden flex flex-row items-start justify-start py-0 px-2 text-sm text-gray-500">
+                            <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                              ~${fromPrice}
                             </div>
                           </div>
                         )}
@@ -371,8 +375,8 @@ const DefiApp = (props) => {
                           <div className="flex-1 relative text-gray-500 text-right">
                             {/* fromBalance */}
                             {isFromLoading
-                              ? ''
-                              : `Balance: ${fromBalance.toString() || ''}`}
+                              ? ""
+                              : `Balance: ${fromBalance.toString() || ""}`}
                           </div>
                         )}
                       </div>
@@ -414,16 +418,20 @@ const DefiApp = (props) => {
                             </div>
                           </>
                         ) : (
+                          // <>
+                          //   <div className="relative inline-block w-[109px] h-[17px] shrink-0">
+                          //     {`~$${
+                          //       tValue
+                          //         ? new Intl.NumberFormat().format(
+                          //             Number(tValue) * Number(toPrice)
+                          //           )
+                          //         : ""
+                          //     } (-${priceDeviation ? priceDeviation : ""}%)`}
+                          //   </div>
+                          // </>
                           <>
                             <div className="relative inline-block w-[109px] h-[17px] shrink-0">
-                              {/* toprice */}
-                              {`~$${
-                                tValue
-                                  ? new Intl.NumberFormat().format(
-                                      Number(tValue) * Number(toPrice)
-                                    )
-                                  : ''
-                              } (-${priceDeviation ? priceDeviation : ''}%)`}
+                              ~${toPrice}
                             </div>
                           </>
                         )}
@@ -431,8 +439,8 @@ const DefiApp = (props) => {
                           <div className="flex-1 relative text-gray-500 text-right">
                             {/* toBalance */}
                             {isToLoading
-                              ? ''
-                              : `Balance: ${toBalance.toString() || ''}`}
+                              ? ""
+                              : `Balance: ${toBalance.toString() || ""}`}
                           </div>
                         )}
                       </div>
@@ -447,7 +455,7 @@ const DefiApp = (props) => {
                     ) : (
                       <>
                         <div className="flex-1 relative">
-                          1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                          1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{" "}
                           {tToken?.symbol.toUpperCase()}
                         </div>
                       </>
@@ -481,7 +489,7 @@ const DefiApp = (props) => {
                   onClick={nextFunc}
                 >
                   <div className="flex-1 relative">
-                    {' '}
+                    {" "}
                     {`Defi ${fToken?.symbol.toUpperCase()} now`}
                   </div>
                 </div>
@@ -497,7 +505,7 @@ const DefiApp = (props) => {
             setToken={setCheckChain}
             service={service}
             isNotCrypto={false}
-            title={'Network'}
+            title={"Network"}
           />
 
           {/* From Token Modal */}
@@ -509,7 +517,7 @@ const DefiApp = (props) => {
             allTokens={allTokensFrom}
             service={service}
             isNotCrypto={false}
-            title={'Select Token'}
+            title={"Select Token"}
           />
 
           {/* To Token Modal */}
@@ -520,28 +528,39 @@ const DefiApp = (props) => {
             setToken={setToToken}
             allTokens={allTokensTo}
             service={service}
-            title={'Select Token'}
+            title={"Select Token"}
+          />
+          {/* Wallet Modal */}
+
+          <WalletModal
+            isTokenModalOpen={isWalletModalOpen}
+            setIsTokenModalOpen={setIsWalletModalOpen}
+            filteredTokens={connectors}
+            setToken={setActiveConnection}
+            allTokens={connectors}
+            service={service}
+            title={"Select Wallet"}
           />
         </div>
       </section>
 
       {/* Wallet Modal */}
-      <WalletModal
+      {/* <WalletModal
         isTokenModalOpen={isWalletModalOpen}
         setIsTokenModalOpen={setIsWalletModalOpen}
         filteredTokens={connectors}
         setToken={setActiveConnection}
         allTokens={connectors}
         service={service}
-        title={'Select Wallet'}
-      />
+        title={"Select Wallet"}
+      /> */}
       {/* Slippage Modal */}
       <SlippageModal
         isTokenModalOpen={isSlippageModalOpen}
         setIsTokenModalOpen={setIsSlippageModalOpen}
         setSlippage={setActiveSlippage}
         slippage={slippage}
-        title={'Slippage tolerance'}
+        title={"Slippage tolerance"}
       />
     </>
   );

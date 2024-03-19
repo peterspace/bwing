@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { getTokenListExchange } from '../../../redux/features/token/tokenSlice';
-import { useDispatch } from 'react-redux';
-import TokenModal from '../../../components/TokenModal';
-import OptionsModalSell from '../../../components/OptionsModalSell';
-import CountriesModal from '../../../components/CountriesModal';
-import PaymenOptionsModal from '../../../components/PaymenOptionsModal';
-import ServiceHeaderBuy from './ServiceHeaderBuy';
-import RatesLocalModel from '../../../components/RatesLocalModel';
+import { useState, useEffect } from "react";
+import { getTokenListExchange } from "../../../redux/features/token/tokenSlice";
+import { useDispatch } from "react-redux";
+import TokenModal from "../../../components/TokenModal";
+import OptionsModalSell from "../../../components/OptionsModalSell";
+import CountriesModal from "../../../components/CountriesModal";
+import PaymenOptionsModal from "../../../components/PaymenOptionsModal";
+import ServiceHeaderBuy from "./ServiceHeaderBuy";
+import RatesLocalModel from "../../../components/RatesLocalModel";
 
-import Menu from './Menu';
-import ServiceHeader from './ServiceHeader';
-import FToken from './FToken';
-import TToken from './TToken';
+import Menu from "./Menu";
+import ServiceHeader from "./ServiceHeader";
+import FToken from "./FToken";
+import TToken from "./TToken";
 
 //Laoding
 //'rounded-lg bg-secondaryFillLight animate-pulse h-[20px]'
@@ -29,7 +29,6 @@ const SellCardApp = (props) => {
     fValue,
     setFromValue,
     loading,
-    mode,
     service,
     setService,
     subService,
@@ -151,8 +150,8 @@ const SellCardApp = (props) => {
   //====================================================================================
 
   async function nextFunc() {
-    setService('sell');
-    setSubService('sellCard');
+    setService("sell");
+    setSubService("sellCard");
     setPercentageProgress(2);
   }
 
@@ -198,23 +197,23 @@ const SellCardApp = (props) => {
   }, [tToken, tValue]);
 
   async function updateTransactionsRange() {
-    if (tToken?.symbol === 'gbp') {
+    if (tToken?.symbol === "gbp") {
       setMinValue(150);
       setMaxValue(2000);
     }
-    if (tToken?.symbol === 'eur') {
+    if (tToken?.symbol === "eur") {
       setMinValue(150);
       setMaxValue(20000);
     }
-    if (tToken?.symbol === 'usd') {
+    if (tToken?.symbol === "usd") {
       setMinValue(150);
       setMaxValue(2000);
     }
-    if (tToken?.symbol === 'aed') {
+    if (tToken?.symbol === "aed") {
       setMinValue(1000);
       setMaxValue(10000);
     }
-    if (tToken?.symbol === 'rub') {
+    if (tToken?.symbol === "rub") {
       setMinValue(30000);
       setMaxValue(300000);
     }
@@ -236,7 +235,7 @@ const SellCardApp = (props) => {
                   />
                   <ServiceHeaderBuy
                     symbolSubService={
-                      paymentMethod === 'card' ? 'Card' : 'Cash'
+                      paymentMethod === "card" ? "Card" : "Cash"
                     }
                     symbolCountry={country}
                     openSubServiceModal={openSubServiceModal}
@@ -296,7 +295,7 @@ const SellCardApp = (props) => {
                         </div>
                         <div className="self-stretch flex flex-col items-start justify-start py-0 px-2">
                           <div className="self-stretch relative font-medium">
-                            {' '}
+                            {" "}
                           </div>
                           {loading ? (
                             <>
@@ -339,7 +338,7 @@ const SellCardApp = (props) => {
                         ) : (
                           <>
                             <div className="flex-1 relative">
-                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{' '}
+                              1 {fToken?.symbol.toUpperCase()} ~ {exchangeRate}{" "}
                               {tToken?.symbol.toUpperCase()}
                             </div>
                             <img
@@ -361,12 +360,12 @@ const SellCardApp = (props) => {
                     </div>
                   </div>
 
-                  {country === 'Russia' ? (
+                  {country === "Russia" ? (
                     <>
                       {tValue < minValue && (
                         <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto">
                           <div className="flex-1 relative">
-                            {' '}
+                            {" "}
                             {`Sell ${fToken?.symbol.toUpperCase()} now`}
                           </div>
                         </div>
@@ -375,27 +374,46 @@ const SellCardApp = (props) => {
                       {tValue > maxValue && (
                         <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto">
                           <div className="flex-1 relative">
-                            {' '}
+                            {" "}
                             {`Sell ${fToken?.symbol.toUpperCase()} now`}
                           </div>
                         </div>
                       )}
 
                       {tValue >= minValue && tValue <= maxValue && (
-                        <div
-                          className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
-                          onClick={nextFunc}
-                        >
-                          <div className="flex-1 relative">
-                            {' '}
-                            {`Sell ${fToken?.symbol.toUpperCase()} now`}
-                          </div>
-                        </div>
+                        <>
+                          {fToken?.symbol == "btc" ? (
+                            <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
+                              <div className="flex-1 relative">
+                                insufficient liquidity
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                              onClick={nextFunc}
+                            >
+                              <div className="flex-1 relative">
+                                {" "}
+                                {`Sell ${fToken?.symbol.toUpperCase()} now`}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                        // <div
+                        //   className="cursor-pointer self-stretch rounded-[18px] bg-indigo-600 h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white font-roboto"
+                        //   onClick={nextFunc}
+                        // >
+                        //   <div className="flex-1 relative">
+                        //     {' '}
+                        //     {`Sell ${fToken?.symbol.toUpperCase()} now`}
+                        //   </div>
+                        // </div>
                       )}
                     </>
                   ) : (
                     <>
-                      {' '}
+                      {" "}
                       <div className="cursor-not-allowed self-stretch rounded-[18px] bg-indigo-400 dark:bg-greenyellow h-10 flex flex-row items-center justify-center py-2 px-4 box-border text-center input-token-container text-white dark:text-yellowgreen font-roboto">
                         <div className="flex-1 relative">
                           Not available in your country
@@ -415,7 +433,7 @@ const SellCardApp = (props) => {
                 allTokens={allTokensFrom}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
               {/* To Token Modal */}
               <TokenModal
@@ -426,13 +444,13 @@ const SellCardApp = (props) => {
                 allTokens={allTokensTo}
                 service={service}
                 isNotCrypto={false}
-                title={'Select Token'}
+                title={"Select Token"}
               />
               {/* Countries Modal */}
               <CountriesModal
                 isTokenModalOpen={isOptionsModalOpen}
                 setIsTokenModalOpen={setIsOptionsModalOpen}
-                title={'Select Country'}
+                title={"Select Country"}
                 paymentMethod={paymentMethod}
                 cities={cities}
                 setCountry={setCountry}

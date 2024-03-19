@@ -32,55 +32,78 @@ const providers = [
 
 const cities = [
   {
-    country: 'USA',
-    cities: ['New york'],
-    flag: '/usa.png',
+    country: "USA",
+    cities: [
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Houston",
+      "Miami",
+      "San Francisco",
+      "Nashville",
+    ],
+    flag: "/usa.png",
   },
   {
-    country: 'UK',
-    cities: ['London'],
-    flag: '/uk.png',
+    country: "UK",
+    cities: [
+      "London",
+      "Liverpool",
+      "Birmingham",
+      "Manchester",
+      "Glasgow",
+      "Cambridge",
+    ],
+    flag: "/uk.png",
   },
   {
-    country: 'France',
-    cities: ['Paris'],
-    flag: '/france.png',
+    country: "France",
+    cities: ["Paris", "Marseille", "Lyon", "Rouen", "Strasbourg"],
+    flag: "/france.png",
   },
 
   {
-    country: 'Germany',
-    cities: ['Berlin'],
-    flag: '/germany.png',
+    country: "Germany",
+    cities: ["Berlin", "Munich", "Hamburg", "Frankfurt"],
+    flag: "/germany.png",
   },
   {
-    country: 'Spain',
-    cities: ['Barcelona'],
-    flag: '/spain.png',
+    country: "Spain",
+    cities: ["Madrid", "Barcelona", "Valencia"],
+    flag: "/spain.png",
   },
   {
-    country: 'Russia',
-    cities: ['Saint Petersburg', 'Moscow'],
-    flag: '/russia.png',
+    country: "Russia",
+    cities: [
+      "Moscow",
+      "Saint Petersburg",
+      "Kazan",
+      "Yekaterinburg",
+      "Omsk",
+      "Novosibirsk",
+      "Chelyabinsk",
+    ],
+    flag: "/russia.png",
   },
   {
-    country: 'Finland',
-    cities: ['Helsinki'],
-    flag: '/finland.png',
+    country: "Finland",
+    cities: ["Helsinki", "Espoo", "Oulou", "Tampere"],
+    flag: "/finland.png",
   },
   {
-    country: 'Hungary',
-    cities: ['Budapest'],
-    flag: '/hungary.png',
+    country: "Hungary",
+    cities: ["Budapest", "Debrecen", "Szeged", "Pecs"],
+    flag: "/hungary.png",
   },
   {
-    country: 'Czech',
-    cities: ['Prague'],
-    flag: '/czech.png',
+    country: "Czech",
+    cities: ["Prague", "Brno", "Liberec", "Olomouc"],
+    flag: "/czech.png",
   },
   {
-    country: 'UAE',
-    cities: ['Dubai'],
-    flag: '/uae.png',
+    country: "UAE",
+    cities: ["Dubai", "Abu Dhabi", "Sharjah", "Al Ain"],
+    flag: "/uae.png",
   },
 ];
 
@@ -305,7 +328,7 @@ export const SellCardHome = (props) => {
   }, []);
   useEffect(() => {
     if (allTokensFromL && !fToken) {
-      setFromToken(allTokensFromL[2]);
+      setFromToken(allTokensFromL[0]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTokensFromL]);
@@ -452,7 +475,6 @@ export const SellCardHome = (props) => {
   useEffect(() => {
     const fetchPrices = async () => {
       exchangeRateException();
-      priceDataException();
     };
 
     fetchPrices();
@@ -463,7 +485,6 @@ export const SellCardHome = (props) => {
   useEffect(() => {
     const fetchPrices = async () => {
       exchangeRateException();
-      priceDataException();
     };
     fetchPrices();
 
@@ -588,6 +609,45 @@ export const SellCardHome = (props) => {
     }
   };
 
+    //=================={update currency}==============
+
+    useEffect(() => {
+      updateCurrency();
+    }, [country]);
+  
+    async function updateCurrency() {
+      if (country === "USA") {
+        setToToken(allTokensTo[0]);
+      }
+      if (country === "UK") {
+        setToToken(allTokensTo[2]);
+      }
+      if (country === "France") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country === "Germany") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country === "Spain") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country === "Russia") {
+        setToToken(allTokensTo[3]);
+      }
+      if (country === "Finland") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country === "Hungary") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country === "Czech") {
+        setToToken(allTokensTo[1]);
+      }
+      if (country?.country === "UAE") {
+        setToToken(allTokensTo[4]);
+      }
+    }
+
   //====={use source data to reset values here e.g booking app approach like in placeForm }==============
   return (
     <>
@@ -605,7 +665,7 @@ export const SellCardHome = (props) => {
             fValue={fValue}
             setFromValue={setFromValue}
             loading={loading}
-            mode={mode}
+            
             service={service}
             setService={setService}
             subService={subService}
@@ -643,7 +703,7 @@ export const SellCardHome = (props) => {
           fValue={fValue}
           setFromValue={setFromValue}
           loading={loading}
-          mode={mode}
+          
           service={service}
           setService={setService}
           subService={subService}

@@ -57,8 +57,6 @@ export const ExchangeHome = (props) => {
     ? JSON.parse(localStorage.getItem("transactionRatesExchange"))
     : 0;
   const [transactionRates, setTransactionRates] = useState(transactionRatesL);
-  // const [transactionRates, setTransactionRates] = useState();
-
   console.log({ transactionRates: transactionRates });
   const tValue = transactionRates ? transactionRates?.tValueFormatted : 0;
   const exchangeRate = transactionRates ? transactionRates?.exchangeRate : 0;
@@ -119,6 +117,8 @@ export const ExchangeHome = (props) => {
   console.log({ activeInterval: activeInterval });
   // const [nextInterval, setNextInterval] = useState(30000);
   console.log({ nextInterval: nextInterval });
+  const [prevTValue, setPrevTValue] = useState();
+  const [isSwitchToken, setIsSwitchToken] = useState(false);
 
   useEffect(() => {
     dispatch(getTokenListExchange());
@@ -178,8 +178,6 @@ export const ExchangeHome = (props) => {
         "transactionRatesExchange",
         JSON.stringify(transactionRates)
       );
-    } else {
-      setLoading(true);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,11 +219,11 @@ export const ExchangeHome = (props) => {
   //======================================={PRICE BLOCK}================================================
   //====================================================================================================
 
-  // useEffect(() => {
-  //   if (activeInterval) {
-  //     setNextInterval(activeInterval);
-  //   }
-  // }, [activeInterval]);
+  useEffect(() => {
+    if (activeInterval) {
+      setNextInterval(activeInterval);
+    }
+  }, [activeInterval]);
 
   // useEffect(() => {
   //   if (exchangeRateInfo?.exchangeRate === "0.000") {
@@ -240,33 +238,44 @@ export const ExchangeHome = (props) => {
 
   // Simulate fetching expected prices
   useEffect(() => {
-    priceDataException();
-
+    if (!isSwitchToken) {
+      priceDataException();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fValue, exchangeRateInfo]);
 
   //=========={on Page Reload or Mount}=============================
 
   useEffect(() => {
-    exchangeRateException();
+    if (!isSwitchToken) {
+      const fetchPrices = async () => {
+        exchangeRateException();
+        priceDataException();
+      };
+
+      fetchPrices();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fToken, tToken]);
 
   useEffect(() => {
-    const fetchPrices = async () => {
-      exchangeRateException();
-    };
-    fetchPrices();
+    if (!isSwitchToken) {
+      const fetchPrices = async () => {
+        exchangeRateException();
+        priceDataException();
+      };
+      fetchPrices();
 
-    let priceInterval;
+      let priceInterval;
 
-    let duration = nextInterval; // stable mode // 15000 for buy and sell since we're only making a single request per time
+      let duration = nextInterval; // stable mode // 15000 for buy and sell since we're only making a single request per time
 
-    priceInterval = setInterval(fetchPrices, duration); // once every 30 seconds (i.e 4 calls per minute)
+      priceInterval = setInterval(fetchPrices, duration); // once every 30 seconds (i.e 4 calls per minute)
 
-    // Clear the interval on unmount
-    return () => clearInterval(priceInterval);
+      // Clear the interval on unmount
+      return () => clearInterval(priceInterval);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fToken, tToken]);
 
@@ -382,13 +391,135 @@ export const ExchangeHome = (props) => {
     }
   };
 
+  const switchExchangeRateException = async () => {
+    if (!fToken) {
+      return;
+    }
+
+    if (!tToken) {
+      return;
+    }
+    const userData = { fToken, tToken, service, subService };
+    try {
+      setLoading(true);
+      setLoadingExchangeRate(true);
+
+      const response = await getTokenExchangeRate(userData);
+      console.log({ exchangeData: response });
+
+      // setExchangeRateInfo(response?.exchangeRate);
+
+      if (response.exchangeRate === "undefined") {
+        // set is loading as true
+        //too many requests
+        return;
+      }
+      if (response.exchangeRate) {
+        // set is loading as true
+        setExchangeRateInfo(response);
+        setRetryMessage("");
+      }
+      if (response.message) {
+        setRetryMessage(response?.message);
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+      setLoadingExchangeRate(false);
+    }
+  };
+  const switchPriceDataException = async () => {
+    if (
+      fValue === 0 ||
+      fValue === "0" ||
+      fValue === null ||
+      fValue === undefined
+    ) {
+      return;
+    }
+
+    if (
+      Number(exchangeRateInfo?.exchangeRate) === 0 ||
+      exchangeRateInfo?.exchangeRate === "0.000" ||
+      exchangeRateInfo?.exchangeRate === null ||
+      exchangeRateInfo?.exchangeRate === undefined
+    ) {
+      return;
+    }
+
+    if (!fToken) {
+      return;
+    }
+
+    if (!tToken) {
+      return;
+    }
+    const userData = {
+      fToken,
+      tToken,
+      exchangeRate: exchangeRateInfo?.exchangeRate,
+      fValue,
+      service,
+      subService,
+    };
+    try {
+      setLoading(true);
+
+      const response = await getTransactionRateInfo(userData);
+
+      if (response.tValueFormatted) {
+        // setTransactionRates(response);
+        let newRates = response;
+        let updatedRate = {
+          ...newRates,
+          exchangeRate: exchangeRateInfo?.exchangeRate,
+          fromPrice: exchangeRateInfo?.fUSDPrice,
+          toPrice: exchangeRateInfo?.tUSDPrice,
+        };
+        setTransactionRates(updatedRate);
+
+        dispatch(getTransactionRate(updatedRate));
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (prevTValue) {
+  //     setTimeout(() => {
+  //       switchExchangeRateException();
+  //       switchPriceDataException();
+  //       setPrevTValue(null);
+  //     }, [200]);
+  //   }
+  // }, [prevTValue]);
+
+  useEffect(() => {
+    if (isSwitchToken) {
+      setTimeout(() => {
+        // exchangeRateException();
+        // priceDataException();
+        setIsSwitchToken(false);
+      }, 200);
+    }
+  }, [isSwitchToken]);
+
   function swapTokensPosition() {
-    setLoading(true);
+    setIsSwitchToken(true);
+    setPrevTValue(tValue);
     let tmpToken = fToken;
     let tmValue = tValue;
     setFromValue(tmValue);
     setFromToken(tToken);
     setToToken(tmpToken);
+
+    // setFromToken(tToken);
+    // setToToken(tmpToken);
+    // setFromValue(tmValue);
   }
 
   //====={use source data to reset values here e.g booking app approach like in placeForm }==============
@@ -418,6 +549,8 @@ export const ExchangeHome = (props) => {
             exchangeRate={exchangeRate}
             transactionRates={transactionRates}
             loadingExchangeRate={loadingExchangeRate}
+            prevTValue={prevTValue}
+            setPrevTValue={setPrevTValue}
             swapTokensPosition={swapTokensPosition}
           />
         </>
